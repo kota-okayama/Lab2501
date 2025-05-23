@@ -1,0 +1,50 @@
+# Python関連の一般的な除外ファイル
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 仮想環境
+venv/
+env/
+ENV/
+
+# IDE関連
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# その他の一般的な除外ファイル
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# .py以外のファイルを除外
+*
+!*.py
+!.gitignore
+
+benchmark/bib_japan_20241024/* 
+
+# fasttextディレクトリの設定
+fasttext/*
+!fasttext/init.py
+pipeline*/*

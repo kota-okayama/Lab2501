@@ -1,0 +1,42 @@
+version: '3.1'
+type: CONFIG
+id: 979e76b3-696b-4a56-a8fe-e5ac365f57c6
+summary:
+  creation_date: '2022-12-17 12:25:33.911'
+  update_date: '2023-05-28 00:12:10.173'
+  target_filepath: .'@/../National_ISBN.tsv'
+  log_filepath: log.log
+  log_level: INFO
+  notification_filepath: '@/notification.yaml'
+  crowdsourcing_platform: N4U
+  crowdsourcing_strict: false
+  crowdsourcing_limit: 3000
+  crowdsourcing_worker_accuracy: 1.0
+  ngraph_construction: DIST
+  ngraph_params:
+    k: 10
+    dist: 1.0
+    enable_pseudo_dist: true
+  inference_mode: BAYESIAN
+workflow:
+- name: LOAD_FASTTEXT
+  filepath: '@/fasttext/cc.ja.300.bin'
+  everytime: true
+- name: LOAD_TSV_FOR_RC
+  filepath: '@/../National_ISBN.tsv'
+  cluster_id: cluster_id
+  attributes:
+    bib1_title: TEXT
+    bib1_author: COMPLEMENT_JA
+    bib1_publisher: COMPLEMENT_JA
+    bib1_pubdate: COMPLEMENT_DATE
+  everytime: true
+- name: GENERATE_BENCHMARK_DATASET
+  required_records_list:
+  - 1000
+  - 2000
+  - 5000
+  - 10000
+  - 30000
+  - 50000
+  - 100000
