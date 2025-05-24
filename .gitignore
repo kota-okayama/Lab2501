@@ -51,4 +51,4 @@ benchmark/bib_japan_20241024/*
 # fasttextディレクトリの設定
 fasttext/*
 !fasttext/init.py
-pipeline*/*
+pipeline*/**
