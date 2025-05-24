@@ -41,6 +41,7 @@ ENV/
 *
 !*.py
 !.gitignore
+!openai_embedding_experiment/
 
 # JSONファイルの取り扱い
 *.json
