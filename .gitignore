@@ -42,6 +42,10 @@ ENV/
 !*.py
 !.gitignore
 
+# JSONファイルの取り扱い
+*.json
+!llm_api_cache.json
+
 benchmark/bib_japan_20241024/* 
 
 # fasttextディレクトリの設定
