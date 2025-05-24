@@ -40,6 +40,7 @@ ENV/
 # .py以外のファイルを除外
 *
 !*.py
+!*.sh
 !.gitignore
 !openai_embedding_experiment/
 
