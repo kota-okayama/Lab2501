@@ -1,0 +1,3762 @@
+version: '3.1'
+type: TARGET
+id: 08da52b6-8c26-4d01-8cf9-3df3b0c0a055
+summary:
+  creation_date: '2024-06-16 01:13:52.608'
+  update_date: '2025-05-17 14:44:14.135'
+  num_of_records: 1000
+  num_of_pairs: {406217376X: 73, '4093883599': 20, '4000220748': 34, 400003328X: 12,
+    '4093863075': 47, '4033214100': 42, '4045742042': 32, '4003314638': 13, '4023333050': 23,
+    '4091038522': 14, '4048741403': 52, '4040663306': 29, '4001141396': 33, '4054007740': 42,
+    410225014X: 19, '4002708691': 30, 400331333X: 30, '4041032253': 21, '4000030981': 9,
+    '4000030914': 11, '4022566264': 25, '4042955029': 34, '4047034886': 11, 400270940X: 30,
+    '4002710068': 30, '4004306345': 29, '4048834134': 20, '4061965484': 23, '4041050162': 28,
+    '4000228781': 10, '4048739573': 34, '4002602753': 25, '4003200519': 24, '4041010802': 15,
+    '4044604010': 22, '4046315008': 21, '4000080229': 10, '4040663438': 16, '4054012191': 7}
+  config_match: null
+  config_mismatch: null
+inf_attr: {bib1_title: TEXT, bib1_author: COMPLEMENT_JA, bib1_publisher: COMPLEMENT_JA,
+  bib1_pubdate: COMPLEMENT_DATE}
+records:
+  406217376X:
+  - id: e3ca129d-8633-4e63-96cf-6a859e12565c
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '', bib1_pubdate: '2012.02'}
+  - id: 20ecb2c6-a7f3-41e5-8031-007e47e5658e
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 723a8c49-955f-4e7a-9ddb-c05e805f8b88
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤∥著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: c60fe697-8199-40d4-86d3-6944f19f6f82
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: bcc8ed07-9dd7-4cbf-9d30-db9131bf5532
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: 講談社, bib1_pubdate: 2012/02}
+  - id: 8fd1f3ba-981d-447b-9f3b-c3fe78feed76
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: acb19a77-bfc8-40f1-92e0-78d872ca41cc
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: ''}
+  - id: 5284dc21-dce4-4ca3-8ba6-c664e038eada
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: b575aaa5-f0f8-4f9c-b5fb-00980926a20c
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズベルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京: 講談社',
+      bib1_pubdate: 2012年02月}
+  - id: 943ed1b7-4fd6-48fc-bc23-20d7488b9ffc
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 1e61d456-61d2-4d94-ab73-83a80ee1d46f
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 1fcebbec-ccf5-49eb-8f66-0c60d529c7ed
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 0e5f10eb-e58f-41c3-8f1c-4c6f1a8382d0
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 2a302f50-30e5-42be-9a16-1053ff1677bd
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 88cb997b-847e-4c68-8ca9-5ff077204951
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤∥著, bib1_publisher: 講談社, bib1_pubdate: ''}
+  - id: 0978443e-f1ee-4c08-bce7-ae4d6adc1c76
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 84deb747-70fe-4bb6-8ecb-0f7db0a164f0
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 3ce45378-8cf3-47bd-a117-b854925477dc
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: 2012/02}
+  - id: 4c9be2c1-8e75-4bce-92e7-e31268d507f6
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: 4bed4bbb-63a6-498e-ad21-e3e00d2c2494
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 2acf8118-a93e-4996-9685-454e2dbc0bc4
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: d0033c83-83d1-4404-b6f2-2aa68ce08c35
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: d18dc251-af17-4616-8d33-59f80044798a
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: f87c1140-36d7-4648-ac54-3126c8575723
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: a271bd15-e072-4dbf-bf85-240efd822958
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: e00a3857-8c6e-4893-94be-71c98d951045
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: 9d74016b-db3f-490b-a832-fef3b8abef17
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 5f5098e8-45d1-475d-9f6f-e66fdf3800ee
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: aae86d01-8335-4cb6-8516-cbfa0350f19f
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: 7bfa8d5f-6abd-4069-af4d-19fc81cd30a7
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: f7d12621-9062-48bf-8efb-fb77aec118f4
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: db4f09b8-4b0e-482c-9861-2bcdbf1fbca8
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤∥著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 6f5b4275-2f0d-4f9c-9bd7-2f5c45660213
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 7f8a0015-9404-4b5a-8971-4f456b61ce1f
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 175a6cf9-53b6-4fdf-962c-e107cc388648
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸/潤∥著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 6aaca8ae-3089-48d4-873e-59a1961a4e39
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤‖著, bib1_publisher: 講談社, bib1_pubdate: 2012年}
+  - id: db8a846b-4dac-4c2d-9212-5e5ff4a48d2d
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤著, bib1_publisher: 講談社, bib1_pubdate: '2012'}
+  - id: 554ba3a8-8197-410e-923a-38f75b471ce7
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: e2861f80-010c-4fe5-8d39-185b0561a8fe
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: c8c2f8bc-ea8a-485a-914d-9685d294730e
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 643ec956-3f1c-484d-85cd-162f79eb8d62
+    cluster_id: 406217376X
+    data: {bib1_title: 'ルーズヴェルト・ゲーム ', bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 52253e03-646c-4121-94c3-b62f547021f1
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: e2e3940d-9e40-438f-8457-fce02fa11b6f
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 2c7d867b-3ba8-4e51-bf1c-bd4ab7bee35f
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: d7a176c9-70c1-41cf-b8aa-2be3cb24ca48
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 035426c6-6826-4d6e-92e2-4b983bc6096f
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: 2012/02}
+  - id: 1b596bf1-2757-406f-883f-75215d715e46
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: aa57e9d0-a66a-4bff-851d-eb36580c6c29
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤∥著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: a6334393-e555-44ae-a2bd-92cd699b0011
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: a72804ca-fa97-4843-a06f-4543a0c72503
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤∥著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 81e26d68-7159-45c5-8865-f1ff05923aab
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: 3b70df35-5621-49a6-9671-0f3b94c2e181
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 56d575af-0a00-49be-b423-98919fc08094
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: ec45a69e-1ecc-4677-a130-1ca38512497d
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 8e4a6d58-c2af-46f5-9cb0-0d4764eebb84
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: b06f6dd4-55fa-4bb1-ab85-f8acf268dba0
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: b176bb4d-a4e0-4f83-b015-55402bfc3481
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: fc4d71fe-567e-4157-99ae-38ab5aed3264
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 6d4a74c9-c935-4677-97dd-90f381a89530
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 30bd8722-2e82-4927-956a-b44ce3425d5c
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: fb7f09ed-0120-4d9a-9be0-4c8e611719b4
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: '2012'}
+  - id: 1f07b2b3-ded7-48ab-92c7-115096316613
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: 講談社, bib1_pubdate: 2013年12月}
+  - id: cc76575d-ba42-4909-94ec-136fab4b2764
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸/潤‖著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: ddf087f4-eb3b-4f45-a23b-f7de4174fea6
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 6019098c-060c-43cb-8bab-5243c5554252
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 9001f327-53d5-44d9-a5c7-df1798a970a5
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 9711e79d-3deb-49b5-8202-f303f2f17a17
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '', bib1_pubdate: '2012.02'}
+  - id: ddc98120-5669-4b0d-b164-8677d4597c0d
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '2012.02'}
+  - id: 5b1ab9f4-8082-49e0-a936-669b987801c3
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤/著, bib1_publisher: 講談社, bib1_pubdate: '2012.02'}
+  - id: e5940804-6ead-4460-be92-2b64d430299b
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸 潤, bib1_publisher: 講談社, bib1_pubdate: '2012'}
+  - id: 20edaaab-c79c-4f4a-b263-a00dd465ff6b
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤著, bib1_publisher: 講談社, bib1_pubdate: '2012'}
+  - id: 0094e38b-1572-46e5-82b1-c414b65885d3
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム 20cm, bib1_author: '', bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  - id: 0aef8e86-b780-49e0-bb25-5f54e2eb62e0
+    cluster_id: 406217376X
+    data: {bib1_title: ルーズヴェルト・ゲーム, bib1_author: 池井戸潤∥著, bib1_publisher: 講談社, bib1_pubdate: '2012.2'}
+  '4093883599':
+  - id: 084eee48-3e77-487f-a66f-83c8a0497071
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより−おいしい暮らし歳時記−, bib1_author: 広田千悦子/絵・文 広田行正/写真, bib1_publisher: 小学館,
+      bib1_pubdate: '2014'}
+  - id: ff320e83-faf3-4785-afec-893c8f643615
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: 9b89ce46-3e4f-4f73-86ef-95c0cfeadec5
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: a8a4e98c-6ece-4068-8303-16c0626d88d7
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: dfed5045-f76a-46df-97c1-3087a7090492
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田/千悦子∥絵・文, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.4'}
+  - id: 8e94998a-af26-4214-a4a2-62731f3fb5b2
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮, bib1_author: 広田千悦子/絵・文, bib1_publisher: 小学館, bib1_pubdate: '2014.4'}
+  - id: 99c103b7-f1b8-40a4-9462-bc13f0a3ef5d
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: e53db7d6-517c-4c9f-b514-2785cd804922
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵 文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: 834f5e71-0dff-4871-87d0-9942c917aec2
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: 2b91da65-260b-40b4-993c-7e02a0493515
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: 小学館,
+      bib1_pubdate: '2014'}
+  - id: 11b3fcdf-6924-464d-9050-e9361725bc5e
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: 292ef05b-a4bd-4592-b82c-82c7b89bb951
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子, bib1_publisher: 小学館,
+      bib1_pubdate: '201404'}
+  - id: a4d5998c-7e6c-4432-b7a1-e2699d807650
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより, bib1_author: 広田 千悦子/画, bib1_publisher: 小学館, bib1_pubdate: '2014'}
+  - id: aad87175-a9bf-44f3-94b0-e7106a4323a2
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子, bib1_publisher: 小学館,
+      bib1_pubdate: '2014'}
+  - id: ca0edc92-1fee-4c65-806e-80a2f812cb2c
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: 69876621-5e23-422c-9e5c-585be8b50e27
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより, bib1_author: '広田/千悦子‖絵・文ヒロタ,チエコ, ほか', bib1_publisher: 小学館(ショウガクカン),
+      bib1_pubdate: '2014.4'}
+  - id: 927bddec-b840-4764-a2f9-72ee746ac5a9
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子∥絵 文, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.4'}
+  - id: 6cb3e814-1dbb-4c1e-a2b8-3c393701e15f
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい暮らし歳時記, bib1_author: 広田 千悦子/絵・文, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.04'}
+  - id: abef3264-9cf8-4d44-80f0-e64ce2416ba6
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより おいしい 暮, bib1_author: 広田 千悦子/絵・文, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.4'}
+  - id: 7c717f5b-6bdb-42a0-aa92-d455f678d897
+    cluster_id: '4093883599'
+    data: {bib1_title: 口福だより/広田 千悦子, bib1_author: 広田 千悦子, bib1_publisher: 小学館, bib1_pubdate: '2014'}
+  '4000220748':
+  - id: 8eec00c6-8c6f-48de-a963-3cf2486a7bff
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: 4bc402e4-f5a2-4bdb-a198-4ad28d127c0e
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: fde2972d-ff9c-450d-8f17-a1a81dc95bbf
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 430f1414-4f40-44a8-a226-c323244165b5
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: 0dab1797-539b-4f75-ac29-9a48c43cef86
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: a0f9a1ae-3af5-479c-9bbe-2e9a02e272d5
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 0625baf6-216b-49b1-8025-646807d699cc
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: c43aa707-8c99-4808-9d15-cb34a4debad4
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 89f754ce-6625-4ef8-8973-94514959bd2a
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 6ce33ff7-9091-457d-bb1e-d242de67bd88
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012'}
+  - id: 4d0d8de6-107d-4b59-853e-92381e6a2d59
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: 6d4d476d-a888-45bc-af97-6e79e4137bcf
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012'}
+  - id: 32b96852-0f70-4488-9b0e-d99641bd84b8
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 23c82b36-716f-4d66-a94c-96d0ab54e4af
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子∥著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 04082605-4758-407b-85a6-dfc4716e9340
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 6b8f90b0-e19e-4b51-9dcf-bd40046b2f82
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012'}
+  - id: 2e5416d6-ba6f-4c58-9adb-f618bd3daa2f
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2012/11}
+  - id: 5cdf1a71-31a4-4fd8-86f7-8026d4615c56
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: 7ee9d27e-218d-44de-b5c8-92d1b7ede4cc
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: b5cb7c48-8319-41ac-8470-466a87798b2c
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西/寛子∥著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 2b17aa19-f6d6-4f0e-9fa4-b8cf93366a79
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西/寛子‖著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: cca833c9-88a3-4886-aff9-a45068061d34
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 830f95e3-0788-45bd-a684-4591ac9f78f8
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2012/11}
+  - id: 1e90fc9f-120a-4c31-b2ce-1add94c5ee3d
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西  寛子∥著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: a1b0d42d-de07-4008-915b-c17acc7b998d
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西/寛子‖著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 300193e1-5734-425d-864c-caad685df7fe
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: f005693d-8646-4c27-a0a2-28fbd62af7b1
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: da305b1a-8feb-4e79-9056-6c03d1e23583
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: 043e5e3e-6ad1-4cf1-9db1-b0b17350c359
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: e7924da6-05a6-46e2-b892-9b0bb9c3834a
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2012/11}
+  - id: e0e238e1-9311-49dd-bdc1-bff19a3c691e
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 2df91402-eb09-47e0-abeb-75c45c2dd6d8
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: '竹西/寛子‖著[タケニシ,ヒロコ]', bib1_publisher: '岩波書店[イワナミ/ショテン]',
+      bib1_pubdate: '2012.11'}
+  - id: 99574ccc-3429-4720-9430-89f86d2d11e8
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2012/11}
+  - id: db431442-dc42-4050-8bb4-fc22868403db
+    cluster_id: '4000220748'
+    data: {bib1_title: 「あはれ」から「もののあはれ」へ, bib1_author: 竹西 寛子/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  400003328X:
+  - id: c4b05c56-546e-4e5e-a32d-3e2db9eabb35
+    cluster_id: 400003328X
+    data: {bib1_title: 'ほんとうの豊かさとは 生活者の社会へ [岩波ブックレット] (No.388)', bib1_author: '暉峻淑子/[著]',
+      bib1_publisher: 岩波書店, bib1_pubdate: '1995.12'}
+  - id: d9b872a6-4e9b-41c5-9cef-6ba2cf25fbf3
+    cluster_id: 400003328X
+    data: {bib1_title: 'ほんとうの豊かさとは    生活者の社会へ   [岩波ブックレット] (No.388)', bib1_author: '暉峻淑子/[著]',
+      bib1_publisher: 岩波書店, bib1_pubdate: '1995.12'}
+  - id: fb1947dd-adaf-4ef4-8f3c-36c5a044642b
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは 生活者の社会へ, bib1_author: '暉峻 淑子/[著]', bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1995.12'}
+  - id: ac7126d8-5f21-4e44-83ed-93c8a6084b74
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは 生活者の社会へ (岩波ブックレット), bib1_author: 暉峻 淑子, bib1_publisher: 岩波書店,
+      bib1_pubdate: 1995/12}
+  - id: 9245b4c7-e5be-4abe-b6bf-c45326d60b49
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは  生活者の社会へ, bib1_author: 暉峻 淑子/〔著〕, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1995.12'}
+  - id: 0f3da259-1b9a-4693-a046-d50a74a7792e
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは 生活者の社会へ 岩波ブックレット No.388, bib1_author: 暉峻 淑子/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1995'}
+  - id: 9cbbccbf-73c9-4c3a-9ab8-772f8b3e7389
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは  生活者の社会へ, bib1_author: '暉峻 淑子/[著]', bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1995.12'}
+  - id: 1afdd0c4-5e36-4eb0-9cb6-3887d7c736ac
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは, bib1_author: '暉峻淑子/[著]', bib1_publisher: 岩波書店,
+      bib1_pubdate: '1995.12'}
+  - id: d22254d5-1092-4cff-b731-86a314f8b321
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは 生活者の社会へ 岩波ブックレット, bib1_author: '暉峻 淑子/[著]', bib1_publisher: 岩波書店,
+      bib1_pubdate: 1995/12}
+  - id: b346b653-7667-4007-a742-fb93ebbc27f5
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは-生活者の社会へ-(岩波ブックレット No.388), bib1_author: '暉峻淑子/[著]',
+      bib1_publisher: 岩波書店, bib1_pubdate: '1995.12'}
+  - id: de1e94d4-26aa-4b85-919d-d2cc860e03cc
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは 生活者の社会へ, bib1_author: 暉峻淑子/〔著〕, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1995.12'}
+  - id: 0bf27a40-9e0e-4589-836b-e778a6646623
+    cluster_id: 400003328X
+    data: {bib1_title: ほんとうの豊かさとは 生活者の社会へ, bib1_author: 暉峻 淑子/〔著〕, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1995.12'}
+  '4093863075':
+  - id: 910ddf68-20af-45ca-924b-d21ecccf921e
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: 小学館, bib1_pubdate: '2013'}
+  - id: 98b52c40-1424-4b87-a9a1-55bab307ce19
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: ccdd5a86-5653-44f6-98d5-56c677a3af67
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠るい著, bib1_publisher: 小学館, bib1_pubdate: '2013'}
+  - id: d5760810-cf00-44be-ab53-fb6fbb013eb5
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: f7b89980-96f9-4553-ad26-78b627091974
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: c02bd493-02d4-4c27-986f-465326afce59
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 4b4f66bc-59e7-4a8e-8de3-978b8974ab83
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 7313d24c-ec55-4aba-8a54-10c711b25bbb
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: '', bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: dbca24d0-c721-4d99-8024-5c35ac064972
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 641d3d09-74b7-4bd4-b54f-757fbe1b127c
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠るい/著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 486d215b-216c-4e1a-b3f9-4a0675047d28
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: b1a914ad-7958-41af-acd0-381f2dda92e4
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい∥著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 99f0d4d2-d61b-4808-8f4b-d8553f0b59a8
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠/るい‖著, bib1_publisher: 小学館, bib1_pubdate: '2013.02'}
+  - id: ceb9c0d6-a571-4100-82f8-347404bf0ae6
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい, bib1_publisher: 小学館, bib1_pubdate: 2013/02}
+  - id: 4dfdb1a7-3a5e-4bcf-aa05-002e301e0ba1
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠るい/著, bib1_publisher: '', bib1_pubdate: '2013.2'}
+  - id: 58d509be-83fc-4e96-8a0c-60c79eefe916
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 97d2aad0-4ab2-43d1-8517-9536afaeac87
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: f04707eb-c421-41f4-ae2c-3052c7dfa41c
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 1a303917-b16a-4a84-8a89-9be5539aa2b7
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 7520db8e-b72a-46f2-a316-f1f54e3b94b8
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: '', bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: b56ba7e7-362a-4640-a87a-1974099cb95e
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京: 小学館', bib1_pubdate: 2013年02月}
+  - id: dc975c49-0a53-4990-ab26-112ecf545d1a
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 09337550-5559-42f3-a584-cbf8f9aa65ce
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: 小学館, bib1_pubdate: '2013.02'}
+  - id: ec76b155-90ce-4547-81a1-82e7cbadf309
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 8d102ad0-d38e-4e6a-90d9-b73e81bfc872
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 6ca98955-acbb-4a0b-85f3-5c92cf325a50
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 1ebab371-585d-458f-84b3-9bac31a812c5
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 4852b2d3-629d-4e58-835e-c6c08ad2661a
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: abb3990f-ecaf-49d1-a3d4-ea0ac2c7f7ef
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 3e14efc0-f944-4f65-a6f7-63390648f99f
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい∥著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 80a57f7b-ac34-4c89-b24a-351723451da9
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '', bib1_pubdate: '2013.02'}
+  - id: 07c91a3e-59a0-4c2b-82c0-2f3d7ca76db1
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: d457a216-48ad-434f-b523-4db7f0f7f185
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 70f564b4-ffbd-4624-a6b9-8f9e6c47c54f
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい∥著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: a68a54c7-7e5e-4ff8-bff1-272ee1797880
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 789ab85f-bf6f-47b2-b91c-eca9b0c9b340
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: '', bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 34399fb1-fc05-4559-bd81-c9ee1549ebe7
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 0d84e8d2-a2cf-4bb3-84d4-f4cd01118a36
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 785a49d9-1db1-4c2a-81e2-e806a99ff11b
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 18c2661c-0d29-421e-af38-ef4905cb9ab2
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 2e381af0-cd4b-412f-afee-b16b6ba88c1c
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠/るい‖著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 1a4f6671-1ceb-4deb-83d7-f23952eca389
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: 小学館, bib1_pubdate: 2013/02}
+  - id: e0cc585b-f153-48da-a784-01e237fcf2dc
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠るい/著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: aec3d5fa-b6bf-4b4d-a686-d675f43ce0a7
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: c8b341bd-2831-431c-a890-bdafef36c8a4
+    cluster_id: '4093863075'
+    data: {bib1_title: ' 九死一生', bib1_author: 小手鞠 るい/著, bib1_publisher: 小学館, bib1_pubdate: '2013.2'}
+  - id: 1d10f8cf-8ebd-42f2-878e-1306e9bc2b7f
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠 るい/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2013.02'}
+  - id: 430d6d48-cb61-4f83-8087-2261bb5f1c48
+    cluster_id: '4093863075'
+    data: {bib1_title: 九死一生, bib1_author: 小手鞠/るい‖著, bib1_publisher: 小学館, bib1_pubdate: '2013.02'}
+  '4033214100':
+  - id: c12f5561-00a4-4687-bc1d-26fb80f56ea7
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: f65cd783-9328-4060-b163-48a6ab877407
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: 1999/09}
+  - id: a059013b-429b-4b5e-a853-879961237ca7
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: f1f158a7-1e1d-4dc7-9317-ba10dcb316d5
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 827e5b3f-b2ad-4a7a-8598-133dbb0cd738
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: aa47f77d-14bf-4558-8def-86246015bcbd
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 5a6aebcd-98c7-4c60-95f3-958da601c5cd
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ作 なぎともこ訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999'}
+  - id: 5e5e9d4b-8d9b-4826-ae90-dc5bdcb97741
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ‖作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: 83d2cf93-06f6-452a-a69e-be90e9c9b391
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: 'カズンズ,ルーシー/作', bib1_publisher: 偕成社,
+      bib1_pubdate: '19999'}
+  - id: a7d700eb-fd62-46c3-beef-31591322a582
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: f69e7e47-9797-4cec-b0aa-b7aab876af91
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作 なぎともこ/訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.09'}
+  - id: 0b37f56e-a176-40a3-b83e-c796b1e62909
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: 0ef741cc-a557-4d10-a9af-2bc389cb14b6
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 4b6a1626-b76d-4867-904b-2ab3da657f4b
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作 なぎともこ/訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.09'}
+  - id: 3ebd4e79-3931-4444-b7bb-a0fef43611d7
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: f52d1fb3-137d-48ad-859d-96e22d93cf72
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ作 なぎともこ訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999'}
+  - id: 1d6d8322-0f8c-4beb-a4b5-19693ec328bc
+    cluster_id: '4033214100'
+    data: {bib1_title: 'オヤスミナサイ メイシー チャン おやすみなさいメイシーちゃん   ', bib1_author: '', bib1_publisher: '',
+      bib1_pubdate: '1999.9'}
+  - id: 28760c2b-1dfc-4c89-b303-95f4814fd9db
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.09'}
+  - id: 0c0a9757-1018-43de-8220-ced2563bb12c
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 7e0712cf-6cbf-440f-979b-6b1e716699fe
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '19999'}
+  - id: 43685425-0e18-4932-8f70-f6583a335f75
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: cb03e546-e800-4552-b40f-e7f96ff828f8
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.09'}
+  - id: 981501ba-9dd1-4ea1-a724-9e6c136f71ed
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ作 ; なぎともこ訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999'}
+  - id: b9ccf75d-d61a-41ea-b17c-4148f0d90415
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ著 なぎともこ訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999'}
+  - id: 62813709-1231-4a07-a18c-85606acffcb6
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー カズンズ, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: b6603a2b-b225-4b70-b133-14153f571177
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.09'}
+  - id: 4b2fa08f-acbc-4bd2-836e-0f8ee4a6ee40
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作|なぎ ともこ/訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999'}
+  - id: 8c0fc077-fd14-4047-90c1-7a049cc8e9ea
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: 1999/09}
+  - id: da02acd5-220e-4a40-b708-35f19f46a752
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 490b8195-972d-49a9-94ff-e54d13b7106c
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: d3cc2001-49d4-4a9c-a4ff-d0030b8caf69
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 4a922b32-4be1-462c-9236-ef4064add009
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 6ece1ed8-4177-421f-9615-4375eca21e12
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: d58571a0-eaba-4731-84de-db0c022e8098
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作 なぎ・ともこ/訳, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999'}
+  - id: 26ac63d8-ec79-462f-b55a-b443f72712b2
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: b5ba5d04-3e94-4723-986d-172bcfc79aa4
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: f4bd00d7-a8bf-4cf1-b5d1-15f7db18dd75
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: e220eb8a-a1a6-45ff-aa29-95f83311e46a
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: 'ルーシー・カズンズ/作[カズンズ*ルーシー], ほか',
+      bib1_publisher: 偕成社, bib1_pubdate: '1999.9'}
+  - id: e4be927f-d7ff-4d5c-9289-4a7be6a4c3a7
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  - id: 3bf64723-7699-4b8a-b979-5649260c6884
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ作, bib1_publisher: 偕成社,
+      bib1_pubdate: '1999.9'}
+  - id: 3c5711c2-e227-4110-9bdf-67192b1d9607
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ, bib1_publisher: 偕成社,
+      bib1_pubdate: '199909'}
+  - id: 4bf6ad01-9e07-41a4-a91d-5e199dc0d9f9
+    cluster_id: '4033214100'
+    data: {bib1_title: おやすみなさいメイシーちゃん, bib1_author: ルーシー・カズンズ/作, bib1_publisher: '東京:偕成社',
+      bib1_pubdate: '1999.09'}
+  '4045742042':
+  - id: 08dfe451-6d50-4d05-ad01-c204a6c9573e
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: 宇野 千代, bib1_publisher: 角川書店, bib1_pubdate: 1997/10}
+  - id: d575b1c4-ea62-40dc-8f09-190a31c11237
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代 瀬戸内寂聴, bib1_author: '', bib1_publisher: 角川書店,
+      bib1_pubdate: 1997/10}
+  - id: 1e568a0e-f533-4a01-824b-07447f648c48
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: 宇野 千代, bib1_publisher: 角川書店, bib1_pubdate: 1997/10}
+  - id: 2fbb2b60-da4a-45b8-a683-686ab07cb950
+    cluster_id: '4045742042'
+    data: {bib1_title: '女性作家シリーズ, 4 宇野千代', bib1_author: '河野多恵子∥[ほか]監修[コウノ,タエコ]', bib1_publisher: 角川書店,
+      bib1_pubdate: '1997.10'}
+  - id: f4a444e0-6bd3-43db-a960-239659815846
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: '角川書店[カドカワ/ショテン]',
+      bib1_pubdate: '1997.10'}
+  - id: 456bcf3d-45e4-47a3-ba3a-836c4ca9fe56
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: ca4e6677-9021-49fa-ad38-0acc96fe70a1
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: 宇野千代, bib1_publisher: 角川書店, bib1_pubdate: 1997/10}
+  - id: a365aa76-7633-4fc6-904d-427366a2f5fa
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: '', bib1_publisher: '東京:角川書店', bib1_pubdate: '1997.10'}
+  - id: 78284dbd-1995-4fc4-ae16-189e59e15453
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1997.10'}
+  - id: 202b3811-ec4e-4eb4-acf8-38b3dc2ca1c2
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: a77807ff-e3f7-4bfa-bc58-c0b6d0d9c5ce
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '199710'}
+  - id: b6a12dd1-a1c3-4db5-a8ac-9c9f46fa7fc4
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1997.10'}
+  - id: 6428a98c-2b30-4bd2-a07c-d5e343290541
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: b5c0dbdf-5cbe-4467-9ac1-d9d1ae8b1dc1
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代−おはん− 瀬戸内寂聴−鬼の栖−, bib1_author: '', bib1_publisher: 角川書店,
+      bib1_pubdate: '1997'}
+  - id: 32b2b3e5-f5af-4393-802f-480f4a784721
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: 09d39d61-da9a-4dca-a8d4-042458c6ab68
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1997.10'}
+  - id: 9bdd3a2c-c8af-43aa-8dae-dc6ce3cf6cf0
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: 角川書店,
+      bib1_pubdate: '1997.10'}
+  - id: e925f362-cf80-48de-b8e4-78cc5ec2518c
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: b0eda189-633e-4a43-a1d4-32c479d311f3
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: 角川書店,
+      bib1_pubdate: '1997.10'}
+  - id: 62a83bb8-92fa-4c68-b48b-547b1eb5308d
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: 角川書店,
+      bib1_pubdate: 1997.10(913.68)}
+  - id: d8f2b304-7a38-43eb-9d2e-d3107bc524df
+    cluster_id: '4045742042'
+    data: {bib1_title: <一般>女性作家シリーズ 4 宇野千代, bib1_author: '', bib1_publisher: 角川書店,
+      bib1_pubdate: '1997.10'}
+  - id: dd649a42-5266-441a-aa08-4465dd579b6e
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 おはん, bib1_author: '', bib1_publisher: '', bib1_pubdate: '1997.10'}
+  - id: c717bb61-9880-4010-b162-c908fa7b44d4
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: 宇野 千代/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: 4ca2a188-8333-4281-bbe4-77827d5111ac
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '199710'}
+  - id: 194f3eeb-77c9-4a59-88d9-0bbeb3543d3f
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1997.10'}
+  - id: c659eb0f-b339-4a91-949a-8bc0f8673883
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: 宇野 千代/〔ほか〕著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: c97dcdc5-710e-4238-92c8-9b347ff01663
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代/瀬戸内寂聴, bib1_author: '', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: 19697355-fe77-4280-9ec2-17481a8e387b
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 おはん, bib1_author: 宇野 千代/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1997.10'}
+  - id: c5da76e1-2b91-40c9-8fd5-3c79a641282d
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1997.10'}
+  - id: 642448e3-67a1-4c83-a2d9-fd4042fb5cb1
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1997.10'}
+  - id: 0ff13cdd-f864-42be-bb04-42956289b922
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4 宇野千代−おはん− 瀬戸内寂聴−鬼の栖−, bib1_author: 河野多恵子〔ほか〕監修,
+      bib1_publisher: 角川書店, bib1_pubdate: '1997'}
+  - id: 1e485fab-b4fb-4cde-96cf-5b05e2549585
+    cluster_id: '4045742042'
+    data: {bib1_title: 女性作家シリーズ 4, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1997.10'}
+  '4003314638':
+  - id: c04a99d4-f94c-4e7e-9fe0-87a99daa397f
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題 岩波文庫 青帯 33-146-3, bib1_author: 九鬼 周造/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2012/11}
+  - id: 7ec8cc71-d831-47cd-b9e1-96601fdd97a5
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題 (岩波文庫), bib1_author: 九鬼 周造, bib1_publisher: 岩波書店, bib1_pubdate: 2012/11}
+  - id: ed6e684b-9e29-4e0f-8e18-1969f35fb582
+    cluster_id: '4003314638'
+    data: {bib1_title: '偶然性の問題 [岩波文庫] (33-146-3)', bib1_author: 九鬼周造/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: b6485f2b-7ff0-4091-a75c-a55d1d6aa01b
+    cluster_id: '4003314638'
+    data: {bib1_title: '偶然性の問題 [岩波文庫] (33-146-3)', bib1_author: 九鬼周造/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 64e16c66-62de-4979-86a7-c960f0ae70d8
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題  岩波文庫 33-146-3, bib1_author: 九鬼 周造/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: 4f982890-b50d-4577-82ef-b8c872bad075
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題 岩波文庫 33-146-3, bib1_author: 九鬼 周造/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2012.11'}
+  - id: 170e7b62-27a8-4945-b468-baf4b6368226
+    cluster_id: '4003314638'
+    data: {bib1_title: '偶然性の問題 [岩波文庫]', bib1_author: 九鬼 周造/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '20121100'}
+  - id: 364438b2-d80d-439e-a52c-c4d3959d3bf8
+    cluster_id: '4003314638'
+    data: {bib1_title: '偶然性の問題 [岩波文庫] (33-146-3)', bib1_author: 九鬼周造/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2012.11'}
+  - id: 9030593d-9fd4-49b9-bacb-332e71a8c6cb
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題, bib1_author: 九鬼 周造/著, bib1_publisher: 岩波書店, bib1_pubdate: 2012/11}
+  - id: 3dfb7600-befe-4eb0-97cb-90140c4f4828
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題, bib1_author: 九鬼 周造/著, bib1_publisher: 岩波書店, bib1_pubdate: '2012'}
+  - id: 037b4abb-5095-4352-abc3-78dad17a3a17
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題 (岩波文庫 33-146-3), bib1_author: 九鬼 周造/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2012/11}
+  - id: 3cfb8647-71d5-4dfc-83fd-e2d2377067dc
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題, bib1_author: 九鬼 周造/著, bib1_publisher: 岩波書店, bib1_pubdate: '201211'}
+  - id: ea87777b-f197-423b-bc37-837bd22fc163
+    cluster_id: '4003314638'
+    data: {bib1_title: 偶然性の問題 (岩波文庫), bib1_author: 九鬼 周造, bib1_publisher: 岩波書店, bib1_pubdate: '2012'}
+  '4023333050':
+  - id: 0de57df7-7be1-4bc5-afd5-61f91c7ffacb
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: '東京:朝日新聞出版',
+      bib1_pubdate: '2019.10'}
+  - id: 3e1a70d9-cea4-43fc-a8e7-dc8e8e9efc16
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: '東京:朝日新聞出版',
+      bib1_pubdate: '2019.10'}
+  - id: 87cf2a10-1cee-4c13-93f4-8ec2e2c12037
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: '東京:朝日新聞出版',
+      bib1_pubdate: '2019.10'}
+  - id: 870889f2-8fe3-4efe-bbb5-4499a205ef21
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版‖編著, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: '2019.10'}
+  - id: 3e83ab4f-7f14-4a53-8cc4-fb114101b415
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版‖編著, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: '2019.10'}
+  - id: 56dcc055-e0c3-4021-869a-928c76c99e67
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: '2019.10'}
+  - id: bad48611-1390-425f-837b-c0dc2640afd4
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版, bib1_pubdate: 2019年10月}
+  - id: 52b08a65-be75-4baa-a05a-ccb0667f4f8c
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版, bib1_pubdate: '2019.10'}
+  - id: 159039ff-d1d7-412b-9218-cd7f5502bed7
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本-棒針編みとかぎ針編み-, bib1_author: 朝日新聞出版, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: '2019.10'}
+  - id: bc32fadb-19e2-4cd2-9075-89ec77f955e9
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版, bib1_pubdate: 2019/10}
+  - id: 42ccdf30-ce1f-45cd-b9fb-dcba991e6666
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本  棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: '東京:朝日新聞出版',
+      bib1_pubdate: '2019.10'}
+  - id: 645f8b36-5c6b-4bb6-8172-9969c363b20a
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本, bib1_author: 朝日新聞出版/編著, bib1_publisher: '東京:朝日新聞出版',
+      bib1_pubdate: '2019.10'}
+  - id: bfa91173-5857-4d10-b637-95c98f059715
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本, bib1_author: 朝日新聞出版∥編著, bib1_publisher: 朝日新聞出版, bib1_pubdate: '2019.10'}
+  - id: 46489716-8fb4-45de-bf3c-2920311f4a20
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: 2019/10}
+  - id: 9bd18da8-ba49-428b-9741-1652166b30c0
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: '2019.10'}
+  - id: 1a4560ca-c53c-4432-b655-3957ad427ce0
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版
+        2019.10, bib1_pubdate: '594.3'}
+  - id: a91cd069-d04c-468a-8674-f911d4c6f9fb
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: '東京:朝日新聞出版',
+      bib1_pubdate: '2019.10'}
+  - id: cc08f69f-6f86-4187-b849-bc207c906e2a
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: '2019.10'}
+  - id: 8e240bca-18c6-491b-9e27-65c90c07189a
+    cluster_id: '4023333050'
+    data: {bib1_title: ' ミトンの本 棒針編みとかぎ針編み', bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: '2019.10'}
+  - id: f7d5de0e-d09b-4163-8b01-267462dc315d
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版, bib1_pubdate: '2019'}
+  - id: 96cb49a8-31df-4f4a-83af-30fbfe75b68a
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版/編著, bib1_publisher: '東京:朝日新聞出版',
+      bib1_pubdate: '2019.10'}
+  - id: 3ae2af4a-d716-4a20-83a8-15c17249beaf
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本, bib1_author: 朝日新聞出版/編著, bib1_publisher: 朝日新聞出版, bib1_pubdate: 2019年10月}
+  - id: 19847adf-9d6e-4664-b82d-774b1d38d389
+    cluster_id: '4023333050'
+    data: {bib1_title: ミトンの本 棒針編みとかぎ針編み, bib1_author: 朝日新聞出版, bib1_publisher: 朝日新聞出版,
+      bib1_pubdate: 2019/10}
+  '4091038522':
+  - id: f0cb0516-38fa-4f3e-9931-61b040038163
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ-決定版-(Lady Bird小学館実用書シリーズ), bib1_author: 安東英子著, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.12'}
+  - id: 22e47b3d-aa72-42c0-8fcd-372e3074692d
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ 決定版 (Lady Bird小学館実用書シリーズ), bib1_author: 安東 英子(住居),
+      bib1_publisher: 小学館, bib1_pubdate: '201412'}
+  - id: 775c6625-27a5-4c82-b8b2-d7bf6ed0b3a4
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ (Lady Bird小学館実用書シリーズ), bib1_author: 安東英子/著, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.12'}
+  - id: baf37328-007b-4e59-9936-8f8c01cf2349
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ 決定版, bib1_author: 安東 英子/著, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.12'}
+  - id: 4e5637e5-e0e8-42f5-9bf2-97d040bea311
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ 決定版 Lady Bird小学館実用書シリーズ, bib1_author: 安東/英子‖著, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.12'}
+  - id: 53494117-964e-4ab2-a50f-fe51a4a28e30
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ 決定版    Lady, bib1_author: 安東英子/著, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.12'}
+  - id: f4eab1b6-6e52-4f8a-8a98-ab3e1d83f4c5
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ  決定版, bib1_author: 安東  英子∥著, bib1_publisher: 小学館, bib1_pubdate: '2014'}
+  - id: cb288fb7-48fe-4965-a65f-4f79614379ae
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ, bib1_author: 安東 英子/著, bib1_publisher: 小学館, bib1_pubdate: '2014.12'}
+  - id: da34164b-8983-4017-8277-ebbdbbf9882a
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ, bib1_author: 安東 英子/著, bib1_publisher: '東京:小学館', bib1_pubdate: '2014.12'}
+  - id: 143e157b-4797-490a-a39a-fdfec768ed87
+    cluster_id: '4091038522'
+    data: {bib1_title: '親の家の片づけ    決定版   [Lady Bird小学館実用書シリーズ]', bib1_author: 安東英子/著,
+      bib1_publisher: 小学館, bib1_pubdate: '2014.12'}
+  - id: 16078714-86a2-45f3-b483-798e892d53a4
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ-決定版-  Lady Bird小学館実用書シリーズ, bib1_author: 安東 英子, bib1_publisher: 小学館,
+      bib1_pubdate: '2014.12'}
+  - id: c62e9d17-abff-495e-8c35-08cb844b2879
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ−決定版, bib1_author: 安東 英子, bib1_publisher: 小学館, bib1_pubdate: '2014.12'}
+  - id: fca3e39a-987d-40ec-a769-80022342525e
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ, bib1_author: 安東 英子/著, bib1_publisher: 小学館, bib1_pubdate: '2014.12'}
+  - id: 8919f1cc-985c-40ca-8f1c-4e61e46825b3
+    cluster_id: '4091038522'
+    data: {bib1_title: 親の家の片づけ 決定版, bib1_author: 安東 英子/著, bib1_publisher: '東京:小学館',
+      bib1_pubdate: '2014.12'}
+  '4048741403':
+  - id: 7c930c16-9d01-4f08-9e8b-b3cc59804e91
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ', bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 15d57aae-a001-41fb-8aa5-a1f417f7adfb
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: 3131e5b9-a3f3-49f9-9a73-ab233e7e5ff1
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ', bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: d64ed993-2459-486c-9e05-c7fd645a85fa
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0 〔The zombies series〕, bib1_author: 金城 一紀/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011'}
+  - id: 21ce14bb-9efe-47b6-bad4-d1ea57223f74
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 44608712-ca10-4549-8f9d-2f43d34e541f
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ', bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 4e96a3ff-2cfd-4614-8048-e5e36da229d8
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: a8e93d39-242a-4aa1-a644-e6fefdf7c3a6
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 [The zombies series] [4]', bib1_author: 金城 一紀/著,
+      bib1_publisher: '東京:角川書店', bib1_pubdate: '2011.02'}
+  - id: b4f83204-388a-4ee3-b6dd-e0f0a30fd9e1
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀, bib1_publisher: 角川書店, bib1_pubdate: '2011'}
+  - id: 8d49670e-3826-451e-844c-3a65c3d2b00d
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城一紀∥著, bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 9928c970-b0da-4fa5-a33f-c0032e27997b
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: e1cfedbc-978d-48b9-88b1-2c8cdb17f9b3
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ( [The zombies series] [4] )', bib1_author: '',
+      bib1_publisher: '', bib1_pubdate: ''}
+  - id: 7ac973b7-4f56-42af-8f27-481d986f1e92
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 4f60c5a6-d62d-4ba8-bf34-65ed2fc32b1e
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0 (〔The zombies series〕), bib1_author: 金城 一紀, bib1_publisher: 角川書店,
+      bib1_pubdate: 2011/02}
+  - id: fc3eabe9-17ee-4a39-be7e-1d9d4e91b982
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: 34ec1c00-8313-4eac-99c3-f69c7aebf348
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ([The zombies series])', bib1_author: 金城一紀/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 56e8e5a3-d953-4d03-86bd-75abc7e6f5ea
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: ''}
+  - id: 06989487-42ac-479b-aa94-6e74e2241667
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ', bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: fed78015-fc22-4922-a08b-0456f32e31f3
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城一紀/著, bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 587323f5-5370-4851-a65f-8d5c38f41dc8
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ', bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 33681c82-32f6-4072-b885-171bb6496e33
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 [The zombies series]', bib1_author: 金城一紀/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: bfbf2ade-3a98-4d95-8f64-14053c7892fc
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0 Revolution No.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 6ffc0ee7-fe96-45d1-aca3-a732fa5bbec8
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 [[The zombies series]] ([4])', bib1_author: 金城一紀/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 22d45a2d-a4a2-44f3-a4c6-6672d9248a47
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ', bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 2f359553-992f-42b5-8b9b-2b80c8aff91d
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0([The zombies series] [4])', bib1_author: 金城一紀/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.02'}
+  - id: c7cbd03a-11dc-4e23-ae26-1a3558a1ca1a
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: a6acc717-2b5d-4b70-adaa-272f0bda9d4f
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城一紀/著, bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 99a5d376-48c0-426d-ae21-1ec06243b324
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: 角川書店,
+      bib1_pubdate: 2011/02}
+  - id: fb441f72-416d-4394-ad84-9f1af12aca74
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 8ff51ba2-21d3-4526-8308-955a8c58164c
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0([The zombies series] [4])', bib1_author: 金城一紀/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.02'}
+  - id: 6f9df106-790b-4f77-a926-3d1e0eaa0d63
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 7c39d811-78f9-4911-8773-8de43794d5b6
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ([The zombies series])', bib1_author: 金城一紀/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: d4eaeebc-e474-478d-aa45-018293cf5c5b
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: 791063fa-e2e5-453d-b26d-d80c1d84b767
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: fd9d895b-1316-4d9d-a44d-803db05159b6
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ([The zombies series])', bib1_author: 金城 一紀,
+      bib1_publisher: 角川書店, bib1_pubdate: 2011/02}
+  - id: b42f3047-52ce-4077-b829-349283b02b9d
+    cluster_id: '4048741403'
+    data: {bib1_title: ' レヴォリューションNo.0 [The zombies series] [4]', bib1_author: 金城
+        一紀/著, bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 969b41d4-7def-44dc-b8f7-3de1e494e051
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀, bib1_publisher: 角川書店, bib1_pubdate: '2011'}
+  - id: fe668744-59a6-48f0-9c0f-e06dedb6e127
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0  [The zombies series] [4]', bib1_author: 金城
+        一紀/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '2011.02'}
+  - id: 08d6a986-7d50-4c4d-9fc8-34e92e0fbfdc
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: '金城/一紀‖著[カネシロ,カズキ]', bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: b9b14f1a-d773-4836-bff4-004f4fe1f68b
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: ''}
+  - id: 5d3e55e5-3cdf-45dd-80ea-68c0e95b3e67
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0  [The zombies series] [4]', bib1_author: 金城
+        一紀/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '2011.02'}
+  - id: 09c2f212-3641-4c05-babd-779ce5988482
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 [[The zombies series]] ([4])', bib1_author: 金城/一紀∥著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 54d04020-20fd-47a4-9873-b1e6e1fb0020
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: f0f45b34-4040-48c1-a43c-097bbd6745c7
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  - id: da2146ea-cb76-4496-a301-57ecf133b137
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: '', bib1_pubdate: '2011.02'}
+  - id: b026c56e-10ed-4760-ade7-5bb1793ab778
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: 角川書店,
+      bib1_pubdate: 2011/02}
+  - id: f6a72e41-a8a2-4b3f-89e4-823b778ce262
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: e87e4d8a-2484-4fa2-bccd-a08b93de5a0d
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2011.2'}
+  - id: b16ab251-996b-49a6-baea-82639f42f17b
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 [[The zombies series]] ([4])', bib1_author: 金城一紀/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '2011.2'}
+  - id: 5e33dba3-5b6b-4088-a477-c1b51b268e7d
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀, bib1_publisher: 角川書店, bib1_pubdate: '2011'}
+  - id: da115fb3-f90a-40d5-973b-ce0b030e8e47
+    cluster_id: '4048741403'
+    data: {bib1_title: レヴォリューションNo.0, bib1_author: 金城 一紀∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: ''}
+  - id: 00b68dba-5477-4559-8c15-158135e22e23
+    cluster_id: '4048741403'
+    data: {bib1_title: 'レヴォリューションNo.0 ', bib1_author: 金城 一紀/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2011.02'}
+  '4040663306':
+  - id: 5a52f6cc-8772-45f9-8cd0-b12cbad40147
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!, bib1_author: MAMA-PLUG/編・著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2014.02'}
+  - id: 827e775f-84f3-4ebb-8913-41e6eb28a70f
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!−災害時に役立つサバイバル術を楽しく学ぶ−, bib1_author: MAMA−PLUG編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014'}
+  - id: 8df33723-1d17-41c7-bb4b-062c55d197ec
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! (災害時に役立つサバイバル術を楽しく学ぶ), bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014.2'}
+  - id: 0a101546-438f-4f7f-a6bf-ff273427a797
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: b9d50ac4-713c-49df-8fd9-3981bdccaf87
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: 291c349b-822a-4fd2-a1df-6c76b30b4606
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: 6a94665d-a8b1-43da-9c6f-09db0a43c0a6
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!    災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014.2'}
+  - id: 83fd1434-a727-4d20-a58f-00e377758818
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: 1e8b9fd0-e9fe-4011-b6d1-4063c6032149
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!, bib1_author: MAMA-PLUG/編・著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2014/02}
+  - id: 59bc98e3-8b01-483b-a275-6eac75dcb5d5
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: 6869802c-f227-4373-84cc-3eaf3b559aab
+    cluster_id: '4040663306'
+    data: {bib1_title: '[ 和図書 ] 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ', bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014.2'}
+  - id: 27c1e167-b0de-4b69-9c1f-c88a0aabd31e
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: 4f106b97-c9c6-4e88-97bd-ea6455809176
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: 3907fe72-98a7-4c7f-9da1-12662439c6e8
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!−災害時に役立つサバイバル術を楽しく学ぶ−, bib1_author: MAMA−PLUG編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014'}
+  - id: cb414aee-7fa8-4c42-92ab-8a7e78591b57
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: fc7dd80e-789c-460c-b324-de9aca483cdf
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!, bib1_author: 'MAMA-PLUG∥編・著[ママ プラグ]', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.2'}
+  - id: 6f2686fd-2a9b-46d4-bd1b-6643ea9008d7
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: 7394378c-4edf-4522-a1a5-d9b62f3040e8
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '201402'}
+  - id: fa0ff4b7-3fd6-42b8-af1e-560150da6603
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!, bib1_author: MAMA-PLUG∥編 著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: ''}
+  - id: 761f5468-e5c8-466b-8089-8c55af213e0b
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: '東京:KADOKAWA', bib1_pubdate: '2014.02'}
+  - id: 84c8f5d3-4cdb-4b81-897d-d63d6d55c4c6
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG‖編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014.2'}
+  - id: b2bcfcd8-a274-45af-b398-390a81a2a7bb
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: 2014/02}
+  - id: b4a522b1-ba7d-4efa-b3b6-18ee95958487
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014.2'}
+  - id: 48b948df-4ec0-46b2-beb7-498799e9d23d
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: 2014/02}
+  - id: fbbfcb7d-8cc7-4cc7-aa65-99e6826da4f6
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!, bib1_author: MAMA-PLUG, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2014年}
+  - id: 7096fcf6-3525-4fe1-b4b6-fa04f1fff62e
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!, bib1_author: MAMA-PLUG/編・著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.2'}
+  - id: 88e246c9-3082-4a86-9f88-8154cfb192fa
+    cluster_id: '4040663306'
+    data: {bib1_title: '防災ピクニックが子どもを守る! ', bib1_author: MAMA-PLUG/編・著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.2'}
+  - id: 9d746d1f-0b66-4851-af9c-0e241f54f37b
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る! 災害時に役立つサバイバル術を楽しく学ぶ, bib1_author: MAMA-PLUG∥編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014.2'}
+  - id: 2fd381a1-df73-4833-a19f-0684cdbb748c
+    cluster_id: '4040663306'
+    data: {bib1_title: 防災ピクニックが子どもを守る!-災害時に役立つサバイバル術を楽しく学ぶ-, bib1_author: MAMA-PLUG/編・著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2014.02'}
+  '4001141396':
+  - id: f3e81feb-a2be-4dc5-873a-93d416d08837
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 岩波少年文庫 139, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: 880760f0-06f0-42e2-9cd3-7ae87e7624b3
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: 辻  直四郎∥訳, bib1_publisher: 岩波書店, bib1_pubdate: '2006.8'}
+  - id: 2005b0d5-5624-42d4-8160-556c345cf631
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: d1b57261-c5d5-4411-a133-558e20ceb2df
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: c9decf81-39d8-4b7e-9a22-30693053087f
+    cluster_id: '4001141396'
+    data: {bib1_title: 'ジャータカ物語 インドの古いおはなし [岩波少年文庫] (139)', bib1_author: 辻直四郎/訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006.8'}
+  - id: eac1172a-3af9-4302-b7b3-3153bda1c1b4
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店', bib1_pubdate: '2006.08'}
+  - id: 463bfecd-e7b1-4ad2-a3e6-c531dccfa2b9
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻/直四郎∥訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006.8'}
+  - id: 16793e4a-2271-4180-b8ee-f6913c18616f
+    cluster_id: '4001141396'
+    data: {bib1_title: 'ジャータカ物語 インドの古いおはなし [岩波少年文庫] (139)', bib1_author: 辻直四郎/訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006.8'}
+  - id: 83bd6260-b42f-47a1-ba40-2c91273b2f7b
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: 辻 直四郎/訳, bib1_publisher: 岩波書店, bib1_pubdate: '2006.8'}
+  - id: b3d11eca-c6e7-4e28-9f3c-c51b729e2f78
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: ddddec86-a2a8-4666-bfaf-2b00753642d0
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: 375fb1b5-27a1-4322-8bbc-f41fc5b54f74
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語  インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: 72e31d5b-bf57-417d-b94a-6e2a97088c77
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006.8'}
+  - id: d47197b4-472c-437d-973a-c34c09ca7300
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: 辻 直四郎∥訳, bib1_publisher: 岩波書店, bib1_pubdate: ''}
+  - id: ddcde007-e0ff-48b7-89ee-ca7409732b38
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: 辻直四郎/訳, bib1_publisher: 岩波書店, bib1_pubdate: '2006.8'}
+  - id: 9191e9ee-e8fa-4760-8592-35439d25763a
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 新版, bib1_author: 辻 直四郎/訳, bib1_publisher: 岩波書店, bib1_pubdate: 2006/08}
+  - id: f7140fbc-587e-4fbf-b540-5658e9df902b
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: 7ec318e8-7c7a-4baa-ac06-4d9f4126a9fa
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 (岩波少年文庫 139) インドの古いおはなし 新版, bib1_author: 辻 直四郎/訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2006/08}
+  - id: b5df345c-99f7-4d4c-bfc4-757499769aae
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: b1ada178-ed25-4da4-bdf2-9a3ded1c484f
+    cluster_id: '4001141396'
+    data: {bib1_title: 'ジャータカ物語 インドの古いおはなし [ 岩波少年文庫 ] (139)', bib1_author: 辻 直四郎∥訳,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2006.8'}
+  - id: b29ae143-4f32-4cb3-a8d4-df73e9a9f7e9
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: 21a652dc-97cb-49dc-9551-fb88c65cbde1
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 (岩波少年文庫 139), bib1_author: 辻 直四郎/訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2006/08}
+  - id: 0ec8b985-6cd0-4e3a-966a-1efd36ed8695
+    cluster_id: '4001141396'
+    data: {bib1_title: 'ジャータカ物語 ', bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: dc887faa-c378-44fb-b384-f0ff695e7352
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語-インドの古いおはなし- 新版(岩波少年文庫 139), bib1_author: 辻直四郎/訳 渡辺照宏/訳,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2006.08'}
+  - id: 00f8a87c-11fb-4612-b69a-a530266c3260
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: 32f25035-28a1-45f2-b400-f56adf4199a6
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: 48b3d230-708e-4a81-821b-2a7516381f5e
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし 岩波少年文庫, bib1_author: 辻 直四郎 訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006'}
+  - id: 8533da85-568a-40a8-8f24-7851979435b8
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし 岩波少年文庫 139, bib1_author: 辻/直四郎∥訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006.8'}
+  - id: 1bdcdef1-cb03-4f67-a132-faa272ab94a6
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし, bib1_author: 辻 直四郎/訳, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2006.08'}
+  - id: 4b1f041a-4540-4cb8-b691-cd42f4040c7f
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし 新版(岩波少年文庫), bib1_author: 辻 直四郎/訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2006/08}
+  - id: d951c39b-4ff1-4835-9e4a-bbc3f5a914e9
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語 インドの古いおはなし 岩波少年文庫, bib1_author: 辻 直四郎 訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006'}
+  - id: 6c0539c0-a42c-4da2-a046-7b10023118b3
+    cluster_id: '4001141396'
+    data: {bib1_title: ジャータカ物語, bib1_author: 辻 直四郎/訳, bib1_publisher: 岩波書店, bib1_pubdate: '2006.8'}
+  - id: d57216a6-95ae-4160-920e-21ceb8e55538
+    cluster_id: '4001141396'
+    data: {bib1_title: 'ジャータカ物語 インドの古 [岩波少年文庫] (139)', bib1_author: 辻直四郎∥訳, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2006'}
+  '4054007740':
+  - id: 03097fa5-e67a-4134-930c-27499de4023a
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 08917321-1739-4f89-b5b3-7c22ad99c5d8
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: fdbfbbbe-0581-4880-b8f5-5118a9f1d810
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 413fe94d-9f47-4d87-ad0b-90037c1a841b
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川洋子著, bib1_publisher: 学習研究社, bib1_pubdate: '1996'}
+  - id: 42ea6c9f-c077-4a52-ae31-f2fe288d39b1
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子, bib1_publisher: 学研, bib1_pubdate: '1996'}
+  - id: c8a3adcb-3727-4ecc-ba06-0f782fd613ea
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 9bc022c7-a803-4375-9373-f3d025488681
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子, bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: 520827d7-0cc0-4aab-bd76-fddee01f176f
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 8bcc7269-3e1b-45ba-8ff8-886d29bf563a
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 60c7323e-2948-41bf-8308-b83294cf7d4a
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 05b633c4-2940-4ded-b7ba-ae15852b7664
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: a273de2d-d87d-49a3-9e50-3bc91a9e2e63
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: ab5ac78b-f0c8-4296-a442-676221930b25
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子, bib1_publisher: 学研, bib1_pubdate: '1996'}
+  - id: af5f71a3-8bf9-48ca-9ca4-5e83a06dea3e
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: 79b636ad-1852-4371-a4ee-17294bccc3d6
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川洋子/著, bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: a817b287-7e39-4e4a-9bb6-4ed6cf12e955
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子(1962~)/著, bib1_publisher: 学研,
+      bib1_pubdate: 1996/11}
+  - id: 7286f5f1-45ee-4d62-8519-18cea41898dd
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子, bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: 2d3b33a0-c276-457c-b5ea-7ab0a1515b72
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: c15b7193-5e8b-4de8-b05f-246fd4310366
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 9e4a29c4-57c1-4d3b-87dd-685e312572f6
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: f0697e64-4c4e-4a22-a382-d6873e2540c9
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子, bib1_publisher: 学研, bib1_pubdate: 1996/11}
+  - id: 013ebcf3-d360-4d16-8472-034dbc3e1c9a
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス/小川 洋子, bib1_author: 小川 洋子, bib1_publisher: 学習研究社,
+      bib1_pubdate: '1996'}
+  - id: 41844a1c-b5e2-43e0-8880-e3b2b370fce9
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: f828a32b-2838-445f-905b-27ee86bb2147
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: 学研, bib1_pubdate: 1996/11}
+  - id: c274d528-931e-4a43-89ad-ca52ceec0c2a
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: 学研, bib1_pubdate: 1996/11}
+  - id: a30d7175-5a94-4736-8ff3-9f5d5813e213
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川  洋子∥著, bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: cb3461b2-b159-420d-bfe8-c24a2f89f778
+    cluster_id: '4054007740'
+    data: {bib1_title: 'ホテル・アイリス ', bib1_author: '', bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: 523d13d3-99d0-4141-bc03-95a1aefc3b3b
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: 学研, bib1_pubdate: '1996'}
+  - id: b16fee82-2052-4b7d-8de8-92c096a297d1
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子(1962~), bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: 41dcc2f9-b785-4e43-91be-19c35a284a29
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス 幻冬舎文庫 お 2-1, bib1_author: 小川 洋子/著, bib1_publisher: 幻冬舎,
+      bib1_pubdate: '1996'}
+  - id: ce7b6064-b4d5-442b-b0f8-c855a412a184
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子(1962~, bib1_publisher: 学研, bib1_pubdate: '199611'}
+  - id: 513dc766-4f9d-49bc-96fb-b7085b2b3654
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: f1041b03-46d1-4fd2-9c05-643270eb4fb0
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: 学研, bib1_pubdate: '1996'}
+  - id: 869d1e5a-d61f-4dcc-8b4b-f83de26135ee
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス 小川, bib1_author: 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '199611'}
+  - id: 43223bc4-9f11-4733-a9ee-0266e68f4cfd
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子(1962~, bib1_publisher: 学研, bib1_pubdate: 1996/11}
+  - id: 4e679e64-1dda-477d-96c9-f3e5d1212985
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: c7eefced-f0f2-4c00-a2b1-5572f76b6e97
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川洋子/著, bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: 5206b221-e019-4f11-b7db-874d018d17ad
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: 431afbd6-d6b6-4e7a-8e7f-173653aed565
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 1189d648-35fb-423e-a332-5c10c577e430
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: '', bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  - id: 9634b42b-d1f9-4930-a4d0-2e5f311c98ed
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: 小川 洋子/著, bib1_publisher: '東京:学研', bib1_pubdate: '1996.11'}
+  - id: 915c9a76-466c-4462-8df3-19f3cb0b36c2
+    cluster_id: '4054007740'
+    data: {bib1_title: ホテル・アイリス, bib1_author: '', bib1_publisher: 学研, bib1_pubdate: '1996.11'}
+  410225014X:
+  - id: 1f4e05ff-b68c-4708-b9aa-499ff509521e
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻(新潮文庫), bib1_author: 'ジュディス・クランツ/[著] 小沢瑞穂/訳', bib1_publisher: 新潮社,
+      bib1_pubdate: '2002.01'}
+  - id: aba3b735-4414-4117-9329-f71858e803ef
+    cluster_id: 410225014X
+    data: {bib1_title: '恋する宝石 上巻  [新潮文庫]', bib1_author: '', bib1_publisher: 新潮社, bib1_pubdate: '2002.1'}
+  - id: e13f83a1-a7b3-4a96-8c7f-d8dced131ca4
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻, bib1_author: ジュディス・クランツ/〔著〕, bib1_publisher: 新潮社,
+      bib1_pubdate: '200201'}
+  - id: 2e06104f-8ea9-4ceb-b169-e25c894833c4
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻, bib1_author: 'ジュディス・クランツ/[著]', bib1_publisher: 新潮社,
+      bib1_pubdate: '2002.1'}
+  - id: c2b188c6-2dd7-4238-811a-2e71357b4c52
+    cluster_id: 410225014X
+    data: {bib1_title: '恋する宝石 上巻 ', bib1_author: ジュディス・クランツ/著, bib1_publisher: 新潮社,
+      bib1_pubdate: '2002'}
+  - id: d61d1521-0ce2-49b0-ae49-8183589707eb
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻 新潮文庫, bib1_author: ジュディス・クランツ/〔著〕, bib1_publisher: '東京:新潮社',
+      bib1_pubdate: '2002.01'}
+  - id: 4750e101-a24b-4aa4-b3e9-24a3d09ad260
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻(新潮文庫 ク-10-14), bib1_author: ジュディス・クランツ〔著〕 小沢瑞穂訳, bib1_publisher: 新潮社,
+      bib1_pubdate: '2002.01'}
+  - id: 023e8509-0812-41f2-82c0-a7ab29480394
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻 新潮文庫, bib1_author: 'ジュディス・クランツ/[著]', bib1_publisher: '東京:新潮社',
+      bib1_pubdate: '2002.01'}
+  - id: 80e158b1-68bc-4588-a0c7-4b44f509e22b
+    cluster_id: 410225014X
+    data: {bib1_title: '恋する宝石 上巻  [新潮文庫]', bib1_author: 'ジュディス・クランツ/[著]', bib1_publisher: 新潮社,
+      bib1_pubdate: '2002.1'}
+  - id: 87a9f883-dd1e-4259-8e28-4c32f9241d2a
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻, bib1_author: 'ジュディス・クランツ/[著]', bib1_publisher: 新潮社,
+      bib1_pubdate: '2002.1'}
+  - id: aae78c8d-b39f-4d63-91d6-4bb8e392db83
+    cluster_id: 410225014X
+    data: {bib1_title: '恋する宝石, 上巻', bib1_author: 'ジュディス・クランツ∥[著][クランツ,ジュディス], ほか',
+      bib1_publisher: 新潮社, bib1_pubdate: '2002.1'}
+  - id: a5f60661-4521-41be-9b02-4dcafa30eb7c
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻, bib1_author: ジュディス・クランツ/〔著〕, bib1_publisher: 新潮社,
+      bib1_pubdate: '2002.1'}
+  - id: 1c8401c9-011b-4a13-8fb5-ea6d3956f624
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻, bib1_author: ジュディス・クランツ 〔著〕, bib1_publisher: 新潮社,
+      bib1_pubdate: '2002'}
+  - id: 89b6463b-4d03-4567-a4e6-170852b85ee6
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻  新潮文庫, bib1_author: ジュディス・クランツ/〔著〕, bib1_publisher: '東京:新潮社',
+      bib1_pubdate: '2002.01'}
+  - id: fa6a1f09-64f2-40a4-92df-d5ef031e6c99
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻 新潮文庫, bib1_author: 'ジュディス・クランツ/[著]', bib1_publisher: 新潮社,
+      bib1_pubdate: 2002/01}
+  - id: 992b9f9f-b294-4474-b7f7-f45263257682
+    cluster_id: 410225014X
+    data: {bib1_title: '恋する宝石 上巻  [新潮文庫]', bib1_author: ジュディス・クランツ/著, bib1_publisher: 新潮社,
+      bib1_pubdate: '2002.1'}
+  - id: d0d5bc95-2212-4a61-9ac2-479c0592b2df
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻 (新潮文庫), bib1_author: 'ジュディス・クランツ/[著]', bib1_publisher: 新潮社,
+      bib1_pubdate: 2002/01}
+  - id: 4222428c-bfdb-4685-8f3d-2afb57c3301c
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻 新潮文庫, bib1_author: ジュディス・クランツ/〔著〕, bib1_publisher: '東京:新潮社',
+      bib1_pubdate: '2002.01'}
+  - id: 315a398b-692a-4ab7-8281-993677687e5d
+    cluster_id: 410225014X
+    data: {bib1_title: 恋する宝石 上巻 新潮文庫, bib1_author: 'ジュディス・クランツ/[著]', bib1_publisher: '東京:新潮社',
+      bib1_pubdate: '2002.01'}
+  '4002708691':
+  - id: e2862fdc-981a-42e9-983a-7b94c6c9b2c1
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 岩波ブックレット No.869, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2013.5'}
+  - id: 28a4df38-221d-488a-b21c-4fa4edb36633
+    cluster_id: '4002708691'
+    data: {bib1_title: '非正規公務員という問題 問われる公共サービスのあり方 [岩波ブックレット] (No.869)', bib1_author: 上林陽治/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: f72cc024-e849-42ac-a7f8-5c343666edf5
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  - id: 256ab84e-35d1-44e9-b8b7-519f09e89aad
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 岩波ブックレット No.869, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2013.5'}
+  - id: 7ce1155f-64bb-4f72-ad12-89eb8216f93e
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2013'}
+  - id: 3dd2a550-2e3a-460c-98e8-a81e41e76c92
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: e5a193de-e0ec-4038-ae15-9ab34c066ce9
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  - id: e58328e8-0ce8-4ba7-9553-a8801ab5f03f
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: '', bib1_publisher: '',
+      bib1_pubdate: ''}
+  - id: 29dada0a-781f-4ef4-8636-b870cbbdd71a
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林 陽治, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: 6a36ba53-4525-41c6-946e-fcaf59d0451f
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題  問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  - id: 73ce467e-9c0d-474c-86e7-9d0006bb9dd5
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: 6abffc61-9129-48a8-bdb5-9db5fe821e4e
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  - id: fb1f69ee-9b2e-417a-8067-c3db56d7b48e
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題-問われる公共サービスのあり方-(岩波ブックレット No.869), bib1_author: 上林陽治/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2013.05'}
+  - id: 85b8f960-0fac-4fef-b884-3edc59be824b
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林 陽治∥著, bib1_publisher: 岩波書店, bib1_pubdate: ''}
+  - id: ce4c2007-abd0-4f41-9110-34bf1184bb3d
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: 89ce3c99-f229-4692-a0bb-c0a6dfb59b00
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題-問われる公共サービスのあり方-(岩波ブックレット no.869), bib1_author: 上林陽治著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2013.05'}
+  - id: 4e7a0c29-f497-4c0e-ac77-14a1b0c94a06
+    cluster_id: '4002708691'
+    data: {bib1_title: 東京都における選挙管理の概観 昭和63年11月, bib1_author: 東京都選挙管理委員会, bib1_publisher: 東京都選挙管理委員会,
+      bib1_pubdate: '1988.11'}
+  - id: 5ccbd9f5-5720-4100-82ba-915f12fdd32f
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  - id: e747ef83-2e39-42fa-a37d-cb7095fc485a
+    cluster_id: '4002708691'
+    data: {bib1_title: '非正規公務員という問題 問われる公共サービスのあり方 [岩波ブックレット] (No.869)', bib1_author: 上林陽治/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: 865db653-3cf6-417e-98f0-0835aef053bd
+    cluster_id: '4002708691'
+    data: {bib1_title: '非正規公務員という問題 問われる公共 サービスの あり方 [岩波ブックレット] (No.869)', bib1_author: 上林
+        陽治∥著, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: b19ee2f9-12c6-4cfd-8396-c1f4251724fd
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2013.5'}
+  - id: ee9df6b0-d433-441f-bcf7-3f700724316d
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  - id: 1641ba5c-51e3-4d3d-addb-53aa01644fd2
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 岩波ブックレット No.869, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2013.5'}
+  - id: c4e87974-ba72-4cba-9489-3754dcad8e05
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林 陽治/著, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: 6d8a30a4-32b1-4d66-8282-abc62b4b7084
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方 (岩波ブックレット), bib1_author: 上林 陽治,
+      bib1_publisher: 岩波書店, bib1_pubdate: 2013年5月}
+  - id: b397e28f-5995-45f6-a34a-1d7f7c10a083
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  - id: 902f02fc-c379-4dd9-b394-3876e1971f96
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方 岩波ブックレット No.869, bib1_author: 上林
+        陽治/著, bib1_publisher: 岩波書店, bib1_pubdate: 2013/05}
+  - id: 0524f592-b491-4463-82a3-6c0a8f1e3e80
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林陽治/著, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: 60d09f81-f703-4d9e-a024-abe50d999d49
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題, bib1_author: 上林陽治/著, bib1_publisher: 岩波書店, bib1_pubdate: '2013.5'}
+  - id: 11587753-01d0-4c97-b58b-69f05861b11c
+    cluster_id: '4002708691'
+    data: {bib1_title: 非正規公務員という問題 問われる公共サービスのあり方, bib1_author: 上林 陽治/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2013.05'}
+  400331333X:
+  - id: 83639600-9ae4-4ac3-9499-a65f8619e1d6
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上(岩波文庫), bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店 2015.5,
+      bib1_pubdate: '222.01'}
+  - id: 08c2d3a2-1276-4503-a820-ac7e946de4f1
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上  岩波文庫 33-133-3, bib1_author: 宮崎 市定/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.05'}
+  - id: c017d530-1675-4f57-b132-c2fef488a828
+    cluster_id: 400331333X
+    data: {bib1_title: '中国史 上  [岩波文庫] (33-13)', bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.5'}
+  - id: 2a278308-52e9-46c2-9771-93c7de6e7bd6
+    cluster_id: 400331333X
+    data: {bib1_title: '中国史 上  [岩波文庫] (33-133-3)', bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.5'}
+  - id: 1876a0b6-4ef7-4e0b-b626-b4a7309be23d
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上(岩波文庫 33-133-3), bib1_author: 宮崎 市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.5'}
+  - id: b3eed2cd-a2cd-44a9-9f7d-01420f1a02d4
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上, bib1_author: 宮崎/市定‖著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.5'}
+  - id: 25a92144-74d2-4e19-94ea-ac53d4b2478d
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 岩波文庫 33-133-3, bib1_author: 宮崎 市定/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.05'}
+  - id: 049ba4e8-1156-496c-9f7a-ae339fe7ca8c
+    cluster_id: 400331333X
+    data: {bib1_title: '中国史 上  [岩波文庫] (33-133-3)', bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.5'}
+  - id: 8e4696ba-1f37-4171-a153-baed064446f5
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 岩波文庫 33-133-3, bib1_author: 宮崎市定/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.05'}
+  - id: 30920743-b4af-4166-af2c-21ca7d6c4154
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 岩波文庫 33-133-3, bib1_author: 宮崎 市定/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.05'}
+  - id: 11a87211-1f39-4044-81f2-c84d47908636
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上  岩波文庫 33-133-3, bib1_author: 宮崎 市定/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.05'}
+  - id: 678ceafa-ecf7-40e4-9426-c4674be72ccf
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上(岩波文庫 33-133-3), bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.05'}
+  - id: 027a5c5b-8c4a-4b22-9018-f65166ff7a49
+    cluster_id: 400331333X
+    data: {bib1_title: '中国史 上  [ 岩波文庫 ] (33-13)', bib1_author: 宮崎 市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.5'}
+  - id: 0d417dd8-2675-4717-bdbc-e848d150fb43
+    cluster_id: 400331333X
+    data: {bib1_title: '中国史 上   [岩波文庫] (33-133-3)', bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.5'}
+  - id: 8da71401-b953-466b-bc2b-f9033817a57b
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上, bib1_author: '宮崎/市定‖著[ミヤザキ,イチサダ]', bib1_publisher: '岩波書店[イワナミ/ショテン]',
+      bib1_pubdate: '2015.5'}
+  - id: b4150d43-53e5-4d88-a2d2-cd9978de26e6
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上, bib1_author: 宮崎 市定/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.5'}
+  - id: 1d97c123-9329-4fbf-a99d-6161339483f7
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 (岩波文庫), bib1_author: 宮崎 市定, bib1_publisher: 岩波書店, bib1_pubdate: '201505'}
+  - id: 1ce45121-5a4e-4a8d-a11a-6292c33ee02f
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 岩波文庫 33-133-3, bib1_author: 宮崎 市定/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.05'}
+  - id: 054a2f08-dfb7-49cc-94fc-6fbf85f854f5
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 岩波文庫, bib1_author: 宮崎 市定/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015'}
+  - id: 4f1a1e61-22fe-4000-8ea8-544795a37e92
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 岩波文庫 33-133-3, bib1_author: 宮崎 市定/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.05'}
+  - id: 0b08a175-612f-4e40-b20f-133ce80fc637
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上(岩波文庫 33-133-3), bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.05'}
+  - id: 36ff0180-598f-492e-9181-b531ca05da12
+    cluster_id: 400331333X
+    data: {bib1_title: '中国史 上  [岩波文庫] (33-133-3)', bib1_author: 宮崎市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.5'}
+  - id: 1de42faf-9b5f-4112-9b62-f5c04a2bf942
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 (岩波文庫), bib1_author: 宮崎 市定, bib1_publisher: 岩波書店, bib1_pubdate: '201505'}
+  - id: 0036806a-8943-4248-ab7c-cdd3c9c87326
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上(岩波文庫 33−133−3), bib1_author: 宮崎市定著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015'}
+  - id: 9cda9bd3-33e1-4a25-99e9-dd718a7d6347
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上, bib1_author: 宮崎/市定|著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.5'}
+  - id: 777bee6e-626d-4e71-8c39-d541249d123f
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史, bib1_author: 宮崎 市定/著, bib1_publisher: 岩波書店, bib1_pubdate: '201505'}
+  - id: 1e93a7b4-076b-42fc-a441-a5ade97c8737
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 (岩波文庫), bib1_author: 宮崎 市定, bib1_publisher: 岩波書店, bib1_pubdate: 2015/05}
+  - id: b6c1f3c1-2fb9-4dfb-869d-168a1606303d
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上【岩波文庫 33-133-3】, bib1_author: 宮崎 市定/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2015/05}
+  - id: 217f7787-9787-4769-9b82-6a9a56c571f7
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上 (岩波文庫), bib1_author: 宮崎 市定, bib1_publisher: 岩波書店, bib1_pubdate: 2015/05}
+  - id: c8267286-beb8-40a2-bd6e-ed58a99c924a
+    cluster_id: 400331333X
+    data: {bib1_title: 中国史 上, bib1_author: 宮崎 市定/著, bib1_publisher: 岩波書店, bib1_pubdate: 2015/05}
+  '4041032253':
+  - id: b8fd4cac-f501-482c-9bf0-03359b9a69ea
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国, bib1_author: '', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.7'}
+  - id: c4458a05-5c37-4979-96f4-b09c26d64eb6
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場  イラク、ネパール、タイ、中国、韓国, bib1_author: 八木沢 高明/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.07'}
+  - id: c685d1dc-6762-4574-aaea-fd5d05d5aae5
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場, bib1_author: 八木澤 高明/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2016/07}
+  - id: 3c1576f8-7c4c-4393-a0f1-e96d7a3099bd
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤 高明, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '201607'}
+  - id: 1fe2e759-2ef4-46cb-827e-0a35608e1689
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場, bib1_author: 八木澤 高明/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.7'}
+  - id: cc8b6565-f320-4629-9550-921991ccc2c4
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場  イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤 高明/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.07'}
+  - id: 4b9a3bdf-0c42-44a4-96f0-894812d73211
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場, bib1_author: 八木澤 高明, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.7'}
+  - id: 5eec0ef2-8599-48df-a41a-85d1e5890ea4
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤 高明, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016'}
+  - id: 10c08981-ec95-4b19-8e8b-2f6882162ed5
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場−イラク、ネパール、タイ、中国、韓国−, bib1_author: 八木澤高明著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016'}
+  - id: 3b7a6e62-f984-4f3c-87b4-d0244d46a1cc
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場-イラク、ネパール、タイ、中国、韓国-, bib1_author: 八木澤高明/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.07'}
+  - id: 267e2b62-288d-4c7f-93a3-10e5f17b13c6
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤 高明, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2016/07}
+  - id: 9ffb93d3-9ce2-43bd-a10e-4b939bb5ce7f
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 -イラク、ネパール、タイ、中国、韓国-, bib1_author: 八木澤 高明/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.7'}
+  - id: 2a0b2d1a-cb7a-4a73-85c8-11294edf5e42
+    cluster_id: '4041032253'
+    data: {bib1_title: ' 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国', bib1_author: 八木澤 高明/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.7'}
+  - id: cb5b3fa1-c7ad-4779-ad88-6b3105c59d73
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤 高明/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.07'}
+  - id: c1d29b96-8478-4942-ac70-7e0f83489409
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場  イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤 高明/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.07'}
+  - id: c223f65c-7f42-4da8-8947-c4d09db14f9a
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤高明/著, bib1_publisher: '',
+      bib1_pubdate: '2016.7'}
+  - id: 1a731c7f-8482-4e21-b607-1cef4aa815d3
+    cluster_id: '4041032253'
+    data: {bib1_title: '娼婦たちから見た戦場 : イラク、ネパール、タイ、中国、韓国', bib1_author: 八木澤高明著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016'}
+  - id: 0784a584-c76e-4f75-b166-e37d8e92f6d2
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場, bib1_author: 八木澤 高明/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.7'}
+  - id: 50bfea75-11fe-49af-a8fe-b5cc66334a38
+    cluster_id: '4041032253'
+    data: {bib1_title: '娼婦たちから見た戦場 イラク、ネパール、タイ、中国、 韓国 ', bib1_author: 八木澤 高明/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '20160700'}
+  - id: 7c2c7413-1634-4978-96ee-f50db7e67d0f
+    cluster_id: '4041032253'
+    data: {bib1_title: 娼婦たちから見た戦場 イラク、ネパール、タイ、中国、韓国, bib1_author: 八木澤 高明/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.07'}
+  - id: ba8665c3-9c73-42e5-92ea-c409a23eec51
+    cluster_id: '4041032253'
+    data: {bib1_title: '娼婦たちから見た戦場 : イラク、ネパール、タイ、中国、韓国', bib1_author: 八木澤高明著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.'}
+  '4000030981':
+  - id: 64ac1fcc-46a8-46f0-beed-fccf813e5928
+    cluster_id: '4000030981'
+    data: {bib1_title: 'ビロード革命のこころ チェコスロバキア大統領は訴える [岩波ブックレット] (No.158)', bib1_author: 'バーツラフ・ハベル/[述]',
+      bib1_publisher: 岩波書店, bib1_pubdate: '1990.6'}
+  - id: a13b89bb-e587-44fb-806f-6f3f3626eb7f
+    cluster_id: '4000030981'
+    data: {bib1_title: 'ビロード革命のこころ チェコ スロバキア 大統領は訴える [岩波ブックレット] (No.158)', bib1_author: 'バーツラフ・ハベル/[述]',
+      bib1_publisher: 岩波書店, bib1_pubdate: '1990.6'}
+  - id: 8add94f4-591d-4c30-b00e-63736a1738cc
+    cluster_id: '4000030981'
+    data: {bib1_title: ビロード革命のこころ, bib1_author: ハベル・バーツラフ, bib1_publisher: 岩波書店, bib1_pubdate: '1990'}
+  - id: a86fc61d-588f-4306-83d2-6ee35654ae16
+    cluster_id: '4000030981'
+    data: {bib1_title: ビロード革命のこころ−チェコスロバキア大統領は訴える−(岩波ブックレット No., bib1_author: バーツラフ・ハベル〔述〕
+        千野栄一編訳 飯島周編訳, bib1_publisher: 岩波書店, bib1_pubdate: '1990'}
+  - id: 95b0ffbe-43ce-4ec3-a968-30f8ef070e31
+    cluster_id: '4000030981'
+    data: {bib1_title: ビロード革命のこころ, bib1_author: 'バーツラフ・ハベル/[述]', bib1_publisher: 岩波書店,
+      bib1_pubdate: '1990.6'}
+  - id: 889d5559-78f5-4413-afbb-a3c2e991f82b
+    cluster_id: '4000030981'
+    data: {bib1_title: ビロード革命のこころ  チェコスロバキア大統領は訴える, bib1_author: バーツラフ・ハベル/〔述〕, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1990.06'}
+  - id: 3e984956-f335-493a-baaa-f461dce28f86
+    cluster_id: '4000030981'
+    data: {bib1_title: ビロード革命のこころ チェコスロバキア大統領は訴える, bib1_author: バーツラフ・ハベル/〔著〕, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1990.06'}
+  - id: 5a3d4f26-7cbd-423d-8efc-3a8bf31f2750
+    cluster_id: '4000030981'
+    data: {bib1_title: ビロード革命のこころ-チェコスロバキア大統領は訴える-(岩波ブックレット No.158), bib1_author: 'バーツラフ・ハベル/[述]
+        千野栄一/編訳 飯島周/編訳', bib1_publisher: 岩波書店, bib1_pubdate: '1990.06'}
+  - id: 9c4c3e2c-e474-42d5-b540-bf6c8b2f9e33
+    cluster_id: '4000030981'
+    data: {bib1_title: ビロード革命のこころ チェコスロバキア大統領は訴える, bib1_author: 'バーツラフ・ハベル/[述]', bib1_publisher: 岩波書店,
+      bib1_pubdate: '1990.6'}
+  '4000030914':
+  - id: f990a803-af77-448f-bf6b-a4437b916be9
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 海からの伝言(岩波ブックレット No.151), bib1_author: 新妻昭夫/編, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1989.06'}
+  - id: 6281495f-2ca9-4a21-9478-8955b3fa52a0
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 海からの伝言 岩波ブックレット No.151, bib1_author: 新妻 昭夫/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1989.06'}
+  - id: e84d2f29-1cae-4a15-8f56-d190c33b16ce
+    cluster_id: '4000030914'
+    data: {bib1_title: 'ナチュラリスト入門, 夏 海からの伝言', bib1_author: '新妻昭夫∥編[ニイズマ,アキオ]', bib1_publisher: 岩波書店,
+      bib1_pubdate: '1989.6'}
+  - id: aaf44116-20be-4a2e-ac55-24cc6170c4b1
+    cluster_id: '4000030914'
+    data: {bib1_title: 海からの伝言 岩波ブックレット, bib1_author: 新妻昭夫編, bib1_publisher: 岩波書店,
+      bib1_pubdate: 1989/6}
+  - id: b2963353-2a77-4c95-ad98-ce56b633adce
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 海からの伝言, bib1_author: 新妻 昭夫/編, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1989'}
+  - id: 71c8cdf8-1717-4b1f-943d-35dd57742792
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 海からの伝言 岩波ブックレット No.151, bib1_author: 新妻 昭夫/編, bib1_publisher: 岩波書店,
+      bib1_pubdate: 1989/06}
+  - id: 071ac6d5-a8e6-4550-9a2c-4ecf9cd2fe51
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 海からの伝言 (岩波ブックレット), bib1_author: 新妻 昭夫, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1989'}
+  - id: bf82a600-f3af-4984-a7fc-a9e935897276
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 ( 岩波ブックレット no.151 ) 海からの伝言, bib1_author: 新妻昭夫/編,
+      bib1_publisher: 岩波書店, bib1_pubdate: '1989.6'}
+  - id: d92a868b-aef2-464d-b989-41ca45b6f7c5
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 海からの伝言, bib1_author: 新妻昭夫/編, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1989.6'}
+  - id: 6cff9663-1e25-480f-92ef-814e6fa0712b
+    cluster_id: '4000030914'
+    data: {bib1_title: 海からの伝言, bib1_author: '新妻 昭夫[ほか]/編', bib1_publisher: 岩波書店, bib1_pubdate: '1989.6'}
+  - id: 05e46c84-ae19-48c7-b9e9-625a870275bb
+    cluster_id: '4000030914'
+    data: {bib1_title: ナチュラリスト入門 夏 海からの伝言 (岩波ブックレット No.151), bib1_author: 新妻 昭夫/編,
+      bib1_publisher: 岩波書店, bib1_pubdate: 1989/06}
+  '4022566264':
+  - id: 890482bc-7f35-4220-b08e-0cc584a25f34
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん−ご婚約記念写真集−, bib1_author: 朝日新聞社編, bib1_publisher: 朝日新聞社,
+      bib1_pubdate: '1993'}
+  - id: 288d8457-edb2-4ef4-882e-3a64578b9106
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: f21096c3-68b2-49b1-9186-f9668e20a270
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん  ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: d0ef8061-aa76-475d-8210-54f89d8abc5e
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん, bib1_author: 朝日新聞社/編, bib1_publisher: 朝日新聞社, bib1_pubdate: '1993.2'}
+  - id: a152f6d8-741d-4ae9-b0b0-5399225a94ae
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: d45f8d74-5a4e-49b6-973e-9af6b8f0321d
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: 朝日新聞社,
+      bib1_pubdate: '1993'}
+  - id: 6e3a27d3-6a1e-4fe2-86ef-23a5b13f282d
+    cluster_id: '4022566264'
+    data: {bib1_title: '皇太子さまと雅子さん ご婚約記念 写真集 ', bib1_author: 朝日新聞社/編, bib1_publisher: 朝日新聞社,
+      bib1_pubdate: '1993.2'}
+  - id: 7dd0fbda-238f-4a20-99ff-626c460d7b44
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: 0e80f738-f957-49c0-8d4d-3d0c9d0bce2e
+    cluster_id: '4022566264'
+    data: {bib1_title: '皇太子さまと雅子さん : ご婚約記念写真集', bib1_author: 朝日新聞社編, bib1_publisher: 朝日新聞社,
+      bib1_pubdate: 1993/2}
+  - id: 49f8fd38-2ca3-467f-be60-17a90fdc0ea4
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: 8a54fca5-9f43-4942-b964-41f18b7c037d
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: 朝日新聞社,
+      bib1_pubdate: 1993/02}
+  - id: 3cb064eb-09cc-4859-88c6-9751911f7fdb
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: cf7fe2fb-19b7-4efa-9a5f-76f5e18174b3
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: 5aae7444-70e7-4809-8b89-b89a29b204b7
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: 9346116e-7cca-4ad8-b7d8-9ca0402e0aaa
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご 婚約 記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: 朝日新聞社,
+      bib1_pubdate: '1993.2'}
+  - id: b5da8cfe-2a76-4b52-bb03-880ef08fde38
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: 6e361ad7-2426-434d-83fb-da5381d4414b
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: f937a15e-6a6a-4bba-853d-1e31f8cd78da
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: e6a44664-184b-4abc-9f5c-574b09241489
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん, bib1_author: 朝日新聞社/編, bib1_publisher: 朝日新聞社, bib1_pubdate: '1993.2'}
+  - id: 8e6e8888-3280-443d-8e54-8be999df6a93
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さんご婚約記念写真集, bib1_author: '', bib1_publisher: '', bib1_pubdate: '1993.2'}
+  - id: 16f077ed-223f-48d9-bebf-75e2fb05283a
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: 8d3064d2-b26d-4215-b512-36e216123af3
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: e6a1cb0b-0dba-4749-9a31-519490dcd698
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  - id: 39a71d8c-b108-4aeb-bf03-e1391122ef50
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん, bib1_author: '', bib1_publisher: '', bib1_pubdate: '1993'}
+  - id: 6e24aa42-b52d-4bb8-932d-93309912fa79
+    cluster_id: '4022566264'
+    data: {bib1_title: 皇太子さまと雅子さん ご婚約記念写真集, bib1_author: 朝日新聞社/編, bib1_publisher: '東京:朝日新聞社',
+      bib1_pubdate: '1993.02'}
+  '4042955029':
+  - id: d62394fe-9dcb-4ec0-a960-e2378fd9e87c
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: 角川書店,
+      bib1_pubdate: 2006/06}
+  - id: aebb181e-01e2-4c18-bf21-569133536a4b
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 (角川文庫), bib1_author: ダン・ブラウン, bib1_publisher: 角川書店,
+      bib1_pubdate: '2006'}
+  - id: f95c6ce8-b29d-4bb3-8306-eb3ae0e5389d
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 (角川文庫), bib1_author: 'Brown,Dan', bib1_publisher: 角川書店,
+      bib1_pubdate: '200606'}
+  - id: 2974ef42-498a-4680-a23c-e0f619e5dc52
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 1a6257c9-bbfd-4232-880a-4bf6e82d5ea6
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: ダン ブラウン∥〔著〕, bib1_publisher: 角川書店, bib1_pubdate: ''}
+  - id: eef31f9f-9ec2-45ec-b9c0-633cb2c650cd
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: ダン・ブラウン/〔著〕, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 5b698b13-e241-4502-aade-b133a87c4b19
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 (角川文庫), bib1_author: ダン・ブラウン/〔著〕, bib1_publisher: 角川書店,
+      bib1_pubdate: '2006'}
+  - id: 5c544ca0-7b69-4a34-8a66-aa820e0a6b18
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 8e6b6d3a-d7f0-4d08-9c3d-4bbb64b9a4e5
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 0fa9fca9-4570-4309-978e-8e41a538219d
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 781e75aa-ae5f-42f1-a341-22a3cabfb3ee
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 14278, bib1_author: ダン・ブラウン/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2006.6'}
+  - id: 396c933b-a22c-464c-9ee1-79f5becad0ee
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 772d8ce4-39f5-49f2-9378-d5f12f1eece1
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 (角川文庫 14278), bib1_author: ダン・ブラウン, bib1_publisher: 角川書店,
+      bib1_pubdate: 2006/06}
+  - id: e596d12f-e697-4603-b2dd-e9daae474d6a
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: 角川書店,
+      bib1_pubdate: '2006.6'}
+  - id: 3bd68e3b-d736-46d6-8e60-5464a5796638
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: ダン・ブラウン/〔著〕, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: f359873d-95c4-4be8-a2c4-bb4c2ac0991f
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下(角川文庫 フ33−6), bib1_author: ダン・ブラウン〔著〕 越前敏弥訳, bib1_publisher: 角川書店,
+      bib1_pubdate: '2006'}
+  - id: 751dbdb7-41f3-4d65-9a82-8d9b636adb15
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: 角川書店,
+      bib1_pubdate: '2006.6'}
+  - id: 70c54814-f546-42e9-8f4a-2c702bdceecc
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: 角川書店,
+      bib1_pubdate: '2006.6'}
+  - id: ab72428a-38fc-4aba-8abf-eeaf084387f7
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下(角川文庫 フ33-6), bib1_author: 'ダン・ブラウン/[著] 越前敏弥/訳', bib1_publisher: 角川書店,
+      bib1_pubdate: '2006.06'}
+  - id: 65e52dfe-5e29-445d-b67a-6a2fb886de20
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下《3》 (角川文庫), bib1_author: ダン・ブラウン, bib1_publisher: 角川書店,
+      bib1_pubdate: '2006'}
+  - id: 42f58b11-3c20-4af4-9716-4204894cbb49
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 14278, bib1_author: ダン・ブラウン/〔著〕, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 773e78e4-8c16-4f85-b8dd-d5e9195a1fda
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 (角川文庫), bib1_author: ダン・ブラウン, bib1_publisher: 角川書店,
+      bib1_pubdate: '2006'}
+  - id: a1ce43df-522b-47d1-8dda-d6a24c96bee7
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 下, bib1_author: ダン・ブラウン/〔著〕, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: d980dde0-d088-4b4e-a84f-d2483cd72d46
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: de2e35f0-1d66-40b9-a920-5ae23c650c3b
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: 角川書店, bib1_pubdate: '2006.6'}
+  - id: 9ef01072-2e3f-49a3-8b96-6de0075207a5
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: ダン・ブラウン, bib1_publisher: 角川書店, bib1_pubdate: '2006'}
+  - id: ed136327-8522-40b4-ab04-cd1256dfb914
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: e1b819fe-7b12-45be-8088-805bd4b49380
+    cluster_id: '4042955029'
+    data: {bib1_title: '天使と悪魔 下 ', bib1_author: ダン・ブラウン/著, bib1_publisher: 角川書店, bib1_pubdate: '2006'}
+  - id: 3a1a6ed2-711f-4f00-9ca6-6b07b28633a5
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 (角川文庫 フ 33-6), bib1_author: ダン・ブラウン, bib1_publisher: 角川書店,
+      bib1_pubdate: '2006'}
+  - id: eb0ca1b8-ae69-4c65-940b-1bd1160e9f76
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下 角川文庫 フ33-6, bib1_author: 'ダン・ブラウン/[著]', bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2006.06'}
+  - id: 175be44f-3290-4e21-8109-5343578dcc27
+    cluster_id: '4042955029'
+    data: {bib1_title: '天使と悪魔 下  [ 角川文庫 ]', bib1_author: ダン・ブラウン/〔著〕, bib1_publisher: 角川書店,
+      bib1_pubdate: '200606'}
+  - id: 4fac3a1f-236b-4aaf-b6ca-b6b768bda63b
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '2006.6'}
+  - id: cf5495f1-5a1d-47b2-89b5-5c4eb63aff2d
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下(角川文庫 フ33-6), bib1_author: 'ダン・ブラウン/[著] 越前敏弥/訳', bib1_publisher: 角川書店,
+      bib1_pubdate: '2006.06'}
+  - id: fbc3aa27-a60e-4e2a-9f15-ccea76ad76b8
+    cluster_id: '4042955029'
+    data: {bib1_title: 天使と悪魔 下, bib1_author: ダン・ブラウン/著, bib1_publisher: 角川書店, bib1_pubdate: '2006.06'}
+  '4047034886':
+  - id: d9b2cd16-011c-46ad-ac6b-73d1d5703fab
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない 無常の日本思想, bib1_author: 竹内整一/著, bib1_publisher: 角川学芸出版,
+      bib1_pubdate: '2011.3'}
+  - id: d856bc86-b568-488d-af76-bd3829996abd
+    cluster_id: '4047034886'
+    data: {bib1_title: '花びらは散る花は散らない : 無常の日本思想', bib1_author: 竹内整一著, bib1_publisher: 角川グループパブリッシング
+        (発売), bib1_pubdate: '2011'}
+  - id: e7b75e52-dadf-4230-acf0-e2d2a579cdef
+    cluster_id: '4047034886'
+    data: {bib1_title: '花びらは散る花は散らない (無常の日本思想) [角川選書]', bib1_author: 竹内整一/著, bib1_publisher: 角川学芸出版,
+      bib1_pubdate: '2011.3'}
+  - id: 5b37b31f-2298-44d9-a547-8b3ca50e8e5d
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない−無常の日本思想−(角川選書 488), bib1_author: 竹内整一/著, bib1_publisher: 角川学芸出版,
+      bib1_pubdate: '2011'}
+  - id: b93b7277-ef0f-44b0-8562-896eb4378ebb
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない-無常の日本思想-(角川選書 488), bib1_author: 竹内整一/著, bib1_publisher: 角川学芸出版,
+      bib1_pubdate: '2011.03'}
+  - id: b30bfb47-0d43-4b6c-a876-363530f5c9b8
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない 無常の日本思想, bib1_author: 竹内 整一/著, bib1_publisher: 角川学芸出版,
+      bib1_pubdate: 2011/03}
+  - id: ae832dab-7986-4d9d-aff8-d9145e7d78e2
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない 無常の日本思想, bib1_author: 竹内 整一/著, bib1_publisher: '東京:角川学芸出版',
+      bib1_pubdate: '2011.03'}
+  - id: 91ccae0a-19d9-4e28-a36e-cc84a4edb674
+    cluster_id: '4047034886'
+    data: {bib1_title: '花びらは散る花は散らない 無常の日本思想 [角川選書] (488)', bib1_author: 竹内整一/著, bib1_publisher: 角川学芸出版,
+      bib1_pubdate: '2011.3'}
+  - id: 1e6426de-6d92-46ba-a072-c5827fc8f91c
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない 無常の日本思想, bib1_author: 竹内 整一/著, bib1_publisher: '東京:角川学芸出版',
+      bib1_pubdate: '2011.03'}
+  - id: 96425a61-99f5-478b-8eba-3b94e3840893
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない 無常の日本思想, bib1_author: 竹内 整一/著, bib1_publisher: '東京:角川学芸出版',
+      bib1_pubdate: '2011.03'}
+  - id: 7b6216ac-0958-43ef-b940-5be0ab5775d3
+    cluster_id: '4047034886'
+    data: {bib1_title: 花びらは散る花は散らない, bib1_author: 竹内 整一∥著, bib1_publisher: 角川学芸出版,
+      bib1_pubdate: '2011.3'}
+  400270940X:
+  - id: e51aba37-7ce4-4caf-8403-07ddc18cfce3
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.11'}
+  - id: 5e35a738-e011-4667-8577-d4f4320a2f37
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.11'}
+  - id: b58babf8-5196-4499-85e9-b24bca4722e6
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言-ホワイトリボン・キャンペーン-(岩波ブックレット No.940), bib1_author: 多賀太/著
+        伊藤公雄/著 安藤哲也/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 2d1ed106-8f72-492a-9ae1-26ed4ca06211
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.11'}
+  - id: 42637e14-b1c3-412c-87cf-42a402051f88
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: 多賀太/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 6e059847-28f2-4499-a83f-c26958aab629
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: '多賀/太‖著[タガ,フトシ], ほか', bib1_publisher: '岩波書店[イワナミ/ショテン]',
+      bib1_pubdate: '2015.11'}
+  - id: dfba87fa-8ffb-45ab-83ac-107ffa3105d3
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: 多賀太/著, bib1_publisher: 岩波書店, bib1_pubdate: '201511'}
+  - id: aec747ca-8e68-44e5-b046-d3ae6878a925
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2015/11}
+  - id: a2dc1bb2-cbfe-4204-a06f-ac47757b31b3
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン (岩波ブックレット), bib1_author: 多賀 太, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015'}
+  - id: 4145a8fc-5d92-4bac-a893-4cdea9d3545a
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャン (岩波ブックレット), bib1_author: 多賀 太, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015'}
+  - id: cf1d19a3-cd1d-4351-8a29-7a9b491f4566
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015.11'}
+  - id: d77abdf2-67ff-4ac3-91d3-a3644dae7232
+    cluster_id: 400270940X
+    data: {bib1_title: <一般図書> 男性の非暴力宣言 -ホワイトリボン・キャンペーン-/岩波ブックレット NO.940/多賀 太等著/岩波書店/2015,
+      bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: e8e3d639-34b9-45e5-b7d5-989b0aacd1a8
+    cluster_id: 400270940X
+    data: {bib1_title: '男性の非暴力宣言 ホワイトリボン・キャンペーン [岩波ブックレット] (No.940)', bib1_author: 多賀太/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 67661903-e724-4c16-a8b2-5d25de97a26e
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: 多賀 太/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 87d10f77-834c-45e6-8ab7-48981e4bfe5e
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言-ホワイトリボン・キャンペーン- 岩波ブックレット, bib1_author: 多賀 太, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2015.11(367.5)}
+  - id: 1128a4c7-2453-4198-a702-3739a118ddee
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言-ホワイトリボン・キャンペーン-(岩波ブックレット No.940), bib1_author: 多賀太/著
+        伊藤公雄/著 安藤哲也/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 94341a9d-5dce-4ab6-a7ff-42a9ca97ea16
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.11'}
+  - id: a24c2341-50af-4a00-9b14-be70dbeea01e
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: '多賀/太‖著[タガ,フトシ], ほか', bib1_publisher: '岩波書店[イワナミ/ショテン]',
+      bib1_pubdate: '2015.11'}
+  - id: 24bc74e2-d988-415d-a978-775c2147320c
+    cluster_id: 400270940X
+    data: {bib1_title: '男性の非暴力宣言 ホワイトリボン・キャンペーン [岩波ブックレット] (No.940)', bib1_author: 多賀
+        太∥著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 62e34b38-1b84-4a5e-95fa-acba9c87a315
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン 岩波ブックレット No.940, bib1_author: 多賀 太/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: 2015/11}
+  - id: 8ee924b1-1c43-4f31-b85b-98a25c950e66
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言-ホワイトリボン・キャンペーン-(岩波ブックレット No.940), bib1_author: 多賀太/著
+        伊藤公雄/著 安藤哲也/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 87ed760c-f30d-4290-bcda-4a9c8fe18940
+    cluster_id: 400270940X
+    data: {bib1_title: '男性の非暴力宣言 : ホワイトリボン・キャンペーン 岩波ブックレット', bib1_author: '多賀太, 伊藤公雄
+        , 安藤哲也著', bib1_publisher: 岩波書店, bib1_pubdate: 2015/11}
+  - id: 2eef9e9d-c28b-41e8-9eac-9d1fdbe80566
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.11'}
+  - id: b8584f25-4c0b-425a-b3fb-4d711571672a
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: 多賀太/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: f8b84d61-6ded-4219-b280-73e5fae55437
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.11'}
+  - id: f18e7aec-9f00-48a9-b05b-52aa7b26037b
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン, bib1_author: 多賀 太/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2015.11'}
+  - id: 338bbeee-c3b9-4aa4-a2c8-129bcfa0e1ab
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言 ホワイトリボン・キャンペーン (岩波ブックレット), bib1_author: 多賀 太, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2015'}
+  - id: ceac08a5-9e5c-4d1d-af9d-867412bb3dc8
+    cluster_id: 400270940X
+    data: {bib1_title: '男性の非暴力宣言 ホワイトリボン・キャンペーン [岩波ブックレット] (No.940)', bib1_author: 多賀太/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: ce06c70f-2d27-49ec-be53-0d3fb5e4ac80
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: 多賀太/著, bib1_publisher: 岩波書店, bib1_pubdate: '2015.11'}
+  - id: 346e2b48-0ef0-41b7-8386-3c225f09e4bf
+    cluster_id: 400270940X
+    data: {bib1_title: 男性の非暴力宣言, bib1_author: 多賀 太/著, bib1_publisher: 岩波書店, bib1_pubdate: '201511'}
+  '4002710068':
+  - id: 029ef126-919c-492f-a0e4-45ec8d4a62e7
+    cluster_id: '4002710068'
+    data: {bib1_title: '安楽死・尊厳死を語る前に知っておきたいこと [岩波ブックレット] (No.1006)', bib1_author: 安藤泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.7'}
+  - id: e63d6bc2-0739-4951-af1b-78e347e6657f
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット No.1006, bib1_author: 安藤泰至‖著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.07'}
+  - id: 0fd65d81-6160-49a1-9c4a-26b6eba8a765
+    cluster_id: '4002710068'
+    data: {bib1_title: '安楽死・尊厳死を語る前に知っておきたいこと [岩波ブックレット] (No.1006)', bib1_author: 安藤泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.7'}
+  - id: 5d49ee67-3242-40e0-8b9b-825e025b1201
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと (岩波ブックレット), bib1_author: 安藤 泰至, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019'}
+  - id: c4e0a73c-107f-4e82-832e-22a1ffe46dbc
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: d46183a2-c449-4d91-aa32-a1ad62084f70
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット, bib1_author: 安藤 泰至‖著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: d1585815-148c-46bb-9f68-6806366c63cd
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: e1b2ba32-7356-4450-8438-46fa51738c3f
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと (岩波ブックレット), bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2019/07}
+  - id: 954f030b-6197-4d0e-a873-2eb6c099fc67
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット, bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019'}
+  - id: 9416305a-3a8f-4001-b75f-40a8cf859da3
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット No.1006, bib1_author: 安藤 泰至/著,
+      bib1_publisher: '東京:岩波書店', bib1_pubdate: '2019.07'}
+  - id: fd9092a5-3024-4f9e-b990-36ca69c581b9
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと No.1006, bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: 62cf193e-a15f-4c56-a961-6446b373dd9e
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット No.1006, bib1_author: 安藤 泰至/著,
+      bib1_publisher: '東京:岩波書店', bib1_pubdate: '2019.07'}
+  - id: d5be0534-f360-439c-af89-1af0642e7f94
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット No.1006, bib1_author: 安藤 泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: 2019/07}
+  - id: 00056224-5793-46a3-a49c-63342a235104
+    cluster_id: '4002710068'
+    data: {bib1_title: '安楽死・尊厳死を語る前に知っておきたいこ [岩波ブック] (No.10)', bib1_author: 安藤泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.7'}
+  - id: ada5d203-e7dd-473b-8a1e-f693c7b02433
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット, bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2019/07}
+  - id: 26fed0ae-58ed-46af-aea5-aa3d8b3eb04f
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット (No.1006), bib1_author: 安藤泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.7'}
+  - id: 36ca5edb-6816-4f4c-91b4-91d5503ac9bc
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと (岩波ブックレット), bib1_author: 安藤 泰至, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019'}
+  - id: 6e341549-8039-4d58-93e8-f850f4fcc452
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: 8200393b-5ea4-41d3-b138-0754835df85d
+    cluster_id: '4002710068'
+    data: {bib1_title: '安楽死・尊厳死を語る前に知っておきたいこと [岩波ブックレット] (No.1006)', bib1_author: 安藤泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.7'}
+  - id: 8db41a6f-84bd-41c2-bef6-059128e0b5e0
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2019/07}
+  - id: a9cdb431-6680-4fe7-84ba-0038b3c848ec
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤泰至∥著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: 060b3825-49fe-4402-a890-fab00a8c43c1
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット No.1006, bib1_author: 安藤 泰至/著,
+      bib1_publisher: '東京:岩波書店', bib1_pubdate: '2019.07'}
+  - id: 3bad408e-7c04-4d27-97f3-8449603444e0
+    cluster_id: '4002710068'
+    data: {bib1_title: '安楽死・尊厳死を語る前に知っておきたいこと [ 岩波 ブックレット]', bib1_author: 安藤泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.7'}
+  - id: 9f6fc6fa-4987-4ed2-8ef9-5924d1df45ca
+    cluster_id: '4002710068'
+    data: {bib1_title: '安楽死・尊厳死を語る前に知っておきたいこと [岩波ブックレット] (No.1006)', bib1_author: 安藤泰至/著,
+      bib1_publisher: 岩波書店, bib1_pubdate: '2019.7'}
+  - id: a533b01b-7ba6-45d6-95be-281410c3103f
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと 岩波ブックレット No.1006, bib1_author: 安藤 泰至/著,
+      bib1_publisher: '東京:岩波書店', bib1_pubdate: '2019.07'}
+  - id: 5dddd415-4942-43eb-9043-f56f8f6a6bc6
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤 泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: 2b73021d-ca5a-44b8-a076-7e22d7b34a4f
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  - id: c6c2a373-0419-4899-9e6a-1e5e52e626bf
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと (岩波ブックレット), bib1_author: 安藤 泰至, bib1_publisher: 岩波書店,
+      bib1_pubdate: '201907'}
+  - id: 431e2e2c-e0ca-4208-b943-9a3129a5fc21
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと (岩波ブックレット), bib1_author: 安藤 泰至, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2019/07}
+  - id: 6bd74eaa-261a-4eec-800b-bfeb6a3a325d
+    cluster_id: '4002710068'
+    data: {bib1_title: 安楽死・尊厳死を語る前に知っておきたいこと, bib1_author: 安藤泰至/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2019.7'}
+  '4004306345':
+  - id: 4fb78bf4-8c41-4768-bb6b-e517adee2263
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 6e12c91c-7fb8-49d4-9547-05434a039ccd
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: be1d98e4-6ce1-4154-9ce7-5c45c6eabc5e
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド, bib1_author: 石井 淳蔵 著, bib1_publisher: 岩波書店, bib1_pubdate: '1999'}
+  - id: 0b7e6521-f37b-46db-9273-40b9027bae68
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井淳蔵/著, bib1_publisher: 岩波書店, bib1_pubdate: '1999.09'}
+  - id: 663c756e-6788-4b31-b0b8-0d62508bb50e
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: ddfb0032-fe57-44e2-b183-cc4252b724c1
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 39e7c361-7428-4d70-9450-016d5fb50ee9
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド ( 岩波新書 新赤版634 ), bib1_author: 石井淳蔵/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1999.9'}
+  - id: 35cc596e-677c-48ae-bb20-1c8b40636530
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド ( 岩波新書 新赤版), bib1_author: 石井淳蔵/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1999.9'}
+  - id: 0aa7afc2-15b3-4fed-814f-5b3b90a9250b
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: eab1ea7f-54ff-4ecd-8498-0711f539acaf
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 10783169-d9ef-4644-a013-7c6ebc8ff1ca
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: '', bib1_publisher: 岩波書店, bib1_pubdate: '1999.9'}
+  - id: 2e4737e8-214c-465e-b636-a8542172d044
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド-価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 227e872e-3946-4d4b-9c8b-89997602529f
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド-価値の創造- 岩波新書 新赤版, bib1_author: 石井 淳蔵, bib1_publisher: 岩波書店,
+      bib1_pubdate: 1999.9(675)}
+  - id: 73526aee-310d-4b3a-a4a6-ec36e0161068
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 78da7777-fc22-4b61-abf0-96437388826c
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 3b946da2-ff6a-41a3-a8bc-d28faf8bc204
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: 岩波書店, bib1_pubdate: '1999.09'}
+  - id: f43e8627-33ca-485e-83f1-0794345a8a3d
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: cdb0977b-3869-48cc-a236-f7f291a541b7
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: a1d80b74-b43e-4b18-9360-6459cd9ef614
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 497d9080-31bc-4bb5-8d63-667f5ba18792
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド, bib1_author: 石井淳蔵/著, bib1_publisher: 岩波書店, bib1_pubdate: '1999.9'}
+  - id: d81379aa-c496-4d69-a313-9d2f193de58b
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: 岩波書店, bib1_pubdate: '19999'}
+  - id: 3557357a-d54a-4c07-8433-40bd5246db08
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 4ffc2da9-fbde-47e4-9177-dd455df1322c
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 0cf38f0a-abd7-47cb-acb1-9317607a5ddc
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: 3faa34ec-ae47-4616-8414-88e0732e00d1
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: 岩波書店, bib1_pubdate: ''}
+  - id: bf750337-9fe6-401e-813a-53dc1f2ce2f2
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 価値の創造, bib1_author: 石井 淳蔵/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1999.09'}
+  - id: a5575d74-b3a9-49ad-9c9f-8b93cd29f28a
+    cluster_id: '4004306345'
+    data: {bib1_title: ' ブランド', bib1_author: 石井 淳蔵/著, bib1_publisher: 岩波書店, bib1_pubdate: '1999.9'}
+  - id: 5ae31874-28e1-434e-b244-d6887d0da9f5
+    cluster_id: '4004306345'
+    data: {bib1_title: ブランド 岩波新書 (新赤版634), bib1_author: 石井淳蔵/, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1999'}
+  - id: 6b712ff2-55f6-4fa6-9ecb-a8786730a1c4
+    cluster_id: '4004306345'
+    data: {bib1_title: 'ブランド : 価値の創造', bib1_author: '石井 淳蔵/著[イシイ ジュンゾウ]', bib1_publisher: 岩波書店,
+      bib1_pubdate: '1999.9'}
+  '4048834134':
+  - id: 5c0a1a02-075b-44b9-bfc0-490d5fc87618
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '1995.05'}
+  - id: 54112f03-9c99-46b0-9e7d-d438e555b1a0
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目 19cm, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: 71cc5c79-feda-4177-851f-d94f7529bd5a
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井順子/著, bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: d2631b26-c8c9-4dbd-a011-470861e53630
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: 4ed6c9ab-fafc-4eb6-bc6a-dbca4a04f852
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '1995.05'}
+  - id: b1898d33-0df4-4369-9aa2-ecb065d02545
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: 12f4d56d-a4d3-4c97-8203-d172c042d228
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '1995.05'}
+  - id: ad22014d-3ebd-4ebd-a47f-d102302ae5c4
+    cluster_id: '4048834134'
+    data: {bib1_title: '女のわかれ目 ', bib1_author: 酒井 順子/著, bib1_publisher: 角川書店, bib1_pubdate: '1995'}
+  - id: ff84891e-b5dd-4c4a-b374-1fa59efe6b38
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '1995.05'}
+  - id: 53bc2019-2ad5-4e5c-ba90-2067d3ea0505
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '1995.05'}
+  - id: b51d6350-9018-4f7e-9bdf-5138e0c4563b
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '1995.05'}
+  - id: 3e5ef40c-2771-4c1e-9d66-3e1bb4a47647
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井順子/著, bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: 854309e1-9260-4f03-ab2e-238f7cf8d158
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井順子/著, bib1_publisher: 角川書店, bib1_pubdate: '1995.05'}
+  - id: 631dbcc8-dca7-434f-b379-a409536ff7ee
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子, bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: 267049a6-1c70-4163-8104-9c7e2be379e6
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: '', bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: 14f9de1a-ce69-4057-b1ae-891d99a76f33
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井順子/著, bib1_publisher: 角川書店, bib1_pubdate: '1995.05'}
+  - id: e8888ac2-1d48-44b7-ac0f-3d5023d055d6
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子∥著, bib1_publisher: 角川書店, bib1_pubdate: '1995.5'}
+  - id: b5c26afc-ce1c-4519-ae57-54cc28e5c588
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井順子, bib1_publisher: 角川書店, bib1_pubdate: '1995.05'}
+  - id: 24d5317c-fdcc-45d1-8112-389401697367
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子/著, bib1_publisher: '東京:角川書店', bib1_pubdate: '1995.05'}
+  - id: b5f34f88-51ef-4287-8235-dd8b66cdb015
+    cluster_id: '4048834134'
+    data: {bib1_title: 女のわかれ目, bib1_author: 酒井 順子, bib1_publisher: 角川書店, bib1_pubdate: '1995'}
+  '4061965484':
+  - id: 54333081-312d-435b-a6bf-bcbfadcb281d
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 吉川英治歴史時代文庫, bib1_author: 吉川 英治, bib1_publisher: 講談社,
+      bib1_pubdate: 1989.4(913.6)}
+  - id: 65766dda-56b3-45d8-b8b8-18e35858c96a
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 2 (吉川英治歴史・時代文庫 48), bib1_author: 吉川 英治, bib1_publisher: 講談社,
+      bib1_pubdate: '1989'}
+  - id: 54cff259-fb96-4d9d-89cc-673d555d9d1d
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1989.04'}
+  - id: e18a7527-0d2a-494c-841c-89823e48653b
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 (吉川英治歴史時代文庫 48), bib1_author: 吉川 英治, bib1_publisher: 講談社,
+      bib1_pubdate: '1989'}
+  - id: 5f556fc2-0e80-4cad-84dd-ea7fb5d59ffb
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 二(歴史時代文庫) 吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1992'}
+  - id: bda684e8-ecfb-4a6d-a836-3eae72864a79
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 ; 2, bib1_author: 吉川 英治, bib1_publisher: 講談社, bib1_pubdate: '1989'}
+  - id: d6b44030-e22d-4d66-95fb-53d2dfa05986
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 (吉川英治歴史時代文庫), bib1_author: 吉川 英治, bib1_publisher: 講談社,
+      bib1_pubdate: '1989'}
+  - id: 1d62eef9-ea2a-43e5-8f12-978b11ac914e
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2  吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1989.04'}
+  - id: c62bdd5f-fab8-4fff-ae64-18ac67a1a70d
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 ( 吉川英治歴史時代文庫 ), bib1_author: '', bib1_publisher: '',
+      bib1_pubdate: ''}
+  - id: e22c9952-41f1-4c78-b323-bcd5992f77c7
+    cluster_id: '4061965484'
+    data: {bib1_title: '新・平家物語 2  [吉川英治歴史時代文庫] (48)', bib1_author: 吉川英治/著, bib1_publisher: 講談社,
+      bib1_pubdate: '1989.4'}
+  - id: 7ae7e753-343d-4c22-800d-4f1eaace6c1e
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 吉川英治歴史時代文庫 48, bib1_author: 吉川英治/著, bib1_publisher: 講談社,
+      bib1_pubdate: '1989.04'}
+  - id: 5b9d47b8-7ce5-4dd4-aa2b-304942381ec0
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: c59d48df-b615-431d-8eed-64f33a415e17
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2  吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1989.04'}
+  - id: 23d92c55-bcb7-4720-94d0-cd18015c593a
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 (吉川英治歴史時代文庫), bib1_author: 吉川 英治, bib1_publisher: 講談社,
+      bib1_pubdate: 1989/04}
+  - id: 067960b5-368b-4d1e-aa64-80fd9d41d6b3
+    cluster_id: '4061965484'
+    data: {bib1_title: '新・平家物語 2  [吉川英治歴史時代文庫] (48)', bib1_author: 吉川 英治/著, bib1_publisher: 講談社,
+      bib1_pubdate: '1989.4'}
+  - id: 72ec62f2-4c97-4fa6-92c5-c4e2e39e2d13
+    cluster_id: '4061965484'
+    data: {bib1_title: '新・平家物語 2  [吉川英治歴史時代文庫]', bib1_author: 吉川英治/著, bib1_publisher: 講談社,
+      bib1_pubdate: '1989.4'}
+  - id: 42dd6bf2-264c-4eb0-a99a-570130b3b3fd
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1989.04'}
+  - id: 52790601-28fa-4097-83d9-1520c3885e0b
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 吉川英治歴史時代文庫 48, bib1_author: 吉川英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1989.04'}
+  - id: 5477995c-2a36-46ac-ab82-2f0e2b23f9b1
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2(吉川英治歴史時代文庫 48), bib1_author: 吉川英治著, bib1_publisher: 講談社,
+      bib1_pubdate: '1989'}
+  - id: e5f8b609-cdd7-434b-a369-42289d01ebc5
+    cluster_id: '4061965484'
+    data: {bib1_title: '新・平家物語, 2', bib1_author: '吉川英治∥著[ヨシカワ,エイジ]', bib1_publisher: 講談社,
+      bib1_pubdate: '1989.4'}
+  - id: 8b9b7397-4a0a-4a66-99e2-68bca97cee5e
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1989.04'}
+  - id: 26a8efe2-3217-4ccc-929a-8400098e51ed
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2(拡大写本) 第六分冊 吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1989.04'}
+  - id: 7328fde8-6d6d-40f0-81fa-b688922b673e
+    cluster_id: '4061965484'
+    data: {bib1_title: 新・平家物語 2 吉川英治歴史時代文庫 48, bib1_author: 吉川 英治/著, bib1_publisher: '東京:講談社',
+      bib1_pubdate: '1990'}
+  '4041050162':
+  - id: 7ee4ebc3-70c3-401b-b45c-0c1cf38f8b82
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下, bib1_author: 山浦玄嗣/著, bib1_publisher: KADOKAWA, bib1_pubdate: '2016.12'}
+  - id: 831a0ad3-b95f-4321-8642-100a44a9e81a
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝-この国のいと小さき者-下, bib1_author: 山浦玄嗣/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.12'}
+  - id: b483b4bc-81e3-42b6-b98c-42d2eab5435b
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA, bib1_pubdate: '2016.12'}
+  - id: 83b7e146-378b-4d9f-abb6-303c27e80ee6
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.12'}
+  - id: a1576c8d-0743-406d-8901-e0af91b26827
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 この国のいと小さき者 下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '201612'}
+  - id: 2b8a91e8-307e-4949-98c5-dff20ba31518
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  - id: dc17a06a-410e-4261-9f8a-9f33fcd33b22
+    cluster_id: '4041050162'
+    data: {bib1_title: 'ホルケウ英雄伝 下 この国のいと小さき者 ', bib1_author: '', bib1_publisher: '',
+      bib1_pubdate: ''}
+  - id: d8f7110b-15b3-46c7-abf0-501b11625c94
+    cluster_id: '4041050162'
+    data: {bib1_title: 性的英雄伝, bib1_author: 志茂田 景樹/著, bib1_publisher: グリーンアロー出版社, bib1_pubdate: '1984'}
+  - id: 023f1aff-b1a9-4566-8423-6c6843c1337a
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 この国のいと小さき者 下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '201612'}
+  - id: 84cc6d51-9b49-473c-9bbb-eff69def65bf
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  - id: 3a5dd9ff-700a-4860-a719-d2554520a18f
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA, bib1_pubdate: '2016.12'}
+  - id: 68a0ff75-f789-4865-8c3d-7490dec66586
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝この国のいと小さき者 下/山浦 玄嗣, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016'}
+  - id: ca63fb38-5cb5-410c-a482-a8a686de261a
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  - id: bb7cecd0-d3a5-402b-b13c-7dad037fbede
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 この国のいと小さき者 下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2016/12}
+  - id: c6c360dd-adc5-4d8f-a40f-f5a54442cda7
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA, bib1_pubdate: '2016.12'}
+  - id: b353af56-2d87-4281-83ae-acda466fc6e0
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下, bib1_author: 山浦玄嗣, bib1_publisher: KADOKAWA, bib1_pubdate: '2016.12'}
+  - id: bd386b81-e120-49ce-b64e-c3f87afb9d93
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  - id: 9d22ba79-b277-4496-896f-9f9ae77c1f6c
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  - id: e1cc7407-5c90-4fc3-8e12-64918e306a80
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  - id: 345fbbc2-2384-4adb-88c8-f5ea0fadf100
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下, bib1_author: 山浦 玄嗣/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.12'}
+  - id: 3cf5d3dc-c0d8-425d-9eab-18529065c25a
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 この国のいと小さき者, bib1_author: 山浦玄嗣/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.12'}
+  - id: d3aa2743-9987-4ff5-ae15-1a18dffa5111
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 この国のいと小さき者 下, bib1_author: 山浦 玄嗣/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016.12'}
+  - id: c79ee965-edcb-4e7d-90cf-4bae873c8043
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 この国のいと小さき者 下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2016'}
+  - id: dac38d0b-05d5-4d4c-80f9-32ee5f85cb23
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA, bib1_pubdate: '2016.12'}
+  - id: 7cd0f359-5efa-4b41-a895-158f3b54bf16
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  - id: 5f91fc21-21cc-4442-bfe7-d172e4657512
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 この国のいと小さき者 下, bib1_author: 山浦 玄嗣, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '201612'}
+  - id: 38ce2dbc-7954-44fb-a4aa-5b87368add78
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2016/12}
+  - id: 17d7b829-f8c9-41b9-8a4b-1937b23e815f
+    cluster_id: '4041050162'
+    data: {bib1_title: ホルケウ英雄伝 下 この国のいと小さき者, bib1_author: 山浦 玄嗣/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2016.12'}
+  '4000228781':
+  - id: f10c2d6f-3c46-40f0-bd4c-12dc3f93fd39
+    cluster_id: '4000228781'
+    data: {bib1_title: '[ 和図書 ] 国家と個人 市民革命から現代まで', bib1_author: 田中 浩/著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2008.2'}
+  - id: cfd315e3-4693-476c-a800-c70a70d1a624
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人−市民革命から現代まで−新版, bib1_author: 田中浩著, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2008'}
+  - id: ba83b618-8490-4429-843f-2590e9363f50
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人, bib1_author: 田中浩/著, bib1_publisher: 岩波書店, bib1_pubdate: '2008.2'}
+  - id: 6d1b9634-8711-427b-95cf-2fb434c1e7a8
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人, bib1_author: 田中 浩/著, bib1_publisher: 岩波書店, bib1_pubdate: '2008.2'}
+  - id: 9e1b49ff-9c59-4d72-b72d-620e20a65125
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人 新版, bib1_author: 田中 浩/著, bib1_publisher: 岩波書店, bib1_pubdate: 2008/02}
+  - id: 22653797-03a0-43f2-8f3a-57f287c77fcf
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人 市民革命から現代まで, bib1_author: 田中浩∥著, bib1_publisher: 岩波書店,
+      bib1_pubdate: 2008年}
+  - id: d5fe47b6-18d2-4a48-87f5-b8e702c8f6b7
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人, bib1_author: 田中浩/著, bib1_publisher: 岩波書店, bib1_pubdate: '2008.2'}
+  - id: 0e1a8293-4729-4f0f-bfd7-17fc5736acf4
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人 市民革命から現代まで, bib1_author: 田中 浩/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2008.02'}
+  - id: fb03a577-f18e-4f85-8640-92fed3a85833
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人  市民革命から現代まで, bib1_author: 田中 浩/著, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '2008.02'}
+  - id: 5d34c376-2fd5-4ff7-8d9c-354daff9ace3
+    cluster_id: '4000228781'
+    data: {bib1_title: 国家と個人 市民革命から現代まで 新版, bib1_author: 田中 浩, bib1_publisher: 岩波書店,
+      bib1_pubdate: '200802'}
+  '4048739573':
+  - id: 853609d0-8a9c-497d-864d-6a7dc4d07c2c
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: 02bc9aca-6f4e-4a84-a0f5-703f71455f94
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石/かおる∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: ''}
+  - id: 33d39e34-0507-4b5b-9474-91069aa7dacb
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2009'}
+  - id: 109f9c94-38c0-4b63-88c7-c33f41593e49
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる∥著, bib1_publisher: 角川書店,
+      bib1_pubdate: ''}
+  - id: cda6071e-63ad-4973-88f4-cb28750fd025
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: 951f7c4f-fb39-41fa-9e6a-5f19dd9a368a
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる, bib1_publisher: 角川書店, bib1_pubdate: '2009'}
+  - id: 6daf143b-aa1d-4294-9d0f-a036cb0264fe
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: 82da9f71-ce4e-4d48-a12f-0b82effa55e5
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる, bib1_publisher: 角川書店, bib1_pubdate: '200905'}
+  - id: 672c2826-9aa5-4168-b303-2780fb297edd
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: 071310ee-f093-446b-ab2c-a56faad38bd9
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: 角川書店,
+      bib1_pubdate: 2009/05}
+  - id: 90d2e160-5e52-4406-b77c-6b5060725637
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石/かおる‖著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2009.5'}
+  - id: 93c060da-da6f-46d0-8ee9-d99668fab884
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '', bib1_pubdate: '2009.05'}
+  - id: 3dede4f2-c1e9-4463-9d5c-1d2038c3d265
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: eaa8f5a2-ec39-4658-97ac-612e281029fc
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: 角川書店,
+      bib1_pubdate: 2009/05}
+  - id: 7b795343-a216-48f1-865d-fa493b2df432
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石かおる著, bib1_publisher: 角川書店, bib1_pubdate: '2009'}
+  - id: a7079e36-f805-487c-9833-a71ec440df46
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: dd06ed21-1c4b-4ee8-a25e-6ec0c8b39a56
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '200905'}
+  - id: c9c3ed45-36f7-43d8-84cc-6c5ed32c1759
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2009.5'}
+  - id: 7779fb82-baa3-4506-9204-20cefbdad28e
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる, bib1_publisher: 角川書店, bib1_pubdate: 2009/05}
+  - id: c470a722-b258-4be8-bd52-76cbf214b0d7
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石かおる/著, bib1_publisher: 角川書店, bib1_pubdate: '2009.5'}
+  - id: 1a973668-6720-4c3d-8a27-46a0a45fa33d
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石/かおる‖著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2009.5'}
+  - id: 17c53950-0c06-41d2-9540-792dbaf4f5d4
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: 715590e7-38a1-4eb3-9f7c-d687bd2472e2
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる, bib1_publisher: 角川書店, bib1_pubdate: '2009.5'}
+  - id: eb742f13-b1f1-42b4-8c01-aaa89680d69a
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: d3521829-8f36-4dc3-a14c-42a8d6cc3f12
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '2009.5'}
+  - id: aafb6e3f-0344-481a-a661-16ec3fd92d90
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる, bib1_publisher: 角川書店, bib1_pubdate: '2009'}
+  - id: acc80aeb-fbee-427d-8bcd-7ca393af7bc0
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石かおる/著, bib1_publisher: 角川書店, bib1_pubdate: '2009.5'}
+  - id: 6165b900-38b8-4dc1-a6e3-290be342d31e
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石かおる/著, bib1_publisher: 角川書店, bib1_pubdate: '2009.5'}
+  - id: f10319c1-4744-4250-9b0d-56fea46f412a
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石かおる/著, bib1_publisher: 角川書店, bib1_pubdate: '2009.5'}
+  - id: 9e8196e4-9a20-4300-a057-14ad419650e1
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: cf2a2ff4-7fe0-46d3-aca2-4ff35f0f9d47
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: 1fb88ff3-aa93-431f-9e9a-0609d21bfd0b
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: cb2e1cad-5faa-40f4-9571-a8578c3a3326
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  - id: 50b77ee0-26ef-48fc-9165-c23b071e717e
+    cluster_id: '4048739573'
+    data: {bib1_title: 僕と『彼女』の首なし死体, bib1_author: 白石 かおる/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '2009.05'}
+  '4002602753':
+  - id: 13cf768b-763a-4e76-8b3d-f3d0246170d6
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: 66423c6b-50c0-474b-bbf3-7b2058e19345
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店', bib1_pubdate: '1996.07'}
+  - id: 028f0655-1387-483a-93ec-4b1eccf8a6fe
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '19967'}
+  - id: fb6e6887-46aa-4191-8fd5-1e834781471d
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: 1f687262-185a-4f57-b18a-daff4adce35e
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史, bib1_author: '', bib1_publisher: 岩波書店, bib1_pubdate: '1996.7'}
+  - id: 67e0622e-ff14-49b6-97a8-0538621c36da
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: e788ede0-3712-4e3c-8495-a9985310ed58
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: 249b7877-da3c-4359-8afe-f1efeee98262
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より 同時代ライブラリー, bib1_author: 沖縄県∥編, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1996.7'}
+  - id: 965a986b-f9af-4eb0-aade-7a31fd163987
+    cluster_id: '4002602753'
+    data: {bib1_title: '沖縄苦難の現代史 代理署名拒否訴訟準備書面より [同時代ライブラリー] (275)', bib1_author: 沖縄県/編,
+      bib1_publisher: 岩波書店, bib1_pubdate: '1996.7'}
+  - id: 5b0d41d9-6466-4f12-ad42-91d31b845a16
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: 15af51f5-3fec-4f88-8e6b-75c0dcd71667
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史, bib1_author: 沖縄県/編, bib1_publisher: 岩波書店, bib1_pubdate: '1996.7'}
+  - id: 0fba1b23-4586-4832-a4dc-af1bb823f985
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: 44070945-26f1-4305-8b27-e06f8c55ca1f
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: 5aad947d-a9e9-4fb2-b560-ffd0d1c27b2f
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史−代理署名拒否訴訟準備書面より−(同時代ライブラリー 275), bib1_author: 沖縄県編,
+      bib1_publisher: 岩波書店, bib1_pubdate: '1996'}
+  - id: ac442bec-9c58-479b-9bdc-2530707f3427
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: 7d3a08e4-dff2-4560-b37c-ef8f08282852
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  - id: f5b9f42c-c475-4f16-8e8e-9169034b20a1
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より (同時代ライブラリー 275), bib1_author: 沖縄県,
+      bib1_publisher: 岩波書店, bib1_pubdate: '1996'}
+  - id: 99e3d316-f515-40ab-9985-765a101a5d39
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史, bib1_author: 沖縄県∥編, bib1_publisher: 岩波書店, bib1_pubdate: ''}
+  - id: 8437e026-d116-4890-a300-eafc2793d391
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史, bib1_author: 沖縄県/編, bib1_publisher: 岩波書店, bib1_pubdate: '199607'}
+  - id: de4f7a42-5c10-47cb-a0ea-daa0f6304326
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1996.7'}
+  - id: da620eb1-0a97-4cf9-94f5-9484ea11d93a
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史, bib1_author: 沖縄県, bib1_publisher: 岩波書店, bib1_pubdate: '1996.7'}
+  - id: 125f9356-44ed-4f5c-b796-43d9c50ee6f3
+    cluster_id: '4002602753'
+    data: {bib1_title: <一般図書> 沖縄 苦難の現代史 -代理署名拒否訴訟準備書面より-/同時代ライブラリー/沖縄県編者/岩波書店/1996,
+      bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: 6ad316ec-17ae-49ea-ba8b-7520af481f50
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖繩苦難の現代史, bib1_author: 沖繩県/編, bib1_publisher: 岩波書店, bib1_pubdate: '199607'}
+  - id: 62ed40a4-e2f1-4eb6-8bbc-eea611e26c01
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1996.7'}
+  - id: dec9733f-a4d3-41af-b0d8-33ca1c387791
+    cluster_id: '4002602753'
+    data: {bib1_title: 沖縄苦難の現代史 代理署名拒否訴訟準備書面より, bib1_author: 沖縄県/編, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1996.07'}
+  '4003200519':
+  - id: 47778e71-1d55-4bb6-9b01-d0f8f001b93e
+    cluster_id: '4003200519'
+    data: {bib1_title: '李白詩選 [岩波文庫]', bib1_author: '', bib1_publisher: 岩波書店, bib1_pubdate: '1997.1'}
+  - id: 238fe58b-2a44-4e1b-a8da-7661392bab6e
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: 李 白/〔著〕, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: 498fe61f-1949-47af-abc7-ca97bdf909f2
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 赤5-1, bib1_author: '李 白/[著]', bib1_publisher: 岩波書店, bib1_pubdate: '1997.1'}
+  - id: 023c680e-1f0d-48eb-82db-46fd1885be7e
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: 李 白/〔著〕, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: 4275bca9-52a1-4743-8103-e6cab083fbb6
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 (岩波文庫), bib1_author: '李 白/[著]', bib1_publisher: 岩波書店,
+      bib1_pubdate: 1997/01}
+  - id: 4ba4efad-3a12-44dd-96c1-d0992acdb1aa
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: '李 白/[著]', bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: 9ac6a0a4-9f56-4d51-8d40-dd3bf9aa90d6
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選, bib1_author: 李 白/著, bib1_publisher: 岩波書店, bib1_pubdate: 1997年}
+  - id: d311b44f-cf9e-4da2-8543-893833522c42
+    cluster_id: '4003200519'
+    data: {bib1_title: ' 李白詩選', bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: b5eaf0c3-7359-4273-a476-6d1febacfd59
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: '李 白/[著]', bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: 29fc3945-c21a-4c0c-8140-03be4d334244
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: '李 白/[著]', bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: 922d51f4-25e7-4c1f-8c74-b1c431148982
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 (岩波文庫), bib1_author: 松浦友久/編訳, bib1_publisher: 岩波書店, bib1_pubdate: 1997/01}
+  - id: e8c87828-32b0-415f-ab9b-45f83f7018da
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: '李/白‖[著]', bib1_publisher: 岩波書店, bib1_pubdate: '1997.1'}
+  - id: 5cff8363-24ee-4c6f-9ad6-9d3e2f687a0c
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 (岩波文庫), bib1_author: '李白/[著]', bib1_publisher: 岩波書店, bib1_pubdate: '1997.01'}
+  - id: ec76f351-439a-4510-9aa9-500cb85233a7
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫 32-005-3, bib1_author: 李白/〔著〕, bib1_publisher: 岩波書店,
+      bib1_pubdate: '2001.01'}
+  - id: 7b7a4e0a-3775-4944-a114-2c9bc26bb9f8
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: '李 白/[著]', bib1_publisher: 岩波書店, bib1_pubdate: '1997'}
+  - id: 24bc20fa-7648-45a5-a953-1611654e4857
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選, bib1_author: '李白/[著]', bib1_publisher: 岩波書店, bib1_pubdate: '1997.1'}
+  - id: 05fbfbf5-a57b-4e8f-8935-e7140284b60d
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選(岩波文庫), bib1_author: '李白/[著] 松浦友久/編訳', bib1_publisher: 岩波書店,
+      bib1_pubdate: '1997.01'}
+  - id: 6d7f4bfc-8dc8-4be9-8924-f469c733b66a
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選  岩波文庫, bib1_author: '李 白/[著]', bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: 9c9fce9c-a920-48f1-b482-fae3ee9e5b96
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: 李 白/〔著〕, bib1_publisher: 岩波書店, bib1_pubdate: '1997'}
+  - id: 5b19baa1-79ca-4e39-a08a-9e5caea17258
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: '李 白/[著]', bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: a7afdbf5-1eff-43e3-87a4-cf1660ac56a4
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選, bib1_author: 李 白/著, bib1_publisher: 岩波書店, bib1_pubdate: '1997'}
+  - id: d8a216b8-e165-4050-b4b8-dae05d18a3fd
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 (岩波文庫), bib1_author: 李 白, bib1_publisher: 岩波書店, bib1_pubdate: '1997'}
+  - id: d5807adb-9f81-489c-b633-44ddd42ab99a
+    cluster_id: '4003200519'
+    data: {bib1_title: 李白詩選 岩波文庫, bib1_author: 李 白/〔著〕, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1997.01'}
+  - id: 770f35ea-60d3-4c0e-a31c-7f15a78e98ab
+    cluster_id: '4003200519'
+    data: {bib1_title: '李白詩選 [岩波文庫]', bib1_author: '李白/[著]', bib1_publisher: 岩波書店,
+      bib1_pubdate: '1997.1'}
+  '4041010802':
+  - id: d36af1bf-b821-4649-b965-002f74cc09f0
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット 角川文庫 は32-6 ハルチカシリーズ 〔4〕, bib1_author: 初野 晴/〔著〕, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2013.11'}
+  - id: d66990cd-f38d-4a3b-8b31-32473d2729c6
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット  角川文庫 は32-6, bib1_author: '初野 晴/[著]', bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2013.11'}
+  - id: c2f83940-3ff6-438f-b8cc-c999b17a9d66
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット (角川文庫 ハルチカシリーズ), bib1_author: 初野 晴, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2013/11}
+  - id: cf6b0097-f2b4-4e75-853c-5120b60d16b6
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット(角川文庫) 角川文庫 は32-6, bib1_author: 初野 晴/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2013.11'}
+  - id: ffde4fc9-b898-4f0a-96e4-99a5e42af3c4
+    cluster_id: '4041010802'
+    data: {bib1_title: '千年ジュリエット       [角川文庫] (は32-6) [ハルチカシリーズ] ([4])', bib1_author: '初野晴/[著]',
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2013.11'}
+  - id: 412edca4-4831-4833-9294-6b7c0994e5e9
+    cluster_id: '4041010802'
+    data: {bib1_title: '千年ジュリエット(角川文庫 は32-6 ハルチカシリーズ [4])', bib1_author: '初野晴/[著]',
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2013.11'}
+  - id: 7eddcab0-4dd7-4bb4-82d8-885317fee85f
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット, bib1_author: '初野 晴/[著]', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2013.11'}
+  - id: ccc7febe-f5ee-40b7-adf5-15ec154c033e
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット, bib1_author: '初野 晴/[著]', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2013.11'}
+  - id: 84c34c42-785b-450b-b488-169ea54736ac
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット, bib1_author: '初野 晴/[著]', bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2013/11}
+  - id: a16fe29d-026e-457a-89ff-bf4dae45764f
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット 角川文庫 は32-6, bib1_author: '初野 晴/[著]', bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2013.11'}
+  - id: 6b647bf1-bc84-4eaf-ae9c-7dcde8222c8b
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット, bib1_author: '初野/晴‖[著]', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2013.11'}
+  - id: 6f19aea3-dee9-4a49-82d1-d6fbcfa0b928
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット 角川文庫 は32-6, bib1_author: '初野 晴/[著]', bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2013.11'}
+  - id: 1f0a0c7f-235b-4fc6-8d04-9050ca1a87a2
+    cluster_id: '4041010802'
+    data: {bib1_title: '千年ジュリエット [角川文庫] (は32-6)', bib1_author: '初野 晴/[著]', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2013.11'}
+  - id: b5a55997-b3fb-4027-8735-f9b23883538f
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット ハルチカシリーズ 4, bib1_author: 初野 晴/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2013.11'}
+  - id: f1feaf4c-fa60-4ac4-a465-23d0f7a4ad34
+    cluster_id: '4041010802'
+    data: {bib1_title: 千年ジュリエット(角川文庫 は32−6 ハルチカシリーズ 〔4〕), bib1_author: 初野晴〔著〕, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2013'}
+  '4044604010':
+  - id: ab8b44e5-8580-4fbb-80cd-a992cb914cd4
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記, bib1_author: 水野 良/著, bib1_publisher: 角川書店, bib1_pubdate: '1988.4'}
+  - id: b2ffd5c5-b0ba-4058-9c88-84f151ba2232
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 灰色の 魔女 ', bib1_author: 安田均/原案, bib1_publisher: 角川書店,
+      bib1_pubdate: '1988.4'}
+  - id: 36603462-99fc-47aa-a280-1814f8d79f25
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 1  [角川スニ-カ-文庫]', bib1_author: 水野良/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '1991'}
+  - id: db76eda0-0bce-4b35-bbdb-45e36db9dabf
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記, bib1_author: 水野良/著, bib1_publisher: 角川書店, bib1_pubdate: '1988.4'}
+  - id: ae6acad3-526c-454c-8be9-c3daedaef0e2
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 1 0001  [角川文庫]', bib1_author: 水野良, bib1_publisher: 角川書店,
+      bib1_pubdate: '1988'}
+  - id: 67b91c07-c422-4d67-9928-0cada999c268
+    cluster_id: '4044604010'
+    data: {bib1_title: ロ-ドス島戦記 1 灰色の魔女 角川スニーカー文庫, bib1_author: 水野良/著, bib1_publisher: 角川書店,
+      bib1_pubdate: 1995/01}
+  - id: 8d646bd0-7d2a-4c7e-8a2d-a317aad3b996
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 [1]  角川文庫', bib1_author: 水野 良/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  - id: 12f4fc27-b818-4f61-a6a8-064e9197309e
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 灰色の魔女 [角川文庫]', bib1_author: 水野 良/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '1988.4'}
+  - id: 15e46409-953b-4dfe-909f-22a3129a6e27
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 [1] ( 角川文庫 スニーカー文庫 )', bib1_author: 安田 均/原案, bib1_publisher: 角川書店,
+      bib1_pubdate: '1988.4'}
+  - id: 156657ed-bd42-4595-8efa-a6583269ba83
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記 1 角川文庫 7079, bib1_author: 水野 良/〔著〕, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  - id: dcd1dce5-02cc-4012-981f-a8ea8a2a02ef
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記 灰色の魔女, bib1_author: '水野 良∥著[ミズノ リョウ], ほか', bib1_publisher: 角川書店,
+      bib1_pubdate: '1988'}
+  - id: 1dc775dc-7c2e-494c-a8a1-5d176eca23f7
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記 灰色の魔女, bib1_author: 水野 良/著, bib1_publisher: 角川書店, bib1_pubdate: '1988'}
+  - id: 5092e1c7-07cc-4e8e-b3be-689a51fce196
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記 1 灰色の魔女, bib1_author: 水野 良/著, bib1_publisher: 角川書店,
+      bib1_pubdate: '1988.4'}
+  - id: e1b429f5-7843-4bb0-9661-f68de199b081
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 [1] 角川文庫', bib1_author: 安田 均/原案, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  - id: 2333ded7-4416-40d4-8b36-37c434d604eb
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記 灰色の魔女 (角川文庫 7079), bib1_author: 安田均/原案, bib1_publisher: 角川書店,
+      bib1_pubdate: '1988.'}
+  - id: 489c7af8-f829-4ecc-9456-39feaac7d7c8
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 [1] 角川文庫', bib1_author: 安田 均/原案, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  - id: afc3ce6d-db9b-45f8-a87b-8172c20d1bfb
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 [1](角川文庫 スニーカー文庫) 灰色の魔女', bib1_author: 安田均/原案 水野良/著,
+      bib1_publisher: 角川書店, bib1_pubdate: '1988.04'}
+  - id: 5d0e402a-ca93-4d2e-b316-eed89f61b4d1
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記  灰色の魔女, bib1_author: 水野 良/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  - id: 94e74047-5bfc-4625-8178-3b51fce3317b
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 [1] 角川文庫', bib1_author: 安田 均/原案, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  - id: 2613f40f-4bf9-4ae4-a8ff-c0eef25d4e06
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記 灰色の魔女, bib1_author: 水野 良/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  - id: 6d31e5eb-a87f-4d68-8829-0eaa5fe8dcc4
+    cluster_id: '4044604010'
+    data: {bib1_title: 'ロードス島戦記 灰色の 魔女 [角川文庫]', bib1_author: 安田均/原案, bib1_publisher: 角川書店,
+      bib1_pubdate: '1988.4'}
+  - id: 9cb834ac-4c4c-4cbe-b2df-fbe891790152
+    cluster_id: '4044604010'
+    data: {bib1_title: ロードス島戦記 〔1〕 角川文庫, bib1_author: 水野 良/著, bib1_publisher: '東京:角川書店',
+      bib1_pubdate: '1988.04'}
+  '4046315008':
+  - id: d2b1f768-5604-4a4a-9422-74c96babd1c0
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン, bib1_author: 廣嶋 玲子/作, bib1_publisher: KADOKAWA, bib1_pubdate: '2015.9'}
+  - id: ee9ab571-3abb-496e-8f64-7cf0e03e2910
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 〔8〕 角川つばさ文庫 Aひ4-8, bib1_author: 広嶋 玲子/作, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2015.09'}
+  - id: ad5c7800-8bd4-41c1-b65c-3f25f5deeeb6
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 〔8〕(角川つばさ文庫 Aひ4−8) ナコと太陽のきずな, bib1_author: 廣嶋玲子作 KeG絵,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2015'}
+  - id: 7c838d11-1343-4659-8f20-19ecce3fc258
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 〔8〕, bib1_author: 廣嶋 玲子/作, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.9'}
+  - id: e5487bcb-6d18-4c3f-a198-2cdda6f81a34
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 〔8〕 ナコと太陽のきずな(角川つばさ文庫), bib1_author: 廣嶋 玲子, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2015/09}
+  - id: 29514219-bd9a-47b9-ad3a-86c10b8de602
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン [8]  [角川 つばさ文庫 ] (Aひ4-8) [ナコと太陽のきずな]', bib1_author: 廣嶋玲子/作,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2015.9'}
+  - id: 56fc5fec-d7cc-4324-8bd6-cc238e2fc33b
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 〔8〕, bib1_author: '', bib1_publisher: '', bib1_pubdate: ''}
+  - id: 0a6cf104-0075-41e3-a1bb-0ffa6289c543
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン [8] 角川つばさ文庫 Aひ4-8', bib1_author: 廣嶋 玲子/作, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2015.09'}
+  - id: 85cd4c92-a414-4c7b-a517-c6e8958fa3ef
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン [8]', bib1_author: 廣嶋 玲子/作, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.9'}
+  - id: c33cbd5b-22d7-4425-8db3-e5d4b7c7cd81
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン ナコと太陽のきずな, bib1_author: '廣嶋玲子∥作, ほか', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.9'}
+  - id: 40eb1968-1e4a-4619-9b75-178f76213cc5
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン/[8]/角川つばさ文庫', bib1_author: 廣嶋/玲子‖作, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.09'}
+  - id: b55066e9-4569-438d-831e-57d260c43489
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン ナコと太陽のきずな  角川つばさ文庫 Aひ4-8, bib1_author: 廣嶋玲子/作, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.09'}
+  - id: 7e381514-2e5b-4178-a5b4-67762446b201
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 〔8〕 ナコと太陽のきずな(角川つばさ文庫), bib1_author: 廣嶋 玲子, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2015/09}
+  - id: 99a65c4d-8e1f-45a0-af5a-6e93c2a55029
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン 〔8〕  [角川つばさ文庫] (Aひ4-8)', bib1_author: 廣嶋玲子/作, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.9'}
+  - id: df2cd7ec-ccd1-4d95-a0b3-7337d4c8b644
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン [8]', bib1_author: 廣嶋 玲子/作, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.9'}
+  - id: ee2b0cc2-0d01-4c36-bfd0-d1a6ac0afbdc
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン [8]', bib1_author: 廣嶋 玲子/作, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2015.9'}
+  - id: 32c28391-4b92-4f86-af8e-4b0547b41333
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 〔8〕 角川つばさ文庫 Aひ4-8, bib1_author: 廣嶋 玲子/作, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2015.09'}
+  - id: 6a7ef9c6-204e-4f98-a7a4-63f9d3bc9728
+    cluster_id: '4046315008'
+    data: {bib1_title: 魔女犬ボンボン 8 ナコと太陽のきずな 角川つばさ文庫 A ひ 4-8, bib1_author: 廣嶋 玲子/著,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2015'}
+  - id: e9936824-48f0-45ae-a28e-3ec613df8872
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン [8] 角川つばさ文庫 Aひ4-8', bib1_author: 廣嶋 玲子/作, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2015.09'}
+  - id: b6fa70c8-02d9-4302-9d14-6194859d8fef
+    cluster_id: '4046315008'
+    data: {bib1_title: '魔女犬ボンボン ナコと太陽のきずな   [角川つばさ文庫] (Aひ4-8)', bib1_author: 廣嶋玲子/作,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2015.9'}
+  - id: f0426d21-5cdb-47e4-a855-d2d5ab1928ed
+    cluster_id: '4046315008'
+    data: {bib1_title: ' 魔女犬ボンボン [8] ナコと太陽のきずな 角川つばさ文庫 Aひ4-8', bib1_author: 廣嶋 玲子/作,
+      bib1_publisher: KADOKAWA, bib1_pubdate: '2015.9'}
+  '4000080229':
+  - id: a0dab0ac-269d-4f1b-b02a-14287c162eb3
+    cluster_id: '4000080229'
+    data: {bib1_title: 'アンコール 岩宮武二 写真集 ', bib1_author: 岩宮武二/写真, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1984.12'}
+  - id: 93332f4b-a130-43fa-9f85-8b93a18bdd1c
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール 岩宮武二写真集, bib1_author: 岩宮 武二, bib1_publisher: 岩波書店, bib1_pubdate: '198412'}
+  - id: b763cd3c-17c4-4c3d-9b80-eee2c8b28d56
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール  岩宮武二写真集, bib1_author: 岩宮 武二/写真, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1984.12'}
+  - id: 1c6e9474-f08a-409a-bb0e-6b378bd40715
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール 岩宮武二写真集, bib1_author: 岩宮 武二/写真, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1984'}
+  - id: edd85ad3-18ec-4533-a4c1-9886ba2b433f
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール 岩宮武二写真集, bib1_author: 岩宮 武二/写真, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1984'}
+  - id: 42ff9b8f-ad85-427d-addd-bef667a97083
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール 岩宮武二写真集, bib1_author: 岩宮武二写真撮影, bib1_publisher: 岩波書店,
+      bib1_pubdate: '1984'}
+  - id: 48296081-38fd-48d0-947a-fdf8c35704fe
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール 岩宮武二写真集, bib1_author: 岩宮 武二/写真, bib1_publisher: '東京:岩波書店',
+      bib1_pubdate: '1984.12'}
+  - id: 705ae8ab-9f48-4ec2-9117-b7b693544ae0
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール 岩宮武二写真集, bib1_author: 岩宮武二 石澤良昭 解説, bib1_publisher: 岩波書店,
+      bib1_pubdate: 1984/12/19}
+  - id: db543201-d695-4808-921c-00febfb9ac86
+    cluster_id: '4000080229'
+    data: {bib1_title: アンコール, bib1_author: 岩宮 武二, bib1_publisher: 岩波書店, bib1_pubdate: 1984/12}
+  - id: 24d5bb39-6d5c-4cca-86c2-79401d29599f
+    cluster_id: '4000080229'
+    data: {bib1_title: 'アンコール : 岩宮武二写真集', bib1_author: 岩宮武二写真撮影, bib1_publisher: 岩波書店,
+      bib1_pubdate: 1984/12}
+  '4040663438':
+  - id: 622ea274-985d-4a0e-84d1-e59fdeb58cc1
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: 2014/03}
+  - id: f18bfdf5-aee8-412b-b6ee-fb53ca9c50bd
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2014.03'}
+  - id: 05050b87-51e7-4b0f-a163-06926bbd3e2b
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.03'}
+  - id: e476880a-ccfe-49de-859b-cb89baca578e
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2014.03'}
+  - id: e192cf52-bc53-4002-9b8a-544b6e579928
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014'}
+  - id: 315f6deb-ffc7-42eb-bb47-28acad4e76b9
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: '', bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014'}
+  - id: 0f071e7e-98a0-4787-8b85-6ad7a120cc4f
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: KADOKAWA(発売),
+      bib1_pubdate: '2014.03'}
+  - id: 18fea087-7fe6-4d5c-8bda-3ca0a5d7b791
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014'}
+  - id: 5b3e01ae-c8d2-4cab-b68e-a41732942eba
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: '東京:KADOKAWA',
+      bib1_pubdate: '2014.03'}
+  - id: c30b0f33-c03c-4611-8874-dfd65a000f57
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '201403'}
+  - id: cfd0ea16-7b32-4bf6-9bd0-ede015930dea
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.03'}
+  - id: 54a1e17a-7bc2-41dc-8c59-b69fb4a37be3
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村 美香(著), bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.3'}
+  - id: 405ff957-f002-4ff1-8d6e-309dcf188896
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村美香著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014'}
+  - id: 3deb49a3-f131-4143-bf0f-6ab58f7134cb
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.3'}
+  - id: e867cd9c-0dd1-49b7-891d-b8abcdfe2260
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.3'}
+  - id: 8fde356d-1948-4adc-9491-59efd56b06a2
+    cluster_id: '4040663438'
+    data: {bib1_title: ミセス美香のはじめての美的ハウスキーピング, bib1_author: 中村美香/著, bib1_publisher: KADOKAWA,
+      bib1_pubdate: '2014.3'}
+  '4054012191':
+  - id: 7f2224e3-a4c2-4901-a58c-3dfa334fe721
+    cluster_id: '4054012191'
+    data: {bib1_title: '安倍晴明占術大全    『【ホ】【キ】内伝金烏玉兎集』現代語訳総解説   [Esoterica selection]',
+      bib1_author: 藤巻一保/訳・解説, bib1_publisher: 学研, bib1_pubdate: '2000.9'}
+  - id: 4a3797b7-f004-4f71-b082-5519ea0285c5
+    cluster_id: '4054012191'
+    data: {bib1_title: '安倍晴明占術大全:『【ホ】【キ】内伝金烏玉兎集』現代語訳総解説', bib1_author: '', bib1_publisher: '',
+      bib1_pubdate: ''}
+  - id: c35cc310-c043-4b2f-aced-7e5b5089539a
+    cluster_id: '4054012191'
+    data: {bib1_title: 安倍晴明占術大全 Esoterica selection, bib1_author: 藤巻一保∥訳・解説, bib1_publisher: 学習研究社,
+      bib1_pubdate: '2000.9'}
+  - id: 84a26a70-5060-469c-963f-fe0cb671a39a
+    cluster_id: '4054012191'
+    data: {bib1_title: '安倍晴明占術大全 ', bib1_author: 藤巻 一保/訳・解説, bib1_publisher: '東京:学研',
+      bib1_pubdate: '2000.09'}
+  - id: c7eedf51-e2d5-4ed0-a5e3-1bcf4097485b
+    cluster_id: '4054012191'
+    data: {bib1_title: 安倍晴明占術大全 『【ホ】【キ】内伝金烏玉兎集』現代語訳総解説, bib1_author: '藤巻/一保‖訳・解説[フジマキ,カズホ]',
+      bib1_publisher: 学研, bib1_pubdate: '2000.9'}
+  - id: fdb0c377-02ee-4132-ad04-7d3de833c8c2
+    cluster_id: '4054012191'
+    data: {bib1_title: 安倍晴明占術大全, bib1_author: 藤巻 一保/訳・解説, bib1_publisher: 学研, bib1_pubdate: '2000.9'}
+  - id: 37ed818b-fec7-4f5d-8ff5-9fd63a04f1bf
+    cluster_id: '4054012191'
+    data: {bib1_title: '安倍晴明占術大全 ', bib1_author: 藤巻 一保/訳・解説, bib1_publisher: '東京:学研',
+      bib1_pubdate: '2000.09'}
