@@ -14,37 +14,56 @@ FASTTEXT_EN_MODEL_PATH = "fasttext_models/cc.en.300.bin"  # 必要に応じて
 loaded_models = {}
 
 
-def load_fasttext_model(lang="ja"):
+def load_fasttext_model(lang="ja", model_full_path=None):
     """
-    指定された言語のfastTextモデルをロードします。
-    既にロードされていればキャッシュから返します。
+    指定された言語のfastTextモデル、または指定されたパスのモデルをロードします。
+    既にロードされていればキャッシュから返します（パス指定の場合はパスをキーとする）。
     """
     global loaded_models
-    model_path = ""
-    if lang == "ja":
-        model_path = FASTTEXT_JA_MODEL_PATH
-    elif lang == "en":
-        model_path = FASTTEXT_EN_MODEL_PATH
+
+    # model_full_pathが指定されていればそれを使用
+    if model_full_path:
+        # パス指定の場合、キャッシュキーはパスそのもの
+        if model_full_path in loaded_models:
+            return loaded_models[model_full_path]
+
+        effective_model_path = model_full_path
+        cache_key = model_full_path  # キャッシュのキーをパスにする
+        load_message_lang_part = f"path {model_full_path}"  # ログメッセージ用
     else:
-        raise ValueError(f"Unsupported language: {lang}. Supported: 'ja', 'en'.")
+        # model_full_pathが未指定の場合、従来のlangベースの処理
+        if lang == "ja":
+            effective_model_path = FASTTEXT_JA_MODEL_PATH
+        elif lang == "en":
+            effective_model_path = FASTTEXT_EN_MODEL_PATH
+        else:
+            print(f"Error: Unsupported language: {lang} when model_full_path is not provided.")
+            return None  # or raise ValueError
 
-    if lang in loaded_models:
-        # print(f"Returning cached fastText model for {lang}.")
-        return loaded_models[lang]
+        if not effective_model_path:  # langが不正でパスが設定されなかった場合
+            print(f"Error: Could not determine model path for lang '{lang}'.")
+            return None
 
-    if not os.path.exists(model_path):
-        print(f"Error: fastText model not found at {model_path}")
-        print("Please run the download script (e.g., fasttext/init.py) first.")
+        # lang指定の場合、キャッシュキーはlang
+        if lang in loaded_models:
+            return loaded_models[lang]
+        cache_key = lang  # キャッシュのキーを言語にする
+        load_message_lang_part = f"lang {lang} from {effective_model_path}"  # ログメッセージ用
+
+    if not os.path.exists(effective_model_path):
+        print(f"Error: fastText model not found at {effective_model_path}")
+        if not model_full_path:  # lang指定で内部パスが見つからない場合
+            print("Please run the download script (e.g., fasttext/init.py) first, or ensure model paths are correct.")
         return None
 
-    print(f"Loading fastText model for {lang} from {model_path}...")
+    print(f"Loading fastText model for {load_message_lang_part}...")
     try:
-        model = fasttext.load_model(model_path)
-        loaded_models[lang] = model
-        print(f"fastText model for {lang} loaded successfully.")
+        model = fasttext.load_model(effective_model_path)
+        loaded_models[cache_key] = model  # 適切なキーでキャッシュ
+        print(f"fastText model for {load_message_lang_part} loaded successfully.")
         return model
     except Exception as e:
-        print(f"Error loading fastText model for {lang}: {e}")
+        print(f"Error loading fastText model ({load_message_lang_part}): {e}")
         return None
 
 

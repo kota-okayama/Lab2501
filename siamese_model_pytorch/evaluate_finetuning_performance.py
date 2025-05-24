@@ -4,6 +4,7 @@ import os
 import time  # API呼び出しのレート制限対策用
 import yaml
 import pandas as pd
+import itertools
 from sklearn.metrics import (
     precision_recall_fscore_support,
     adjusted_rand_score,
@@ -11,40 +12,38 @@ from sklearn.metrics import (
     v_measure_score,
     homogeneity_score,
     completeness_score,
+    confusion_matrix,
 )
 import networkx as nx
 from openai import OpenAI  # もしV1未満の古いライブラリをお使いの場合は要調整
+import argparse
 
-# --- グローバル設定 ---
+# --- グローバル設定 (デフォルト値として使用) ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT_ASSUMED = os.path.abspath(os.path.join(BASE_DIR, ".."))
 
-# 入力ファイル
-PROJECT_ROOT_ASSUMED = os.path.abspath(os.path.join(BASE_DIR, ".."))  # 必要に応じて調整
-BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT = "benchmark/bib_japan_20241024/1k"
-RECORD_YAML_FILENAME = "record.yml"
-RECORD_YAML_PATH = os.path.join(PROJECT_ROOT_ASSUMED, BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT, RECORD_YAML_FILENAME)
+DEFAULT_RECORD_YAML_DIR_RELATIVE_TO_PROJECT_ROOT = "benchmark/bib_japan_20241024"
+DEFAULT_RECORD_YAML_FILENAME = "extract_subset_10k.yml"
+DEFAULT_EVAL_PAIRS_CSV_DIR_RELATIVE_TO_BASE_DIR = "."  # スクリプトと同じ場所
+DEFAULT_EVAL_PAIRS_CSV_FILENAME = "evaluation_candidate_pairs.csv"
+DEFAULT_OUTPUT_DIR_RELATIVE_TO_BASE_DIR = "evaluation_results"
+DEFAULT_MODEL_ID_BEFORE_FINETUNING = "gpt-4o-mini-2024-07-18"
+# MODEL_ID_AFTER_FINETUNING は引数で必須とする
 
-EVALUATION_PAIRS_CSV_FILENAME = "evaluation_candidate_pairs.csv"  # K近傍探索で見つかった候補ペア
-EVALUATION_PAIRS_CSV_PATH = os.path.join(
-    BASE_DIR, EVALUATION_PAIRS_CSV_FILENAME
-)  # prepare_finetuning_data.pyと同じ階層にあると仮定
+# グローバル変数は main 関数内でパスが確定してから設定
+RECORD_YAML_PATH = None
+EVALUATION_PAIRS_CSV_PATH = None
+OUTPUT_DIR = None  # グローバルスコープでは None で初期化
+PERFORMANCE_REPORT_PATH = None
+DETAILED_RESULTS_CSV_PATH = None
+CACHE_FILE_PATH = None
+# グローバルスコープでの os.makedirs 呼び出しは削除 (もし存在する場合)
 
-# 出力関連 (必要に応じて)
-OUTPUT_DIR = os.path.join(BASE_DIR, "evaluation_results")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-PERFORMANCE_REPORT_PATH = os.path.join(OUTPUT_DIR, "finetuning_performance_report.txt")
-DETAILED_RESULTS_CSV_PATH = os.path.join(OUTPUT_DIR, "detailed_evaluation_results.csv")
-
-# キャッシュ関連
-CACHE_FILE_PATH = os.path.join(OUTPUT_DIR, "llm_api_cache.json")
+# キャッシュデータ (グローバル)
 CACHE_DATA = {}
 
-# OpenAI APIクライアント (環境変数 OPENAI_API_KEY を設定しておくこと)
-try:
-    client = OpenAI()
-except Exception as e:
-    print(f"OpenAI APIクライアントの初期化に失敗しました。環境変数 OPENAI_API_KEY を確認してください。エラー: {e}")
-    client = None  # API呼び出しができないようにする
+# OpenAI APIクライアント (グローバル)
+client = None  # main の最初で初期化する
 
 # モデルID
 MODEL_ID_BEFORE_FINETUNING = "gpt-4o-mini-2024-07-18"
@@ -59,7 +58,10 @@ GROUND_TRUTH_CLUSTERS = {}
 # --- キャッシュ管理関数 ---
 def load_cache():
     """キャッシュファイルをロードする"""
-    global CACHE_DATA
+    global CACHE_DATA, CACHE_FILE_PATH
+    if not CACHE_FILE_PATH:
+        print("エラー: キャッシュファイルパスが設定されていません。ロードをスキップします。")
+        return
     if os.path.exists(CACHE_FILE_PATH):
         try:
             with open(CACHE_FILE_PATH, "r", encoding="utf-8") as f:
@@ -81,7 +83,10 @@ def load_cache():
 
 def save_cache():
     """メモリ上のキャッシュをファイルに保存する"""
-    global CACHE_DATA
+    global CACHE_DATA, CACHE_FILE_PATH
+    if not CACHE_FILE_PATH:
+        print("エラー: キャッシュファイルパスが設定されていません。保存をスキップします。")
+        return
     try:
         with open(CACHE_FILE_PATH, "w", encoding="utf-8") as f:
             json.dump(CACHE_DATA, f, ensure_ascii=False, indent=4)
@@ -228,7 +233,7 @@ def get_record_details_for_prompt(record_id):
 # --- LLM呼び出し関連関数 ---
 
 
-def get_llm_evaluation_for_pair(record_id_1, record_id_2, model_id):
+def get_llm_evaluation_for_pair(record_id_1, record_id_2, model_id, openai_client):
     """
     指定されたモデルIDを使用し、2つの書誌レコードのペアが同一かLLMに判定させる。
     結果はキャッシュされる。
@@ -251,7 +256,7 @@ def get_llm_evaluation_for_pair(record_id_1, record_id_2, model_id):
             # 予期しないキャッシュ形式の場合は、キャッシュを無視してAPIを呼び出す
             print(f"警告: キャッシュキー {cache_key} のデータ形式が不正です。APIを呼び出します。")
 
-    if not client:
+    if not openai_client:
         return None, None, "OpenAI APIクライアントが初期化されていません。"
 
     bib_info_1 = get_record_details_for_prompt(record_id_1)
@@ -278,7 +283,7 @@ def get_llm_evaluation_for_pair(record_id_1, record_id_2, model_id):
         # レート制限を考慮して少し待機 (必要に応じて調整)
         time.sleep(0.1)  # 0.1秒待機
 
-        completion = client.chat.completions.create(
+        completion = openai_client.chat.completions.create(
             model=model_id,
             messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
             temperature=0.0,  # 再現性のため温度は低めに設定
@@ -399,7 +404,7 @@ def format_clusters_with_details(predicted_clusters, bib_data_dict):
     return sorted_grouped_clusters
 
 
-def evaluate_model_on_pairs(model_id, pairs_to_evaluate, all_record_ids_in_pairs):
+def evaluate_model_on_pairs(model_id, pairs_to_evaluate, all_record_ids_in_pairs, openai_client):
     """
     指定されたモデルで全評価ペアを判定し、結果を収集する。
     Args:
@@ -444,7 +449,7 @@ def evaluate_model_on_pairs(model_id, pairs_to_evaluate, all_record_ids_in_pairs
 
         ground_truths.append(is_truly_similar)
 
-        llm_is_similar, llm_score, error_msg = get_llm_evaluation_for_pair(r_id1, r_id2, model_id)
+        llm_is_similar, llm_score, error_msg = get_llm_evaluation_for_pair(r_id1, r_id2, model_id, openai_client)
 
         if error_msg:
             errors.append(((r_id1, r_id2), error_msg))
@@ -476,18 +481,54 @@ def evaluate_model_on_pairs(model_id, pairs_to_evaluate, all_record_ids_in_pairs
 
 
 def calculate_pairwise_metrics(ground_truths, predictions, model_name=""):
-    """ペアごとの評価指標を計算する"""
+    """ペアごとの評価指標と混合行列を計算する"""
     precision, recall, f1, _ = precision_recall_fscore_support(
         ground_truths, predictions, average="binary", zero_division=0
     )
     # average='binary' は Positiveクラスに対する指標。TrueがPositive。
     # もしmulti-classの場合は average='weighted' や 'macro' も検討。
 
+    # 混合行列の計算: labels=[False, True] を指定して順序を明確にする
+    # True: 一致ペア (Positive), False: 不一致ペア (Negative)
+    # cm[0,0] = TN, cm[0,1] = FP, cm[1,0] = FN, cm[1,1] = TP
+    cm = confusion_matrix(ground_truths, predictions, labels=[False, True])
+    # labels=[False, True] を指定した場合、cm は通常2x2。
+    # ground_truths や predictions が空、または単一クラスのみの場合の挙動も考慮。
+    if cm.size == 4:
+        tn, fp, fn, tp = cm.ravel()
+    elif cm.size == 1 and len(set(ground_truths)) == 1:  # 全て同じ正解ラベルで、予測も全てそのラベルなど
+        label_val = list(set(ground_truths))[0]
+        if label_val == False:  # All TN
+            tn, fp, fn, tp = cm.item(), 0, 0, 0
+        else:  # All TP
+            tn, fp, fn, tp = 0, 0, 0, cm.item()
+    else:  # 予期しないケースや、より複雑な片側だけの予測など。
+        print(
+            f"警告: {model_name} の混合行列が予期せぬ形状 {cm.shape} / サイズ {cm.size} です。 TN/FP/FN/TP は0として扱われる可能性があります。"
+        )
+        # 安全のため、明示的に初期化し、可能な範囲でcmから取得試行
+        tn, fp, fn, tp = 0, 0, 0, 0
+        if cm.shape == (2, 2):  # 再度確認
+            tn, fp, fn, tp = cm[0, 0], cm[0, 1], cm[1, 0], cm[1, 1]
+        # ここはさらに詳細な分岐が必要になる場合もあるが、多くは labels 指定でカバーされるはず
+
     print(f"\n--- {model_name} ペアワイズ評価指標 ---")
-    print(f"  適合率 (Precision): {precision:.4f}")
-    print(f"  再現率 (Recall):    {recall:.4f}")
+    print(f"  混合行列 (Positive: 一致ペア, Negative: 不一致ペア):")
+    print(
+        f"  +----------------+-----------------+-----------------+\n  | {'Ground Truth':^14} | {'Predicted: Pos':^15} | {'Predicted: Neg':^15} |"
+    )
+    print(f"  +================+=================+=================+")
+    print(f"  | {'Positive':<14} | TP: {tp:<12d} | FN: {fn:<12d} |")
+    print(
+        f"  +----------------+-----------------+-----------------+\n  | {'Negative':<14} | FP: {fp:<12d} | TN: {tn:<12d} |"
+    )
+    print(
+        f"  +----------------+-----------------+-----------------+\n  適合率 (Precision): {precision:.4f} (TP / (TP + FP))"
+    )
+    print(f"  再現率 (Recall):    {recall:.4f} (TP / (TP + FN))")
     print(f"  F1スコア:           {f1:.4f}")
-    return {"precision": precision, "recall": recall, "f1_score": f1}
+
+    return {"precision": precision, "recall": recall, "f1_score": f1, "tn": tn, "fp": fp, "fn": fn, "tp": tp}
 
 
 def form_predicted_clusters(positive_pairs, all_record_ids):
@@ -558,71 +599,123 @@ def calculate_clustering_metrics(true_cluster_map, pred_cluster_map, all_record_
     return {"ari": ari, "nmi": nmi, "homogeneity": homogeneity, "completeness": completeness, "v_measure": v_measure}
 
 
+# --- ヘルパー関数 (ファイル名サニタイズ用) ---
+def sanitize_model_name_for_filename(model_name):
+    """モデル名をファイル名として安全な形式に変換する。"""
+    if not model_name:
+        return "unknown_model"
+    # ファイル名に使えない文字をアンダースコアに置換
+    # Windowsでは \\ / : * ? \" < > | が使えない。Unix系では / と NUL。
+    # OpenAIのモデルIDは通常 : を含むので、これを置換対象の主とする。
+    # 他にも必要に応じて追加。
+    sanitized_name = model_name.replace(":", "_").replace("/", "-")
+    # 長すぎる場合は短縮することも検討できるが、ここでは行わない
+    return sanitized_name
+
+
 # --- メイン処理 ---
 
 
-def main():
+def main(args):
     """
     ファインチューニング前後のモデル性能評価を実行するメイン関数。
     """
-    global MODEL_ID_AFTER_FINETUNING  # main関数内で代入されることを明示
-    load_cache()  # ★★★ キャッシュをロード ★★★
+    global RECORD_YAML_PATH, EVALUATION_PAIRS_CSV_PATH, OUTPUT_DIR
+    global PERFORMANCE_REPORT_PATH, DETAILED_RESULTS_CSV_PATH, CACHE_FILE_PATH
+    global client
+
+    # パス設定
+    if args.record_yaml_dir:
+        record_yaml_base_dir = args.record_yaml_dir
+    else:
+        record_yaml_base_dir = os.path.join(PROJECT_ROOT_ASSUMED, DEFAULT_RECORD_YAML_DIR_RELATIVE_TO_PROJECT_ROOT)
+    RECORD_YAML_PATH = os.path.join(record_yaml_base_dir, args.record_yaml_filename)
+
+    if args.eval_pairs_csv_dir:
+        eval_pairs_base_dir = args.eval_pairs_csv_dir
+    else:
+        eval_pairs_base_dir = os.path.join(BASE_DIR, DEFAULT_EVAL_PAIRS_CSV_DIR_RELATIVE_TO_BASE_DIR)
+    EVALUATION_PAIRS_CSV_PATH = os.path.join(eval_pairs_base_dir, args.eval_pairs_csv_filename)
+
+    if args.output_dir:
+        OUTPUT_DIR = args.output_dir
+    else:
+        OUTPUT_DIR = os.path.join(BASE_DIR, DEFAULT_OUTPUT_DIR_RELATIVE_TO_BASE_DIR)
+
+    # OUTPUT_DIR が決定した後にディレクトリを作成
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    # OUTPUT_DIR を使って他のパスを設定
+    model_id_before_ft = args.model_before_ft
+    model_id_after_ft = args.model_after_ft
+
+    # モデル名に基づいてファイル名を生成
+    model_before_ft_sanitized = sanitize_model_name_for_filename(model_id_before_ft)
+    model_after_ft_sanitized = sanitize_model_name_for_filename(model_id_after_ft)
+
+    # 既存のファイル名定義を上書き
+    report_filename = (
+        f"finetuning_performance_report_before-{model_before_ft_sanitized}_after-{model_after_ft_sanitized}.txt"
+    )
+    detailed_csv_filename = (
+        f"detailed_evaluation_results_before-{model_before_ft_sanitized}_after-{model_after_ft_sanitized}.csv"
+    )
+    # cache_filename = f"llm_api_cache_before-{model_before_ft_sanitized}_after-{model_after_ft_sanitized}.json"  # キャッシュファイルもモデル別に
+
+    PERFORMANCE_REPORT_PATH = os.path.join(OUTPUT_DIR, report_filename)
+    DETAILED_RESULTS_CSV_PATH = os.path.join(OUTPUT_DIR, detailed_csv_filename)
+    CACHE_FILE_PATH = os.path.join(OUTPUT_DIR, "llm_api_cache.json")  # グローバル変数を更新 (固定名に戻す)
+
+    try:
+        client = OpenAI()
+    except Exception as e:
+        print(f"OpenAI APIクライアントの初期化に失敗しました。環境変数 OPENAI_API_KEY を確認してください。エラー: {e}")
+        client = None
+
+    load_cache()
 
     try:
         print("評価処理を開始します...")
-        print(f"ファインチューニング前のモデルID: {MODEL_ID_BEFORE_FINETUNING}")
-        print(f"ファインチューニング後のモデルID: {MODEL_ID_AFTER_FINETUNING}")
+        print(
+            f"使用するパス:\n  書誌YAML: {RECORD_YAML_PATH}\n  評価ペアCSV: {EVALUATION_PAIRS_CSV_PATH}\n  出力ディレクトリ: {OUTPUT_DIR}"
+        )
+        print(f"ファインチューニング前のモデルID: {model_id_before_ft}")
+        print(f"ファインチューニング後のモデルID: {model_id_after_ft}")
 
         if not client:
             print("OpenAI APIクライアントが利用できません。処理を中断します。")
             return
 
-        # 1. データロード
         if not load_bib_data_and_gt_clusters(RECORD_YAML_PATH):
             return
-
         evaluation_pairs = load_evaluation_pairs(EVALUATION_PAIRS_CSV_PATH)
         if not evaluation_pairs:
             return
 
-        # evaluation_pairs = evaluation_pairs[:10]  # 最初の100ペアに制限
-        # print(f"注意: 評価対象を最初の {len(evaluation_pairs)} ペアに制限して実行します。")
-
-        # 評価対象ペアに含まれる全ユニークなレコードIDのセットを取得
-        all_record_ids_in_pairs = set()
-        for r_id1, r_id2 in evaluation_pairs:
-            all_record_ids_in_pairs.add(r_id1)
-            all_record_ids_in_pairs.add(r_id2)
-        all_record_ids_list = sorted(list(all_record_ids_in_pairs))  # 順序を固定するためソート
-
-        # 結果を格納するデータフレームの準備
+        all_record_ids_in_pairs = set(r_id for pair in evaluation_pairs for r_id in pair)
+        all_record_ids_list = sorted(list(all_record_ids_in_pairs))
         results_df_data = []
 
-        # 2. ファインチューニング「前」のモデル評価
         print("\n===== ファインチューニング「前」のモデル性能評価 =====")
-        results_before = evaluate_model_on_pairs(MODEL_ID_BEFORE_FINETUNING, evaluation_pairs, all_record_ids_in_pairs)
-
+        results_before = evaluate_model_on_pairs(model_id_before_ft, evaluation_pairs, all_record_ids_in_pairs, client)
         pairwise_metrics_before = calculate_pairwise_metrics(
-            results_before["ground_truths"], results_before["predictions"], MODEL_ID_BEFORE_FINETUNING
+            results_before["ground_truths"], results_before["predictions"], model_id_before_ft
         )
         pred_clusters_before = form_predicted_clusters(results_before["predicted_positive_pairs"], all_record_ids_list)
         clustering_metrics_before = calculate_clustering_metrics(
-            GROUND_TRUTH_CLUSTERS, pred_clusters_before, all_record_ids_list, MODEL_ID_BEFORE_FINETUNING
+            GROUND_TRUTH_CLUSTERS, pred_clusters_before, all_record_ids_list, model_id_before_ft
         )
 
-        # 3. ファインチューニング「後」のモデル評価
         print("\n===== ファインチューニング「後」のモデル性能評価 =====")
-        results_after = evaluate_model_on_pairs(MODEL_ID_AFTER_FINETUNING, evaluation_pairs, all_record_ids_in_pairs)
-
+        results_after = evaluate_model_on_pairs(model_id_after_ft, evaluation_pairs, all_record_ids_in_pairs, client)
         pairwise_metrics_after = calculate_pairwise_metrics(
-            results_after["ground_truths"], results_after["predictions"], MODEL_ID_AFTER_FINETUNING
+            results_after["ground_truths"], results_after["predictions"], model_id_after_ft
         )
         pred_clusters_after = form_predicted_clusters(results_after["predicted_positive_pairs"], all_record_ids_list)
         clustering_metrics_after = calculate_clustering_metrics(
-            GROUND_TRUTH_CLUSTERS, pred_clusters_after, all_record_ids_list, MODEL_ID_AFTER_FINETUNING
+            GROUND_TRUTH_CLUSTERS, pred_clusters_after, all_record_ids_list, model_id_after_ft
         )
 
-        # 4. 詳細結果のDataFrame作成とCSV保存
         for i, (r_id1, r_id2) in enumerate(results_before["processed_pairs"]):
             results_df_data.append(
                 {
@@ -643,100 +736,208 @@ def main():
                     ),
                 }
             )
-
         detailed_results_df = pd.DataFrame(results_df_data)
         try:
             detailed_results_df.to_csv(DETAILED_RESULTS_CSV_PATH, index=False, encoding="utf-8-sig")
             print(f"\n詳細な評価結果を {DETAILED_RESULTS_CSV_PATH} に保存しました。")
         except Exception as e:
-            print(f"エラー: 詳細な評価結果のCSV保存に失敗しました: {e}")
+            print(f"エラー: 詳細な評価結果のCSV保存に失敗: {e}")
 
-        # 5. パフォーマンスレポートの作成と保存
+        # === 全レコードペアを対象とした推論的ペアワイズ評価 ===
+        print("\n\n===== 全レコードペアを対象とした推論的ペアワイズ評価 =====")
+        all_record_ids_global = sorted(list(BIB_DATA.keys()))  # YAML由来の全てのレコードID
+
+        pairwise_metrics_all_before = None
+        pairwise_metrics_all_after = None
+
+        if len(all_record_ids_global) < 2:
+            print("評価対象のレコードが2件未満のため、全ペア評価はスキップします。")
+            # レポート用にダミーの指標を初期化 (あるいはレポート側で存在チェック)
+            empty_metrics = {"tn": 0, "fp": 0, "fn": 0, "tp": 0, "precision": 0, "recall": 0, "f1_score": 0}
+            pairwise_metrics_all_before = empty_metrics
+            pairwise_metrics_all_after = empty_metrics
+        else:
+            # 予測クラスタを全レコードスコープで構築
+            pred_clusters_all_scope_before = form_predicted_clusters(
+                results_before["predicted_positive_pairs"], all_record_ids_global
+            )
+            pred_clusters_all_scope_after = form_predicted_clusters(
+                results_after["predicted_positive_pairs"], all_record_ids_global
+            )
+
+            all_pairs_true_labels = []
+            all_pairs_pred_labels_before = []
+            all_pairs_pred_labels_after = []
+
+            num_total_pairs = len(all_record_ids_global) * (len(all_record_ids_global) - 1) // 2
+            print(f"全ペア推論評価: {len(all_record_ids_global)}C2 = {num_total_pairs} ペアのラベルを生成中...")
+
+            for r_id1, r_id2 in itertools.combinations(all_record_ids_global, 2):
+                # 正解ラベル
+                gt_c1 = GROUND_TRUTH_CLUSTERS.get(str(r_id1))
+                gt_c2 = GROUND_TRUTH_CLUSTERS.get(str(r_id2))
+                is_truly_similar = (
+                    gt_c1 is not None
+                    and gt_c2 is not None
+                    and not str(gt_c1).startswith("gt_orphan_")
+                    and not str(gt_c2).startswith("gt_orphan_")
+                    and str(gt_c1) == str(gt_c2)
+                )
+                all_pairs_true_labels.append(is_truly_similar)
+
+                # ファインチューニング前モデルの予測ラベル (クラスタベース)
+                pred_c1_b = pred_clusters_all_scope_before.get(str(r_id1))
+                pred_c2_b = pred_clusters_all_scope_before.get(str(r_id2))
+                all_pairs_pred_labels_before.append(pred_c1_b is not None and pred_c1_b == pred_c2_b)
+
+                # ファインチューニング後モデルの予測ラベル (クラスタベース)
+                pred_c1_a = pred_clusters_all_scope_after.get(str(r_id1))
+                pred_c2_a = pred_clusters_all_scope_after.get(str(r_id2))
+                all_pairs_pred_labels_after.append(pred_c1_a is not None and pred_c1_a == pred_c2_a)
+
+            print("全ペアのラベル生成完了。評価指標を計算します...")
+
+            if not all_pairs_true_labels:
+                print("全ペア評価のためのラベルが生成できませんでした。")
+                empty_metrics = {"tn": 0, "fp": 0, "fn": 0, "tp": 0, "precision": 0, "recall": 0, "f1_score": 0}
+                pairwise_metrics_all_before = empty_metrics
+                pairwise_metrics_all_after = empty_metrics
+            else:
+                pairwise_metrics_all_before = calculate_pairwise_metrics(
+                    all_pairs_true_labels, all_pairs_pred_labels_before, f"{model_id_before_ft} (全ペア推論)"
+                )
+                pairwise_metrics_all_after = calculate_pairwise_metrics(
+                    all_pairs_true_labels, all_pairs_pred_labels_after, f"{model_id_after_ft} (全ペア推論)"
+                )
+
+        # レポート内容の更新 (K近傍 + 全ペア)
         report_content = f"""# ファインチューニング性能評価レポート
-
 日付: {time.strftime("%Y-%m-%d %H:%M:%S")}
-
 ## 評価対象
 - 書誌データ: {RECORD_YAML_PATH}
-- 評価ペアリスト: {EVALUATION_PAIRS_CSV_PATH} ({len(evaluation_pairs)} ペア)
-- 評価対象レコード数: {len(all_record_ids_in_pairs)}
+- K近傍ペアリスト (LLM直接評価対象): {EVALUATION_PAIRS_CSV_PATH} ({len(evaluation_pairs)} ペア)
+- 全レコード数 (全ペア推論評価の母数): {len(all_record_ids_global)}
 
-## ファインチューニング前モデル ({MODEL_ID_BEFORE_FINETUNING})
-### ペアワイズ評価
-- 適合率 (Precision): {pairwise_metrics_before['precision']:.4f}
-- 再現率 (Recall):    {pairwise_metrics_before['recall']:.4f}
-- F1スコア:           {pairwise_metrics_before['f1_score']:.4f}
-- 判定エラー数:       {len(results_before['errors'])}
+## K近傍ペア評価 (LLMが直接判定したペアに基づく)
+### ファインチューニング前モデル ({model_id_before_ft})
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: {pairwise_metrics_before['tp']:<18d} | FN: {pairwise_metrics_before['fn']:<18d}
+  Actual: Negative  | FP: {pairwise_metrics_before['fp']:<18d} | TN: {pairwise_metrics_before['tn']:<18d}
+- 適合率: {pairwise_metrics_before['precision']:.4f}, 再現率: {pairwise_metrics_before['recall']:.4f}, F1: {pairwise_metrics_before['f1_score']:.4f}
+- エラー数: {len(results_before['errors'])}
 
-### クラスタリング評価
+### クラスタリング評価 (K近傍ペアのLLM判定結果から形成されたクラスタ - 評価対象: K近傍ペアに含まれるID群)
 - Adjusted Rand Index (ARI): {clustering_metrics_before['ari']:.4f}
 - Normalized Mutual Information (NMI): {clustering_metrics_before['nmi']:.4f}
-- Homogeneity:  {clustering_metrics_before['homogeneity']:.4f}
-- Completeness: {clustering_metrics_before['completeness']:.4f}
-- V-measure:    {clustering_metrics_before['v_measure']:.4f}
+- Homogeneity: {clustering_metrics_before['homogeneity']:.4f}, Completeness: {clustering_metrics_before['completeness']:.4f}, V-measure: {clustering_metrics_before['v_measure']:.4f}
 
-## ファインチューニング後モデル ({MODEL_ID_AFTER_FINETUNING})
-### ペアワイズ評価
-- 適合率 (Precision): {pairwise_metrics_after['precision']:.4f}
-- 再現率 (Recall):    {pairwise_metrics_after['recall']:.4f}
-- F1スコア:           {pairwise_metrics_after['f1_score']:.4f}
-- 判定エラー数:       {len(results_after['errors'])}
+### ファインチューニング後モデル ({model_id_after_ft})
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: {pairwise_metrics_after['tp']:<18d} | FN: {pairwise_metrics_after['fn']:<18d}
+  Actual: Negative  | FP: {pairwise_metrics_after['fp']:<18d} | TN: {pairwise_metrics_after['tn']:<18d}
+- 適合率: {pairwise_metrics_after['precision']:.4f}, 再現率: {pairwise_metrics_after['recall']:.4f}, F1: {pairwise_metrics_after['f1_score']:.4f}
+- エラー数: {len(results_after['errors'])}
 
-### クラスタリング評価
+### クラスタリング評価 (K近傍ペアのLLM判定結果から形成されたクラスタ - 評価対象: K近傍ペアに含まれるID群)
 - Adjusted Rand Index (ARI): {clustering_metrics_after['ari']:.4f}
 - Normalized Mutual Information (NMI): {clustering_metrics_after['nmi']:.4f}
-- Homogeneity:  {clustering_metrics_after['homogeneity']:.4f}
-- Completeness: {clustering_metrics_after['completeness']:.4f}
-- V-measure:    {clustering_metrics_after['v_measure']:.4f}
+- Homogeneity: {clustering_metrics_after['homogeneity']:.4f}, Completeness: {clustering_metrics_after['completeness']:.4f}, V-measure: {clustering_metrics_after['v_measure']:.4f}
+"""
+        # pairwise_metrics_all_before と pairwise_metrics_all_after が None でないことを確認してレポートに追加
+        if pairwise_metrics_all_before and pairwise_metrics_all_after:
+            report_content += f""" 
 
-## 考察ポイント
-- F1スコアは向上したか？
-- ARI/NMIは向上したか？
-- 判定エラー数は減少したか？
+## 全ペア推論評価 (LLM判定から形成されたクラスタに基づき、全レコード間のペアを推論)
+### ファインチューニング前モデル ({model_id_before_ft} - 全ペア推論)
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: {pairwise_metrics_all_before['tp']:<18d} | FN: {pairwise_metrics_all_before['fn']:<18d}
+  Actual: Negative  | FP: {pairwise_metrics_all_before['fp']:<18d} | TN: {pairwise_metrics_all_before['tn']:<18d}
+- 適合率: {pairwise_metrics_all_before['precision']:.4f}, 再現率: {pairwise_metrics_all_before['recall']:.4f}, F1: {pairwise_metrics_all_before['f1_score']:.4f}
+
+### ファインチューニング後モデル ({model_id_after_ft} - 全ペア推論)
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: {pairwise_metrics_all_after['tp']:<18d} | FN: {pairwise_metrics_all_after['fn']:<18d}
+  Actual: Negative  | FP: {pairwise_metrics_all_after['fp']:<18d} | TN: {pairwise_metrics_all_after['tn']:<18d}
+- 適合率: {pairwise_metrics_all_after['precision']:.4f}, 再現率: {pairwise_metrics_all_after['recall']:.4f}, F1: {pairwise_metrics_all_after['f1_score']:.4f}
 """
         try:
             with open(PERFORMANCE_REPORT_PATH, "w", encoding="utf-8") as f:
                 f.write(report_content)
             print(f"パフォーマンスレポートを {PERFORMANCE_REPORT_PATH} に保存しました。")
         except Exception as e:
-            print(f"エラー: パフォーマンスレポートの保存に失敗しました: {e}")
+            print(f"エラー: パフォーマンスレポートの保存に失敗: {e}")
 
-        # 予測クラスタ情報をJSONファイルに保存
         try:
-            # ファインチューニング前の予測クラスタ
-            if "pred_clusters_before" in locals() and pred_clusters_before:  # 変数が存在し、中身がある場合のみ保存
+            if "pred_clusters_before" in locals() and pred_clusters_before:
                 formatted_clusters_before = format_clusters_with_details(pred_clusters_before, BIB_DATA)
-                path_before_detailed = os.path.join(OUTPUT_DIR, "grouped_clusters_with_details_before_ft.json")
+                # モデル名を含めたファイル名に変更
+                filename_before_detailed = f"grouped_clusters_with_details_before-{model_before_ft_sanitized}.json"
+                path_before_detailed = os.path.join(OUTPUT_DIR, filename_before_detailed)
                 with open(path_before_detailed, "w", encoding="utf-8") as f:
                     json.dump(formatted_clusters_before, f, ensure_ascii=False, indent=4)
                 print(f"詳細なファインチューニング前予測クラスタ情報を {path_before_detailed} に保存しました。")
-
-            # ファインチューニング後の予測クラスタ
-            if "pred_clusters_after" in locals() and pred_clusters_after:  # 変数が存在し、中身がある場合のみ保存
+            if "pred_clusters_after" in locals() and pred_clusters_after:
                 formatted_clusters_after = format_clusters_with_details(pred_clusters_after, BIB_DATA)
-                path_after_detailed = os.path.join(OUTPUT_DIR, "grouped_clusters_with_details_after_ft.json")
+                # モデル名を含めたファイル名に変更
+                filename_after_detailed = f"grouped_clusters_with_details_after-{model_after_ft_sanitized}.json"
+                path_after_detailed = os.path.join(OUTPUT_DIR, filename_after_detailed)
                 with open(path_after_detailed, "w", encoding="utf-8") as f:
                     json.dump(formatted_clusters_after, f, ensure_ascii=False, indent=4)
                 print(f"詳細なファインチューニング後予測クラスタ情報を {path_after_detailed} に保存しました。")
         except Exception as e:
-            print(f"エラー: 詳細な予測クラスタ情報のJSON保存に失敗しました: {e}")
-
+            print(f"エラー: 詳細な予測クラスタ情報のJSON保存に失敗: {e}")
         print("\n評価処理が完了しました。")
-
     finally:
-        save_cache()  # ★★★ どんな時もキャッシュを保存 ★★★
+        save_cache()
 
 
 if __name__ == "__main__":
-    # ファインチューニング後のモデルIDを入力させる
-    model_id_after_ft_input = input(
-        "ファインチューニング後のモデルIDを入力してください (例: ft:gpt-4o-mini...): "
-    ).strip()
-    if not model_id_after_ft_input:
-        print("エラー: ファインチューニング後のモデルIDが入力されませんでした。処理を中断します。")
-    else:
-        # グローバル変数をここで設定
-        MODEL_ID_AFTER_FINETUNING = model_id_after_ft_input
+    parser = argparse.ArgumentParser(description="ファインチューニング前後のLLM性能を評価するスクリプト")
+    parser.add_argument(
+        "--record_yaml_dir",
+        type=str,
+        default=None,
+        help=f"書誌データYAMLファイルが格納されているディレクトリのパス。デフォルト: PROJECT_ROOT/{DEFAULT_RECORD_YAML_DIR_RELATIVE_TO_PROJECT_ROOT}",
+    )
+    parser.add_argument(
+        "--record_yaml_filename",
+        type=str,
+        default=DEFAULT_RECORD_YAML_FILENAME,
+        help=f"書誌データYAMLファイル名。デフォルト: {DEFAULT_RECORD_YAML_FILENAME}",
+    )
+    parser.add_argument(
+        "--eval_pairs_csv_dir",
+        type=str,
+        default=None,
+        help=f"評価ペアCSVファイルが格納されているディレクトリのパス。デフォルト: スクリプトの場所/{DEFAULT_EVAL_PAIRS_CSV_DIR_RELATIVE_TO_BASE_DIR}",
+    )
+    parser.add_argument(
+        "--eval_pairs_csv_filename",
+        type=str,
+        default=DEFAULT_EVAL_PAIRS_CSV_FILENAME,
+        help=f"評価ペアCSVファイル名。デフォルト: {DEFAULT_EVAL_PAIRS_CSV_FILENAME}",
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        default=None,
+        help=f"評価結果を保存するディレクトリのパス。デフォルト: スクリプトの場所/{DEFAULT_OUTPUT_DIR_RELATIVE_TO_BASE_DIR}",
+    )
+    parser.add_argument(
+        "--model_before_ft",
+        type=str,
+        default=DEFAULT_MODEL_ID_BEFORE_FINETUNING,
+        help=f"ファインチューニング前のモデルID。デフォルト: {DEFAULT_MODEL_ID_BEFORE_FINETUNING}",
+    )
+    parser.add_argument("--model_after_ft", type=str, required=True, help="ファインチューニング後のモデルID (必須)")
 
-        # main処理関数の呼び出し
-        main()
+    parsed_args = parser.parse_args()
+    main(parsed_args)

@@ -3,17 +3,18 @@ import os
 import csv
 import time
 import sys
+import argparse
 
 # プロジェクトルートをPythonパスに追加 (他モジュールをインポートするため)
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-# --- 設定値 ---
-KNN_GRAPH_PATH = "siamese_model_pytorch/knn_graph"
-KNN_GRAPH_FILENAME = "scenarioC_graph_output.json"  # build_knn_graph.py で K=10 としたファイル名
-OUTPUT_PAIRS_PATH = "siamese_model_pytorch/llm_evaluation_pairs"
-OUTPUT_PAIRS_FILENAME = "evaluation_candidate_pairs_scenarios.csv"
+# --- デフォルト値設定 ---
+DEFAULT_KNN_GRAPH_FILENAME = "scenarioC_graph_output.json"
+DEFAULT_OUTPUT_PAIRS_FILENAME = "evaluation_candidate_pairs_scenarios.csv"
+DEFAULT_KNN_GRAPH_DIR_NAME = "knn_graph"
+DEFAULT_OUTPUT_CSV_DIR_NAME = "llm_evaluation_pairs"
 
 
 def extract_unique_pairs_from_knn_graph(knn_graph_path):
@@ -71,28 +72,55 @@ def save_pairs_to_csv(pairs, output_csv_path):
 
 
 if __name__ == "__main__":
-    # --- 設定 ---
-    # K近傍グラフのパス (build_knn_graph.pyの出力)
-    KNN_GRAPH_DIR = "knn_graph"
-    #    KNN_GRAPH_FILENAME = "knn_graph_k10.json"
+    parser = argparse.ArgumentParser(description="K近傍グラフからユニークなペアを抽出しCSVに保存するスクリプト")
+    parser.add_argument(
+        "--input_directory",
+        type=str,
+        default=None,
+        help=f"K近傍グラフファイルが格納されているディレクトリのパス。指定されない場合、スクリプトの場所の '{DEFAULT_KNN_GRAPH_DIR_NAME}' ディレクトリが使われます。",
+    )
+    parser.add_argument(
+        "--knn_graph_filename",
+        type=str,
+        default=DEFAULT_KNN_GRAPH_FILENAME,
+        help=f"K近傍グラフのファイル名 (デフォルト: {DEFAULT_KNN_GRAPH_FILENAME})",
+    )
+    parser.add_argument(
+        "--output_directory",
+        type=str,
+        default=None,
+        help=f"出力CSVファイルを保存するディレクトリのパス。指定されない場合、スクリプトの場所の '{DEFAULT_OUTPUT_CSV_DIR_NAME}' ディレクトリが使われます。",
+    )
+    parser.add_argument(
+        "--output_pairs_filename",
+        type=str,
+        default=DEFAULT_OUTPUT_PAIRS_FILENAME,
+        help=f"出力するCSVファイル名 (デフォルト: {DEFAULT_OUTPUT_PAIRS_FILENAME})",
+    )
+    args = parser.parse_args()
 
-    # 出力CSVファイルのパスとファイル名
-    OUTPUT_CSV_DIR = "."  # スクリプトと同じディレクトリに保存
-    #    OUTPUT_CSV_FILENAME = "evaluation_candidate_pairs.csv"
-    # --- 設定ここまで ---
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # 入力ディレクトリの決定
+    if args.input_directory:
+        input_dir = args.input_directory
+    else:
+        input_dir = os.path.join(script_dir, DEFAULT_KNN_GRAPH_DIR_NAME)
+
+    # 出力ディレクトリの決定
+    if args.output_directory:
+        output_dir = args.output_directory
+    else:
+        output_dir = os.path.join(script_dir, DEFAULT_OUTPUT_CSV_DIR_NAME)
 
     # ファイルパスの構築
-    # スクリプトのディレクトリを基準にする
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    knn_graph_path = os.path.join(script_dir, KNN_GRAPH_DIR, KNN_GRAPH_FILENAME)
+    knn_graph_path = os.path.join(input_dir, args.knn_graph_filename)
+    output_csv_path = os.path.join(output_dir, args.output_pairs_filename)
 
     # 出力ディレクトリが存在しない場合は作成
-    output_dir_full_path = os.path.join(script_dir, OUTPUT_CSV_DIR)
-    if not os.path.exists(output_dir_full_path):
-        os.makedirs(output_dir_full_path)
-        print(f"出力ディレクトリを作成しました: {output_dir_full_path}")
-
-    output_csv_path = os.path.join(output_dir_full_path, OUTPUT_PAIRS_FILENAME)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"出力ディレクトリを作成しました: {output_dir}")
 
     print(f"K近傍グラフファイル: {knn_graph_path}")
     print(f"出力CSVファイル: {output_csv_path}")
