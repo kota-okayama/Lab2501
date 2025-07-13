@@ -16,25 +16,38 @@ sys.path.append(PROJECT_ROOT)
 
 
 def run_command(command, description):
-    """コマンドを実行して結果を表示"""
+    """コマンドを実行して結果をリアルタイムで表示"""
     print(f"\n{'='*60}")
     print(f"実行中: {description}")
     print(f"コマンド: {' '.join(command)}")
     print('='*60)
     
     try:
-        result = subprocess.run(command, check=True, capture_output=True, text=True)
-        print(result.stdout)
-        if result.stderr:
-            print("警告/エラー出力:")
-            print(result.stderr)
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            encoding='utf-8',
+            bufsize=1  # 行単位のバッファリング
+        )
+
+        if process.stdout:
+            for line in iter(process.stdout.readline, ''):
+                print(line, end='')
+        
+        process.wait()
+
+        if process.returncode != 0:
+            print(f"\nエラー: コマンドが失敗しました (終了コード: {process.returncode})")
+            return False
+        
         return True
-    except subprocess.CalledProcessError as e:
-        print(f"エラー: コマンドが失敗しました (終了コード: {e.returncode})")
-        print("標準出力:")
-        print(e.stdout)
-        print("エラー出力:")
-        print(e.stderr)
+    except FileNotFoundError as e:
+        print(f"エラー: コマンド '{e.filename}' が見つかりません。PATHが通っているか確認してください。")
+        return False
+    except Exception as e:
+        print(f"コマンド実行中に予期せぬエラーが発生しました: {e}")
         return False
 
 
@@ -113,6 +126,7 @@ def main():
     if not args.skip_embedding:
         embed_command = [
             sys.executable,
+            "-u", # 出力バッファリングを無効化
             str(multi_embed_script),
             "--record_yaml_path", args.record_yaml_path,
             "--output_embeddings_path", str(embeddings_dir / "embeddings_template.npy"),
@@ -141,6 +155,7 @@ def main():
     if not args.skip_graph_building:
         graph_command = [
             sys.executable,
+            "-u", # 出力バッファリングを無効化
             str(multi_graph_script),
             "--embedding_summary_path", str(summary_file),
             "--k_neighbors", str(args.k_neighbors),
