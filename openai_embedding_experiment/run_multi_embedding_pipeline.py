@@ -8,209 +8,120 @@ import sys
 import argparse
 import subprocess
 import json
-from pathlib import Path
 
-# プロジェクトルートをパスに追加
+# プロジェクトのルートディレクトリをパスに追加
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(PROJECT_ROOT)
 
 
-def run_command(command, description):
-    """コマンドを実行して結果をリアルタイムで表示"""
-    print(f"\n{'='*60}")
-    print(f"実行中: {description}")
-    print(f"コマンド: {' '.join(command)}")
-    print('='*60)
-    
-    try:
-        process = subprocess.Popen(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            encoding='utf-8',
-            bufsize=1  # 行単位のバッファリング
-        )
-
-        if process.stdout:
-            for line in iter(process.stdout.readline, ''):
-                print(line, end='')
-        
-        process.wait()
-
-        if process.returncode != 0:
-            print(f"\nエラー: コマンドが失敗しました (終了コード: {process.returncode})")
-            return False
-        
-        return True
-    except FileNotFoundError as e:
-        print(f"エラー: コマンド '{e.filename}' が見つかりません。PATHが通っているか確認してください。")
-        return False
-    except Exception as e:
-        print(f"コマンド実行中に予期せぬエラーが発生しました: {e}")
-        return False
-
-
-def main():
+def run_pipeline():
+    """エンベディング生成とグラフ構築のパイプラインを実行するメイン関数"""
     parser = argparse.ArgumentParser(
-        description="多フィールドエンベディング→K近傍グラフ統合の全パイプライン実行"
+        description="複数フィールドのエンベディング生成とK近傍グラフ構築・統合を行うパイプライン",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
+
+    # 必須引数
+    parser.add_argument("--record_yaml_path", required=True, help="入力レコードのYAMLファイルパス")
+    parser.add_argument("--output_base_dir", required=True, help="全ての出力ファイルのベースディレクトリ")
     
-    # 入力ファイル
+    # オプション引数
+    parser.add_argument("--openai_model", default="text-embedding-ada-002", help="OpenAIエンベディングモデル")
+    parser.add_argument("--api_batch_size", type=int, default=50, help="エンベディング生成時のAPIバッチサイズ")
     parser.add_argument(
-        "--record_yaml_path", type=str, required=True,
-        help="入力YAMLファイルのパス"
+        "--embedding_combinations",
+        type=str,
+        default="full",
+        help="生成するエンベディングの組み合わせをセミコロンで区切って指定 (例: 'full;title;[title,author]')。デフォルトは 'full'。"
     )
-    
-    # 出力ディレクトリ
-    parser.add_argument(
-        "--output_base_dir", type=str, required=True,
-        help="出力ベースディレクトリ"
-    )
-    
-    # エンベディング設定
-    parser.add_argument(
-        "--openai_model", type=str, default="text-embedding-ada-002",
-        help="OpenAI エンベディングモデル"
-    )
-    parser.add_argument(
-        "--api_batch_size", type=int, default=50,
-        help="API バッチサイズ"
-    )
-    
-    # フィールド組み合わせ選択
-    parser.add_argument(
-        "--selected_combinations", type=str, default="",
-        help="使用するフィールド組み合わせ (例: 'full,title_only,author_only')"
-    )
-    
-    # K近傍設定
-    parser.add_argument(
-        "--k_neighbors", type=int, default=15,
-        help="K近傍のK値"
-    )
+    parser.add_argument("--k_neighbors", type=int, default=15, help="K近傍のK値")
     
     # 実行制御
-    parser.add_argument(
-        "--skip_embedding", action="store_true",
-        help="エンベディング生成をスキップ (既存ファイルを使用)"
-    )
-    parser.add_argument(
-        "--skip_graph_building", action="store_true",
-        help="グラフ構築をスキップ"
-    )
+    parser.add_argument("--skip_embedding", action="store_true", help="エンベディング生成をスキップ")
+    parser.add_argument("--skip_graph_building", action="store_true", help="グラフ構築と統合をスキップ")
 
     args = parser.parse_args()
-    
+
     # 出力ディレクトリの準備
-    output_base = Path(args.output_base_dir)
-    embeddings_dir = output_base / "embeddings"
-    graphs_dir = output_base / "graphs"
-    
-    output_base.mkdir(parents=True, exist_ok=True)
-    embeddings_dir.mkdir(exist_ok=True)
-    graphs_dir.mkdir(exist_ok=True)
-    
-    print(f"出力ベースディレクトリ: {output_base}")
+    embeddings_dir = os.path.join(args.output_base_dir, "embeddings")
+    graphs_dir = os.path.join(args.output_base_dir, "graphs")
+    os.makedirs(embeddings_dir, exist_ok=True)
+    os.makedirs(graphs_dir, exist_ok=True)
+
+    print(f"出力ベースディレクトリ: {args.output_base_dir}")
     print(f"エンベディング出力: {embeddings_dir}")
     print(f"グラフ出力: {graphs_dir}")
-    
-    # スクリプトパス
-    current_dir = Path(__file__).parent
-    multi_embed_script = current_dir / "vectorize_multi_field_openai.py"
-    multi_graph_script = current_dir / "build_multi_knn_graph_openai.py"
-    
-    success = True
-    
-    # ステップ1: 複数フィールドエンベディング生成
+
+    # --- Step 1: 複数フィールドのエンベディングを生成 ---
     if not args.skip_embedding:
-        embed_command = [
-            sys.executable,
-            "-u", # 出力バッファリングを無効化
-            str(multi_embed_script),
+        print("\n" + "="*60)
+        print("実行中: 複数フィールドエンベディング生成")
+        vectorize_script = os.path.join(PROJECT_ROOT, "openai_embedding_experiment", "vectorize_multi_field_openai.py")
+        vectorize_command = [
+            sys.executable, "-u", vectorize_script,
             "--record_yaml_path", args.record_yaml_path,
-            "--output_embeddings_path", str(embeddings_dir / "embeddings_template.npy"),
+            "--output_base_dir", embeddings_dir,
             "--openai_model", args.openai_model,
-            "--api_batch_size", str(args.api_batch_size)
+            "--api_batch_size", str(args.api_batch_size),
+            "--embedding_combinations", args.embedding_combinations
         ]
+        print(f"コマンド: {' '.join(vectorize_command)}")
+        print("="*60)
         
-        if args.selected_combinations:
-            embed_command.extend(["--selected_combinations", args.selected_combinations])
-        
-        success = run_command(embed_command, "複数フィールドエンベディング生成")
-        
-        if not success:
+        result = subprocess.run(vectorize_command)
+        if result.returncode != 0:
             print("エンベディング生成に失敗しました。処理を中断します。")
-            return
+            sys.exit(1)
     else:
-        print("エンベディング生成をスキップしました")
-    
-    # エンベディングサマリーファイルの確認
-    summary_file = embeddings_dir / "embedding_summary.json"
-    if not summary_file.exists():
-        print(f"エラー: エンベディングサマリーファイルが見つかりません: {summary_file}")
-        return
-    
-    # ステップ2: K近傍グラフ構築と統合
+        print("\nエンベディング生成をスキップしました。")
+
+
+    # --- Step 2: K近傍グラフの構築と統合 ---
+    embedding_summary_path = os.path.join(embeddings_dir, "embedding_summary.json")
+    if not os.path.exists(embedding_summary_path):
+        print(f"エラー: エンベディングサマリーファイルが見つかりません: {embedding_summary_path}")
+        print("エンベディング生成ステップを先に実行してください。")
+        sys.exit(1)
+
     if not args.skip_graph_building:
+        print("\n" + "="*60)
+        print("実行中: K近傍グラフ構築と統合")
+        graph_script = os.path.join(PROJECT_ROOT, "openai_embedding_experiment", "build_multi_knn_graph_openai.py")
         graph_command = [
-            sys.executable,
-            "-u", # 出力バッファリングを無効化
-            str(multi_graph_script),
-            "--embedding_summary_path", str(summary_file),
+            sys.executable, "-u", graph_script,
+            "--embedding_summary_path", embedding_summary_path,
             "--k_neighbors", str(args.k_neighbors),
-            "--output_dir", str(graphs_dir)
+            "--output_dir", graphs_dir
         ]
-        
-        if args.selected_combinations:
-            graph_command.extend(["--selected_combinations", args.selected_combinations])
-        
-        success = run_command(graph_command, "K近傍グラフ構築と統合")
-        
-        if not success:
-            print("グラフ構築に失敗しました。")
-            return
+        print(f"コマンド: {' '.join(graph_command)}")
+        print("="*60)
+
+        result = subprocess.run(graph_command)
+        if result.returncode != 0:
+            print("グラフ構築と統合に失敗しました。処理を中断します。")
+            sys.exit(1)
     else:
-        print("グラフ構築をスキップしました")
-    
-    # 結果サマリーの表示
-    print(f"\n{'='*60}")
+        print("\nグラフ構築と統合をスキップしました。")
+
+
+    # --- 完了 ---
+    print("\n" + "="*60)
     print("パイプライン実行完了")
-    print('='*60)
+    print("="*60)
     
-    print(f"出力ディレクトリ: {output_base}")
+    summary = json.load(open(embedding_summary_path))
     
-    if embeddings_dir.exists():
-        embed_files = list(embeddings_dir.glob("embeddings_*.npy"))
-        print(f"生成されたエンベディングファイル: {len(embed_files)}個")
-        
-        if summary_file.exists():
-            with open(summary_file, 'r', encoding='utf-8') as f:
-                summary = json.load(f)
-            print("エンベディング詳細:")
-            for item in summary:
-                print(f"  - {item['name']}: {item['record_count']}件 "
-                     f"(次元: {item['dimension']})")
+    print(f"出力ディレクトリ: {args.output_base_dir}")
+    print(f"生成されたエンベディングファイル: {len(summary)}個")
+    print("エンベディング詳細:")
+    for s in summary:
+        print(f"  - {s['name']}: {s['record_count']} records")
+
+    print(f"個別グラフファイル: {len(summary)}個 (in {graphs_dir})")
     
-    if graphs_dir.exists():
-        graph_files = list(graphs_dir.glob("knn_graph_*.json"))
-        merged_files = list(graphs_dir.glob("merged_knn_graph_*.json"))
-        print(f"個別グラフファイル: {len(graph_files)}個")
-        print(f"統合グラフファイル: {len(merged_files)}個")
-        
-        # 統合サマリーがあれば表示
-        merge_summary_file = graphs_dir / f"merge_summary_k{args.k_neighbors}.json"
-        if merge_summary_file.exists():
-            with open(merge_summary_file, 'r', encoding='utf-8') as f:
-                merge_summary = json.load(f)
-            print("グラフ統合詳細:")
-            print(f"  - 統合前グラフ数: {len(merge_summary['source_combinations'])}")
-            print(f"  - 統合後ノード数: {merge_summary['merged_graph']['nodes']}")
-            print(f"  - 統合後エッジ数: {merge_summary['merged_graph']['edges']}")
-    
-    print(f"\nブロッキング用統合グラフ: {graphs_dir / f'merged_knn_graph_k{args.k_neighbors}.json'}")
-    print("パイプライン実行完了")
+    merged_graph_path = os.path.join(graphs_dir, f"merged_knn_graph_k{args.k_neighbors}.json")
+    print(f"ブロッキング用統合グラフ: {merged_graph_path}")
 
 
 if __name__ == "__main__":
-    main() 
+    run_pipeline()

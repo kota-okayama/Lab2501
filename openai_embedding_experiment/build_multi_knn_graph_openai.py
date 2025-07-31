@@ -240,6 +240,15 @@ def main():
         
     else:
         print(f"\n統合可能なグラフが{len(graph_list_for_merge)}個のため、統合をスキップします")
+        # グラフが1つの場合、それをmerged_graphとして扱う
+        if len(graph_list_for_merge) == 1:
+            single_graph = graph_list_for_merge[0]
+            merged_graph_path = os.path.join(
+                args.output_dir, f"merged_knn_graph_k{args.k_neighbors}.json"
+            )
+            with open(merged_graph_path, "w", encoding="utf-8") as f:
+                json.dump(single_graph, f, indent=2, ensure_ascii=False)
+            print(f"単一グラフを統合済みグラフとして保存: {merged_graph_path}")
 
     print("\n=== 処理完了 ===")
     print(f"個別グラフ数: {len(individual_graphs)}")

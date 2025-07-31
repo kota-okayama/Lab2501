@@ -9,13 +9,16 @@ import os
 import argparse
 import itertools
 import networkx as nx
-import numpy as np
 import pandas as pd
-from sklearn.metrics import precision_recall_fscore_support, confusion_matrix, adjusted_rand_score, normalized_mutual_info_score, v_measure_score, homogeneity_completeness_v_measure
+from sklearn.metrics import (
+    precision_recall_fscore_support, 
+    confusion_matrix, 
+    adjusted_rand_score, 
+    normalized_mutual_info_score, 
+    homogeneity_completeness_v_measure
+)
 from openai import AsyncOpenAI
-import openai
 from tqdm.asyncio import tqdm
-from tqdm import tqdm as tqdm_sync
 
 # --- グローバル変数 ---
 BIB_DATA = {}  # {record_id: bib_details_dict}
@@ -167,7 +170,7 @@ def load_evaluation_pairs(csv_path):
     
     with open(csv_path, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
-        header = next(reader, None)
+        header = next(reader, None)  # ヘッダー行を読み飛ばす
         
         for row in reader:
             if len(row) >= 2:
@@ -182,26 +185,87 @@ def load_evaluation_pairs(csv_path):
 
 def get_record_details_for_prompt(record_id):
     """
-    レコードIDから書誌情報を取得してプロンプト形式で返す
+    レコードIDから書誌情報を取得してプロンプト形式で返す（動的フィールド対応）
     """
     global BIB_DATA
     
     if record_id not in BIB_DATA:
-        return f"レコードID {record_id} の書誌情報なし"
+        # このメッセージは、load_bib_data_and_gt_clustersが正しく動作していれば通常表示されないはず
+        return f"レコードID {record_id} の書誌情報が内部データ構造(BIB_DATA)に見つかりません"
     
     record = BIB_DATA[record_id]
     details = []
     
-    for field in ['bib1_title', 'bib1_author', 'bib1_publisher', 'bib1_pubdate']:
-        value = record.get(field, '').strip()
-        if value:
+    # レコードのすべてのキーと値をループ処理
+    for field, value in record.items():
+        # 'record_id'フィールドは表示しない
+        if field == 'record_id':
+            continue
+        
+        # 値が文字列で、かつ空でない場合にのみ追加
+        if isinstance(value, str) and value.strip():
+            # 'bib1_'プレフィックスを削除して整形（存在する場合）
             field_name = field.replace('bib1_', '').title()
-            details.append(f"{field_name}: {value}")
-    
+            details.append(f"{field_name}: {value.strip()}")
+
     if not details:
-        return f"レコードID {record_id} に利用可能な書誌情報なし"
+        # BIB_DATAには存在するが、中身が空の場合
+        return f"レコードID {record_id} には表示可能な書誌情報フィールドがありません"
     
     return f"Record ID: {record_id}\n" + "\n".join(details)
+
+
+def get_prompts(data_type):
+    """データタイプに応じたプロンプトを返す"""
+    if data_type == "bib":
+        system_prompt = (
+            "あなたは2つの書誌情報が実質的に同一の文献を指すかどうかを判断する専門家です。\n"
+            "まず、2つの書誌情報が同一の文献と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
+            "あなたの判断は次のルールに厳密に従う必要があります：\n"
+            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
+            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+        )
+        user_prompt_template = (
+            "以下の2つの書誌情報が、実質的に同一の文献を指しているかどうかを判断してください。\n\n"
+            "情報1:\n{info_1}\n\n"
+            "情報2:\n{info_2}\n\n"
+            "これらは同一の文献ですか？\n回答:"
+        )
+    elif data_type == "music":
+        system_prompt = (
+            "あなたは2つの楽曲情報が実質的に同一の楽曲を指すかどうかを判断する専門家です。\n"
+            "まず、2つの楽曲情報が同一の楽曲と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
+            "あなたの判断は次のルールに厳密に従う必要があります：\n"
+            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
+            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+        )
+        user_prompt_template = (
+            "以下の2つの楽曲情報が、実質的に同一の楽曲を指しているかどうかを判断してください。\n\n"
+            "情報1:\n{info_1}\n\n"
+            "情報2:\n{info_2}\n\n"
+            "これらは同一の楽曲ですか？\n回答:"
+        )
+    elif data_type == "person":
+        system_prompt = (
+            "あなたは2つの人物情報が実質的に同一の人物を指すかどうかを判断する専門家です。\n"
+            "まず、2つの人物情報が同一の人物と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
+            "あなたの判断は次のルールに厳密に従う必要があります：\n"
+            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
+            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+        )
+        user_prompt_template = (
+            "以下の2つの人物情報が、実質的に同一の人物を指しているかどうかを判断してください。\n\n"
+            "情報1:\n{info_1}\n\n"
+            "情報2:\n{info_2}\n\n"
+            "これらは同一の人物ですか？\n回答:"
+        )
+    else:
+        raise ValueError(f"未知のデータタイプです: {data_type}")
+
+    return system_prompt, user_prompt_template
 
 
 class RateLimiter:
@@ -229,12 +293,16 @@ class RateLimiter:
             self.request_times.append(time.time())
 
 
-async def get_llm_evaluation_for_pair_async(client, record_id_1, record_id_2, model_id, rate_limiter):
+async def get_llm_evaluation_for_pair_async(client, record_id_1, record_id_2, model_id, rate_limiter, data_type):
     """
     非同期でLLM評価を実行する関数 (openaiライブラリ使用)
     """
     global CACHE_DATA
-    cache_key = f"{record_id_1}_{record_id_2}_{model_id}"
+    # data_typeが'bib'の場合はキーに含めず、それ以外は含める
+    if data_type == 'bib':
+        cache_key = f"{record_id_1}_{record_id_2}_{model_id}"
+    else:
+        cache_key = f"{record_id_1}_{record_id_2}_{model_id}_{data_type}"
     
     # キャッシュチェック
     if cache_key in CACHE_DATA:
@@ -243,28 +311,16 @@ async def get_llm_evaluation_for_pair_async(client, record_id_1, record_id_2, mo
             return cached_item["is_similar"], cached_item["score"], None
     
     # 書誌情報取得
-    bib_info_1 = get_record_details_for_prompt(record_id_1)
-    bib_info_2 = get_record_details_for_prompt(record_id_2)
+    info_1 = get_record_details_for_prompt(record_id_1)
+    info_2 = get_record_details_for_prompt(record_id_2)
     
-    if "情報取得エラー" in bib_info_1 or "書誌情報なし" in bib_info_1:
-        return None, None, f"レコード {record_id_1} の情報取得に失敗: {bib_info_1}"
-    if "情報取得エラー" in bib_info_2 or "書誌情報なし" in bib_info_2:
-        return None, None, f"レコード {record_id_2} の情報取得に失敗: {bib_info_2}"
+    if "見つかりません" in info_1 or "フィールドがありません" in info_1:
+        return None, None, f"レコード {record_id_1} の情報取得に失敗: {info_1}"
+    if "見つかりません" in info_2 or "フィールドがありません" in info_2:
+        return None, None, f"レコード {record_id_2} の情報取得に失敗: {info_2}"
     
-    system_prompt = (
-        "あなたは2つの書誌情報が実質的に同一の文献を指すかどうかを判断する専門家です。\n"
-        "まず、2つの書誌情報が同一の文献と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
-        "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
-        "あなたの判断は次のルールに厳密に従う必要があります：\n"
-        " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
-        " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
-    )
-    user_prompt = (
-        f"以下の2つの書誌情報が、実質的に同一の文献を指しているかどうかを判断してください。\n\n"
-        f"書誌情報1:\n{bib_info_1}\n\n"
-        f"書誌情報2:\n{bib_info_2}\n\n"
-        "これらは同一の文献ですか？\n回答:"
-    )
+    system_prompt, user_prompt_template = get_prompts(data_type)
+    user_prompt = user_prompt_template.format(info_1=info_1, info_2=info_2)
     
     try:
         # レート制限を適用
@@ -347,7 +403,7 @@ async def get_llm_evaluation_for_pair_async(client, record_id_1, record_id_2, mo
         return None, None, error_msg
 
 
-async def evaluate_model_on_pairs_async(model_id, pairs_to_evaluate, all_record_ids_in_pairs, api_key):
+async def evaluate_model_on_pairs_async(model_id, pairs_to_evaluate, all_record_ids_in_pairs, api_key, data_type):
     """
     非同期でモデル評価を実行する関数
     """
@@ -383,7 +439,7 @@ async def evaluate_model_on_pairs_async(model_id, pairs_to_evaluate, all_record_
             
             # LLM評価実行
             llm_is_similar, llm_score, error_msg = await get_llm_evaluation_for_pair_async(
-                client, r_id1, r_id2, model_id, rate_limiter
+                client, r_id1, r_id2, model_id, rate_limiter, data_type
             )
             
             if error_msg:
@@ -485,14 +541,14 @@ def calculate_pairwise_metrics(ground_truths, predictions, model_name=""):
             tn, fp, fn, tp = cm[0, 0], cm[0, 1], cm[1, 0], cm[1, 1]
     
     print(f"\n--- {model_name} ペアワイズ評価指標 ---")
-    print(f"  混合行列 (Positive: 一致ペア, Negative: 不一致ペア):")
-    print(f"  +----------------+-----------------+-----------------+")
+    print("  混合行列 (Positive: 一致ペア, Negative: 不一致ペア):")
+    print("  +----------------+-----------------+-----------------+")
     print(f"  | {'Ground Truth':^14} | {'Predicted: Pos':^15} | {'Predicted: Neg':^15} |")
-    print(f"  +================+=================+=================+")
+    print("  +================+=================+=================+")
     print(f"  | {'Positive':<14} | TP: {tp:<12d} | FN: {fn:<12d} |")
-    print(f"  +----------------+-----------------+-----------------+")
+    print("  +----------------+-----------------+-----------------+")
     print(f"  | {'Negative':<14} | FP: {fp:<12d} | TN: {tn:<12d} |")
-    print(f"  +----------------+-----------------+-----------------+")
+    print("  +----------------+-----------------+-----------------+")
     print(f"  適合率 (Precision): {precision:.4f} (TP / (TP + FP))")
     print(f"  再現率 (Recall):    {recall:.4f} (TP / (TP + FN))")
     print(f"  F1スコア:           {f1:.4f}")
@@ -579,17 +635,17 @@ async def main(args):
     pairs_to_evaluate, all_record_ids_in_pairs = load_evaluation_pairs(args.pairs_csv)
     all_record_ids_list = sorted(list(all_record_ids_in_pairs))
     
-    print(f"\n===== ファインチューニング前後のモデル性能比較評価 =====")
+    print("\n===== ファインチューニング前後のモデル性能比較評価 =====")
     print(f"ファインチューニング前のモデル: {args.model_before_ft}")
     print(f"ファインチューニング後のモデル: {args.model_after_ft}")
     print(f"最大同時リクエスト数: {MAX_CONCURRENT_REQUESTS}")
     print(f"1分間の最大リクエスト数: {REQUESTS_PER_MINUTE}")
     
     # ファインチューニング前のモデル評価
-    print(f"\n===== ファインチューニング「前」のモデル性能評価 =====")
+    print("\n===== ファインチューニング「前」のモデル性能評価 =====")
     start_time_before = time.time()
     results_before = await evaluate_model_on_pairs_async(
-        args.model_before_ft, pairs_to_evaluate, all_record_ids_in_pairs, api_key
+        args.model_before_ft, pairs_to_evaluate, all_record_ids_in_pairs, api_key, args.data_type
     )
     end_time_before = time.time()
     
@@ -612,10 +668,10 @@ async def main(args):
     )
     
     # ファインチューニング後のモデル評価
-    print(f"\n===== ファインチューニング「後」のモデル性能評価 =====")
+    print("\n===== ファインチューニング「後」のモデル性能評価 =====")
     start_time_after = time.time()
     results_after = await evaluate_model_on_pairs_async(
-        args.model_after_ft, pairs_to_evaluate, all_record_ids_in_pairs, api_key
+        args.model_after_ft, pairs_to_evaluate, all_record_ids_in_pairs, api_key, args.data_type
     )
     end_time_after = time.time()
     
@@ -638,7 +694,7 @@ async def main(args):
     )
     
     # 全ペア推論評価
-    print(f"\n===== 全ペア推論評価 =====")
+    print("\n===== 全ペア推論評価 =====")
     all_record_ids_global = sorted(list(BIB_DATA.keys()))
     
     if len(all_record_ids_global) >= 2:
@@ -815,7 +871,7 @@ async def main(args):
     # 最終的にキャッシュを保存
     save_cache()
     
-    print(f"\n===== 評価完了 =====")
+    print("\n===== 評価完了 =====")
     print(f"総処理時間: {(end_time_after - start_time_before):.2f}秒")
     print(f"F1スコア改善: {pairwise_metrics_after['f1_score'] - pairwise_metrics_before['f1_score']:+.4f}")
 
@@ -824,6 +880,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="ファインチューニング前後のLLM性能を非同期で評価するスクリプト")
     parser.add_argument("--pairs_csv", required=True, help="評価ペアのCSVファイルパス")
     parser.add_argument("--ground_truth_yaml", required=True, help="正解データのYAMLファイルパス")
+    parser.add_argument(
+        "--data_type",
+        type=str,
+        required=True,
+        choices=["bib", "music", "person"],
+        help="評価対象のデータの種類 (bib, music, person)"
+    )
     parser.add_argument(
         "--model_before_ft", 
         type=str, 

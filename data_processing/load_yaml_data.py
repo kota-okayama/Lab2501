@@ -1,43 +1,67 @@
 import yaml
 import os
 
-
-def load_bibliographic_data(yaml_file_path):
+def load_yaml_data(yaml_path):
     """
-    書誌情報YAMLファイルを読み込み、レコードのリストを返します。
+    YAMLファイルを読み込み、レコードリストとinf_attrを返す。
+    """
+    try:
+        with open(yaml_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+        
+        records = data.get('records', {})
+        inf_attr = data.get('inf_attr', {})
 
-    各レコードは以下のキーを持つ辞書として表現されます:
-    - record_id (str): レコードの一意識別子 (例: '65e694f1-dc96-4c04-bde8-3f924acfb4c6')
-    - cluster_id (str): レコードが属するクラスタID
-    - data (dict): 書誌データ (例: {'bib1_title': '...', 'bib1_author': '...'})
+        records_list = []
+        for record_items in records.values():
+            for item in record_items:
+                entry = {
+                    "record_id": item.get('id'),
+                    "cluster_id": item.get('cluster_id'),
+                    "data": item.get('data', {})
+                }
+                records_list.append(entry)
+        
+        return records_list, inf_attr
+
+    except FileNotFoundError:
+        print(f"Error: The file {yaml_path} was not found.")
+        return [], {}
+    except yaml.YAMLError as e:
+        print(f"Error parsing YAML file {yaml_path}: {e}")
+        return [], {}
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return [], {}
+
+
+def load_bibliographic_data(yaml_path):
+    """
+    書誌情報YAMLファイルを読み込み、各レコードをリストとして返す。
+    各レコードにはrecord_idとcluster_idが付与される。
+    下位互換性のために残されている。
+    """
+    records_list, _ = load_yaml_data(yaml_path)
+    return records_list
+
+
+def load_and_group_bibliographic_data(yaml_file_path):
+    """
+    書誌情報YAMLファイルを読み込み、クラスタIDでグループ化された辞書を返す。
     """
     if not os.path.exists(yaml_file_path):
         print(f"Error: File not found at {yaml_file_path}")
-        return None
+        return {}
 
-    with open(yaml_file_path, "r", encoding="utf-8") as f:
-        try:
-            data = yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            print(f"Error parsing YAML file: {e}")
-            return None
-
-    records_list = []
-    if data and "records" in data:
-        for cluster_key, items_in_cluster in data["records"].items():
-            if items_in_cluster:  # クラスタ内にアイテムが存在する場合
-                for item in items_in_cluster:
-                    record = {
-                        "record_id": item.get("id"),
-                        "cluster_id": item.get("cluster_id"),  # YAML構造に基づき、各アイテムからcluster_idを取得
-                        "data": item.get("data", {}),
-                    }
-                    records_list.append(record)
-    else:
-        print("No 'records' section found in YAML or file is empty.")
-        return None
-
-    return records_list
+    records_list, _ = load_yaml_data(yaml_file_path)
+    grouped_data = {}
+    for record in records_list:
+        cluster_id = record.get("cluster_id")
+        if cluster_id:
+            if cluster_id not in grouped_data:
+                grouped_data[cluster_id] = []
+            grouped_data[cluster_id].append(record.get("data", {}))
+    return grouped_data
 
 
 if __name__ == "__main__":
@@ -79,7 +103,7 @@ if __name__ == "__main__":
     try:
         import yaml
     except ImportError:
-        print("\n--------------------------------------------------------------------")
+        print("\n--------------------------------------")
         print("PyYAML library is not installed. Please install it by running:")
         print("pip install PyYAML")
-        print("--------------------------------------------------------------------")
+        print("---------------------------------------")

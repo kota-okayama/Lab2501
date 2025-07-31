@@ -2,47 +2,37 @@ import csv
 import json
 import os
 import yaml
-import sys
-import random
+import sys  # sys.exitのため追加
+import random  # Add this import
+import argparse # Add this import
+from collections import defaultdict
+import pandas as pd
 
 # --- グローバル設定 ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SIMULATION_RESULTS_FILENAME = "human_review_simulation_accuracy_sample2000_100.csv"
+SIMULATION_RESULTS_PATH = os.path.join(BASE_DIR, SIMULATION_RESULTS_FILENAME)
 
 PROJECT_ROOT_ASSUMED = os.path.abspath(os.path.join(BASE_DIR, ".."))
 BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT = "benchmark/bib_japan_20241024"
 RECORD_YAML_FILENAME = "sampled_data_2000.yml"
-RECORD_YAML_PATH = os.path.join(
-    PROJECT_ROOT_ASSUMED,
-    BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT,
-    RECORD_YAML_FILENAME,
-)
+RECORD_YAML_PATH = os.path.join(PROJECT_ROOT_ASSUMED, BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT, RECORD_YAML_FILENAME)
 
-INCONSISTENT_TRIANGLES_FILENAME = "inconsistent_triangles.csv"
-INCONSISTENT_TRIANGLES_PATH = os.path.join(
-    BASE_DIR, INCONSISTENT_TRIANGLES_FILENAME
-)
-
-# 不一致ペアを追加するためのソースファイル
-EVALUATION_DETAILS_FILENAME = (
-    "eval_async_candidate_pairs_from_sampled_data_2000_k15_before-gpt-4o-mini"
-    "-2024-07-18_after-gpt-4o-mini-2024-07-18_details.csv"
-)
-EVALUATION_DETAILS_PATH = os.path.join(
-    PROJECT_ROOT_ASSUMED, "results", "evaluation_results",
-    EVALUATION_DETAILS_FILENAME
-)
-
-OUTPUT_JSONL_FILENAME = "finetuning_data_balanced_with_hard_negatives.jsonl"
+OUTPUT_JSONL_FILENAME = "finetuning_data_with_llm_score.jsonl"
 OUTPUT_JSONL_PATH = os.path.join(BASE_DIR, OUTPUT_JSONL_FILENAME)
 
 # グローバル変数として書誌データを保持
 BIB_DATA = {}
+RECORD_ID_TO_CLUSTER_ID = {}  # Add this global variable
+BIB_DATA = {}
+GROUND_TRUTH_CLUSTERS = {}
 
 
-# --- 書誌データ読み込み関連関数 ---
+# --- 書誌データ読み込み関連関数 (evaluate_pairs_with_openai_async.py から拝借・調整) ---
 def load_bib_data_for_finetuning(yaml_path):
-    global BIB_DATA
+    global BIB_DATA, RECORD_ID_TO_CLUSTER_ID  # Add RECORD_ID_TO_CLUSTER_ID to global
     BIB_DATA = {}
+    RECORD_ID_TO_CLUSTER_ID = {}  # Initialize
     if not os.path.exists(yaml_path):
         print(f"エラー: 書誌データファイルが見つかりません: {yaml_path}")
         sys.exit(1)
@@ -56,19 +46,26 @@ def load_bib_data_for_finetuning(yaml_path):
                 possible_records_dict = all_data["records"]
 
             processed_record_ids_for_bib_data = set()
+            processed_record_ids_for_cluster_map = set()
 
             if isinstance(possible_records_dict, dict):
-                for key, value_list in possible_records_dict.items():
-                    if (key in ["version", "type", "id", "summary", "inf_attr"] and
-                            possible_records_dict is all_data):
+                for (
+                    key,
+                    value_list,
+                ) in (
+                    possible_records_dict.items()
+                ):  # value_listのtypo修正 value -> This comment seems to refer to a previous state; value_list is correct here.
+                    if key in ["version", "type", "id", "summary", "inf_attr"] and possible_records_dict is all_data:
                         continue
                     if isinstance(value_list, list):
                         for record in value_list:
                             record_id_str = None
+                            cluster_id_val = None
                             actual_bib_data = {}
 
                             if isinstance(record, dict) and "id" in record:
                                 record_id_str = str(record["id"])
+                                cluster_id_val = record.get("cluster_id")
 
                                 if "data" in record and isinstance(record["data"], dict):
                                     actual_bib_data = record["data"]
@@ -84,34 +81,131 @@ def load_bib_data_for_finetuning(yaml_path):
                                         BIB_DATA[record_id_str] = actual_bib_data
                                         processed_record_ids_for_bib_data.add(record_id_str)
 
+                                    if cluster_id_val is not None:  # cluster_id could be 0, so check for None
+                                        # Add to cluster_id map. If ID appears multiple times with different cluster_ids, this will take the last one.
+                                        # This assumes cluster_id is consistent if id appears multiple times in the YAML under different categories.
+                                        RECORD_ID_TO_CLUSTER_ID[record_id_str] = cluster_id_val
+                                        processed_record_ids_for_cluster_map.add(
+                                            record_id_str
+                                        )  # Keep track of which IDs had a cluster_id
+
                                 elif record_id_str and not actual_bib_data:
                                     print(
-                                        f"警告: レコードID {record_id_str} に有効な"
-                                        "書誌データが見つかりませんでした。スキップします。"
+                                        f"警告: レコードID {record_id_str} に有効な書誌データが見つかりませんでした。BIB_DATAへの登録をスキップします。"
                                     )
 
         if not BIB_DATA:
-            print(f"エラー: {yaml_path} から書誌データロード不可、または空。")
+            print(f"エラー: {yaml_path} から書誌データロード不可、または空。YAMLの構造を確認してください。")
             sys.exit(1)
         print(f"{len(BIB_DATA)} 件の書誌データを {yaml_path} からロードしました。")
+        print(f"{len(RECORD_ID_TO_CLUSTER_ID)} 件の record_id と cluster_id のマッピングをロードしました。")
+        if not RECORD_ID_TO_CLUSTER_ID:
+            print(
+                f"警告: {yaml_path} から cluster_id を含むレコードが見つからなかったか、マッピングの作成に失敗しました。ランダム非一致ペアの生成が困難または不可能になります。"
+            )
 
     except yaml.YAMLError as e:
-        print(
-            f"エラー: 書誌データファイル ({yaml_path}) のYAML形式が正しくありません: {e}"
-        )
+        print(f"エラー: 書誌データファイル ({yaml_path}) のYAML形式が正しくありません: {e}")
         sys.exit(1)
     except Exception as e:
-        print(
-            f"エラー: 書誌データファイル ({yaml_path}) の読み込み中に予期せぬエラー: {e}"
-        )
+        print(f"エラー: 書誌データファイル ({yaml_path}) の読み込み中に予期せぬエラー: {e}")
         import traceback
+
+        traceback.print_exc()
+        sys.exit(1)
+
+
+def load_bib_data_and_gt_clusters(yaml_path):
+    global BIB_DATA, RECORD_ID_TO_CLUSTER_ID, GROUND_TRUTH_CLUSTERS
+    BIB_DATA = {}
+    RECORD_ID_TO_CLUSTER_ID = {}
+    GROUND_TRUTH_CLUSTERS = {}
+    if not os.path.exists(yaml_path):
+        print(f"エラー: 書誌データファイルが見つかりません: {yaml_path}")
+        sys.exit(1)
+    try:
+        with open(yaml_path, "r", encoding="utf-8") as f:
+            all_data = yaml.safe_load(f)
+
+        if isinstance(all_data, dict):
+            possible_records_dict = all_data
+            if "records" in all_data and isinstance(all_data["records"], dict):
+                possible_records_dict = all_data["records"]
+
+            processed_record_ids_for_bib_data = set()
+            processed_record_ids_for_cluster_map = set()
+
+            if isinstance(possible_records_dict, dict):
+                for (
+                    key,
+                    value_list,
+                ) in (
+                    possible_records_dict.items()
+                ):  # value_listのtypo修正 value -> This comment seems to refer to a previous state; value_list is correct here.
+                    if key in ["version", "type", "id", "summary", "inf_attr"] and possible_records_dict is all_data:
+                        continue
+                    if isinstance(value_list, list):
+                        for record in value_list:
+                            record_id_str = None
+                            cluster_id_val = None
+                            actual_bib_data = {}
+
+                            if isinstance(record, dict) and "id" in record:
+                                record_id_str = str(record["id"])
+                                cluster_id_val = record.get("cluster_id")
+
+                                if "data" in record and isinstance(record["data"], dict):
+                                    actual_bib_data = record["data"]
+                                else:
+                                    actual_bib_data = {
+                                        k_rec: v_rec
+                                        for k_rec, v_rec in record.items()
+                                        if k_rec not in ["id", "cluster_id"]
+                                    }
+
+                                if record_id_str and actual_bib_data:
+                                    if record_id_str not in processed_record_ids_for_bib_data:
+                                        BIB_DATA[record_id_str] = actual_bib_data
+                                        processed_record_ids_for_bib_data.add(record_id_str)
+
+                                    if cluster_id_val is not None:  # cluster_id could be 0, so check for None
+                                        # Add to cluster_id map. If ID appears multiple times with different cluster_ids, this will take the last one.
+                                        # This assumes cluster_id is consistent if id appears multiple times in the YAML under different categories.
+                                        RECORD_ID_TO_CLUSTER_ID[record_id_str] = cluster_id_val
+                                        processed_record_ids_for_cluster_map.add(
+                                            record_id_str
+                                        )  # Keep track of which IDs had a cluster_id
+
+                                elif record_id_str and not actual_bib_data:
+                                    print(
+                                        f"警告: レコードID {record_id_str} に有効な書誌データが見つかりませんでした。BIB_DATAへの登録をスキップします。"
+                                    )
+
+        if not BIB_DATA:
+            print(f"エラー: {yaml_path} から書誌データロード不可、または空。YAMLの構造を確認してください。")
+            sys.exit(1)
+        print(f"{len(BIB_DATA)} 件の書誌データを {yaml_path} からロードしました。")
+        print(f"{len(RECORD_ID_TO_CLUSTER_ID)} 件の record_id と cluster_id のマッピングをロードしました。")
+        if not RECORD_ID_TO_CLUSTER_ID:
+            print(
+                f"警告: {yaml_path} から cluster_id を含むレコードが見つからなかったか、マッピングの作成に失敗しました。ランダム非一致ペアの生成が困難または不可能になります。"
+            )
+
+    except yaml.YAMLError as e:
+        print(f"エラー: 書誌データファイル ({yaml_path}) のYAML形式が正しくありません: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"エラー: 書誌データファイル ({yaml_path}) の読み込み中に予期せぬエラー: {e}")
+        import traceback
+
         traceback.print_exc()
         sys.exit(1)
 
 
 def get_record_details_for_finetuning_prompt(record_id):
     if not BIB_DATA:
-        print("エラー: 書誌データがロードされていません。")
+        print("エラー: 書誌データがロードされていません。(get_record_details_for_finetuning_prompt)")
+        # この関数が呼ばれる時点ではBIB_DATAはロードされているはずなので、基本的にはここに来ない想定
         return "情報取得エラー: BIB_DATA未ロード"
 
     bib_details = BIB_DATA.get(str(record_id))
@@ -125,257 +219,146 @@ def get_record_details_for_finetuning_prompt(record_id):
     return f"タイトル: {title}\n著者: {authors_str}\n出版社: {publisher}\n出版日: {pubdate}"
 
 
-def create_finetuning_sample(record_id_1, record_id_2, is_similar):
-    """指定されたペアIDとラベルから、単一のファインチューニングサンプルを作成する。"""
-    bib_info_1 = get_record_details_for_finetuning_prompt(record_id_1)
-    bib_info_2 = get_record_details_for_finetuning_prompt(record_id_2)
+def get_prompts(data_type):
+    prompt_map = {
+        "bib": (
+            "あなたは2つの書誌情報が実質的に同一の文献を指すかどうかを判断する専門家です。\\n"
+            "まず、2つの書誌情報が同一の文献と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        ),
+        "music": (
+            "あなたは2つの音楽情報が実質的に同一の作品を指すかどうかを判断する専門家です。\\n"
+            "まず、2つの音楽情報が同一の作品と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        ),
+        "person": (
+            "あなたは2つの人物情報が実質的に同一の人物を指すかどうかを判断する専門家です。\\n"
+            "まず、2つの人物情報が同一の人物と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        ),
+        "unknown": (
+            "あなたは2つの情報が実質的に同一のものを指すかどうかを判断する専門家です。\\n"
+            "まず、2つの情報が同一のものと思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        ),
+    }
+    return prompt_map.get(data_type, prompt_map["unknown"])
 
-    if (
-        "情報取得エラー" in bib_info_1
-        or "書誌情報なし" in bib_info_1
-        or "情報取得エラー" in bib_info_2
-        or "書誌情報なし" in bib_info_2
-    ):
-        print(
-            f"警告: ペア ({record_id_1}, {record_id_2}) の書誌情報取得に失敗。"
-            "サンプル生成をスキップします。"
-        )
-        return None
 
-    system_prompt = (
-        "あなたは2つの書誌情報が実質的に同一の文献を指すかどうかを判断する専門家です。\\n"
-        "まず、2つの書誌情報が同一の文献と思われる場合は「はい」、"
-        "そうでない場合は「いいえ」で明確に回答してください。\\n"
-        "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から"
-        "1.0（完全に同一）の範囲で提示してください。"
-    )
-
+def create_finetuning_message(record1_id, record2_id, is_truly_similar, data_type, score=None):
+    system_prompt = get_prompts(data_type)
     user_prompt = (
-        f"以下の2つの書誌情報が、実質的に同一の文献を指しているかどうかを"
-        f"判断してください。\\n\\n"
-        f"書誌情報1:\\n{bib_info_1}\\n\\n"
-        f"書誌情報2:\\n{bib_info_2}\\n\\n"
+        f"以下の2つの書誌情報が、実質的に同一の文献を指しているかどうかを判断してください。\\n\\n"
+        f"書誌情報1:\\n{get_record_details_for_finetuning_prompt(record1_id)}\\n\\n"
+        f"書誌情報2:\\n{get_record_details_for_finetuning_prompt(record2_id)}\\n\\n"
         "これらは同一の文献ですか？\\n回答:"
     )
-
-    assistant_response = (
-        "はい\\n類似度スコア: 1.0" if is_similar else "いいえ\\n類似度スコア: 0.0"
-    )
-
-    return {
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-            {"role": "assistant", "content": assistant_response},
-        ]
-    }
-
-
-def generate_data_from_all_inconsistent_triangles(filepath, existing_pairs):
-    """
-    矛盾三角形CSVのすべての行を読み込み、各三角形の3つの構成ペアすべてを
-    学習データとして生成する。正解ラベルはCSV内のものを使用する。
-    """
-    if not os.path.exists(filepath):
-        print(f"エラー: 矛盾三角形ファイルが見つかりません: {filepath}。")
-        return []
-
-    print(f"{filepath} から全ての矛盾三角形を読み込み、学習データを生成します...")
-    finetuning_samples = []
-
-    try:
-        with open(filepath, "r", newline="", encoding="utf-8-sig") as infile:
-            reader = csv.DictReader(infile)
-            for row in reader:
-                try:
-                    id1 = row['triangle_node1']
-                    id2 = row['triangle_node2']
-                    id3 = row['triangle_node3']
-
-                    is_similar_12 = row['true_edge12'] == 'True'
-                    is_similar_23 = row['true_edge23'] == 'True'
-                    is_similar_31 = row['true_edge31'] == 'True'
-
-                    pairs_to_process = [
-                        ((id1, id2), is_similar_12),
-                        ((id2, id3), is_similar_23),
-                        ((id3, id1), is_similar_31),
-                    ]
-
-                    for (r_id_1, r_id_2), is_similar in pairs_to_process:
-                        pair_key = tuple(sorted((str(r_id_1), str(r_id_2))))
-                        if pair_key in existing_pairs:
-                            continue
-
-                        sample = create_finetuning_sample(r_id_1, r_id_2, is_similar)
-                        if sample:
-                            finetuning_samples.append(sample)
-                            existing_pairs.add(pair_key)
-                except KeyError as e:
-                    print(f"警告: CSVに必要なキーが見つかりません: {e} (行: {row})。スキップします。")
-                    continue
-    except Exception as e:
-        print(f"矛盾三角形ファイル ({filepath}) の処理中にエラー: {e}")
-        import traceback
-        traceback.print_exc()
-        return []
-
-    return finetuning_samples
-
-
-def add_balancing_negative_pairs(
-    filepath, num_to_add, existing_pairs, score_column_name='score_before'
-):
-    """評価結果ファイルから、バランス調整用の不一致ペアを追加する。"""
-    if not os.path.exists(filepath):
-        print(
-            f"警告: バランス調整用の評価結果ファイルが見つかりません: {filepath}。"
-            "スキップします。"
-        )
-        return []
-
-    print(f"{filepath} からバランス調整用の不一致ペアを追加します...")
-    
-    negative_candidates = []
-    try:
-        with open(filepath, 'r', newline='', encoding='utf-8-sig') as infile:
-            reader = csv.DictReader(infile)
-            for row in reader:
-                try:
-                    if row.get('ground_truth_similar', 'True').lower() == 'false':
-                        id1 = row['record_id_1']
-                        id2 = row['record_id_2']
-                        pair_key = tuple(sorted((id1, id2)))
-                        if pair_key in existing_pairs:
-                            continue
-
-                        score_str = row.get(score_column_name, '0.0')
-                        score = float(score_str) if score_str else 0.0
-                        
-                        negative_candidates.append({
-                            'id1': id1, 'id2': id2, 'score': score
-                        })
-                except (ValueError, KeyError) as e:
-                    print(
-                        f"警告: 評価結果ファイルの行処理中にエラー: {e} "
-                        f"(行: {row})。スキップします。"
-                    )
-                    continue
-    except Exception as e:
-        print(f"評価結果ファイル ({filepath}) の処理中にエラー: {e}")
-        return []
-
-    if not negative_candidates:
-        print("警告: 追加できる不一致ペア候補がありません。")
-        return []
-    
-    # スコア0.5に近い順にソート (Hard Negatives)
-    hard_negatives = sorted(negative_candidates, key=lambda p: abs(p['score'] - 0.5))
-    
-    num_hard_to_add = num_to_add // 2
-    num_random_to_add = num_to_add - num_hard_to_add
-
-    print(
-        f"目標追加数: {num_to_add} (困難なペア: {num_hard_to_add}, "
-        f"ランダムペア: {num_random_to_add})"
-    )
-    
-    new_negative_pairs = []
-    
-    # 困難な不一致ペアを追加
-    added_keys = set()
-    for pair_data in hard_negatives:
-        if len(new_negative_pairs) >= num_hard_to_add:
-            break
-        key = tuple(sorted((pair_data['id1'], pair_data['id2'])))
-        if key not in added_keys:
-            new_negative_pairs.append((pair_data['id1'], pair_data['id2']))
-            added_keys.add(key)
-            
-    # ランダムな不一致ペアを追加
-    remaining_candidates = [
-        p for p in negative_candidates
-        if tuple(sorted((p['id1'], p['id2']))) not in added_keys
-    ]
-    
-    if len(remaining_candidates) > num_random_to_add:
-        selected_randoms = random.sample(
-            remaining_candidates, num_random_to_add
-        )
+    if is_truly_similar:
+        assistant_response = "はい\\n類似度スコア: 1.0"
     else:
-        print(
-            f"警告: ランダム不一致ペアの候補が目標数 ({num_random_to_add}) "
-            "より少ないため、あるだけ追加します。"
-        )
-        selected_randoms = remaining_candidates
-
-    for pair_data in selected_randoms:
-        new_negative_pairs.append((pair_data['id1'], pair_data['id2']))
-
-    # ファインチューニングサンプルを作成
-    added_samples = []
-    for id1, id2 in new_negative_pairs:
-        pair_key = tuple(sorted((id1, id2)))
-        if pair_key in existing_pairs:
-            continue
-        sample = create_finetuning_sample(id1, id2, is_similar=False)
-        if sample:
-            added_samples.append(sample)
-            existing_pairs.add(pair_key)
-            
-    print(f"{len(added_samples)} 件の不一致ペアを追加しました。")
-    return added_samples
+        assistant_response = "いいえ\\n類似度スコア: 0.0"
+    return {"messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}, {"role": "assistant", "content": assistant_response}]}
 
 
 # --- メイン処理 ---
-def main():
+def main(args):
+    """
+    矛盾する三角形と判断が難しいペアを組み合わせて、
+    ファインチューニング用のデータセットを生成する。
+    """
     print("ファインチューニング用データ作成処理を開始します...")
 
-    load_bib_data_for_finetuning(RECORD_YAML_PATH)
+    # 正解データのロード
+    load_bib_data_and_gt_clusters(args.ground_truth_yaml)
 
-    existing_pairs = set()
+    finetuning_samples = []
 
-    # 1. 矛盾三角形ファイルからベースとなるサンプルを生成
-    finetuning_samples = generate_data_from_all_inconsistent_triangles(
-        INCONSISTENT_TRIANGLES_PATH, existing_pairs
-    )
-
-    # 2. 現在の正解・不正解の数をカウント
-    pos_count = sum(1 for s in finetuning_samples if "はい" in s['messages'][-1]['content'])
-    neg_count = sum(1 for s in finetuning_samples if "いいえ" in s['messages'][-1]['content'])
-    print(f"矛盾ペアからの読み込み結果: 一致 {pos_count}件, 不一致 {neg_count}件")
-
-    # 3. 不一致ペアが不足している場合、バランスを取るために追加
-    if pos_count > neg_count:
-        num_to_add = pos_count - neg_count
-        balancing_samples = add_balancing_negative_pairs(
-            EVALUATION_DETAILS_PATH, num_to_add, existing_pairs
-        )
-        finetuning_samples.extend(balancing_samples)
-
-    if not finetuning_samples:
-        print("ファインチューニング対象のサンプルが0件でした。処理を終了します。")
-        return
-
-    # 最終結果のカウントとシャッフル
-    final_pos_count = sum(1 for s in finetuning_samples if "はい" in s['messages'][-1]['content'])
-    final_neg_count = sum(1 for s in finetuning_samples if "いいえ" in s['messages'][-1]['content'])
-    
-    print(
-        f"\n最終的な学習データ: 合計 {len(finetuning_samples)} 件 "
-        f"(一致: {final_pos_count}, 不一致: {final_neg_count})"
-    )
-
-    random.shuffle(finetuning_samples)
-
+    # 1. 矛盾する三角形のペアを追加
     try:
-        with open(OUTPUT_JSONL_PATH, "w", encoding="utf-8") as outfile:
-            for sample in finetuning_samples:
-                outfile.write(json.dumps(sample, ensure_ascii=False) + "\n")
-        print(f"ファインチューニング用データを {OUTPUT_JSONL_PATH} に保存しました。")
+        inconsistent_df = pd.read_csv(args.inconsistent_triangles_csv)
+        for _, row in inconsistent_df.iterrows():
+            # 3つのペア (n1,n2), (n2,n3), (n1,n3) を処理
+            for pair_prefix in ["pair1", "pair2", "pair3"]:
+                id1, id2 = row[f"{pair_prefix}_id1"], row[f"{pair_prefix}_id2"]
+                is_similar = row[f"{pair_prefix}_is_truly_similar"]
+                score = row[f"{pair_prefix}_score"]
+                
+                message = create_finetuning_message(
+                    id1, id2, is_similar, args.data_type, score
+                )
+                finetuning_samples.append(message)
+        print(f"{len(inconsistent_df) * 3} 件の矛盾ペアをサンプルに追加しました。")
+    except FileNotFoundError:
+        print(f"警告: 矛盾ペアファイルが見つかりません: {args.inconsistent_triangles_csv}")
     except Exception as e:
-        print(f"エラー: JSONLファイル書き込み中にエラー: {e}")
+        print(f"警告: 矛盾ペアファイルの処理中にエラー: {e}")
+
+    # 2. Hard negative/positive ペアを追加
+    try:
+        details_df = pd.read_csv(args.evaluation_details_csv)
+        # スコアに基づいてソート
+        details_df['abs_score_dist'] = (details_df[args.score_column] - 0.5).abs()
+        hard_pairs_df = details_df.sort_values(by='abs_score_dist').head(100)
+
+        for _, row in hard_pairs_df.iterrows():
+            message = create_finetuning_message(
+                row['record_id_1'],
+                row['record_id_2'],
+                row['ground_truth_similar'],
+                args.data_type,
+                row[args.score_column]
+            )
+            finetuning_samples.append(message)
+        print(f"{len(hard_pairs_df)} 件のHard Negative/Positiveペアをサンプルに追加しました。")
+    except FileNotFoundError:
+        print(f"警告: 評価詳細ファイルが見つかりません: {args.evaluation_details_csv}")
+    except Exception as e:
+        print(f"警告: 評価詳細ファイルの処理中にエラー: {e}")
+    
+    print(f"{len(finetuning_samples)} 件のファインチューニング用サンプルを作成しました。")
+
+    # 指定されたパスにファインチューニング用データを保存
+    try:
+        with open(args.output_jsonl_path, 'w', encoding='utf-8') as f:
+            for entry in finetuning_samples:
+                f.write(json.dumps(entry, ensure_ascii=False) + '\n')
+        print(f"ファインチューニング用データを {args.output_jsonl_path} に保存しました。")
+    except IOError as e:
+        print(f"エラー: ファイルの書き込みに失敗しました - {args.output_jsonl_path}: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        description="矛盾する三角形と判断が難しいペアからファインチューニング用データを生成します。"
+    )
+    parser.add_argument(
+        "--inconsistent_triangles_csv", required=True,
+        help="矛盾ペア情報のCSVファイルパス"
+    )
+    parser.add_argument(
+        "--evaluation_details_csv", required=True,
+        help="モデル評価詳細情報のCSVファイルパス"
+    )
+    parser.add_argument(
+        "--ground_truth_yaml", required=True,
+        help="正解データのYAMLファイルパス"
+    )
+    parser.add_argument(
+        "--output_jsonl_path", required=True,
+        help="出力するJSONLファイルのパス"
+    )
+    parser.add_argument(
+        "--data_type",
+        required=True,
+        choices=["bib", "music", "person"],
+        help="データの種類 (プロンプト生成に利用)"
+    )
+    parser.add_argument(
+        "--score_column",
+        required=True,
+        help="Hard negative/positiveマイニングに使用するスコア列名"
+    )
+
+    args = parser.parse_args()
+    main(args)

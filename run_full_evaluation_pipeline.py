@@ -74,6 +74,11 @@ def run_command(command, description):
         return False
 
 
+def sanitize_model_name_for_filename(model_name):
+    """ファイル名に使用できるようにモデル名をサニタイズする"""
+    return model_name.replace('/', '_').replace(':', '_').replace(' ', '_')
+
+
 def run_embedding_and_graph_pipeline(args):
     """STEP 1: 複数フィールドエンベディング生成からK近傍グラフ統合までを実行"""
     print("\n\n===== STEP 1: Embedding生成とK近傍グラフ構築 =====")
@@ -89,10 +94,8 @@ def run_embedding_and_graph_pipeline(args):
         "--openai_model", args.openai_embedding_model,
         "--api_batch_size", str(args.api_batch_size),
         "--k_neighbors", str(args.k_neighbors),
+        "--embedding_combinations", args.embedding_combinations
     ]
-
-    if args.selected_combinations:
-        command.extend(["--selected_combinations", args.selected_combinations])
 
     if not run_command(command, "Embedding生成とグラフ構築パイプライン"):
         print("STEP 1 が失敗しました。処理を中断します。")
@@ -188,8 +191,8 @@ def run_pair_extraction(args):
 def get_evaluation_details_path(args, pairs_csv_path):
     """評価詳細CSVファイルのパスを生成する"""
     base_name = os.path.basename(pairs_csv_path).replace(".csv", "")
-    before_model_name = args.model_before_ft.split('/')[-1]
-    after_model_name = args.model_after_ft.split('/')[-1]
+    before_model_name = sanitize_model_name_for_filename(args.model_before_ft)
+    after_model_name = sanitize_model_name_for_filename(args.model_after_ft)
     
     # 評価スクリプト内の命名規則に合わせる
     output_filename = (
@@ -219,6 +222,7 @@ def run_evaluation(args, pairs_csv_path):
         "python3", "-u", script_path,
         "--pairs_csv", pairs_csv_path,
         "--ground_truth_yaml", args.record_yaml_path,
+        "--data_type", args.data_type,
         "--model_before_ft", args.model_before_ft,
         "--model_after_ft", args.model_after_ft,
         "--max_concurrent", str(args.max_concurrent),
@@ -243,21 +247,18 @@ def run_inconsistency_detection(args, details_csv_path):
     )
 
     output_dir = os.path.dirname(details_csv_path)
-    base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
-    output_csv_path = os.path.join(
-        output_dir, f"{base_name}_inconsistent_triangles.csv"
-    )
-
+    
     print(f"入力評価詳細ファイル: {details_csv_path}")
-    print(f"出力矛盾三角形CSV: {output_csv_path}")
+    print(f"正解YAMLファイル: {args.record_yaml_path}")
+    print(f"出力ディレクトリ: {output_dir}")
 
     command = [
         "python3", "-u", script_path,
-        "--details_csv_path", details_csv_path,
-        "--output_csv_path", output_csv_path,
-        "--score_column", "score_after",
-        "--threshold", str(args.inconsistency_threshold),
-        "--top_n", str(args.inconsistency_top_n)
+        "--input-csv", details_csv_path,
+        "--ground-truth-yaml", args.record_yaml_path,
+        "--output-dir", output_dir,
+        "--score-column", "score_after",
+        "--num-triangles", str(args.inconsistency_top_n)
     ]
 
     if not run_command(command, "矛盾する三角形の検出"):
@@ -265,7 +266,11 @@ def run_inconsistency_detection(args, details_csv_path):
         sys.exit(1)
 
     print("===== STEP 4完了 =====")
-    return output_csv_path
+    # 次のステップで使うため、生成された矛盾三角形ファイルのパスを返す
+    base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
+    return os.path.join(
+        output_dir, f"{base_name}_score_after_inconsistent_triangles.csv"
+    )
 
 
 def run_finetuning_data_preparation(
@@ -280,22 +285,28 @@ def run_finetuning_data_preparation(
 
     base_name = os.path.basename(
         inconsistent_triangles_csv
-    ).replace(".csv", "")
+    ).replace("_inconsistent_triangles.csv", "")
+    
+    # 出力先を evaluation_results ディレクトリに統一
+    output_dir = os.path.dirname(inconsistent_triangles_csv)
     output_jsonl_path = os.path.join(
-        os.path.dirname(inconsistent_triangles_csv),
+        output_dir,
         f"finetuning_data_from_{base_name}.jsonl"
     )
 
     print(f"入力矛盾ペアCSV: {inconsistent_triangles_csv}")
     print(f"入力評価詳細CSV: {details_csv_path}")
+    print(f"正解YAMLファイル: {args.record_yaml_path}")
     print(f"出力Finetuning JSONL: {output_jsonl_path}")
 
     command = [
         "python3", "-u", script_path,
         "--inconsistent_triangles_csv", inconsistent_triangles_csv,
         "--evaluation_details_csv", details_csv_path,
+        "--ground_truth_yaml", args.record_yaml_path,
         "--output_jsonl_path", output_jsonl_path,
-        "--ground_truth_yaml", args.record_yaml_path
+        "--data_type", args.data_type,
+        "--score_column", "score_before" # Hard negative miningで参照
     ]
 
     if not run_command(command, "ファインチューニング用データの準備"):
@@ -324,6 +335,12 @@ def main():
         help="全ての出力のベースディレクトリ"
     )
     req_group.add_argument(
+        "--data_type",
+        required=True,
+        choices=["bib", "music", "person"],
+        help="評価対象データの種類"
+    )
+    req_group.add_argument(
         "--model_before_ft", required=True,
         help="ファインチューニング前のモデルID"
     )
@@ -343,8 +360,8 @@ def main():
         help="エンベディング生成時のAPIバッチサイズ"
     )
     step1_group.add_argument(
-        "--selected_combinations", default="",
-        help="使用するフィールド組み合わせ (例: 'full,title_only')"
+        "--embedding_combinations", type=str, default="full",
+        help="生成するエンベディングの組み合わせをセミコロンで区切って指定 (例: 'full;title;[title,author]')。デフォルトは 'full'。"
     )
     step1_group.add_argument(
         "--k_neighbors", type=int, default=15, help="K近傍のK値"
@@ -368,7 +385,7 @@ def main():
         help="矛盾検出におけるスコアの閾値"
     )
     step4_group.add_argument(
-        "--inconsistency_top_n", type=int, default=1000,
+        "--inconsistency_top_n", type=int, default=100,
         help="検出する矛盾ペアの上位N件"
     )
 
@@ -442,8 +459,9 @@ def main():
         base_name = os.path.basename(
             details_csv_path
         ).replace("_details.csv", "")
+        # detect_inconsistent_triangles.pyの命名規則に合わせる
         inconsistent_triangles_csv = os.path.join(
-            output_dir, f"{base_name}_inconsistent_triangles.csv"
+            output_dir, f"{base_name}_score_after_inconsistent_triangles.csv"
         )
         if not os.path.exists(inconsistent_triangles_csv):
             print(f"エラー: 矛盾三角形ファイルが見つかりません: {inconsistent_triangles_csv}")
