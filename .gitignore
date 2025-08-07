@@ -37,10 +37,15 @@ ENV/
 .env.local
 .env.*.local
 
-# .py以外のファイルを除外
+# プロジェクト固有の除外設定
+# .py以外のファイルを除外（ただし重要なファイルは明示的に含める）
 *
 !*.py
 !*.sh
+!*.md
+!*.txt
+!*.yml
+!*.yaml
 !.gitignore
 !openai_embedding_experiment/
 
@@ -48,9 +53,22 @@ ENV/
 *.json
 !llm_api_cache.json
 
+# ベンチマークデータ（大きなファイルは除外）
 benchmark/bib_japan_20241024/* 
 
-# fasttextディレクトリの設定
+# FastTextモデル（大きなファイルは除外）
 fasttext/*
 !fasttext/init.py
+fasttext_models/*.bin
+fasttext_models/*.gz
+
+# パイプライン出力
 pipeline*/**
+
+# 学習済みモデル
+*.pth
+*.pkl
+*.npy
+
+# ログファイル
+*.log

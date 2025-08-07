@@ -1,0 +1,53 @@
+# ファインチューニング性能評価レポート
+日付: 2025-05-22 21:37:12
+## 評価対象
+- 書誌データ: benchmark/bib_japan_20241024/extract_subset_10k.yml
+- K近傍ペアリスト (LLM直接評価対象): openai_embedding_experiment/llm_pairs/extracted_llm_pairs.csv (9428 ペア)
+- 全レコード数 (全ペア推論評価の母数): 1000
+
+## K近傍ペア評価 (LLMが直接判定したペアに基づく)
+### ファインチューニング前モデル (gpt-4o-mini-2024-07-18)
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: 8416               | FN: 524               
+  Actual: Negative  | FP: 0                  | TN: 488               
+- 適合率: 1.0000, 再現率: 0.9414, F1: 0.9698
+- エラー数: 0
+
+### クラスタリング評価 (K近傍ペアのLLM判定結果から形成されたクラスタ - 評価対象: K近傍ペアに含まれるID群)
+- Adjusted Rand Index (ARI): 0.9499
+- Normalized Mutual Information (NMI): 0.9896
+- Homogeneity: 1.0000, Completeness: 0.9795, V-measure: 0.9896
+
+### ファインチューニング後モデル (ft:gpt-4o-mini-2024-07-18:mlab:bib-matching-inconsistency-0519:BYiGHy7V)
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: 8922               | FN: 18                
+  Actual: Negative  | FP: 0                  | TN: 488               
+- 適合率: 1.0000, 再現率: 0.9980, F1: 0.9990
+- エラー数: 0
+
+### クラスタリング評価 (K近傍ペアのLLM判定結果から形成されたクラスタ - 評価対象: K近傍ペアに含まれるID群)
+- Adjusted Rand Index (ARI): 0.9543
+- Normalized Mutual Information (NMI): 0.9919
+- Homogeneity: 1.0000, Completeness: 0.9840, V-measure: 0.9919
+ 
+
+## 全ペア推論評価 (LLM判定から形成されたクラスタに基づき、全レコード間のペアを推論)
+### ファインチューニング前モデル (gpt-4o-mini-2024-07-18 - 全ペア推論)
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: 14239              | FN: 1456              
+  Actual: Negative  | FP: 0                  | TN: 483805            
+- 適合率: 1.0000, 再現率: 0.9072, F1: 0.9514
+
+### ファインチューニング後モデル (ft:gpt-4o-mini-2024-07-18:mlab:bib-matching-inconsistency-0519:BYiGHy7V - 全ペア推論)
+- 混合行列 (Positive: 一致ペア, Negative: 不一致ペア):
+    予測ラベル     |  Predicted: Positive | Predicted: Negative
+  ----------------|----------------------|----------------------
+  Actual: Positive  | TP: 14363              | FN: 1332              
+  Actual: Negative  | FP: 0                  | TN: 483805            
+- 適合率: 1.0000, 再現率: 0.9151, F1: 0.9557

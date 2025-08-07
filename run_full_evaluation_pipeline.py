@@ -17,8 +17,9 @@ Embedding生成からLLM評価、ファインチューニングデータ生成�
    - `siamese_model_pytorch/detect_inconsistent_triangles.py` を使用
    - モデル評価の結果から、推移律に反するペアを検出します。
 5. ファインチューニング用データの準備:
-   - `siamese_model_pytorch/prepare_finetuning_data.py` を使用
-   - 検出した矛盾ペアと判断が難しいペアを組み合わせて、次回のファインチューニング用のデータを生成します。
+   - `prepare_finetuning_data.py` (inconsistency) と
+     `create_finetuning_data_from_strategies.py` (diversity, etc.) を使用
+   - 複数の戦略に基づき、次回のファインチューニング用のデータを生成します。
 
 各ステップはコマンドライン引数でスキップすることが可能です。
 """
@@ -67,7 +68,8 @@ def run_command(command, description):
         return True
 
     except FileNotFoundError as e:
-        print(f"エラー: コマンド '{e.filename}' が見つかりません。PATHが通っているか確認してください。")
+        print(f"エラー: コマンド '{e.filename}' が見つかりません。"
+              "PATHが通っているか確認してください。")
         return False
     except Exception as e:
         print(f"コマンド実行中に予期せぬエラーが発生しました: {e}")
@@ -77,6 +79,14 @@ def run_command(command, description):
 def sanitize_model_name_for_filename(model_name):
     """ファイル名に使用できるようにモデル名をサニタイズする"""
     return model_name.replace('/', '_').replace(':', '_').replace(' ', '_')
+
+
+def get_num_lines_in_jsonl(file_path):
+    """JSONLファイルの行数を数える"""
+    if not os.path.exists(file_path):
+        return 0
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return sum(1 for _ in f)
 
 
 def run_embedding_and_graph_pipeline(args):
@@ -193,15 +203,12 @@ def get_evaluation_details_path(args, pairs_csv_path):
     base_name = os.path.basename(pairs_csv_path).replace(".csv", "")
     before_model_name = sanitize_model_name_for_filename(args.model_before_ft)
     after_model_name = sanitize_model_name_for_filename(args.model_after_ft)
-    
-    # 評価スクリプト内の命名規則に合わせる
+
     output_filename = (
         f"eval_async_{base_name}_before-{before_model_name}_"
         f"after-{after_model_name}_details.csv"
     )
-    
-    # evaluate_finetuning_performance_async.py は
-    # evaluation_results ディレクトリを生成するため、それを考慮
+
     return os.path.join(
         os.path.dirname(pairs_csv_path),
         "..",
@@ -234,7 +241,6 @@ def run_evaluation(args, pairs_csv_path):
         sys.exit(1)
 
     print("===== STEP 3完了 =====")
-    # 次のステップで使うため、生成された評価詳細ファイルのパスを返す
     return get_evaluation_details_path(args, pairs_csv_path)
 
 
@@ -247,10 +253,6 @@ def run_inconsistency_detection(args, details_csv_path):
     )
 
     output_dir = os.path.dirname(details_csv_path)
-    
-    print(f"入力評価詳細ファイル: {details_csv_path}")
-    print(f"正解YAMLファイル: {args.record_yaml_path}")
-    print(f"出力ディレクトリ: {output_dir}")
 
     command = [
         "python3", "-u", script_path,
@@ -266,7 +268,6 @@ def run_inconsistency_detection(args, details_csv_path):
         sys.exit(1)
 
     print("===== STEP 4完了 =====")
-    # 次のステップで使うため、生成された矛盾三角形ファイルのパスを返す
     base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
     return os.path.join(
         output_dir, f"{base_name}_score_after_inconsistent_triangles.csv"
@@ -274,47 +275,70 @@ def run_inconsistency_detection(args, details_csv_path):
 
 
 def run_finetuning_data_preparation(
-    args, inconsistent_triangles_csv, details_csv_path
+    args, inconsistent_triangles_csv, details_csv_path, llm_clusters_json_path
 ):
-    """STEP 5: ファインチューニング用データの準備"""
+    """STEP 5: ファインチューニング用データの準備（複数戦略）"""
     print("\n\n===== STEP 5: ファインチューニング用データの準備 =====")
 
-    script_path = os.path.join(
-        "siamese_model_pytorch", "prepare_finetuning_data.py"
-    )
+    strategies = args.ft_strategies.split(',')
+    base_name_for_ft = os.path.basename(details_csv_path).replace("_details.csv", "")
+    output_dir = os.path.dirname(details_csv_path)
+    num_samples = 0
 
-    base_name = os.path.basename(
-        inconsistent_triangles_csv
-    ).replace("_inconsistent_triangles.csv", "")
-    
-    # 出力先を evaluation_results ディレクトリに統一
-    output_dir = os.path.dirname(inconsistent_triangles_csv)
-    output_jsonl_path = os.path.join(
-        output_dir,
-        f"finetuning_data_from_{base_name}.jsonl"
-    )
+    # 1. Inconsistency-based strategy (if requested)
+    if 'inconsistency' in strategies:
+        print("\n--- 戦略: inconsistency ---")
+        script_path = os.path.join("siamese_model_pytorch", "prepare_finetuning_data.py")
+        output_jsonl_path = os.path.join(
+            output_dir, f"ft_data_{base_name_for_ft}_inconsistency.jsonl"
+        )
+        command = [
+            "python3", "-u", script_path,
+            "--inconsistent_triangles_csv", inconsistent_triangles_csv,
+            "--evaluation_details_csv", details_csv_path,
+            "--ground_truth_yaml", args.record_yaml_path,
+            "--output_jsonl_path", output_jsonl_path,
+            "--data_type", args.data_type,
+            "--score_column", "score_before"
+        ]
+        if not run_command(command, "FTデータ準備 (inconsistency)"):
+            print("inconsistency 戦略が失敗しました。")
+        else:
+            num_samples = get_num_lines_in_jsonl(output_jsonl_path)
+            print(f"inconsistency 戦略で {num_samples} 件のデータを生成しました。")
 
-    print(f"入力矛盾ペアCSV: {inconsistent_triangles_csv}")
-    print(f"入力評価詳細CSV: {details_csv_path}")
-    print(f"正解YAMLファイル: {args.record_yaml_path}")
-    print(f"出力Finetuning JSONL: {output_jsonl_path}")
+    if num_samples == 0 and len(strategies) > 1:
+        print("警告: inconsistency戦略のサンプル数が0です。"
+              "他の戦略のサンプル数を決定できません。スキップします。")
+        return
 
-    command = [
-        "python3", "-u", script_path,
-        "--inconsistent_triangles_csv", inconsistent_triangles_csv,
-        "--evaluation_details_csv", details_csv_path,
-        "--ground_truth_yaml", args.record_yaml_path,
-        "--output_jsonl_path", output_jsonl_path,
-        "--data_type", args.data_type,
-        "--score_column", "score_before" # Hard negative miningで参照
-    ]
+    # 2. Other strategies
+    other_strategies = [s for s in strategies if s != 'inconsistency']
+    for strategy in other_strategies:
+        print(f"\n--- 戦略: {strategy} ---")
+        script_path = os.path.join("siamese_model_pytorch", "create_finetuning_data_from_strategies.py")
+        output_jsonl_path = os.path.join(
+            output_dir, f"ft_data_{base_name_for_ft}_{strategy}.jsonl"
+        )
+        command = [
+            "python3", "-u", script_path,
+            "--strategy", strategy,
+            "--output_jsonl_path", output_jsonl_path,
+            "--ground_truth_yaml", args.record_yaml_path,
+            "--num_samples", str(num_samples),
+            "--data_type", args.data_type,
+        ]
+        if strategy in ["uncertainty", "random"]:
+            command.extend(["--evaluation_details_csv", details_csv_path])
+        if strategy == "uncertainty":
+            command.extend(["--score_column", "score_after"])
+        if strategy == "diversity":
+            command.extend(["--llm_clusters_json", llm_clusters_json_path])
 
-    if not run_command(command, "ファインチューニング用データの準備"):
-        print("STEP 5 が失敗しました。処理を中断します。")
-        sys.exit(1)
+        if not run_command(command, f"FTデータ準備 ({strategy})"):
+            print(f"{strategy} 戦略が失敗しました。")
 
-    print("===== STEP 5完了 =====")
-    return output_jsonl_path
+    print("\n===== STEP 5完了 =====")
 
 
 def main():
@@ -361,7 +385,7 @@ def main():
     )
     step1_group.add_argument(
         "--embedding_combinations", type=str, default="full",
-        help="生成するエンベディングの組み合わせをセミコロンで区切って指定 (例: 'full;title;[title,author]')。デフォルトは 'full'。"
+        help="生成するエンベディングの組み合わせ (例: 'full;title')"
     )
     step1_group.add_argument(
         "--k_neighbors", type=int, default=15, help="K近傍のK値"
@@ -381,39 +405,37 @@ def main():
     # --- Step 4: Inconsistency Detection ---
     step4_group = parser.add_argument_group('Step 4: Inconsistency Detection')
     step4_group.add_argument(
-        "--inconsistency_threshold", type=float, default=0.8,
-        help="矛盾検出におけるスコアの閾値"
-    )
-    step4_group.add_argument(
         "--inconsistency_top_n", type=int, default=100,
         help="検出する矛盾ペアの上位N件"
     )
 
     # --- Step 5: Finetuning Data Preparation ---
-    # このステップには専用の引数はありません。
-    # 前のステップの出力を使用します。
+    step5_group = parser.add_argument_group('Step 5: Finetuning Data Prep')
+    step5_group.add_argument(
+        "--ft-strategies", type=str,
+        default="inconsistency,diversity,uncertainty,random",
+        help="実行するFTデータ生成戦略（カンマ区切り）"
+    )
 
     # --- 実行制御 ---
     control_group = parser.add_argument_group('実行制御')
     control_group.add_argument(
         "--skip_embedding_and_graphing", action="store_true",
-        help="Step 1 (Embeddingとグラフ生成) をスキップ"
+        help="Step 1 をスキップ"
     )
     control_group.add_argument(
-        "--skip_pair_extraction", action="store_true",
-        help="Step 2 (評価ペア抽出) をスキップ"
+        "--skip_pair_extraction", action="store_true", help="Step 2 をスキップ"
     )
     control_group.add_argument(
-        "--skip_evaluation", action="store_true",
-        help="Step 3 (モデル評価) をスキップ"
+        "--skip_evaluation", action="store_true", help="Step 3 をスキップ"
     )
     control_group.add_argument(
         "--skip_inconsistency_detection", action="store_true",
-        help="Step 4 (矛盾検出) をスキップ"
+        help="Step 4 をスキップ"
     )
     control_group.add_argument(
         "--skip_finetuning_data_preparation", action="store_true",
-        help="Step 5 (FTデータ準備) をスキップ"
+        help="Step 5 をスキップ"
     )
 
     args = parser.parse_args()
@@ -421,7 +443,6 @@ def main():
     os.makedirs(args.output_base_dir, exist_ok=True)
 
     # --- パイプライン実行 ---
-    # Step 1 & 2
     if not args.skip_embedding_and_graphing:
         run_embedding_and_graph_pipeline(args)
     else:
@@ -433,22 +454,20 @@ def main():
         print("\n\n===== STEP 2 をスキップしました =====")
         pairs_csv_path = get_evaluation_pairs_path(args)
         if not os.path.exists(pairs_csv_path):
-            print(f"\nエラー: 評価ペアファイルが見つかりません: {pairs_csv_path}")
+            print(f"エラー: 評価ペアファイルが見つかりません: {pairs_csv_path}")
             sys.exit(1)
         print(f"既存の評価ペアファイルを使用します: {pairs_csv_path}")
 
-    # Step 3
     if not args.skip_evaluation:
         details_csv_path = run_evaluation(args, pairs_csv_path)
     else:
         print("\n\n===== STEP 3 をスキップしました =====")
         details_csv_path = get_evaluation_details_path(args, pairs_csv_path)
         if not os.path.exists(details_csv_path):
-            print(f"\nエラー: 評価詳細ファイルが見つかりません: {details_csv_path}")
+            print(f"エラー: 評価詳細ファイルが見つかりません: {details_csv_path}")
             sys.exit(1)
         print(f"既存の評価詳細ファイルを使用します: {details_csv_path}")
 
-    # Step 4
     if not args.skip_inconsistency_detection:
         inconsistent_triangles_csv = run_inconsistency_detection(
             args, details_csv_path
@@ -456,10 +475,7 @@ def main():
     else:
         print("\n\n===== STEP 4 をスキップしました =====")
         output_dir = os.path.dirname(details_csv_path)
-        base_name = os.path.basename(
-            details_csv_path
-        ).replace("_details.csv", "")
-        # detect_inconsistent_triangles.pyの命名規則に合わせる
+        base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
         inconsistent_triangles_csv = os.path.join(
             output_dir, f"{base_name}_score_after_inconsistent_triangles.csv"
         )
@@ -468,10 +484,15 @@ def main():
             sys.exit(1)
         print(f"既存の矛盾三角形ファイルを使用します: {inconsistent_triangles_csv}")
 
-    # Step 5
     if not args.skip_finetuning_data_preparation:
+        # Step5で必要なクラスタファイルのパスを決定
+        # (evaluate...async.pyの命名規則に依存)
+        base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
+        clusters_path = os.path.join(
+            os.path.dirname(details_csv_path), f"{base_name}_clusters_after.json"
+        )
         run_finetuning_data_preparation(
-            args, inconsistent_triangles_csv, details_csv_path
+            args, inconsistent_triangles_csv, details_csv_path, clusters_path
         )
     else:
         print("\n\n===== STEP 5 をスキップしました =====")
@@ -480,4 +501,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()

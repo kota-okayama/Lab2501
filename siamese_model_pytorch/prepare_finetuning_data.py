@@ -1,22 +1,25 @@
-import csv
 import json
 import os
 import yaml
-import sys  # sys.exitのため追加
-import random  # Add this import
-import argparse # Add this import
-from collections import defaultdict
+import sys
+import argparse
 import pandas as pd
 
 # --- グローバル設定 ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SIMULATION_RESULTS_FILENAME = "human_review_simulation_accuracy_sample2000_100.csv"
+SIMULATION_RESULTS_FILENAME = (
+    "human_review_simulation_accuracy_sample2000_100.csv"
+)
 SIMULATION_RESULTS_PATH = os.path.join(BASE_DIR, SIMULATION_RESULTS_FILENAME)
 
 PROJECT_ROOT_ASSUMED = os.path.abspath(os.path.join(BASE_DIR, ".."))
 BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT = "benchmark/bib_japan_20241024"
 RECORD_YAML_FILENAME = "sampled_data_2000.yml"
-RECORD_YAML_PATH = os.path.join(PROJECT_ROOT_ASSUMED, BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT, RECORD_YAML_FILENAME)
+RECORD_YAML_PATH = os.path.join(
+    PROJECT_ROOT_ASSUMED,
+    BENCHMARK_DIR_RELATIVE_TO_PROJECT_ROOT,
+    RECORD_YAML_FILENAME,
+)
 
 OUTPUT_JSONL_FILENAME = "finetuning_data_with_llm_score.jsonl"
 OUTPUT_JSONL_PATH = os.path.join(BASE_DIR, OUTPUT_JSONL_FILENAME)
@@ -30,9 +33,9 @@ GROUND_TRUTH_CLUSTERS = {}
 
 # --- 書誌データ読み込み関連関数 (evaluate_pairs_with_openai_async.py から拝借・調整) ---
 def load_bib_data_for_finetuning(yaml_path):
-    global BIB_DATA, RECORD_ID_TO_CLUSTER_ID  # Add RECORD_ID_TO_CLUSTER_ID to global
+    global BIB_DATA, RECORD_ID_TO_CLUSTER_ID
     BIB_DATA = {}
-    RECORD_ID_TO_CLUSTER_ID = {}  # Initialize
+    RECORD_ID_TO_CLUSTER_ID = {}
     if not os.path.exists(yaml_path):
         print(f"エラー: 書誌データファイルが見つかりません: {yaml_path}")
         sys.exit(1)
@@ -52,10 +55,9 @@ def load_bib_data_for_finetuning(yaml_path):
                 for (
                     key,
                     value_list,
-                ) in (
-                    possible_records_dict.items()
-                ):  # value_listのtypo修正 value -> This comment seems to refer to a previous state; value_list is correct here.
-                    if key in ["version", "type", "id", "summary", "inf_attr"] and possible_records_dict is all_data:
+                ) in possible_records_dict.items():
+                    if (key in ["version", "type", "id", "summary", "inf_attr"]
+                            and possible_records_dict is all_data):
                         continue
                     if isinstance(value_list, list):
                         for record in value_list:
@@ -67,7 +69,9 @@ def load_bib_data_for_finetuning(yaml_path):
                                 record_id_str = str(record["id"])
                                 cluster_id_val = record.get("cluster_id")
 
-                                if "data" in record and isinstance(record["data"], dict):
+                                if "data" in record and isinstance(
+                                    record["data"], dict
+                                ):
                                     actual_bib_data = record["data"]
                                 else:
                                     actual_bib_data = {
@@ -77,38 +81,51 @@ def load_bib_data_for_finetuning(yaml_path):
                                     }
 
                                 if record_id_str and actual_bib_data:
-                                    if record_id_str not in processed_record_ids_for_bib_data:
+                                    if (record_id_str not in
+                                            processed_record_ids_for_bib_data):
                                         BIB_DATA[record_id_str] = actual_bib_data
-                                        processed_record_ids_for_bib_data.add(record_id_str)
+                                        processed_record_ids_for_bib_data.add(
+                                            record_id_str
+                                        )
 
-                                    if cluster_id_val is not None:  # cluster_id could be 0, so check for None
-                                        # Add to cluster_id map. If ID appears multiple times with different cluster_ids, this will take the last one.
-                                        # This assumes cluster_id is consistent if id appears multiple times in the YAML under different categories.
-                                        RECORD_ID_TO_CLUSTER_ID[record_id_str] = cluster_id_val
+                                    if cluster_id_val is not None:
+                                        RECORD_ID_TO_CLUSTER_ID[
+                                            record_id_str
+                                        ] = cluster_id_val
                                         processed_record_ids_for_cluster_map.add(
                                             record_id_str
-                                        )  # Keep track of which IDs had a cluster_id
+                                        )
 
                                 elif record_id_str and not actual_bib_data:
                                     print(
-                                        f"警告: レコードID {record_id_str} に有効な書誌データが見つかりませんでした。BIB_DATAへの登録をスキップします。"
+                                        f"警告: レコードID {record_id_str} に有効な"
+                                        f"書誌データが見つかりませんでした。"
+                                        f"BIB_DATAへの登録をスキップします。"
                                     )
 
         if not BIB_DATA:
-            print(f"エラー: {yaml_path} から書誌データロード不可、または空。YAMLの構造を確認してください。")
+            print(f"エラー: {yaml_path} から書誌データロード不可、または空。"
+                  "YAMLの構造を確認してください。")
             sys.exit(1)
         print(f"{len(BIB_DATA)} 件の書誌データを {yaml_path} からロードしました。")
-        print(f"{len(RECORD_ID_TO_CLUSTER_ID)} 件の record_id と cluster_id のマッピングをロードしました。")
+        print(
+            f"{len(RECORD_ID_TO_CLUSTER_ID)} 件の record_id と "
+            "cluster_id のマッピングをロードしました。"
+        )
         if not RECORD_ID_TO_CLUSTER_ID:
             print(
-                f"警告: {yaml_path} から cluster_id を含むレコードが見つからなかったか、マッピングの作成に失敗しました。ランダム非一致ペアの生成が困難または不可能になります。"
+                f"警告: {yaml_path} から cluster_id を含むレコードが見つからな"
+                f"かったか、マッピングの作成に失敗しました。"
+                f"ランダム非一致ペアの生成が困難または不可能になります。"
             )
 
     except yaml.YAMLError as e:
-        print(f"エラー: 書誌データファイル ({yaml_path}) のYAML形式が正しくありません: {e}")
+        print(f"エラー: 書誌データファイル ({yaml_path}) のYAML形式が"
+              f"正しくありません: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"エラー: 書誌データファイル ({yaml_path}) の読み込み中に予期せぬエラー: {e}")
+        print(f"エラー: 書誌データファイル ({yaml_path}) の読み込み中に"
+              f"予期せぬエラー: {e}")
         import traceback
 
         traceback.print_exc()
@@ -139,10 +156,9 @@ def load_bib_data_and_gt_clusters(yaml_path):
                 for (
                     key,
                     value_list,
-                ) in (
-                    possible_records_dict.items()
-                ):  # value_listのtypo修正 value -> This comment seems to refer to a previous state; value_list is correct here.
-                    if key in ["version", "type", "id", "summary", "inf_attr"] and possible_records_dict is all_data:
+                ) in possible_records_dict.items():
+                    if (key in ["version", "type", "id", "summary", "inf_attr"]
+                            and possible_records_dict is all_data):
                         continue
                     if isinstance(value_list, list):
                         for record in value_list:
@@ -154,7 +170,9 @@ def load_bib_data_and_gt_clusters(yaml_path):
                                 record_id_str = str(record["id"])
                                 cluster_id_val = record.get("cluster_id")
 
-                                if "data" in record and isinstance(record["data"], dict):
+                                if "data" in record and isinstance(
+                                    record["data"], dict
+                                ):
                                     actual_bib_data = record["data"]
                                 else:
                                     actual_bib_data = {
@@ -164,38 +182,51 @@ def load_bib_data_and_gt_clusters(yaml_path):
                                     }
 
                                 if record_id_str and actual_bib_data:
-                                    if record_id_str not in processed_record_ids_for_bib_data:
+                                    if (record_id_str not in
+                                            processed_record_ids_for_bib_data):
                                         BIB_DATA[record_id_str] = actual_bib_data
-                                        processed_record_ids_for_bib_data.add(record_id_str)
+                                        processed_record_ids_for_bib_data.add(
+                                            record_id_str
+                                        )
 
-                                    if cluster_id_val is not None:  # cluster_id could be 0, so check for None
-                                        # Add to cluster_id map. If ID appears multiple times with different cluster_ids, this will take the last one.
-                                        # This assumes cluster_id is consistent if id appears multiple times in the YAML under different categories.
-                                        RECORD_ID_TO_CLUSTER_ID[record_id_str] = cluster_id_val
+                                    if cluster_id_val is not None:
+                                        RECORD_ID_TO_CLUSTER_ID[
+                                            record_id_str
+                                        ] = cluster_id_val
                                         processed_record_ids_for_cluster_map.add(
                                             record_id_str
-                                        )  # Keep track of which IDs had a cluster_id
+                                        )
 
                                 elif record_id_str and not actual_bib_data:
                                     print(
-                                        f"警告: レコードID {record_id_str} に有効な書誌データが見つかりませんでした。BIB_DATAへの登録をスキップします。"
+                                        f"警告: レコードID {record_id_str} に有効な"
+                                        f"書誌データが見つかりませんでした。"
+                                        f"BIB_DATAへの登録をスキップします。"
                                     )
 
         if not BIB_DATA:
-            print(f"エラー: {yaml_path} から書誌データロード不可、または空。YAMLの構造を確認してください。")
+            print(f"エラー: {yaml_path} から書誌データロード不可、または空。"
+                  "YAMLの構造を確認してください。")
             sys.exit(1)
         print(f"{len(BIB_DATA)} 件の書誌データを {yaml_path} からロードしました。")
-        print(f"{len(RECORD_ID_TO_CLUSTER_ID)} 件の record_id と cluster_id のマッピングをロードしました。")
+        print(
+            f"{len(RECORD_ID_TO_CLUSTER_ID)} 件の record_id と "
+            "cluster_id のマッピングをロードしました。"
+        )
         if not RECORD_ID_TO_CLUSTER_ID:
             print(
-                f"警告: {yaml_path} から cluster_id を含むレコードが見つからなかったか、マッピングの作成に失敗しました。ランダム非一致ペアの生成が困難または不可能になります。"
+                f"警告: {yaml_path} から cluster_id を含むレコードが見つからな"
+                f"かったか、マッピングの作成に失敗しました。"
+                f"ランダム非一致ペアの生成が困難または不可能になります。"
             )
 
     except yaml.YAMLError as e:
-        print(f"エラー: 書誌データファイル ({yaml_path}) のYAML形式が正しくありません: {e}")
+        print(f"エラー: 書誌データファイル ({yaml_path}) のYAML形式が"
+              f"正しくありません: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"エラー: 書誌データファイル ({yaml_path}) の読み込み中に予期せぬエラー: {e}")
+        print(f"エラー: 書誌データファイル ({yaml_path}) の読み込み中に"
+              f"予期せぬエラー: {e}")
         import traceback
 
         traceback.print_exc()
@@ -204,8 +235,8 @@ def load_bib_data_and_gt_clusters(yaml_path):
 
 def get_record_details_for_finetuning_prompt(record_id):
     if not BIB_DATA:
-        print("エラー: 書誌データがロードされていません。(get_record_details_for_finetuning_prompt)")
-        # この関数が呼ばれる時点ではBIB_DATAはロードされているはずなので、基本的にはここに来ない想定
+        print("エラー: 書誌データがロードされていません。"
+              "(get_record_details_for_finetuning_prompt)")
         return "情報取得エラー: BIB_DATA未ロード"
 
     bib_details = BIB_DATA.get(str(record_id))
@@ -216,7 +247,8 @@ def get_record_details_for_finetuning_prompt(record_id):
     authors_str = bib_details.get("bib1_author", "著者不明")
     publisher = bib_details.get("bib1_publisher", "出版社不明")
     pubdate = bib_details.get("bib1_pubdate", "出版日不明")
-    return f"タイトル: {title}\n著者: {authors_str}\n出版社: {publisher}\n出版日: {pubdate}"
+    return (f"タイトル: {title}\n著者: {authors_str}\n"
+            f"出版社: {publisher}\n出版日: {pubdate}")
 
 
 def get_prompts(data_type):
@@ -245,7 +277,8 @@ def get_prompts(data_type):
     return prompt_map.get(data_type, prompt_map["unknown"])
 
 
-def create_finetuning_message(record1_id, record2_id, is_truly_similar, data_type, score=None):
+def create_finetuning_message(record1_id, record2_id, is_truly_similar,
+                              data_type, score=None):
     system_prompt = get_prompts(data_type)
     user_prompt = (
         f"以下の2つの書誌情報が、実質的に同一の文献を指しているかどうかを判断してください。\\n\\n"
@@ -257,7 +290,13 @@ def create_finetuning_message(record1_id, record2_id, is_truly_similar, data_typ
         assistant_response = "はい\\n類似度スコア: 1.0"
     else:
         assistant_response = "いいえ\\n類似度スコア: 0.0"
-    return {"messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}, {"role": "assistant", "content": assistant_response}]}
+    return {
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+            {"role": "assistant", "content": assistant_response},
+        ]
+    }
 
 
 # --- メイン処理 ---
@@ -272,10 +311,12 @@ def main(args):
     load_bib_data_and_gt_clusters(args.ground_truth_yaml)
 
     finetuning_samples = []
+    seen_pairs = set()
 
     # 1. 矛盾する三角形のペアを追加
     try:
         inconsistent_df = pd.read_csv(args.inconsistent_triangles_csv)
+        temp_samples = []
         for _, row in inconsistent_df.iterrows():
             # 3つのペアを処理: (node1,node2), (node2,node3), (node1,node3)
             pairs_data = [
@@ -308,8 +349,20 @@ def main(args):
                     pair_data['is_similar'], args.data_type,
                     pair_data['score']
                 )
-                finetuning_samples.append(message)
-        print(f"{len(inconsistent_df) * 3} 件の矛盾ペアをサンプルに追加しました。")
+                temp_samples.append(message)
+
+        # 矛盾ペアの重複除去
+        for sample in temp_samples:
+            user_content = sample['messages'][1]['content']
+            if user_content not in seen_pairs:
+                seen_pairs.add(user_content)
+                finetuning_samples.append(sample)
+
+        print(
+            f"矛盾ペア処理: {len(inconsistent_df) * 3} 件の候補から "
+            f"{len(finetuning_samples)} 件のユニークなペアを追加しました。"
+        )
+
     except FileNotFoundError:
         print(f"警告: 矛盾ペアファイルが見つかりません: {args.inconsistent_triangles_csv}")
     except Exception as e:
@@ -319,171 +372,95 @@ def main(args):
         else:
             print("  データフレームを読み込めませんでした")
 
-    # 2. Hard negative/positive ペアを追加（バランス調整機能付き）
-    try:
-        details_df = pd.read_csv(args.evaluation_details_csv)
-        # スコアに基づいてソート
-        details_df['abs_score_dist'] = (details_df[args.score_column] - 0.5).abs()
-        hard_pairs_df = details_df.sort_values(by='abs_score_dist')
+    # 2. Hard negative/positive ペアを追加してバランス調整
+    # 現在の正例・負例を数える
+    positive_count = sum(1 for sample in finetuning_samples
+                         if 'はい' in sample['messages'][2]['content'])
+    negative_count = len(finetuning_samples) - positive_count
 
-        # 現在の矛盾ペアの正例・負例を数える
-        positive_count = sum(1 for sample in finetuning_samples 
-                           if 'はい' in sample['messages'][2]['content'])
-        negative_count = len(finetuning_samples) - positive_count
-        
-        print(f"矛盾ペアの内訳: 正例={positive_count}件, 負例={negative_count}件")
-        
+    print(f"矛盾ペアの内訳: 正例={positive_count}件, 負例={negative_count}件")
+
+    try:
         # バランスを取るために必要な数を計算
-        target_count = max(positive_count, negative_count)  # より多い方に合わせる
+        target_count = max(positive_count, negative_count)
         needed_positive = target_count - positive_count
         needed_negative = target_count - negative_count
-        
-        print(f"バランス調整目標: 正例・負例を各{target_count}件に調整")
-        print(f"必要な追加数: 正例={needed_positive}件, 負例={needed_negative}件")
-        
-        # Hard ペアを正例・負例に分けて取得
-        hard_positive_df = hard_pairs_df[hard_pairs_df['ground_truth_similar'] == True]
-        hard_negative_df = hard_pairs_df[hard_pairs_df['ground_truth_similar'] == False]
-        
-        added_positive = 0
-        added_negative = 0
-        
-        # 必要な正例を追加
-        if needed_positive > 0:
-            for _, row in hard_positive_df.head(needed_positive).iterrows():
-                message = create_finetuning_message(
-                    row['record_id_1'],
-                    row['record_id_2'],
-                    row['ground_truth_similar'],
-                    args.data_type,
-                    row[args.score_column]
-                )
-                finetuning_samples.append(message)
-                added_positive += 1
-        
-        # 必要な負例を追加
-        if needed_negative > 0:
-            for _, row in hard_negative_df.head(needed_negative).iterrows():
-                message = create_finetuning_message(
-                    row['record_id_1'],
-                    row['record_id_2'],
-                    row['ground_truth_similar'],
-                    args.data_type,
-                    row[args.score_column]
-                )
-                finetuning_samples.append(message)
-                added_negative += 1
-        
-        print(f"Hard ペア追加完了: 正例={added_positive}件, 負例={added_negative}件")
-        
-    except FileNotFoundError:
-        print(f"警告: 評価詳細ファイルが見つかりません: {args.evaluation_details_csv}")
-    except Exception as e:
-        print(f"警告: 評価詳細ファイルの処理中にエラー: {e}")
-    
-    print(f"{len(finetuning_samples)} 件のファインチューニング用サンプルを作成しました。")
 
-    # 重複除去処理
-    unique_samples = []
-    seen_pairs = set()
-    
-    for sample in finetuning_samples:
-        user_content = sample['messages'][1]['content']
-        # ペア情報でユニーク判定（user_contentをキーとして使用）
-        if user_content not in seen_pairs:
-            seen_pairs.add(user_content)
-            unique_samples.append(sample)
-    
-    duplicate_count = len(finetuning_samples) - len(unique_samples)
-    print(f"重複除去: {duplicate_count} 件の重複を削除し、{len(unique_samples)} 件のユニークサンプルを保持しました。")
-    
-    finetuning_samples = unique_samples
-    
-    # 重複除去後の最終バランス確認と再調整
-    final_positive = sum(1 for sample in finetuning_samples 
-                        if 'はい' in sample['messages'][2]['content'])
-    final_negative = len(finetuning_samples) - final_positive
-    
-    print(f"重複除去後のバランス: 正例={final_positive}件, 負例={final_negative}件")
-    
-    # 差異が大きい場合、追加のバランス調整を実施
-    if abs(final_positive - final_negative) > 5:
-        print(f"⚠️  差異{abs(final_positive - final_negative)}件を調整します")
-        
-        try:
-            # 再度evaluation_details_csvから追加データを取得
+        if needed_positive > 0 or needed_negative > 0:
+            print(f"バランス調整目標: 正例・負例を各{target_count}件に調整")
+            print(f"必要な追加数: 正例={needed_positive}件, 負例={needed_negative}件")
+
             details_df = pd.read_csv(args.evaluation_details_csv)
-            details_df['abs_score_dist'] = (details_df[args.score_column] - 0.5).abs()
-            
-            # 現在使用済みのペアを特定（重複回避）
-            used_pairs = set()
-            for sample in finetuning_samples:
-                user_content = sample['messages'][1]['content']
-                used_pairs.add(user_content)
-            
-            # より多い方に合わせてバランスを取る
-            target_max = max(final_positive, final_negative)
-            needed_positive = target_max - final_positive if final_positive < target_max else 0
-            needed_negative = target_max - final_negative if final_negative < target_max else 0
-            
-            print(f"目標数: {target_max}件ずつ, 追加必要数: 正例={needed_positive}件, 負例={needed_negative}件")
+            details_df['abs_score_dist'] = \
+                (details_df[args.score_column] - 0.5).abs()
+            hard_pairs_df = details_df.sort_values(by='abs_score_dist')
+
+            hard_positive_df = hard_pairs_df[
+                hard_pairs_df['ground_truth_similar']
+            ]
+            hard_negative_df = hard_pairs_df[
+                ~hard_pairs_df['ground_truth_similar']
+            ]
+
+            added_positive = 0
             if needed_positive > 0:
-                hard_positive_df = details_df[details_df['ground_truth_similar'] == True]
-                added = 0
                 for _, row in hard_positive_df.iterrows():
-                    if added >= needed_positive:
+                    if added_positive >= needed_positive:
                         break
-                    
-                    test_message = create_finetuning_message(
+                    message = create_finetuning_message(
                         row['record_id_1'], row['record_id_2'],
                         row['ground_truth_similar'], args.data_type,
                         row[args.score_column]
                     )
-                    test_content = test_message['messages'][1]['content']
-                    
-                    if test_content not in used_pairs:
-                        finetuning_samples.append(test_message)
-                        used_pairs.add(test_content)
-                        added += 1
-                
-                print(f"追加した正例: {added}件")
-            
+                    user_content = message['messages'][1]['content']
+                    if user_content not in seen_pairs:
+                        finetuning_samples.append(message)
+                        seen_pairs.add(user_content)
+                        added_positive += 1
+
+            added_negative = 0
             if needed_negative > 0:
-                hard_negative_df = details_df[details_df['ground_truth_similar'] == False]
-                added = 0
                 for _, row in hard_negative_df.iterrows():
-                    if added >= needed_negative:
+                    if added_negative >= needed_negative:
                         break
-                    
-                    test_message = create_finetuning_message(
+                    message = create_finetuning_message(
                         row['record_id_1'], row['record_id_2'],
                         row['ground_truth_similar'], args.data_type,
                         row[args.score_column]
                     )
-                    test_content = test_message['messages'][1]['content']
-                    
-                    if test_content not in used_pairs:
-                        finetuning_samples.append(test_message)
-                        used_pairs.add(test_content)
-                        added += 1
-                
-                print(f"追加した負例: {added}件")
-                
-        except Exception as e:
-            print(f"再バランス調整中にエラー: {e}")
-    
+                    user_content = message['messages'][1]['content']
+                    if user_content not in seen_pairs:
+                        finetuning_samples.append(message)
+                        seen_pairs.add(user_content)
+                        added_negative += 1
+
+            print(f"Hard ペア追加完了: 正例={added_positive}件, "
+                  f"負例={added_negative}件")
+        else:
+            print("矛盾ペアのバランスが取れているため、Hardペアの追加はスキップします。")
+
+    except FileNotFoundError:
+        print(f"警告: 評価詳細ファイルが見つかりません: "
+              f"{args.evaluation_details_csv}。バランス調整は行われません。")
+    except Exception as e:
+        print(f"警告: 評価詳細ファイルの処理中にエラーが発生しました: {e}")
+
     # 最終確認
-    final_positive = sum(1 for sample in finetuning_samples 
-                        if 'はい' in sample['messages'][2]['content'])
+    final_positive = sum(1 for sample in finetuning_samples
+                         if 'はい' in sample['messages'][2]['content'])
     final_negative = len(finetuning_samples) - final_positive
-    
+
+    print("-" * 20)
+    print(f"最終的なサンプル数: {len(finetuning_samples)} 件")
     print(f"最終データバランス: 正例={final_positive}件, 負例={final_negative}件")
-    print(f"バランス比率: {final_positive/final_negative:.2f} (理想は1.00)")
-    
+    if final_negative > 0:
+        print(f"バランス比率: {final_positive/final_negative:.2f} (理想は1.00)")
+
     if abs(final_positive - final_negative) <= 5:
         print("✅ バランス良好（差異5件以内）")
     else:
         print(f"⚠️  バランス偏り（差異{abs(final_positive - final_negative)}件）")
+    print("-" * 20)
 
     # 指定されたパスにファインチューニング用データを保存
     try:
@@ -492,7 +469,8 @@ def main(args):
                 f.write(json.dumps(entry, ensure_ascii=False) + '\n')
         print(f"ファインチューニング用データを {args.output_jsonl_path} に保存しました。")
     except IOError as e:
-        print(f"エラー: ファイルの書き込みに失敗しました - {args.output_jsonl_path}: {e}")
+        print(f"エラー: ファイルの書き込みに失敗しました - "
+              f"{args.output_jsonl_path}: {e}")
         sys.exit(1)
 
 
