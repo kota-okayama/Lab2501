@@ -1,0 +1,14 @@
+# Dockerイメージに含めないファイルやディレクトリ
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.git
+.gitignore
+.dockerignore
+Dockerfile
+results_bibkyoto/

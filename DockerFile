@@ -1,0 +1,23 @@
+# ベースとなるPythonの公式イメージを選択
+FROM python:3.10-slim
+
+# コンテナ内の作業ディレクトリを設定
+WORKDIR /app
+
+# 1. 依存関係ファイルだけを先にコピーする
+# (このファイルを変更しない限り、以降のRUNコマンドはキャッシュが利用され、ビルドが高速化する)
+COPY requirements.txt .
+
+# 2. pipで依存ライブラリをインストールする
+# --no-cache-dir はイメージサイズを小さく保つためのおまじない
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 3. プロジェクトの全てのファイルをコンテナにコピーする
+COPY . .
+
+# 4. (推奨) OpenAI APIキーを環境変数として設定する
+# ここに直接キーを書くのではなく、docker runコマンドで渡すのが安全です。
+# ENV OPENAI_API_KEY="YOUR_API_KEY_HERE" 
+
+# コンテナが実行されたときのデフォルトのコマンドを設定
+ENTRYPOINT ["python3"]

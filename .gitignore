@@ -48,6 +48,9 @@ ENV/
 !*.yaml
 !.gitignore
 !openai_embedding_experiment/
+!/Dockerfile
+!/.dockerignore
+!/
 
 # JSONファイルの取り扱い
 *.json
