@@ -1,0 +1,441 @@
+
+
+=== ページ 1 ===
+ACTIVE LLM: L ARGE LANGUAGE MODEL -BASED ACTIVE
+LEARNING FOR TEXTUAL FEW-SHOT SCENARIOS
+A P REPRINT
+Markus Bayer
+PEASEC
+Technical University of Darmstadt bayer@peasec.tu-darmstadt.deChristian Reuter
+PEASEC
+Technical University of Darmstadt reuter@peasec.tu-darmstadt.de
+May 20, 2024ABSTRACT
+Active learning is designed to minimize annotation efforts by prioritizing instances that most enhance learning. However, many active learning strategies struggle with a ‘cold start’ problem, needing substantial initial data to be effective. This limitation often reduces their utility for pre-trained models, which already perform well in few-shot scenarios. To address this, we introduce ActiveLLM, a novel active learning approach that leverages large language models such as GPT-4, Llama 3, and
+Mistral Large for selecting instances. We demonstrate that ActiveLLM significantly enhances the classification performance of BERT classifiers in few-shot scenarios, outperforming both traditional active learning methods and the few-shot learning method SetFit. Additionally, ActiveLLM can be extended to non-few-shot scenarios, allowing for iterative selections. In this way, ActiveLLM can even help other active learning strategies to overcome their cold start problem. Our results suggest that ActiveLLM offers a promising solution for improving model performance across various learning setups.
+Keywords Active Learning ·Large Language Models ·Few-Shot Learning ·Cold Start Problem
+1 Introduction
+The selection of training examples significantly impacts the performance of models. Even LLMs, such as GPT-3, show high variances based on training example selection [ 35]. This dependency is even more pronounced in smaller models such as BERT [ 35], which are sometimes preferred for their cost and resource efficiency as well as data protection benefits over APIs. Therefore, we explore the classical concept of active learning for BERT-like models, enhanced by foundation models like GPT-4 [18].
+Active learning encompasses strategies integrated into the labeling process to select instances with the highest learning impact [ 36]. Typically, a model is trained iteratively during the annotation process to query instances for labeling by the annotators (oracle). While active learning can yield significant learning improvements with mid-sized datasets, it often encounters a ‘cold start’ problem [ 5], rendering it unsuitable for few-shot learning. The cold start problem occurs when the active learning method cannot make meaningful decisions at the beginning of data labeling due to insufficient data. For example, in the uncertainty strategy, the method aims to select the most uncertain instances based on an iteratively learned classifier during annotation. The incremental classifier cannot make accurate uncertainty guesses without enough data. This problem intensifies as pre-trained models, like BERT [ 6], perform exceptionally well in few-shot scenarios, making active learning unnecessary for many cases. Additionally, iteratively training such a deep learning model during querying is often impractical due to high waiting times. Even in ‘model mismatch scenarios’, where the instance selection model (query model) differs from the model used for final tasks (successor model), active learning can yield limited gains [36].
+To address these challenges in few-shot and model mismatch scenarios, we propose ActiveLLM, an active learning method leveraging large language models (LLMs). ActiveLLM can estimate uncertainty and diversity even withoutarXiv:2405.10808v1 [cs.CL] 17 May 2024
+
+=== ページ 2 ===
+arXiv Template A P REPRINT
+annotated data and does not require training during the annotation process. This method serves both as a standalone active learning approach and as a solution to the cold start problem in other active learning strategies. Therefore, our contributions are as follows:
+(C1) Innovative Active Learning Method: We introduce a novel active learning strategy using LLMs such as GPT-4, tailored for efficient few-shot learning and effective in overcoming the cold start problem.
+(C2) Scalable Methodology and Enhanced Efficiency: Our approach decouples the query process from the successor model dependency, enhancing scalability and establishing high practicality compared to conventional active learning strategies.
+(C3) Rigorous Model Evaluation: We conduct comprehensive evaluations with various LLMs, showcasing improved performance over current few-shot and active learning benchmarks.
+2 Related Work
+2.1 Foundations
+2.1.1 Few-Shot Learning
+Few-shot learning refers to scenarios where models must learn from a limited number of training instances. This is particularly challenging in fields where acquiring large datasets is difficult or expensive. While very large lanuage models such as GPT-3 inherently have robust few-shot or zero-shot capabilities, our focus is on enhancing few-shot learning in smaller models such as BERT, as detailed in the introduction. With specific methods these smaller language models can attain similar or even better few-shot performance [26].
+One approach to this is to formulate tasks as cloze-style tests, where certain words in a text instance are missing and the language model is employed to fill in the blanks. Task instances are often rephrased into questions so that the answer word to fill corresponds to the label. This way no classifier needs to be trained on top of the language model leading to a more effective way of utilizing the language models [ 9]. This kind of approach is exemplified by Gao et al. [9], Zhang et al. [33], , Schick and Schütze [20], and Tam et al. [26].
+The state-of-the-art technique for BERT-like models, known as SetFit [ 28], overcomes the necessity to formulate such cloze-tasks. In SetFit a sentence transformer [ 19] is fine-tuned on the available training data. The instances are then encoded with the resulting sentence transformer and a classification head is trained on them. At inference, the instances are encoded by the fine-tuned sentence transformer and then classified by the trained classification head.
+2.1.2 Active Learning
+The rationale behind active learning is that a system selectively chooses instances to be labeled, thereby reducing the labeling effort [23]. In this context, annotators serve as oracles, responding to queries from the active learning system regarding the labels of specific instances. This system utilizes a query strategy that typically hinges on measures of uncertainty or diversity. Traditionally, the querying is performed by the machine learning model itself, which undergoes iterative training during the labeling process. For instance, the model might frequently request labels for instances where its uncertainty is highest, measured through approaches like Least Confidence (LC), Margin of Confidence, or entropy.
+However, the scope of active learning has expanded to encompass scenarios where the querying model may differ from the final training model—a phenomenon known as model mismatch—or situations where no model is used for querying.
+The former scenario is increasingly relevant, as modern models often demand substantial computational resources and time, rendering them impractical for iterative training during labeling. Alternatively, the latter approach often focuses on maximizing the diversity of the selected examples and might involve techniques such as data clustering.
+While active learning can significantly streamline the learning process by reducing labeling efforts, most strategies encounter a cold start problem. In the absence of a sufficient initial labeled dataset (label seed), a model may struggle to make informed predictions about uncertainty or diversity [ 32]. This challenge is pronounced when dealing with pre-trained models, which generally require fewer data instances initially. Moreover, these models often necessitate substantial time resources, thereby increasing the necessity for model mismatch scenarios. In the subsequent sections, we give an overview of active learning for pre-trained transformer models, distinguishing between model matching and mismatching scenarios.
+2
+
+=== ページ 3 ===
+arXiv Template A P REPRINT
+Query Strategies Model Matching MCDO Comparison To Random
+[7]LC (w/ and w/o MCDO), Perceptron
+Ensemble, Expected
+Gradient Length,
+Core-Set, D-ALBERT ✓ ✓ /✗Improvements in imbalenced low-data scenarios
+[13]VR, PE, BALD,
+Diversity HeuristicsBERT ✓ ✓ Mixed results
+[32]ALPS, PE, BERT-KM,
+BADGEBERT ✓ ✗ Mixed results
+[21]PE, Breaking Ties,
+LC, Contrastive
+Active LearningBERT
+distilRoBERTa✓ ✗Small improvements in later iterations
+[22]BATL (triplet loss considering uncertainty and diversity), LC
+PE, D-AL, BALD,
+Core-Set, BADGE,
+ALPSDISTRE, BERT
+SCIBERT✓ ✗ Mostly improvements
+[10] BALD BERT base ✓ ✓ Mixed results
+[24] MNLP, VR, BALDBERT base,
+DistilBERT base,
+ELECTRA base✓ ✓ + Significant improvements
+[24] MNLP, VR, BALDBERT,
+DistilBERT,
+ELECTRA✗ ✓ +Significant improvements when mismatch is of the form:
+distilled transformer (query)
+and normal transformer
+(successor)
+[27]LC, MNLP,
+Mahalanobis Distance(Distil-)BERT,
+(Distil-)RoBERTa,
+(Distil-)ELECTRA,
+XL-Net✗ ✗Significant improvements when successor model (from distilled mismatch setting) is used for pseudo-labelling a independent model
+[17]MNLP, BERT-KM,
+BADGE, ALPSXLM-RoBERTa, miniLM✗ ✗Significant improvements when successor model (from distilled mismatch setting) is included in the query process by giving delayed feedback to the distilled model
+Table 1: Overview of different works applying active learning to transformer models. In MCDO, ✓+ means that a normal and an adapted variant of MCDO are tested.
+3
+
+=== ページ 4 ===
+arXiv Template A P REPRINT
+2.2 Active Learning with Transformer Models
+2.2.1 Emergence
+The study by Ein-Dor et al. [7]is among the first to explore active learning with pre-trained transformer models such as BERT. The authors employ well-known active learning strategies, including LC, Core-Set, and Discriminative
+Active Learning (D-AL), and integrate these strategies incrementally without model mismatch. They demonstrate that active learning can enhance the performance of BERT classifiers, particularly in low-data scenarios and when the initial dataset (seed set) is rich in relevant class instances. Similarly, Jacobs et al. [13] investigate the use of hybrid active learning strategies combining uncertainty-based and diversity methods, utilizing SentenceBERT embeddings to refine the instance selection process. Their findings indicate that while active learning reduces labeling efforts, its effectiveness with BERT models is mixed, and the improvements are modest compared to older NLP models. With
+ALPS, Yuan et al. [32] propose a novel approach to address the cold start problem in active learning by leveraging
+BERT’s pre-existing masked language modeling objective along with clustering to select instances. They hypothesize that this strategy provides more reliable confidence scores in the initial stages of model training than a classifier head.
+However, the results are mixed which is also later confirmed by Nguyen et al. [17]. Schröder et al. [21] focus on active learning with BERT and DistilRoBERTa, evaluating both models in settings where the query and successor models match. They report improvements using strategies such as Prediction Entropy (PE), Breaking Ties, LC, and Contrastive
+Active Learning, though they note that random sampling occasionally outperforms these strategies during early training phases due to the cold start problem. In another development, Seo et al. [22] introduce BATL, an active learning method designed specifically for pre-trained transformer models. This method incorporates triplet loss to account for uncertainty and diversity, drawing on the embeddings and task-specific outputs of the classifier head, and generally surpasses traditional active learning methods. Grießhaber et al. [10] also examine the impact of active learning on
+BERT, focusing on the BALD by Houlsby et al. [11] strategy with Monte Carlo Dropout (MCDO). Their results are mixed, sometimes outperforming random sampling in terms of performance and variance, while at other times showing negligible benefits. They further explore the potential of freezing layers within the BERT model to enhance training efficiency and performance in scenarios with limited data. Although this is not discussed in the study presented, it may also be a viable approach for enhancing the efficiency of querying with the same model. As noted by Schröder et al. [21], the incremental training of these models can be time-consuming, which may negate the cost savings from reduced labeling efforts. Moreover, the training of LLMs is not only a time-consuming process but requires significant resources and hyperparameter tuning. The outcomes of this process can vary significantly. Thus, subsequent studies explore mismatch scenarios where the query model differs from the successor model.
+2.2.2 Model Mismatch Scenario
+In [24], the authors explore active learning for sequence classification using transformer models. They investigate several active learning strategies including BALD and Variation Ratio (VR). For the transformer models, they evaluate the standard implementation of MCDO, as well as an efficient variant where Dropout is applied only to the last layer of the model. Their experiments demonstrate significant improvements in active learning when employed with BERT, distilBERT, and ELECTRA, particularly in scenarios without model mismatch. Additional experiments with varying query and successor models reveal that model mismatches tend to reduce the benefits of active learning. This observation aligns with findings by Lowell et al. [15], who note that mismatch scenarios might lead to worse outcomes than random sampling. However, Shelmanov et al. [24] discover that employing a distilled version of BERT as the query model does not affect performance, which can be attributed to the similar uncertainties between distilled and original models.
+Building on these insights, Tsvigun et al. [27] attempt to eliminate the dependence on a specific query model based on the successor model. They do this by using the trained successor model from active learning sessions with distilled versions to pseudolabel the entire dataset, subsequently training an arbitrary model on these instances. Additionally, to enhance efficiency during the iterative training steps in active learning, the authors suggest avoiding predictions on instances where uncertainty was low in previous iterations. Their experiments with uncertainty-based methods such as
+Least Confidence, Maximum Normalized Log-Probability (MNLP), and Mahalanobis Distance demonstrate that the pseudo-labeling approach produces results akin to those in non-model mismatch scenarios. However, this approach still requires a reasonably sized distilled model to be employed throughout the active learning process. This model must be iteratively trained and then used for inference. Moreover, the authors emphasize that the performance of the successor model should not be considerably inferior to that of the final model.
+In a related effort, Nguyen et al. [17] aim to enhance the findings of Shelmanov et al. [24]. by proposing an iterative training of the successor model concurrently with the annotation of new instances. They use a smaller query model for immediate feedback, which is trained with newly annotated data and distilled insights from the previous iteration’s successor model. While this approach shows some improvement over scenarios that do not incorporate the successor model iteratively, the query model is still a distilled version of the successor model in their experiments.
+4
+
+=== ページ 5 ===
+arXiv Template A P REPRINT
+An overview of the different active learning studies working with pre-trained transformer models is given in Table 1.
+2.3 Research Gap
+The most significant gap in active learning research is the use of LLMs, such as GPT-4, which, to our knowledge, has not been explored previously. However, the use of these models allows us to address additional gaps in the research:
+While Ein-Dor et al. [7]and Grießhaber et al. [10] assess the performance of active learning with BERT in low-resource scenarios, their datasets are still considerably larger than those in few-shot scenarios. BERT models tend to achieve very good results even with limited data, which presents a major challenge in active learning with current models, as it only excels when provided with sufficient data (cold start problem). When combining BERT-like models with efficient few-shot learning methods, such as SetFit or ADAPET [ 26], it stands to reason that there might be little or no improvement through active learning. This work aims to overcome this challenge by proposing an active learning strategy that mitigates the cold start problem, enabling improvements also in few-shot scenarios.
+Moreover, many studies [ 2,21,24] report that a model mismatch between the query and successor model often leads to unsatisfactory results [ 36]. This is particularly problematic for the practical application of active learning, as the training runtimes for large pre-trained models can be prohibitively long [ 36]. While efforts by Shelmanov et al. [24] and Nguyen et al. [17] attempt to address this by using smaller, similar models for querying, there remains a dependency on the model type. Similarly, Tsvigun et al. [27] offer a promising approach for decoupling the query and successor models, although a distilled version is still required in the process. In contrast to using smaller, resource-efficient models for querying, we propose the use of much larger foundation models. This approach may initially seem counterintuitive due to concerns about high runtimes, but since these models are capable of zero-shot learning, no training is required.
+Furthermore, these models can be utilized via several cost-free chat interfaces in real-time and without extensive machine learning expertise, making them ideally suited for practical applications.
+3 Method
+ActiveLLM is a pool-based sampling method that operates in batch mode, meaning that it selects a subset from a pool of unlabeled data for querying an oracle. This method is particularly suited for scenarios involving model mismatch. It employs instruction-tuned LLMs as query models, while allowing the choice of a successor model to be independent of these models. ActiveLLM does not train the instruction-tuned LLMs during the active learning process, enabling direct application to the unlabeled dataset without encountering the cold-start problem.
+The design of prompts is critical for achieving optimal results with instruction-tuned LLMs. To this end, we have crafted detailed prompts in various configurations to determine their effectiveness in this context. We propose two main variants of ActiveLLM: one that does not incorporate feedback, addressing few-shot learning scenarios, and another that does incorporate feedback, suitable for general scenarios involving iterative querying.
+3.1 No Feedback Mode: Few-Shot Learning
+The prompts are constructed so that the language model receives a description of active learning, including exact details of its tasks, while also keeping the context length small, as this is a limiting factor for current models. In all cases, given a specific task, ActiveLLM creates a prompt consisting of active learning role allocation, instructions on the selection process, a description of how to format the output, followed by a batch of unlabeled instances. The active learning role allocation positions the language model as an active learning component, explaining that it should select instances for a human annotator to label. Then, the instructions on the selection process specify how many instances it should select.
+The output format should be a simple list of the indices of the selected instances.
+The final prompt design is illustrated in Figure 1. The parameters displayed on the right indicate certain text phrase constellations which can be included, excluded, or adjusted:
+•Guidelines: This includes a phrase indicating that the model is given not only a set of instances but also guidelines for the task. Before listing the instances, the guidelines are included.
+•Instances: This parameter determines how many instances the model should label. While in the few-shot experiments this parameter is set to 32, we also test different values in Section 4.2.3.
+•Advice: Initial experiments showed that the LLMs often respond with explaining general strategies for choosing instances in an active learning manner. Hence, we included the parameter ‘advice,’ which incorporates these strategies (in the figure, this is abbreviated, but we included the full prompt in Appendix A Figure 7)
+5
+
+=== ページ 6 ===
+arXiv Template A P REPRINT
+Figure 1: Prompt Design of ActiveLLM in few-shot learning mode.
+•No CoT/CoT/Explanation: One of the most common and beneficial prompt engineering strategies is the use of
+CoT (Chain of Thought) prompting [ 31]. We experiment with no CoT, ‘normal’ CoT ("think step by step"), and the task to explain the thoughts on each instance. In the case of the explanation for each instance, we also reiterated the ‘instances’ parameter, as we noticed due to very long answers that models often forget how many instances they should select.
+Finally, a batch of unlabeled instances is appended to the prompt. We hypothesize that, contrary to common active learning strategies, large batches or even all instances do not need to be evaluated by the query model to find instances with high learning impact. We test different values of this parameter in Section 4.2.2.
+3.2 Feedback Mode: Iterated Querying
+In the second variant, we designed ActiveLLM similar to other active learning strategies, allowing the LLM to query new instances repeatedly. For this, it is sensible to include data that was selected in previous iterations. These instances must be incorporated into the prompt in such a way that the prompt does not become too large. Therefore, we consider three additional prompt parameters:
+• No Recap: Indicating the baseline, where no instances from previous queries are recalled.
+• Recap: The instances from previous queries are directly included in the prompt.
+•Index Recap: To reduce the context size, the indices of the instances from previous queries are included in the prompt.
+For the latter two scenarios, we included instructions in the prompt to indicate that instances from previous iterations are incorporated. In both cases, we did not include the annotated labels, as our experiments showed that they were generally disregarded by the language models.
+The corresponding prompts and further details on how these designs are implemented are provided in Appendix A.
+4 Experiments
+4.1 Models, Datasets, and Hyperparameter
+As is common in research, our experiments simulate the active learning cycle. To do this, we take a subset of the training set (labels removed) for the respective task and allow the LLM to select a specified number of instances based on the prompt given in Section 3. These instances are then assigned the true labels as if they were annotated by a perfect annotator. For comparison, the baseline method involves random sampling, where the first instances from a shuffled dataset are selected. We train BERT models and compare their performance on the task’s test or validation sets.
+6
+
+=== ページ 7 ===
+arXiv Template A P REPRINT
+4.1.1 Experiments Description
+Given that GPT-4 [ 18] is achieving top results across various benchmarks, we primarily employ this model in our experiments, starting with the prompt engineering phase. This phase begins by comparing different prompt configurations, as illustrated in Figure 1. We then evaluate the effects of varying batch sizes for the unlabeled data used in the prompts.
+Lastly, in the prompt engineering section, we compare different selection sizes, i.e., the number of instances the LLM
+can select.
+In the subsequent experiments outlined in Section 4.3, we demonstrate the general applicability of our ActiveLLM
+approach using the optimal prompt identified earlier. We benchmark ActiveLLM with GPT-4 [ 18], GPT-4o1, GPT-
+3.52[4], Llama 3 70B3, Gemini-Ultra 1.0 [ 1], Mistral Large4and Mixtral 8x7B[ 14] on the GLUE benchmark [ 30]
+(ActiveLLM is renamed according to the used LLM - e.g. GPT-4: ActiveGPT4). Additionally, we compare ActiveLLM
+against the state-of-the-art few-shot learning method SetFit [ 29] and conventional active learning strategies such as LC,
+PE, Embedding KMeans, and BALD.
+In the final set of experiments, we explore the feedback variant of ActiveLLM, which iteratively selects instances using
+GPT-4. First, we compare the different prompts to retrieve previously selected instances. Then we use the best setting to overcome the cold start problem of the conventional active learning method PE.
+4.1.2 Datasets
+For the initial prompt engineering experiments, we are interested in a less common dataset, as a LLM might be less biased by data leakage. We chose the Specialized CTI few-shot dataset [ 3], where Twitter posts are classified according to their relevance to specific CTI events. Detailed dataset specifications are available in Appendix B Table 4. In the general applicability tests, we used the best-performing prompt from earlier experiments on the commonly-used GLUE
+benchmark, sampling 32 instances for each task to create a few-shot scenario. For comparing with other methods, we utilize the AGNews dataset [ 34] (32 instances), for which a SetFit adaptation exists. The SST-2 dataset [ 25], previously used in the general applicability section, is also employed in the final experiments.
+4.1.3 Hyperparameters and Models
+During the prompt engineering experiments, we aim to minimize random factors by generating five different randomizations of the CTI task and applying both the baseline and each prompt to these variations. For each evaluation, we select five different seeds for training the successor model, with the reported results for the baseline and each prompt being the average score from 25 runs (5 randomizations times 5 trained models). For subsequent experiments, we create one randomization of the datasets but continue to train five models and provide the average score.
+As a successor model for the selected instances, we chose BERT [ 6]. While foundational works such as from Devlin et al. [6]typically train BERT-like models for only 3-5 epochs, other studies [ 8,16] suggest that higher epoch counts are necessary for stable and optimal performance in low-data regimes. Consequently, we have opted for 25 epochs for our experiments. Otherwise, we adhere to the default Huggingface transformer parameters, with a learning rate of 1e-3, a weight decay of 0.01, and a dropout probability of 0.1. For conventional active learning methods, we construct a model-matching scenario where the query model and the successor model are the same.
+To underscore the practicality of our method, we employ chat versions of the LLMs to simulate realistic user interaction scenarios within a chat environment.
+4.2 Prompt Engineering Phase
+4.2.1 Configuration Results
+Table 2 presents the results of various prompt configurations. For these prompts we use a batch of 300 presented unlabeled instances. Prompt configurations A and B differ in whether the advice on how to select the instances is already included in the prompt. We observed that GPT-4 tends to reiterate the advice even when it is provided in the prompt. Furthermore, the results suggest that it is preferable not to include the advice in the prompt, likely due to the increased context size when the advice is repeated in both the prompt and the response.
+1https://openai.com/index/hello-gpt-4o/
+2https://platform.openai.com/docs/models/gpt-3-5-turbo
+3https://ai.meta.com/blog/meta-llama-3/
+4https://mistral.ai/news/mistral-large/
+7
+
+=== ページ 8 ===
+arXiv Template A P REPRINT
+Advice CoT Expl. Dec. Guidelines F1 (SD)
+Baseline - - - - 0.6781 (0.029)
+Prompt A1 ✓ ✗ ✗ ✗ 0.6522 (0.100)
+Prompt A2 ✓ ✓ ✗ ✗ 0.6951 (0.102)
+Prompt A3 ✓ ✗ ✓ ✗ 0.6876 (0.108)
+Prompt B1 ✗ ✗ ✗ ✗ 0.7135 (0.060)
+Prompt B2 ✗ ✓ ✗ ✗ 0.7214 (0.053)
+Prompt B3 ✗ ✗ ✓ ✗ 0.6271 (0.139)
+Prompt C2 ✗ ✓ ✗ ✓ 0.7329 (0.053)
+Table 2: Prompt design results of the baseline and ActiveGPT4 on the CTI dataset. The results are averaged over 25runs (5 random dataset and 5 random model initializations) and the standard deviation is given in parentheses. The naming is given as follows: A (advice), B (no advice), C (no advice, but guidelines), 1 (no CoT), 2 (step-by-step CoT), and 3 (explain each instance CoT).
+We also test the three CoT variants: A1 and B1, where there is no CoT; A2 and B2, which use the standard CoT
+approach ("think step by step"); and A3 and B3, which instruct to include explanations for each instance. Interestingly, the common "think step by step" instruction yielded the best results. This might be because this approach allows GPT
+more reasoning in structured steps, while not increasing the context size too much. The explanations for each instance, on the other hand, are probably not helpful due to the increased context length, as explanations for each instance significantly lengthen the responses.
+Finally, we experimented with including labeling guidelines in the prompt. Although labeling guidelines are often created before the labeling process, they are rarely included in the dataset for common tasks. While the guidelines are available for the CTI task, its inclusion in the prompt should be seen as an exploration of what can be achieved rather than the default case for ActiveLLM. As anticipated, this prompt configuration produced the best results, as the model might now be better able to differentiate between instances. In future evaluations, we will utilize ActiveGPT4 with prompt B2, i.e., without guidelines or additional advice on active learning, only employing the simple "think step by step" CoT prompting.
+4.2.2 Presented Batch Size Results
+Figure 2: Varying size of the batch of unlabelled instances from which ActiveGPT4 can choose. All results are averaged over 5 runs on the CTI dataset (F1). The standard deviation is shown in red.
+In the subsequent experiment, we explore varying batch sizes of unlabeled instances presented to ActiveGPT4. Figure 2displays the results for 50, 100, 200, 300, and 400 examples. There is a noticeable trade-off between the context length and the number of presented examples. While a larger pool of examples generally allows for a more diverse set, an increase in context length tends to degrade the model’s performance. It can be observed that the optimal prompt with
+8
+
+=== ページ 9 ===
+arXiv Template A P REPRINT
+300 examples, as used in the previous section, could be significantly enhanced by reducing the size to 200. With 400examples, GPT-4 occasionally indicated an inability to select instances due to the overwhelming quantity. Consequently, for the primary experiments in Section 4.3, we limited the number of instances presented to the model to 200, contingent on the model’s capacity to handle such a context size.
+4.2.3 Selection Size Results
+Figure 3: Varying selection size of examples to be selected by ActiveGPT4. All results are averaged over 5 runs on the
+CTI (F1) and SST-2 (accuracy) datasets. The standard deviation is shown as tubes around the lines.
+In our final experiment on prompt engineering, we investigated the impact of the selection size—how many instances the model should choose—on the outcomes. Many few-shot scenarios in research typically employ 32 examples. We evaluated whether smaller or larger sizes might be more effective for ActiveGPT4. Figure 3 illustrates varying selection sizes for the CTI and SST-2 datasets. Both datasets suggest that selecting 32 examples per active session is a sensible choice. Notably, with the SST-2 dataset, performance diminishes with up to 80 examples, indicating that the model may struggle to process the large number of examples effectively. However, performance increases beyond this point, as expected, because a larger data pool is inherently beneficial.
+4.3 General Applicability
+In this section, we aim to assess how ActiveLLM equipped with various LLMs and the prompt configuration B2 from
+Section 4.2.1 perform on the more common datasets of the GLUE benchmark. Unlike previous experiments, we only sample one dataset for each task but continue to average the performance across five training runs.
+The results of this experiment are given in Table 3. ActiveGPT4, ActiveGPT4o and ActiveMistralLarge are given 200unlabeled instances, as identified in the batch size experiments (Section 4.2.2). Llama 3, GPT-3.5, Gemini-Ultra and
+Mixtral can not process such extensive prompts and are therefore given 100 instances. Notably, on average over all tasks
+Mistral Large with 200 examples emerged as the superior model, even surpassing GPT-4. However, ActiveGPT4 is the only one that consistently improved results, while other variants decreased performance in at least one task compared to the baseline. Intriguingly, despite being the weakest overall, Gemini-Ultra achieved the best scores in MRPC and
+COLA. Furthermore, although Mistral-Large with 200 examples generally outperformed its 100-example counterpart, it yielded inferior results in five out of eight tasks. The tasks in which Mistral-Large with 200 instances performs better are those with a generally shorter text length, suggesting that choosing a batch size based on token length may be better than a static batch size.
+Overall, ActiveLLM proves to be a robust method for enhancing performance in few-shot scenarios. The most significant improvements were observed with ActiveMistralLarge (200) and ActiveGPT4 on WNLI and SST2, respectively, achieving improvements of 17.19 and 17.11 percentage points over the baseline.
+9
+
+=== ページ 10 ===
+arXiv Template A P REPRINT
+QNLI QQP RTE SST2 WNLI MNLI-(m/mm) MRPC COLA
+Baseline 55.11 63.67 50.83 56.03 35.77 34.92/35.01 67.55 63.89Active 200↰GPT-4 58.94 63.99 53.57 73.14 40.28 35.45/35.14 68.33 64.70↰GPT-4o 62.76 63.65 48.88 66.31 41.13 32.23/32.8 69.75 65.41↰Mistral Large 60.23 65.26 55.60 60.64 52.96 36.59/35.92 67.06 67.44Active 100↰Llama 3 70B 56.57 65.82 52.27 65.71 40.28 37.19/36.68 66.86 68.15↰Mistral Large 60.68 64.82 49.48 66.86 46.48 37.41/36.58 69.07 67.56↰GPT-3.5 55.11 65.88 55.09* 61.15 51.55 37.44/37.62 67.7 68.63↰Gemini-Ultra 57.6 61.18 54.58* 49.08 43.1 35.74/35.77 69.95 69.22↰Mixtral 8x7B 61.13 65.27 50.97 68.00 41.41 33.62/33.75 68.14 66.96Table 3: Few-shot results (32 instances) of ActiveLLM with different LLMs on GLUE tasks. ’Active 200/100’ describes the size of the batch of unlabelled instances. Only GPT-4, GPT-4o and Mistral Large are capable of processing 200instances. All results are averaged over 5 runs (accuracy).
+4.3.1 Language Model Analysis
+In addition to performance discrepancies among different LLMs on the GLUE benchmark, as detailed in Table 3, our analysis revealed distinct response patterns. GPT-4, GPT-4o and Mistral-Large have particularly high reliability and transparency. GPT-4o and Mistral Large typically provided concise answers, while all three models initially offered general advice on example selection before proceeding with more detailed responses. GPT-3.5 was also reliable but much more succinct in explaining its instance choices than GPT-4. Gemini-Ultra often refused to answer and indicated its limitations by stating it could not perform tasks beyond those typical of a language model. Mixtral struggled the most with task comprehension, frequently generating irrelevant instances based on the given data and overlooking the initial instructions.
+While all models occasionally failed to select exactly 32 instances, this issue was least common with GPT-4, GPT-4o and Mistral-Large.
+4.4 Comparison
+Figure 4: Comparison of ActiveGPT4, the few-shot method SetFit, and common active learning strategies (LC, PE, Embedding KMeans, BALD) on the AGNews dataset. All results are averaged over 5 runs (accuracy). The standard deviation is shown in red.
+While showing significant improvements over the baseline of random sampling, we were interested to see how
+ActiveLLM performs against other techniques. For this, we evaluated the performance of ActiveGPT4, the state-of-the-
+10
+
+=== ページ 11 ===
+arXiv Template A P REPRINT
+art few-shot learning method SetFit, and the active learning strategies LC, PE, Embedding KMeans, and BALD on a subset of 32 instances from the AGNews dataset. These active learning strategies were employed in a model matching setting, where the successor model, BERT, is iteratively trained and used as the query model.
+The results of this experiment are illustrated in Figure 4. ActiveGPT4 substantially outperformed the other active learning methods and improved over SetFit by 1.52 percentage points. In comparing the other active learning methods, it is important to keep in mind that this experiment was conducted in a few-shot scenario where they encounter the cold start problem. Therefore, in the experiment in Section 4.5.2, we also use ActiveLLM in combination with conventional active learning to overcome this problem.
+4.5 Non-Few-Shot-Scenarios
+4.5.1 Iterated Querying
+Figure 5: Iterated querying on the SST2 dataset with different strategies of recalling already labelled instances. All results are averaged over 5 runs (accuracy). The standard deviation is shown as tubes around the lines.
+In our last experiments, we investigate how ActiveLLM performs in non-few-shot scenarios. For this purpose, we selected a sample size of 25 and evaluated the process up to 300 examples.
+Figure 5 indicates that ActiveGPT4 is particularly beneficial in few-shot scenarios up to about 100 instances. Beyond this point, random sampling mostly matches its performance. Furthermore, the figure underscores the importance of recalling instances that have already been selected. Providing the model with the indices of these instances appears to be the most efficient method, as it does not overly complicate or significantly enlarge the prompt.
+These results motivate the subsequent experiment in which we explore whether ActiveLLM might be a viable solution for overcoming the cold start problem of learning strategies.
+4.5.2 Overcoming the Cold Start Problem
+As outlined in Section 1, a pervasive issue in active learning research is the initial poor performance due to insufficient data, which leads to random or worse selections. However, as deep learning models increasingly excel in low-data regimes, the quality of initial data becomes progressively crucial. Observing that ActiveLLM excels in few-shot scenarios, we hypothesized that combining traditional active learning strategies with ActiveLLM could be beneficial in non-few-shot scenarios as well. Consequently, in this evaluation, we used the first 50 examples selected by ActiveGPT4
+(index recap mode) as the starting point for PE.
+Once again, a selection size of 25 was used, and the experiments continued until reaching a total of 300 examples The results in Figure 6 clearly show that using ActiveLLM as a starting point for PE outperforms PE with cold start until a plateau is reached at around 100 instances. This indicates that ActiveLLM is indeed an effective method for mitigating the cold start issues in active learning strategies.
+11
+
+=== ページ 12 ===
+arXiv Template A P REPRINT
+Figure 6: Comparison of PE with and without selected instances by ActiveGPT4 as seed label set. ActiveGPT4 was used to select 50 instances for the SST-2 set with index recap mode and a sample size of 25. All results are averaged over 5 runs (accuracy). The standard deviation is shown as tubes around the lines.
+5 Discussion & Conclusion
+Utilizing instruction-tuned LLMs presents several advantages for active learning with pre-trained transformers like
+BERT. Since these LLMs exhibit substantial zero-shot capabilities, they overcome the cold start problem and can be directly applied to a dataset. This is crucial for models like BERT, which already demonstrate strong performance in few-shot settings, rendering active learning strategies that face the cold start problem less useful. Realised in the
+ActiveLLM method, we show that this procedure indeed excels in few-shot scenarios in contrast to other active learning strategies and even outperforms the state-of-the-art few-shot learning method SetFit. In further experiments, we also demonstrate a variant of ActiveLLM usable for non-few-shot scenarios incorporating feedback from previous iterations.
+In a combined setting, we demonstrate that ActiveLLM overcomes the cold start problem inherent in conventional active learning strategies, exemplified by the PE active learning strategy.
+Moreover, the LLMs do not need to be trained during the active learning process, making ActiveLLM especially suitable for practical scenarios. Even efficient methods need several minutes to perform one querying iteration [ 32].
+While ActiveLLM considers only a small part of the unlabeled data, it achieves significant improvements and requires only a few seconds for querying. Furthermore, these LLMs are accessible through several chat interfaces, enabling practitioners from all domains without a deep machine learning or programming background to freely implement
+ActiveLLM.
+5.1 LLM-based Active Learning Strategies
+The question remains as to how LLMs choose instances. It is nearly impossible to assess if the models truly perform the strategies they claim to execute. However, LLMs are known to be good at finding topics and patterns in texts, which could suggest that diversity sampling is a valid procedure. We expect these models are capable of identifying unique, representative, frequent, or highly information-dense instances. Similarly, we expect these models to perform well on the tasks themselves, which is why they could be relatively proficient at selecting a balanced set of all classes. However, these models cannot inspect their own internals, which means they certainly are not performing uncertainty sampling based on these internals. However, related to uncertainty, LLMs might be very well suited for identifying difficult or ambiguous examples. Occasionally, the models mention that they try to filter out any instances that are anomalies that would teach the successor model incorrect patterns. In the feedback variant, the language models often directly mention strategies regarding the feedback, explaining that for selecting the instances, they incorporate past instances and try to avoid redundancy, but also track very ambiguous instances from which more data might be needed in the successor training.
+12
+
+=== ページ 13 ===
+arXiv Template A P REPRINT
+5.2 Limitations
+In this study, we focus on active learning for BERT-like transformer models. While LLMs like GPT-4 may have greater capabilities, they are too expensive and resource-intensive to deploy in many cases, and APIs may be too prohibitive because of data privacy reasons. While BERT-like models remain common for classification tasks, we also look forward to using ActiveLLM on LLMs like GPT-4. As reported by [ 35], the selection of training examples for demonstration in the prompt can also have significant effects on the LLM performance, making ActiveLLM a promising method.
+The context size is crucial for ActiveLLM. If the prompts get too large, the LLMs tend to forget the task or are not able to reason over the various instances. Although some models were reported to be able to handle long context inputs, we found that they were not able to reason perfectly over lengthy contexts. This is in line with the findings of Hsieh et al. [12] who argue that simple retrieval-based tests, like the common needle-in-a-haystack test, are not suitable for testing long context understanding. In our results, we noticed differences for tasks with longer instances on average. Therefore, we are interested in considering not only the instances as a length restriction but also the token count in future work.
+Our work focuses on the utilization of the chat versions of the respective models to emphasize practicability. However, directly using the models, e.g., with the APIs, might yield different results. While this might only play an insignificant difference for Llama or Mixtral, some chat interfaces, like those from OpenAI or Google, hide parameters, preceding prompts, and exact version declarations. We see our results as a baseline that might be improved with different parameters or without a preceding prompt in the future.
+Furthermore, we look forward to works further refining the prompt design. For example, the prompt could promote that the language model should favor certain active learning strategies. It would also be interesting to analyze certain strategies in isolation, like only diversity sampling. While we did not receive better results incorporating the true labels during iterated querying, this behavior might stem from the fact that we only evaluated ActiveLLM on at most three-class multi-classification tasks. We expect with a growing number of classes that the models identify to also look for the count of already labeled instances of a certain class.
+References
+[1]Rohan Anil, Sebastian Borgeaud, Yonghui Wu, Jean-Baptiste Alayrac, Jiahui Yu, Radu Soricut, Johan Schalkwyk,
+Andrew M. Dai, Anja Hauth, Katie Millican, David Silver, Slav Petrov, Melvin Johnson, Ioannis Antonoglou,
+Julian Schrittwieser, Amelia Glaese, Jilin Chen, Emily Pitler, Timothy P. Lillicrap, Angeliki Lazaridou, Orhan
+Firat, James Molloy, Michael Isard, Paul Ronald Barham, Tom Hennigan, Benjamin Lee, Fabio Viola, Malcolm
+Reynolds, Yuanzhong Xu, Ryan Doherty, Eli Collins, Clemens Meyer, Eliza Rutherford, Erica Moreira, Kareem
+Ayoub, Megha Goel, George Tucker, Enrique Piqueras, Maxim Krikun, Iain Barr, Nikolay Savinov, Ivo Danihelka,
+Becca Roelofs, Anaïs White, Anders Andreassen, Tamara von Glehn, Lakshman Yagati, Mehran Kazemi, Lucas
+Gonzalez, Misha Khalman, Jakub Sygnowski, and et al. Gemini: A family of highly capable multimodal models.
+CoRR , abs/2312.11805, 2023. doi:10.48550/ARXIV .2312.11805. URL https://doi.org/10.48550/arXiv.
+2312.11805 .
+[2]Jason Baldridge and Miles Osborne. Active learning and the total cost of annotation. In Proceedings of the 2004Conference on Empirical Methods in Natural Language Processing , EMNLP 2004, A meeting of SIGDAT, a
+Special Interest Group of the ACL, held in conjunction with ACL 2004, 25-26 July 2004, Barcelona, Spain , pages
+9–16. ACL, 2004. URL https://aclanthology.org/W04-3202/ .
+[3]Markus Bayer, Tobias Frey, and Christian Reuter. Multi-level fine-tuning, data augmentation, and few-shot learning for specialized cyber threat intelligence. Comput. Secur. , 134:103430, 2023. doi:10.1016/J.COSE.2023.103430.
+URL https://doi.org/10.1016/j.cose.2023.103430 .
+[4]Tom B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, Sandhini Agarwal, Ariel Herbert-V oss, Gretchen Krueger,
+Tom Henighan, Rewon Child, Aditya Ramesh, Daniel M. Ziegler, Jeffrey Wu, Clemens Winter, Christopher Hesse,
+Mark Chen, Eric Sigler, Mateusz Litwin, Scott Gray, Benjamin Chess, Jack Clark, Christopher Berner, Sam
+McCandlish, Alec Radford, Ilya Sutskever, and Dario Amodei. Language models are few-shot learners. In Hugo
+Larochelle, Marc’Aurelio Ranzato, Raia Hadsell, Maria-Florina Balcan, and Hsuan-Tien Lin, editors, Advances in
+Neural Information Processing Systems 33: Annual Conference on Neural Information Processing Systems 2020,
+NeurIPS 2020, December 6-12, 2020, virtual , 2020. URL https://proceedings.neurips.cc/paper/2020/
+hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html .
+[5]Liangyu Chen, Yutong Bai, Siyu Huang, Yongyi Lu, Bihan Wen, Alan L. Yuille, and Zongwei Zhou. Making your first choice: To address cold start problem in medical active learning. In Ipek Oguz, Jack H. Noble, Xiaoxiao Li,
+Martin Styner, Christian Baumgartner, Mirabela Rusu, Tobias Heimann, Despina Kontos, Bennett A. Landman,
+13
+
+=== ページ 14 ===
+arXiv Template A P REPRINT
+and Benoit M. Dawant, editors, Medical Imaging with Deep Learning, MIDL 2023, 10-12 July 2023, Nashville,
+TN, USA , volume 227 of Proceedings of Machine Learning Research , pages 496–525. PMLR, 2023. URL
+https://proceedings.mlr.press/v227/chen24a.html .
+[6]Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. BERT: pre-training of deep bidirectional transformers for language understanding. In Jill Burstein, Christy Doran, and Thamar Solorio, editors, Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human
+Language Technologies, NAACL-HLT 2019, Minneapolis, MN, USA, June 2-7, 2019, Volume 1 (Long and Short Papers) , pages 4171–4186. Association for Computational Linguistics, 2019. doi:10.18653/V1/N19-1423. URL
+https://doi.org/10.18653/v1/n19-1423 .
+[7]Liat Ein-Dor, Alon Halfon, Ariel Gera, Eyal Shnarch, Lena Dankin, Leshem Choshen, Marina Danilevsky,
+Ranit Aharonov, Yoav Katz, and Noam Slonim. Active learning for BERT: an empirical study. In Bonnie
+Webber, Trevor Cohn, Yulan He, and Yang Liu, editors, Proceedings of the 2020 Conference on Empirical
+Methods in Natural Language Processing, EMNLP 2020, Online, November 16-20, 2020 , pages 7949–7962.
+Association for Computational Linguistics, 2020. doi:10.18653/V1/2020.EMNLP-MAIN.638. URL https:
+//doi.org/10.18653/v1/2020.emnlp-main.638 .
+[8]Tianyu Gao, Adam Fisch, and Danqi Chen. Making pre-trained language models better few-shot learners. In
+Chengqing Zong, Fei Xia, Wenjie Li, and Roberto Navigli, editors, Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language
+Processing, ACL/IJCNLP 2021, (Volume 1: Long Papers), Virtual Event, August 1-6, 2021 , pages 3816–3830.
+Association for Computational Linguistics, 2021. doi:10.18653/V1/2021.ACL-LONG.295. URL https://doi.
+org/10.18653/v1/2021.acl-long.295 .
+[9]Tianyu Gao, Adam Fisch, and Danqi Chen. Making pre-trained language models better few-shot learners. In
+Chengqing Zong, Fei Xia, Wenjie Li, and Roberto Navigli, editors, Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language
+Processing, ACL/IJCNLP 2021, (Volume 1: Long Papers), Virtual Event, August 1-6, 2021 , pages 3816–3830.
+Association for Computational Linguistics, 2021. doi:10.18653/V1/2021.ACL-LONG.295. URL https://doi.
+org/10.18653/v1/2021.acl-long.295 .
+[10] Daniel Grießhaber, Johannes Maucher, and Ngoc Thang Vu. Fine-tuning BERT for low-resource natural language understanding via active learning. In Donia Scott, Núria Bel, and Chengqing Zong, editors, Proceedings of the 28th International Conference on Computational Linguistics, COLING 2020, Barcelona, Spain (Online), December 8-13, 2020 , pages 1158–1171. International Committee on Computational Linguistics, 2020.
+doi:10.18653/V1/2020.COLING-MAIN.100. URL https://doi.org/10.18653/v1/2020.coling-main.
+100.
+[11] Neil Houlsby, Ferenc Huszar, Zoubin Ghahramani, and Máté Lengyel. Bayesian active learning for classification and preference learning. CoRR , abs/1112.5745, 2011. URL http://arxiv.org/abs/1112.5745 .
+[12] Cheng-Ping Hsieh, Simeng Sun, Samuel Kriman, Shantanu Acharya, Dima Rekesh, Fei Jia, Yang Zhang, and
+Boris Ginsburg. Ruler: What’s the real context size of your long-context language models?, 2024.
+[13] Pieter Floris Jacobs, Gideon Maillette de Buy Wenniger, Marco A. Wiering, and Lambert Schomaker. Active learning for reducing labeling effort in text classification tasks. In Luis A. Leiva, Cédric Pruski, Réka Markovich,
+Amro Najjar, and Christoph Schommer, editors, Artificial Intelligence and Machine Learning - 33rd Benelux
+Conference on Artificial Intelligence, BNAIC/Benelearn 2021, Esch-sur-Alzette, Luxembourg, November 10-12,
+2021, Revised Selected Papers , volume 1530 of Communications in Computer and Information Science , pages 3–29.
+Springer, 2021. doi:10.1007/978-3-030-93842-0_1. URL https://doi.org/10.1007/978-3-030-93842-0_
+1.
+[14] Albert Q. Jiang, Alexandre Sablayrolles, Antoine Roux, Arthur Mensch, Blanche Savary, Chris Bamford,
+Devendra Singh Chaplot, Diego de Las Casas, Emma Bou Hanna, Florian Bressand, Gianna Lengyel, Guillaume Bour, Guillaume Lample, Lélio Renard Lavaud, Lucile Saulnier, Marie-Anne Lachaux, Pierre Stock,
+Sandeep Subramanian, Sophia Yang, Szymon Antoniak, Teven Le Scao, Théophile Gervet, Thibaut Lavril,
+Thomas Wang, Timothée Lacroix, and William El Sayed. Mixtral of experts. CoRR , abs/2401.04088, 2024.
+doi:10.48550/ARXIV .2401.04088. URL https://doi.org/10.48550/arXiv.2401.04088 .
+[15] David Lowell, Zachary C. Lipton, and Byron C. Wallace. Practical obstacles to deploying active learning.
+In Kentaro Inui, Jing Jiang, Vincent Ng, and Xiaojun Wan, editors, Proceedings of the 2019 Conference on
+Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural
+Language Processing, EMNLP-IJCNLP 2019, Hong Kong, China, November 3-7, 2019 , pages 21–30. Association for Computational Linguistics, 2019. doi:10.18653/V1/D19-1003. URL https://doi.org/10.18653/v1/
+D19-1003 .
+14
+
+=== ページ 15 ===
+arXiv Template A P REPRINT
+[16] Marius Mosbach, Maksym Andriushchenko, and Dietrich Klakow. On the stability of fine-tuning BERT: misconceptions, explanations, and strong baselines. In 9th International Conference on Learning Representations, ICLR
+2021, Virtual Event, Austria, May 3-7, 2021 . OpenReview.net, 2021. URL https://openreview.net/forum?
+id=nzpLWnVAyah .
+[17] Minh Van Nguyen, Nghia Trung Ngo, Bonan Min, and Thien Huu Nguyen. FAMIE: A fast active learning framework for multilingual information extraction. CoRR , abs/2202.08316, 2022. URL https://arxiv.org/
+abs/2202.08316 .
+[18] OpenAI. GPT-4 technical report. CoRR , abs/2303.08774, 2023. doi:10.48550/ARXIV .2303.08774. URL
+https://doi.org/10.48550/arXiv.2303.08774 .
+[19] Nils Reimers and Iryna Gurevych. Sentence-bert: Sentence embeddings using siamese bert-networks. In Kentaro
+Inui, Jing Jiang, Vincent Ng, and Xiaojun Wan, editors, Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing,
+EMNLP-IJCNLP 2019, Hong Kong, China, November 3-7, 2019 , pages 3980–3990. Association for Computational
+Linguistics, 2019. doi:10.18653/V1/D19-1410. URL https://doi.org/10.18653/v1/D19-1410 .
+[20] Timo Schick and Hinrich Schütze. Exploiting cloze-questions for few-shot text classification and natural language inference. In Paola Merlo, Jörg Tiedemann, and Reut Tsarfaty, editors, Proceedings of the 16th Conference of the
+European Chapter of the Association for Computational Linguistics: Main Volume, EACL 2021, Online, April
+19 - 23, 2021 , pages 255–269. Association for Computational Linguistics, 2021. doi:10.18653/V1/2021.EACLMAIN.20. URL https://doi.org/10.18653/v1/2021.eacl-main.20 .
+[21] Christopher Schröder, Andreas Niekler, and Martin Potthast. Revisiting uncertainty-based query strategies for active learning with transformers. In Smaranda Muresan, Preslav Nakov, and Aline Villavicencio, editors,
+Findings of the Association for Computational Linguistics: ACL 2022, Dublin, Ireland, May 22-27, 2022 , pages
+2194–2203. Association for Computational Linguistics, 2022. doi:10.18653/V1/2022.FINDINGS-ACL.172. URL
+https://doi.org/10.18653/v1/2022.findings-acl.172 .
+[22] Seungmin Seo, Donghyun Kim, Youbin Ahn, and Kyong-Ho Lee. Active learning on pre-trained language model with task-independent triplet loss. In Thirty-Sixth AAAI Conference on Artificial Intelligence, AAAI 2022, ThirtyFourth Conference on Innovative Applications of Artificial Intelligence, IAAI 2022, The Twelveth Symposium on
+Educational Advances in Artificial Intelligence, EAAI 2022 Virtual Event, February 22 - March 1, 2022 , pages
+11276–11284. AAAI Press, 2022. doi:10.1609/AAAI.V36I10.21378. URL https://doi.org/10.1609/aaai.
+v36i10.21378 .
+[23] Burr Settles. Active Learning . Synthesis Lectures on Artificial Intelligence and Machine Learning. Morgan &
+Claypool Publishers, 2012. ISBN 978-3-031-00432-2. doi:10.2200/S00429ED1V01Y201207AIM018. URL
+https://doi.org/10.2200/S00429ED1V01Y201207AIM018 .
+[24] Artem Shelmanov, Dmitry Puzyrev, Lyubov Kupriyanova, Denis Belyakov, Daniil Larionov, Nikita Khromov,
+Olga Kozlova, Ekaterina Artemova, Dmitry V . Dylov, and Alexander Panchenko. Active learning for sequence tagging with deep pre-trained models and bayesian uncertainty estimates. In Paola Merlo, Jörg Tiedemann, and Reut Tsarfaty, editors, Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: Main Volume, EACL 2021, Online, April 19 - 23, 2021 , pages 1698–1712.
+Association for Computational Linguistics, 2021. doi:10.18653/V1/2021.EACL-MAIN.145. URL https:
+//doi.org/10.18653/v1/2021.eacl-main.145 .
+[25] Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher D. Manning, Andrew Y . Ng, and Christopher
+Potts. Recursive deep models for semantic compositionality over a sentiment treebank. In Proceedings of the
+2013 Conference on Empirical Methods in Natural Language Processing, EMNLP 2013, 18-21 October 2013,
+Grand Hyatt Seattle, Seattle, Washington, USA, A meeting of SIGDAT, a Special Interest Group of the ACL , pages
+1631–1642. ACL, 2013. URL https://aclanthology.org/D13-1170/ .
+[26] Derek Tam, Rakesh R. Menon, Mohit Bansal, Shashank Srivastava, and Colin Raffel. Improving and simplifying pattern exploiting training. In Marie-Francine Moens, Xuanjing Huang, Lucia Specia, and Scott Wen-tau
+Yih, editors, Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing,
+EMNLP 2021, Virtual Event / Punta Cana, Dominican Republic, 7-11 November, 2021 , pages 4980–4991.
+Association for Computational Linguistics, 2021. doi:10.18653/V1/2021.EMNLP-MAIN.407. URL https:
+//doi.org/10.18653/v1/2021.emnlp-main.407 .
+[27] Akim Tsvigun, Artem Shelmanov, Gleb Kuzmin, Leonid Sanochkin, Daniil Larionov, Gleb Gusev, Manvel
+Avetisian, and Leonid Zhukov. Towards computationally feasible deep active learning. In Marine Carpuat, MarieCatherine de Marneffe, and Iván Vladimir Meza Ruíz, editors, Findings of the Association for Computational
+Linguistics: NAACL 2022, Seattle, WA, United States, July 10-15, 2022 , pages 1198–1218. Association for
+15
+
+=== ページ 16 ===
+arXiv Template A P REPRINT
+Computational Linguistics, 2022. doi:10.18653/V1/2022.FINDINGS-NAACL.90. URL https://doi.org/10.
+18653/v1/2022.findings-naacl.90 .
+[28] Lewis Tunstall, Nils Reimers, Unso Eun Seo Jo, Luke Bates, Daniel Korat, Moshe Wasserblat, and Oren Pereg.
+Efficient few-shot learning without prompts. CoRR , abs/2209.11055, 2022. doi:10.48550/ARXIV .2209.11055.
+URL https://doi.org/10.48550/arXiv.2209.11055 .
+[29] Lewis Tunstall, Nils Reimers, Unso Eun Seo Jo, Luke Bates, Daniel Korat, Moshe Wasserblat, and Oren Pereg.
+Efficient few-shot learning without prompts. CoRR , abs/2209.11055, 2022. doi:10.48550/ARXIV .2209.11055.
+URL https://doi.org/10.48550/arXiv.2209.11055 .
+[30] Alex Wang, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel R. Bowman. GLUE: A
+multi-task benchmark and analysis platform for natural language understanding. In 7th International Conference on Learning Representations, ICLR 2019, New Orleans, LA, USA, May 6-9, 2019 . OpenReview.net, 2019. URL
+https://openreview.net/forum?id=rJ4km2R5t7 .
+[31] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed H. Chi, Quoc V . Le, and Denny Zhou. Chain-of-thought prompting elicits reasoning in large language models. In Sanmi Koyejo,
+S. Mohamed, A. Agarwal, Danielle Belgrave, K. Cho, and A. Oh, editors, Advances in Neural Information
+Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New
+Orleans, LA, USA, November 28 - December 9, 2022 , 2022. URL http://papers.nips.cc/paper_files/
+paper/2022/hash/9d5609613524ecf4f15af0f7b31abca4-Abstract-Conference.html .
+[32] Michelle Yuan, Hsuan-Tien Lin, and Jordan L. Boyd-Graber. Cold-start active learning through self-supervised language modeling. In Bonnie Webber, Trevor Cohn, Yulan He, and Yang Liu, editors, Proceedings of the 2020Conference on Empirical Methods in Natural Language Processing, EMNLP 2020, Online, November 16-20, 2020 , pages 7935–7948. Association for Computational Linguistics, 2020. doi:10.18653/V1/2020.EMNLP-MAIN.637.
+URL https://doi.org/10.18653/v1/2020.emnlp-main.637 .
+[33] Ningyu Zhang, Luoqiu Li, Xiang Chen, Shumin Deng, Zhen Bi, Chuanqi Tan, Fei Huang, and Huajun Chen.
+Differentiable prompt makes pre-trained language models better few-shot learners. In The Tenth International
+Conference on Learning Representations, ICLR 2022, Virtual Event, April 25-29, 2022 . OpenReview.net, 2022.
+URL https://openreview.net/forum?id=ek9a0qIafW .
+[34] Xiang Zhang, Junbo Jake Zhao, and Yann LeCun. Character-level convolutional networks for text classification.
+In Corinna Cortes, Neil D. Lawrence, Daniel D. Lee, Masashi Sugiyama, and Roman Garnett, editors, Advances in Neural Information Processing Systems 28: Annual Conference on Neural Information Processing Systems
+2015, December 7-12, 2015, Montreal, Quebec, Canada , pages 649–657, 2015. URL https://proceedings.
+neurips.cc/paper/2015/hash/250cf8b51c773f3f8dc8b4be867a9a02-Abstract.html .
+[35] Yiming Zhang, Shi Feng, and Chenhao Tan. Active example selection for in-context learning. In Yoav Goldberg,
+Zornitsa Kozareva, and Yue Zhang, editors, Proceedings of the 2022 Conference on Empirical Methods in
+Natural Language Processing, EMNLP 2022, Abu Dhabi, United Arab Emirates, December 7-11, 2022 , pages
+9134–9148. Association for Computational Linguistics, 2022. doi:10.18653/V1/2022.EMNLP-MAIN.622. URL
+https://doi.org/10.18653/v1/2022.emnlp-main.622 .
+[36] Zhisong Zhang, Emma Strubell, and Eduard H. Hovy. A survey of active learning for natural language processing.
+In Yoav Goldberg, Zornitsa Kozareva, and Yue Zhang, editors, Proceedings of the 2022 Conference on Empirical
+Methods in Natural Language Processing, EMNLP 2022, Abu Dhabi, United Arab Emirates, December 7-11, 2022 , pages 6166–6190. Association for Computational Linguistics, 2022. doi:10.18653/V1/2022.EMNLP-MAIN.414.
+URL https://doi.org/10.18653/v1/2022.emnlp-main.414 .
+16
+
+=== ページ 17 ===
+arXiv Template A P REPRINT
+Appendix
+A Full Prompt Design for Feedback Mode
+Figure 7: Complete prompt design for the feedback mode of ActiveLLM, including the text of the ’advice’ parameter, which represents the description of several active learning strategies.
+Figure 7 illustrates the comprehensive prompt design for the second variant of ActiveLLM. Compared to the prompt design of the first variant, this one contains the parameters ’No Recap’, ’Recap’ and ’Index Recap’. In scenarios ’No
+Recap’ and ’Recap’, the unlabeled instances presented to the model are the ones immediately following the last labeled instance, extending up to the index of this last labeled instance plus the batch size, typically 200 instances. In contrast, the ’Index Recap’ scenario maintains the last presented instance but includes all preceding instances, allowing the model to access texts from the specific indices given as labelled. Additionally, Figure 7 introduces the ’advice’ parameter, which outlines various active learning strategies, including representativeness, diversity, difficulty, stratification, balance, temporal/special distribution, and bias avoidance.
+17
+
+=== ページ 18 ===
+arXiv Template A P REPRINT
+Split Count Relevant Not Relevant
+Train (full) 1800 949 851Train 32 16 16Dev (full) 600 273 327Dev 8 4 4Test 601 304 297Total 3001 1526 1475Table 4: Split of the CTI dataset with count of relevant and not relevant labels in the datasets.
+B Dataset Details
+The Spezialised CTI few-shot dataset consists of tweets that are binary labelled based on their relevance to cybersecurity experts during the Microsoft Exchange Server data breach in 2021. The dataset is split into a full and few-shot training and development set, with only the few-shot datasets being relevant in our case. The splits (train, dev) consist of 1800and 600 instances for the full set and 32 and 8 instances for the few-shot set, respectively. The test set is the same in both cases and consists of 601 instances. The details are also given in 4.
+C LLM Details
+For the LLMs GPT-45, GPT-4o6, GPT-3.57, Gemini-Ultra8, and Mistral Large9, we utilized the native chat interfaces provided by OpenAI, Google, and Mistral. For Llama 3 70B10and Mixtral 8x7B11, we used the chat interface provided by deepinfra. We used no extra system prompts, a maximum answer length of 2048 tokens, a temperature of 0.7, Top P
+of 0.9, and Top K set to 0. For all interactions, we opened a new chat session and disabled memory functions
+5https://chatgpt.com/?model=gpt-4 - queried in January 2024
+6https://chatgpt.com/?model=gpt-4o - queried in May 2024
+7https://chatgpt.com/?model=text-davinci-002-render-sha - queried in April 2024
+8https://gemini.google.com/app -> Gemini-Ultra - queried in April 2024
+9https://chat.mistral.ai/chat -> Model: Large - queried in April 2024
+10https://deepinfra.com/meta-llama/Meta-Llama-3-70B-Instruct - queried in May 2024
+11https://deepinfra.com/mistralai/Mixtral-8x7B-Instruct-v0.1 - queried in April 2024
+18

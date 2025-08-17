@@ -71,12 +71,19 @@ def get_record_details_for_finetuning_prompt(record_id):
     if not bib_details:
         return f"レコードID {record_id} の書誌情報なし"
 
-    title = bib_details.get("bib1_title", "タイトル不明")
-    authors_str = bib_details.get("bib1_author", "著者不明")
-    publisher = bib_details.get("bib1_publisher", "出版社不明")
-    pubdate = bib_details.get("bib1_pubdate", "出版日不明")
-    return (f"タイトル: {title}\n著者: {authors_str}\n"
-            f"出版社: {publisher}\n出版日: {pubdate}")
+    details = []
+    # レコードのすべてのキーと値を動的に処理
+    for field, value in bib_details.items():
+        if field in ['id', 'cluster_id', 'record_id']:
+            continue
+        if isinstance(value, str) and value.strip():
+            field_name = field.replace('bib1_', '').title()
+            details.append(f"{field_name}: {value.strip()}")
+
+    if not details:
+        return f"レコードID {record_id} には表示可能な情報フィールドがありません"
+
+    return "\n".join(details)
 
 
 def get_prompts(data_type):
@@ -84,6 +91,21 @@ def get_prompts(data_type):
         "bib": (
             "あなたは2つの書誌情報が実質的に同一の文献を指すかどうかを判断する専門家です。\\n"
             "まず、2つの書誌情報が同一の文献と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        ),
+        "music": (
+            "あなたは2つの音楽情報が実質的に同一の作品を指すかどうかを判断する専門家です。\\n"
+            "まず、2つの音楽情報が同一の作品と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        ),
+        "person": (
+            "あなたは2つの人物情報が実質的に同一の人物を指すかどうかを判断する専門家です。\\n"
+            "まず、2つの人物情報が同一の人物と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        ),
+        "unknown": (
+            "あなたは2つの情報が実質的に同一のものを指すかどうかを判断する専門家です。\\n"
+            "まず、2つの情報が同一のものと思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
             "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
         ),
     }
