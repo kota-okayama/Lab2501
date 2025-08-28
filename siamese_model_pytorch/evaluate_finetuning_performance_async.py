@@ -262,6 +262,36 @@ def get_prompts(data_type):
             "情報2:\n{info_2}\n\n"
             "これらは同一の人物ですか？\n回答:"
         )
+    elif data_type == "walmart_amazon_product":
+        system_prompt = (
+            "あなたは2つの商品情報が実質的に同一の商品を指すかどうかを判断する専門家です。\n"
+            "まず、2つの商品情報が同一と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
+            "あなたの判断は次のルールに厳密に従う必要があります：\n"
+            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
+            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+        )
+        user_prompt_template = (
+            "以下の2つの商品情報が、実質的に同一の商品を指しているかどうかを判断してください。\n\n"
+            "情報1:\n{info_1}\n\n"
+            "情報2:\n{info_2}\n\n"
+            "これらは同一の商品ですか？\n回答:"
+        )
+    elif data_type == "wdc_product":
+        system_prompt = (
+            "あなたは2つの商品情報が実質的に同一の商品を指すかどうかを判断する専門家です。\n"
+            "まず、2つの商品情報が同一と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
+            "あなたの判断は次のルールに厳密に従う必要があります：\n"
+            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
+            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+        )
+        user_prompt_template = (
+            "以下の2つの商品情報が、実質的に同一の商品を指しているかどうかを判断してください。\n\n"
+            "情報1:\n{info_1}\n\n"
+            "情報2:\n{info_2}\n\n"
+            "これらは同一の商品ですか？\n回答:"
+        )
     else:
         raise ValueError(f"未知のデータタイプです: {data_type}")
 
@@ -884,8 +914,8 @@ if __name__ == "__main__":
         "--data_type",
         type=str,
         required=True,
-        choices=["bib", "music", "person"],
-        help="評価対象のデータの種類 (bib, music, person)"
+        choices=["bib", "music", "person", "walmart_amazon_product","wdc_product"],
+        help="評価対象のデータの種類 (bib, music, person, walmart_amazon_product, wdc_product)"
     )
     parser.add_argument(
         "--model_before_ft", 

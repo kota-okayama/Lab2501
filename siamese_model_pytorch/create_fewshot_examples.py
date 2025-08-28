@@ -46,7 +46,9 @@ def get_record_details_for_prompt(record_id):
         'bib1_publisher': '出版社', 'bib1_pubdate': '出版日'
     }
     parts = []
-    fields_to_use = AVAILABLE_FIELDS if AVAILABLE_FIELDS else list(bib_details.keys())
+    fields_to_use = (
+        AVAILABLE_FIELDS if AVAILABLE_FIELDS else list(bib_details.keys())
+    )
     for field in fields_to_use:
         if value := bib_details.get(field):
             display_name = field_map.get(field, field)
@@ -76,9 +78,13 @@ def load_evaluation_details(filepath):
             reader = csv.DictReader(f)
             for row in reader:
                 try:
-                    key = tuple(sorted((row['record_id_1'], row['record_id_2'])))
+                    key = tuple(
+                        sorted((row['record_id_1'], row['record_id_2']))
+                    )
                     details[key] = {
-                        "is_similar_gt": row['ground_truth_similar'].lower() == 'true',
+                        "is_similar_gt": (
+                            row['ground_truth_similar'].lower() == 'true'
+                        ),
                         "score_before": float(row.get('score_before') or 0.0),
                         "score_after": float(row.get('score_after') or 0.0),
                     }
@@ -172,7 +178,9 @@ def generate_fewshot_only_prompt(eval_details, data_type_info, num_pairs=2):
     hard_neg, hard_pos = select_hard_pairs(eval_details, num_pairs, num_pairs)
     examples = []
     for pair in hard_neg + hard_pos:
-        examples.extend(create_pair_example(pair, eval_details, data_type_info))
+        examples.extend(
+            create_pair_example(pair, eval_details, data_type_info)
+        )
     
     system_prompt = (
         f"あなたは2つの情報が同一の{data_type_info['entity']}を指すかを判断する"
@@ -266,7 +274,9 @@ def generate_hybrid_prompt(
     examples = []
     for pair in hard_neg + hard_pos:
         if pair in eval_details:
-            examples.extend(create_pair_example(pair, eval_details, data_type_info))
+            examples.extend(
+                create_pair_example(pair, eval_details, data_type_info)
+            )
 
     return {"system_prompt": system_prompt, "fewshot_examples": examples}
 

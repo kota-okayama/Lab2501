@@ -76,10 +76,20 @@ def parse_report_file(file_path):
         elif 'music' in path_str: data_type = 'music'
         elif 'bib' in path_str: data_type = 'bib'
 
-    sections = re.split(r'## (K近傍ペア評価|全ペア推論評価)', content)
+    # ファイル名から戦略を決定
+    strategy = 'selecting' if 'eval_async_knn' in str(file_path).lower() else 'default'
+
+    sections = re.split(r'## (K近傍ペア評価|全ペア推論評価|Selecting戦略 評価)', content)
     for i in range(1, len(sections), 2):
         scope_title, scope_content = sections[i], sections[i+1]
-        current_scope = "K-Nearest Pairs" if "K近傍" in scope_title else "All-Pairs Inference"
+        
+        current_scope = "Unknown Scope"
+        if "K近傍" in scope_title:
+            current_scope = "K-Nearest Pairs"
+        elif "全ペア推論" in scope_title:
+            current_scope = "All-Pairs Inference"
+        elif "Selecting戦略" in scope_title:
+            current_scope = "Selecting Strategy"
 
         sub_sections = re.split(r'###\s*(.+?)\s*\n', scope_content)
         for j in range(1, len(sub_sections), 2):
@@ -100,7 +110,8 @@ def parse_report_file(file_path):
                 results.append({
                     "Record Count": record_count, "Data Type": data_type,
                     "Model": model_name, "Evaluation Type": eval_type,
-                    "Evaluation Scope": current_scope, **metrics
+                    "Evaluation Scope": current_scope, "Strategy": strategy,
+                    **metrics
                 })
     return results
 
@@ -125,7 +136,7 @@ def format_markdown_table(records, columns):
 def generate_markdown_content(records):
     """指定されたレコード群からMarkdownレポートの文字列を生成する"""
     report_lines = []
-    perf_cols = ['Model', 'Evaluation Type', 'F1 Score', 'Precision', 'Recall']
+    perf_cols = ['Model', 'Evaluation Type', 'Strategy', 'F1 Score', 'Precision', 'Recall']
 
     grouped_by_type = defaultdict(list)
     for record in records:
@@ -141,7 +152,8 @@ def generate_markdown_content(records):
         for scope in sorted(grouped_by_scope.keys()):
             report_lines.append(f"### {scope}\n")
             
-            scope_records = sorted(grouped_by_scope[scope], key=lambda x: (x.get('Evaluation Type', ''), x.get('Model', '')))
+            # F1スコアで降順にソート
+            scope_records = sorted(grouped_by_scope[scope], key=lambda x: x.get('F1 Score', 0.0), reverse=True)
             
             report_lines.append("#### Performance Metrics\n")
             report_lines.extend(format_markdown_table(scope_records, perf_cols))
@@ -150,7 +162,7 @@ def generate_markdown_content(records):
             report_lines.append("#### Confusion Matrix\n")
             for record in scope_records:
                 report_lines.extend([
-                    f"**Model**: {record.get('Model')}    **Evaluation Type**: {record.get('Evaluation Type')}\n",
+                    f"**Model**: {record.get('Model')}    **Evaluation Type**: {record.get('Evaluation Type')}    **Strategy**: {record.get('Strategy')}\n",
                     "| 予測ラベル | Predicted: Positive | Predicted: Negative |",
                     "|---|---|---|",
                     f"| Actual: Positive | TP: {record.get('TP')} | FN: {record.get('FN')} |",
@@ -182,7 +194,7 @@ def save_files(df, output_dir, file_prefix):
                 
                 # Pivot table
                 pivot = df.pivot_table(
-                    index=['Data Type', 'Model', 'Evaluation Type'],
+                    index=['Data Type', 'Model', 'Evaluation Type', 'Strategy'],
                     columns='Evaluation Scope',
                     values=['F1 Score', 'Precision', 'Recall', 'TP', 'FN', 'FP', 'TN'],
                     aggfunc='first'
@@ -207,6 +219,10 @@ def main(args):
     all_results = []
     for dir_pattern in args.search_dirs:
         for report_file in Path.cwd().glob(f"{dir_pattern}/**/*_report.txt"):
+            # bibデータは 'results_bibkyoto' ディレクトリからのみ取得する
+            path_str_lower = str(report_file).lower()
+            if 'results_bib' in path_str_lower and 'results_bibkyoto' not in path_str_lower:
+                continue
             all_results.extend(parse_report_file(report_file))
 
     if not all_results:
@@ -214,8 +230,14 @@ def main(args):
         return
 
     df = pd.DataFrame(all_results)
-    numeric_cols = ['F1 Score', 'Precision', 'Recall', 'TP', 'FN', 'FP', 'TN']
-    df = df.drop_duplicates(subset=numeric_cols).reset_index(drop=True)
+    if 'Strategy' not in df.columns:
+        df['Strategy'] = 'default'
+    df['Strategy'] = df['Strategy'].fillna('default')
+    # モデルIDと評価スコープ、戦略、数値メトリクスがすべて一致する場合に重複排除
+    subset_cols = [
+        'Model', 'Evaluation Scope', 'Strategy', 'F1 Score', 'Precision', 'Recall', 'TP', 'FN', 'FP', 'TN'
+    ]
+    df = df.drop_duplicates(subset=subset_cols).reset_index(drop=True)
 
     # --- N/A (テストデータ) とそれ以外を分離 ---
     df_na = df[df['Data Type'] == 'N/A']
@@ -232,8 +254,12 @@ def main(args):
     if not df_main.empty:
         for rc, group_df in df_main.groupby('Record Count'):
             print(f"\nProcessing Record Count '{rc}' ({len(group_df)} entries)...")
-            file_prefix = f"evaluation_summary_{rc}"
-            save_files(group_df, output_dir, file_prefix)
+            # F1スコアで降順にソート
+            sorted_group_df = group_df.sort_values(by='F1 Score', ascending=False).reset_index(drop=True)
+            # ファイル名に使えない文字を置換
+            safe_rc = str(rc).replace('/', '_')
+            file_prefix = f"evaluation_summary_{safe_rc}"
+            save_files(sorted_group_df, output_dir, file_prefix)
     
     print("\nAll processing finished.")
 

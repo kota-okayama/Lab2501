@@ -453,11 +453,11 @@ async def evaluate_model_on_selections_async(
     """
     predictions = []
     ground_truths = []
-    # `predicted_positive_pairs` はクラスタリングのために維持
-    predicted_positive_pairs = []
+    predicted_positive_pairs = []  # この関数内で初期化する
     errors = []
     processed_anchors = []
-    
+    detailed_results_by_anchor = {}  # Store detailed results here
+
     print(
         f"\nモデル '{model_id}' で {len(candidate_sets)} アンカーの"
         "非同期評価を開始します..."
@@ -470,21 +470,22 @@ async def evaluate_model_on_selections_async(
     async def evaluate_single_selection(anchor_info):
         async with semaphore:
             anchor_id, candidate_ids, index = anchor_info
-            
+
             # LLM評価実行
             selected_indices, error_msg = await get_llm_evaluation_for_selection_async(
                 client, anchor_id, candidate_ids, model_id,
                 rate_limiter, data_type
             )
-            
+
             if error_msg:
                 return {
                     'index': index,
                     'anchor_id': anchor_id,
+                    'candidate_ids': candidate_ids,
                     'error': error_msg,
                     'is_valid_result': False
                 }
-            
+
             # 正解ラベルの決定
             anchor_gt_cluster = GROUND_TRUTH_CLUSTERS.get(anchor_id)
             true_match_candidate_ids = set()
@@ -502,32 +503,32 @@ async def evaluate_model_on_selections_async(
             # 予測が正解かどうかの判定と、予測ペアの収集
             prediction_correct = False
             selected_candidate_ids = []
-            
+            positive_pairs_for_this_anchor = []
+
             # `selected_indices` が None でなく、空でもなく、[-1] でもない場合
             if selected_indices and selected_indices[0] != -1:
                 for idx in selected_indices:
                     if 0 <= idx < len(candidate_ids):
                         selected_id = candidate_ids[idx]
                         selected_candidate_ids.append(selected_id)
-                        
-                        # 予測ペアは正解・不正解を問わず追加 (バグ修正)
+
+                        # 予測ペアは正解・不正解を問わず追加
                         pair = tuple(sorted((anchor_id, selected_id)))
-                        predicted_positive_pairs.append(pair)
-                        
+                        positive_pairs_for_this_anchor.append(pair)
+
                         # 予測が正解セットに含まれているかチェック
                         if selected_id in true_match_candidate_ids:
                             prediction_correct = True
 
-            # 最初の正解候補のみをレポート用に選択（なければNone）
-            first_true_match = next(iter(true_match_candidate_ids), None)
-
             return {
                 'index': index,
                 'anchor_id': anchor_id,
+                'candidate_ids': candidate_ids,
                 'ground_truth_exists': is_truly_positive_exists,
                 'prediction_correct': prediction_correct,
-                'selected_candidate_id': ", ".join(selected_candidate_ids) if selected_candidate_ids else "None",
-                'true_match_candidate_id': first_true_match,
+                'selected_candidate_ids': selected_candidate_ids,
+                'true_match_candidate_ids': true_match_candidate_ids,
+                'positive_pairs': positive_pairs_for_this_anchor,
                 'error': None,
                 'is_valid_result': True
             }
@@ -562,10 +563,20 @@ async def evaluate_model_on_selections_async(
                         pbar.write(f"エラー発生 (アンカー: {result['anchor_id']}): {result['error']}")
                     continue
                 
-                processed_anchors.append(result['anchor_id'])
+                anchor_id = result['anchor_id']
+                processed_anchors.append(anchor_id)
                 ground_truths.append(result['ground_truth_exists'])
                 predictions.append(result['prediction_correct'])
-            
+                detailed_results_by_anchor[anchor_id] = {
+                    'selected_ids': result['selected_candidate_ids'],
+                    'true_match_ids': result['true_match_candidate_ids'],
+                    'candidate_ids': result['candidate_ids'],
+                    'error': result['error'],
+                }
+                
+                # 予測ペアは正解・不正解を問わず追加
+                predicted_positive_pairs.extend(result['positive_pairs'])
+
             if batch_task_errors > 0:
                 pbar.set_description(f"{desc} [タスクエラー: {batch_task_errors}件]")
             if len(errors) > 0:
@@ -575,13 +586,14 @@ async def evaluate_model_on_selections_async(
                 save_cache(pbar)
     
     print(f"モデル '{model_id}' での非同期評価完了。エラー: {len(errors)}件。")
-    
+
     return {
         "predictions": predictions,
         "ground_truths": ground_truths,
         "predicted_positive_pairs": list(set(predicted_positive_pairs)),
         "errors": errors,
         "processed_anchors": processed_anchors,
+        "detailed_results": detailed_results_by_anchor
     }
 
 
@@ -856,8 +868,59 @@ async def main(args):
         pairwise_metrics_all_before = empty_metrics
         pairwise_metrics_all_after = empty_metrics
     
-    # 詳細結果のCSV作成 (To be implemented properly)
-    # results_df_data = []
+    # --- 詳細結果のCSV作成 ---
+    csv_rows = []
+    # ユニークなペアを記録し、重複行を避ける
+    processed_pairs = set()
+
+    # `candidate_sets` をもとに全ペアをリストアップ
+    for anchor_id, candidate_ids in candidate_sets.items():
+        for candidate_id in candidate_ids:
+            pair = tuple(sorted((anchor_id, candidate_id)))
+            if pair in processed_pairs:
+                continue
+            processed_pairs.add(pair)
+            
+            # 正解ラベルの判定
+            gt_c1 = GROUND_TRUTH_CLUSTERS.get(pair[0])
+            gt_c2 = GROUND_TRUTH_CLUSTERS.get(pair[1])
+            is_truly_similar = (
+                gt_c1 is not None and gt_c2 is not None and
+                not str(gt_c1).startswith("gt_orphan_") and
+                not str(gt_c2).startswith("gt_orphan_") and
+                str(gt_c1) == str(gt_c2)
+            )
+            
+            # 各モデルの予測結果を取得 (対称性を考慮)
+            # Before-FT
+            res_before_anchor = results_before["detailed_results"].get(anchor_id)
+            pred_before_anchor_selects_cand = (res_before_anchor and candidate_id in res_before_anchor['selected_ids'])
+            
+            res_before_cand = results_before["detailed_results"].get(candidate_id)
+            pred_before_cand_selects_anchor = (res_before_cand and anchor_id in res_before_cand['selected_ids'])
+
+            pred_before = pred_before_anchor_selects_cand or pred_before_cand_selects_anchor
+            err_before = (res_before_anchor['error'] if res_before_anchor and res_before_anchor['error'] else None)
+
+            # After-FT
+            res_after_anchor = results_after["detailed_results"].get(anchor_id)
+            pred_after_anchor_selects_cand = (res_after_anchor and candidate_id in res_after_anchor['selected_ids'])
+
+            res_after_cand = results_after["detailed_results"].get(candidate_id)
+            pred_after_cand_selects_anchor = (res_after_cand and anchor_id in res_after_cand['selected_ids'])
+            
+            pred_after = pred_after_anchor_selects_cand or pred_after_cand_selects_anchor
+            err_after = (res_after_anchor['error'] if res_after_anchor and res_after_anchor['error'] else None)
+
+            csv_rows.append({
+                "record_id_1": pair[0],
+                "record_id_2": pair[1],
+                "ground_truth_similar": is_truly_similar,
+                "predicted_similar_before": pred_before,
+                "error_before": err_before or "",
+                "predicted_similar_after": pred_after,
+                "error_after": err_after or "",
+            })
     
     # --- 出力先ディレクトリの準備 ---
     candidates_json_path = args.candidates_json
@@ -881,6 +944,15 @@ async def main(args):
         f"before-{model_before_ft_sanitized}_"
         f"after-{model_after_ft_sanitized}"
     )
+
+    # --- CSVファイルの保存 ---
+    if csv_rows:
+        import pandas as pd
+        details_df = pd.DataFrame(csv_rows)
+        details_filename = os.path.join(output_dir, f"{base_filename}_details.csv")
+        details_df.to_csv(details_filename, index=False)
+        print(f"詳細な評価結果を {details_filename} に保存しました。")
+
 
     # --- パフォーマンスレポートの生成 ---
     report_content = f"""# ファインチューニング性能評価レポート（selecting戦略）

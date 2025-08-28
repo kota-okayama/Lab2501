@@ -361,7 +361,7 @@ def main():
     req_group.add_argument(
         "--data_type",
         required=True,
-        choices=["bib", "music", "person"],
+        choices=["bib", "music", "person", "walmart_amazon_product", "wdc_product"],
         help="評価対象データの種類"
     )
     req_group.add_argument(
@@ -420,21 +420,21 @@ def main():
     # --- 実行制御 ---
     control_group = parser.add_argument_group('実行制御')
     control_group.add_argument(
-        "--skip_embedding_and_graphing", action="store_true",
+        "--skip_step_1", action="store_true",
         help="Step 1 をスキップ"
     )
     control_group.add_argument(
-        "--skip_pair_extraction", action="store_true", help="Step 2 をスキップ"
+        "--skip_step_2", action="store_true", help="Step 2 をスキップ"
     )
     control_group.add_argument(
-        "--skip_evaluation", action="store_true", help="Step 3 をスキップ"
+        "--skip_step_3", action="store_true", help="Step 3 をスキップ"
     )
     control_group.add_argument(
-        "--skip_inconsistency_detection", action="store_true",
+        "--skip_step_4", action="store_true",
         help="Step 4 をスキップ"
     )
     control_group.add_argument(
-        "--skip_finetuning_data_preparation", action="store_true",
+        "--skip_step_5", action="store_true",
         help="Step 5 をスキップ"
     )
 
@@ -443,12 +443,12 @@ def main():
     os.makedirs(args.output_base_dir, exist_ok=True)
 
     # --- パイプライン実行 ---
-    if not args.skip_embedding_and_graphing:
+    if not args.skip_step_1:
         run_embedding_and_graph_pipeline(args)
     else:
         print("\n\n===== STEP 1 をスキップしました =====")
 
-    if not args.skip_pair_extraction:
+    if not args.skip_step_2:
         pairs_csv_path = run_pair_extraction(args)
     else:
         print("\n\n===== STEP 2 をスキップしました =====")
@@ -458,7 +458,7 @@ def main():
             sys.exit(1)
         print(f"既存の評価ペアファイルを使用します: {pairs_csv_path}")
 
-    if not args.skip_evaluation:
+    if not args.skip_step_3:
         details_csv_path = run_evaluation(args, pairs_csv_path)
     else:
         print("\n\n===== STEP 3 をスキップしました =====")
@@ -468,7 +468,7 @@ def main():
             sys.exit(1)
         print(f"既存の評価詳細ファイルを使用します: {details_csv_path}")
 
-    if not args.skip_inconsistency_detection:
+    if not args.skip_step_4:
         inconsistent_triangles_csv = run_inconsistency_detection(
             args, details_csv_path
         )
@@ -484,7 +484,7 @@ def main():
             sys.exit(1)
         print(f"既存の矛盾三角形ファイルを使用します: {inconsistent_triangles_csv}")
 
-    if not args.skip_finetuning_data_preparation:
+    if not args.skip_step_5:
         # Step5で必要なクラスタファイルのパスを決定
         # (evaluate...async.pyの命名規則に依存)
         base_name = os.path.basename(details_csv_path).replace("_details.csv", "")

@@ -90,6 +90,26 @@ def find_csv_files(root_dir: str) -> List[str]:
     return csv_files
 
 
+def find_candidate_json_files(root_dir: str) -> List[str]:
+    """selecting戦略で使われる候補リストJSONファイルを探す"""
+    json_files: List[str] = []
+    # 候補リストは llm_evaluation_pairs または graphs ディレクトリにあると仮定
+    search_dirs = [
+        os.path.join(root_dir, "llm_evaluation_pairs"),
+        os.path.join(root_dir, "graphs")
+    ]
+    for directory in search_dirs:
+        if not os.path.isdir(directory):
+            continue
+        for filename in os.listdir(directory):
+            # 例: candidate_pairs_from_record_k10.json, merged_knn_graph_k15.json
+            if filename.lower().endswith(".json") and (
+                "candidate" in filename or "knn_graph" in filename
+            ):
+                json_files.append(os.path.join(directory, filename))
+    return json_files
+
+
 def iter_pairs_from_csv(csv_path: str) -> List[Tuple[str, str]]:
     pairs: List[Tuple[str, str]] = []
     try:
@@ -114,6 +134,22 @@ def collect_pairs(run_dir: str) -> Set[Tuple[str, str]]:
         pairs = iter_pairs_from_csv(csv_path)
         all_pairs.update(pairs)
     return all_pairs
+
+
+def collect_candidate_sets(run_dir: str) -> Dict[str, List[str]]:
+    """JSONファイルからアンカーと候補のセットを収集する"""
+    all_candidate_sets: Dict[str, List[str]] = {}
+    json_files = find_candidate_json_files(run_dir)
+    for json_path in json_files:
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            if isinstance(data, dict):
+                all_candidate_sets.update(data)
+        except (IOError, json.JSONDecodeError):
+            print(f"警告: ファイルの読み込みまたは解析に失敗: {json_path}")
+            continue
+    return all_candidate_sets
 
 
 def should_delete_key_for_pair(
@@ -144,6 +180,38 @@ def should_delete_key_for_pair(
         return True
     # モデル指定あり: 末尾が _{model}_{data_type}
     return any(key.endswith(f"_{m}_{data_type}") for m in models)
+
+
+def should_delete_key_for_selection(
+    key: str,
+    anchor_id: str,
+    candidate_ids: List[str],
+    data_type: str,
+    models: Optional[Set[str]] = None,
+) -> bool:
+    """selecting戦略のキャッシュキーかどうかを判定する"""
+    sorted_candidates_str = "_".join(sorted(candidate_ids))
+    
+    # prefixのチェック
+    prefix = f"select_{anchor_id}_{sorted_candidates_str}_"
+    if not key.startswith(prefix):
+        return False
+
+    # data_typeによるsuffixのチェック
+    if data_type == "bib":
+        if not models:
+            return True
+        # model指定あり: prefix + model_id
+        expected_keys = {f"{prefix}{m}" for m in models}
+        return key in expected_keys
+    else:
+        # others: model_id + data_type
+        if not models:
+            # model指定なしの場合は、data_typeで終わることを確認
+            return key.endswith(f"_{data_type}")
+        
+        expected_keys = {f"{prefix}{m}_{data_type}" for m in models}
+        return key in expected_keys
 
 
 def process_keys(
@@ -185,6 +253,35 @@ def process_keys(
     return to_delete
 
 
+def process_keys_for_selection(
+    keys_to_check: Set[str],
+    candidate_sets: Dict[str, List[str]],
+    data_type: str,
+    model_set: Optional[Set[str]],
+) -> Set[str]:
+    """selecting戦略のキーセットから削除対象を見つけ出す"""
+    to_delete = set()
+    # 処理を高速化するため、キーをアンカーIDでグルーピング
+    key_map = defaultdict(list)
+    for key in keys_to_check:
+        if key.startswith("select_"):
+            try:
+                # "select_{anchor_id}_..." から anchor_id を抽出
+                anchor_id = key.split('_')[1]
+                key_map[anchor_id].append(key)
+            except IndexError:
+                continue
+
+    for anchor_id, candidates in candidate_sets.items():
+        if anchor_id in key_map:
+            for key in key_map[anchor_id]:
+                if should_delete_key_for_selection(
+                    key, anchor_id, candidates, data_type, model_set
+                ):
+                    to_delete.add(key)
+    return to_delete
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="ディレクトリ配下のペアに該当するLLMキャッシュを部分削除"
@@ -195,6 +292,12 @@ def main():
         required=True,
         choices=["bib", "music", "person"],
         help="対象データタイプ（キー末尾の判定に使用）",
+    )
+    parser.add_argument(
+        "--strategy",
+        default="matching",
+        choices=["matching", "selecting"],
+        help="キャッシュキーの戦略（matching または selecting）"
     )
     parser.add_argument(
         "--model",
@@ -217,28 +320,49 @@ def main():
         print(f"モデル指定: {sorted(model_set)}")
     else:
         print("モデル指定: なし（全モデル対象）")
-
+    
+    print(f"戦略: {args.strategy}")
     print(f"走査対象ディレクトリ: {run_dir}")
 
-    # 1) すべてのペアを収集
-    pairs = collect_pairs(run_dir)
-    print(f"検出ペア数: {len(pairs)} 件")
-
-    if not pairs:
-        print("対象ペアが見つかりませんでした。処理を終了します。")
-        return
-
-    # 2) キャッシュのロード
+    # 1) キャッシュのロード
     json_cache = load_json_cache(JSON_CACHE_PATH)
     pkl_cache = load_pickle_cache(PICKLE_CACHE_PATH)
-
     json_keys = set(json_cache.keys())
     pkl_keys = set(pkl_cache.keys())
 
-    # 3) 削除対象キーを抽出 (最適化されたロジック)
-    print("削除対象キーの抽出を開始します（最適化ロジック使用）...")
-    json_to_delete = process_keys(json_keys, pairs, args.data_type, model_set)
-    pkl_to_delete = process_keys(pkl_keys, pairs, args.data_type, model_set)
+    # 2) 戦略に応じて削除対象キーを抽出
+    json_to_delete = set()
+    pkl_to_delete = set()
+
+    if args.strategy == "matching":
+        pairs = collect_pairs(run_dir)
+        print(f"検出ペア数: {len(pairs)} 件")
+        if not pairs:
+            print("対象ペアが見つかりませんでした。処理を終了します。")
+            return
+        
+        print("削除対象キーの抽出を開始します (matching)...")
+        json_to_delete = process_keys(
+            json_keys, pairs, args.data_type, model_set
+        )
+        pkl_to_delete = process_keys(
+            pkl_keys, pairs, args.data_type, model_set
+        )
+
+    elif args.strategy == "selecting":
+        candidate_sets = collect_candidate_sets(run_dir)
+        print(f"検出アンカー数: {len(candidate_sets)} 件")
+        if not candidate_sets:
+            print("対象の候補セットが見つかりませんでした。処理を終了します。")
+            return
+
+        print("削除対象キーの抽出を開始します (selecting)...")
+        json_to_delete = process_keys_for_selection(
+            json_keys, candidate_sets, args.data_type, model_set
+        )
+        pkl_to_delete = process_keys_for_selection(
+            pkl_keys, candidate_sets, args.data_type, model_set
+        )
 
     to_delete = set()
     for key in json_to_delete:
