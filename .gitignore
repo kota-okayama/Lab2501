@@ -50,7 +50,7 @@ ENV/
 !openai_embedding_experiment/
 !/Dockerfile
 !/.dockerignore
-!/siamese_model_pytorch
+!/siamese_model_pytorch/
 
 # JSONファイルの取り扱い
 *.json

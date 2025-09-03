@@ -198,20 +198,11 @@ def run_pair_extraction(args):
     return output_csv_path
 
 
-def get_legacy_evaluation_details_path(args, pairs_csv_path):
-    """【旧バージョン互換】古い命名規則で評価詳細CSVファイルのパスを生成する"""
-    if len(args.model_ids) < 2:
-        return None # 古い形式は少なくとも2つのモデルIDを前提としていた
-    # 互換性のために、最初の2つのモデルIDを旧引数とみなす
-    return get_evaluation_details_path(
-        args, pairs_csv_path, args.model_ids[0], args.model_ids[1]
-    )
-
-def get_evaluation_details_path(args, pairs_csv_path, model_before_ft, model_after_ft):
+def get_evaluation_details_path(args, pairs_csv_path):
     """評価詳細CSVファイルのパスを生成する"""
     base_name = os.path.basename(pairs_csv_path).replace(".csv", "")
-    before_model_name = sanitize_model_name_for_filename(model_before_ft)
-    after_model_name = sanitize_model_name_for_filename(model_after_ft)
+    before_model_name = sanitize_model_name_for_filename(args.model_before_ft)
+    after_model_name = sanitize_model_name_for_filename(args.model_after_ft)
 
     output_filename = (
         f"eval_async_{base_name}_before-{before_model_name}_"
@@ -226,9 +217,9 @@ def get_evaluation_details_path(args, pairs_csv_path, model_before_ft, model_aft
     )
 
 
-def run_evaluation(args, pairs_csv_path, model_before, model_after):
+def run_evaluation(args, pairs_csv_path):
     """STEP 3: ファインチューニング前後のモデル性能を評価"""
-    print(f"\n\n===== STEP 3: モデル評価 (Before: {model_before}, After: {model_after}) =====")
+    print("\n\n===== STEP 3: モデル評価 =====")
 
     script_path = os.path.join(
         "siamese_model_pytorch", "evaluate_finetuning_performance_async.py"
@@ -239,8 +230,8 @@ def run_evaluation(args, pairs_csv_path, model_before, model_after):
         "--pairs_csv", pairs_csv_path,
         "--ground_truth_yaml", args.record_yaml_path,
         "--data_type", args.data_type,
-        "--model_before_ft", model_before,
-        "--model_after_ft", model_after,
+        "--model_before_ft", args.model_before_ft,
+        "--model_after_ft", args.model_after_ft,
         "--max_concurrent", str(args.max_concurrent),
         "--requests_per_minute", str(args.requests_per_minute),
     ]
@@ -250,7 +241,7 @@ def run_evaluation(args, pairs_csv_path, model_before, model_after):
         sys.exit(1)
 
     print("===== STEP 3完了 =====")
-    return get_evaluation_details_path(args, pairs_csv_path, model_before, model_after)
+    return get_evaluation_details_path(args, pairs_csv_path)
 
 
 def run_inconsistency_detection(args, details_csv_path):
@@ -290,20 +281,17 @@ def run_finetuning_data_preparation(
     print("\n\n===== STEP 5: ファインチューニング用データの準備 =====")
 
     strategies = args.ft_strategies.split(',')
-    base_name_for_ft = os.path.basename(
-        details_csv_path
-    ).replace("_details.csv", "")
+    base_name_for_ft = os.path.basename(details_csv_path).replace("_details.csv", "")
     output_dir = os.path.dirname(details_csv_path)
+    num_samples_inconsistency = args.inconsistency_top_n
     num_samples = 0
 
     # 1. Inconsistency-based strategy (if requested)
     if 'inconsistency' in strategies:
         print("\n--- 戦略: inconsistency ---")
-        script_path = os.path.join(
-            "siamese_model_pytorch", "prepare_finetuning_data.py"
-        )
+        script_path = os.path.join("siamese_model_pytorch", "prepare_finetuning_data.py")
         output_jsonl_path = os.path.join(
-            output_dir, f"ft_data_{base_name_for_ft}_inconsistency.jsonl"
+            output_dir, f"ft_data_{base_name_for_ft}_{num_samples_inconsistency}_inconsistency.jsonl"
         )
         command = [
             "python3", "-u", script_path,
@@ -329,12 +317,9 @@ def run_finetuning_data_preparation(
     other_strategies = [s for s in strategies if s != 'inconsistency']
     for strategy in other_strategies:
         print(f"\n--- 戦略: {strategy} ---")
-        script_path = os.path.join(
-            "siamese_model_pytorch",
-            "create_finetuning_data_from_strategies.py"
-        )
+        script_path = os.path.join("siamese_model_pytorch", "create_finetuning_data_from_strategies.py")
         output_jsonl_path = os.path.join(
-            output_dir, f"ft_data_{base_name_for_ft}_{strategy}.jsonl"
+            output_dir, f"ft_data_{base_name_for_ft}_{num_samples_inconsistency}_{strategy}.jsonl"
         )
         command = [
             "python3", "-u", script_path,
@@ -377,18 +362,16 @@ def main():
     req_group.add_argument(
         "--data_type",
         required=True,
-        choices=[
-            "bib", "music", "person",
-            "walmart_amazon_product", "wdc_product"
-        ],
+        choices=["bib", "music", "person", "walmart_amazon_product", "wdc_product"],
         help="評価対象データの種類"
     )
     req_group.add_argument(
-        "--model_ids",
-        nargs='+',
-        required=True,
-        help="評価対象のモデルIDを順番に指定します。ペアで評価され、"
-             "奇数個の場合は最後のモデルが最初のモデルとペアになります。"
+        "--model_before_ft", required=True,
+        help="ファインチューニング前のモデルID"
+    )
+    req_group.add_argument(
+        "--model_after_ft", required=True,
+        help="ファインチューニング後のモデルID"
     )
 
     # --- Step 1: Embedding & Graphing ---
@@ -476,94 +459,44 @@ def main():
             sys.exit(1)
         print(f"既存の評価ペアファイルを使用します: {pairs_csv_path}")
 
-    # --- Create Model Pairs ---
-    model_ids = args.model_ids
-    if not model_ids:
-        print("エラー: --model_ids には少なくとも1つのモデルIDを指定してください。")
-        sys.exit(1)
-
-    model_pairs = []
-    # 偶数個のモデルIDをペアにする
-    for i in range(0, len(model_ids) - (len(model_ids) % 2), 2):
-        model_pairs.append((model_ids[i], model_ids[i + 1]))
-
-    # モデルIDが奇数個の場合、最後のものを最初のものとペアにする
-    if len(model_ids) % 2 != 0:
-        model_pairs.append((model_ids[0], model_ids[-1]))
-
-    # --- Loop for Steps 3, 4, 5 for each model pair ---
-    if args.skip_step_3 and args.skip_step_4 and args.skip_step_5:
-        print("\n\n===== STEP 3, 4, 5 をスキップしました =====")
+    if not args.skip_step_3:
+        details_csv_path = run_evaluation(args, pairs_csv_path)
     else:
-        for i, (model_before, model_after) in enumerate(model_pairs):
-            print(f"\n\n{'#'*80}")
-            print(f"#### モデルペア {i+1}/{len(model_pairs)} の処理を開始... ####")
-            print(f"#### BEFORE: {model_before}")
-            print(f"#### AFTER:  {model_after}")
-            print(f"{'#'*80}")
+        print("\n\n===== STEP 3 をスキップしました =====")
+        details_csv_path = get_evaluation_details_path(args, pairs_csv_path)
+        if not os.path.exists(details_csv_path):
+            print(f"エラー: 評価詳細ファイルが見つかりません: {details_csv_path}")
+            sys.exit(1)
+        print(f"既存の評価詳細ファイルを使用します: {details_csv_path}")
 
-            # --- Step 3 ---
-            if not args.skip_step_3:
-                details_csv_path = run_evaluation(
-                    args, pairs_csv_path, model_before, model_after
-                )
-            else:
-                print("\n\n===== STEP 3 をスキップしました =====")
-                # 新しい命名規則でパスを取得
-                details_csv_path = get_evaluation_details_path(
-                    args, pairs_csv_path, model_before, model_after
-                )
-                if not os.path.exists(details_csv_path):
-                    # 見つからない場合、古い命名規則でフォールバック
-                    print(f"  -> 新しい命名規則のファイルが見つかりません。古い命名規則で再試行します...")
-                    legacy_path = get_legacy_evaluation_details_path(args, pairs_csv_path)
-                    if legacy_path and os.path.exists(legacy_path):
-                        details_csv_path = legacy_path
-                        print(f"  -> 古い命名規則のファイルを使用します: {details_csv_path}")
-                    else:
-                        print(f"エラー: 評価詳細ファイルが見つかりません: {details_csv_path}")
-                        print("Step 3をスキップするには、このファイルが事前に存在している必要があります。")
-                        continue  # 次のペアへ
-                print(f"既存の評価詳細ファイルを使用します: {details_csv_path}")
+    if not args.skip_step_4:
+        inconsistent_triangles_csv = run_inconsistency_detection(
+            args, details_csv_path
+        )
+    else:
+        print("\n\n===== STEP 4 をスキップしました =====")
+        output_dir = os.path.dirname(details_csv_path)
+        base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
+        inconsistent_triangles_csv = os.path.join(
+            output_dir, f"{base_name}_score_after_inconsistent_triangles.csv"
+        )
+        if not os.path.exists(inconsistent_triangles_csv):
+            print(f"エラー: 矛盾三角形ファイルが見つかりません: {inconsistent_triangles_csv}")
+            sys.exit(1)
+        print(f"既存の矛盾三角形ファイルを使用します: {inconsistent_triangles_csv}")
 
-            # --- Step 4 ---
-            if not args.skip_step_4:
-                inconsistent_triangles_csv = run_inconsistency_detection(
-                    args, details_csv_path
-                )
-            else:
-                print("\n\n===== STEP 4 をスキップしました =====")
-                output_dir = os.path.dirname(details_csv_path)
-                base_name = os.path.basename(
-                    details_csv_path
-                ).replace("_details.csv", "")
-                inconsistent_triangles_csv = os.path.join(
-                    output_dir,
-                    f"{base_name}_score_after_inconsistent_triangles.csv"
-                )
-                if not os.path.exists(inconsistent_triangles_csv):
-                     print(f"  -> 新しい命名規則のファイルが見つかりません。")
-                     # 古いパスはdetails_csv_pathに依存するため、details_csv_pathが古いパスなら自動で古いパスを探すことになる
-                     print(f"エラー: 矛盾三角形ファイルが見つかりません: {inconsistent_triangles_csv}")
-                     print("Step 4をスキップするには、このファイルが事前に存在している必要があります。")
-                     continue # 次のペアへ
-                print(f"既存の矛盾三角形ファイルを使用します: {inconsistent_triangles_csv}")
-
-            # --- Step 5 ---
-            if not args.skip_step_5:
-                # Step5で必要なクラスタファイルのパスを決定
-                base_name = os.path.basename(
-                    details_csv_path
-                ).replace("_details.csv", "")
-                clusters_path = os.path.join(
-                    os.path.dirname(details_csv_path),
-                    f"{base_name}_clusters_after.json"
-                )
-                run_finetuning_data_preparation(
-                    args, inconsistent_triangles_csv, details_csv_path, clusters_path
-                )
-            else:
-                print("\n\n===== STEP 5 をスキップしました =====")
+    if not args.skip_step_5:
+        # Step5で必要なクラスタファイルのパスを決定
+        # (evaluate...async.pyの命名規則に依存)
+        base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
+        clusters_path = os.path.join(
+            os.path.dirname(details_csv_path), f"{base_name}_clusters_after.json"
+        )
+        run_finetuning_data_preparation(
+            args, inconsistent_triangles_csv, details_csv_path, clusters_path
+        )
+    else:
+        print("\n\n===== STEP 5 をスキップしました =====")
 
     print("\n\nパイプラインの全工程が正常に完了しました。")
 

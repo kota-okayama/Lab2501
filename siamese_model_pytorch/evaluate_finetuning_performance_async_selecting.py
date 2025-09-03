@@ -31,7 +31,7 @@ REQUESTS_PER_MINUTE = 3000    # 1分間の最大リクエスト数
 REQUEST_DELAY = 60.0 / REQUESTS_PER_MINUTE  # リクエスト間の最小間隔
 
 # デフォルト設定
-DEFAULT_MODEL_ID_BEFORE_FINETUNING = "gpt-4o-mini"
+DEFAULT_MODEL_ID_BEFORE_FINETUNING = "gpt-4o-mini-2024-07-18"
 DEFAULT_MODEL_ID_AFTER_FINETUNING = (
     "ft:gpt-4o-mini-2024-07-18:your-org:model-name:suffix"
 )
@@ -308,6 +308,37 @@ def get_prompts(data_type, strategy="matching"):
             "情報2:\n{info_2}\n\n"
             "これらは同一の人物ですか？\n回答:"
         )
+    elif data_type == "wdc_product":
+        system_prompt = (
+            "あなたは2つの製品情報が実質的に同一の製品を指すかどうかを判断する専門家です。\n"
+            "まず、2つの製品情報が同一の製品と思われる場合は「はい」、"
+            "そうでない場合は「いいえ」で明確に回答してください。\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から"
+            "1.0（完全に同一）の範囲で提示してください。\n"
+            "あなたの判断は次のルールに厳密に従う必要があります：\n"
+            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
+            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+        )
+        user_prompt_template = (
+            "以下の2つの製品情報が、実質的に同一の製品を指しているかどうかを判断してください。\n\n"
+            "情報1:\n{info_1}\n\n"
+            "情報2:\n{info_2}\n\n"
+            "これらは同一の製品ですか？\n回答:"
+        )
+    elif data_type == "walmart_amazon_product":
+        system_prompt = (
+            "あなたは2つの製品情報が実質的に同一の製品を指すかどうかを判断する専門家です。\n"
+            "まず、2つの製品情報が同一の製品と思われる場合は「はい」、"
+            "そうでない場合は「いいえ」で明確に回答してください。\n"
+            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から"
+            "1.0（完全に同一）の範囲で提示してください。\n"
+        )
+        user_prompt_template = (
+            "以下の2つの製品情報が、実質的に同一の製品を指しているかどうかを判断してください。\n\n"
+            "情報1:\n{info_1}\n\n"
+            "情報2:\n{info_2}\n\n"
+            "これらは同一の製品ですか？\n回答:"
+        )
     else:
         raise ValueError(f"未知のデータタイプです: {data_type}")
 
@@ -453,11 +484,14 @@ async def evaluate_model_on_selections_async(
     """
     predictions = []
     ground_truths = []
-    predicted_positive_pairs = []  # この関数内で初期化する
+    # `predicted_positive_pairs` はクラスタリングのために維持
+    predicted_positive_pairs = []
     errors = []
     processed_anchors = []
-    detailed_results_by_anchor = {}  # Store detailed results here
-
+    # --- ここから KNNペア評価用のメトリクス初期化を追加 ---
+    total_knn_tp, total_knn_fp, total_knn_fn, total_knn_tn = 0, 0, 0, 0
+    # --- ここまで追加 ---
+    
     print(
         f"\nモデル '{model_id}' で {len(candidate_sets)} アンカーの"
         "非同期評価を開始します..."
@@ -470,22 +504,23 @@ async def evaluate_model_on_selections_async(
     async def evaluate_single_selection(anchor_info):
         async with semaphore:
             anchor_id, candidate_ids, index = anchor_info
-
+            
             # LLM評価実行
-            selected_indices, error_msg = await get_llm_evaluation_for_selection_async(
-                client, anchor_id, candidate_ids, model_id,
-                rate_limiter, data_type
+            selected_indices, error_msg = (
+                await get_llm_evaluation_for_selection_async(
+                    client, anchor_id, candidate_ids, model_id,
+                    rate_limiter, data_type
+                )
             )
-
+            
             if error_msg:
                 return {
                     'index': index,
                     'anchor_id': anchor_id,
-                    'candidate_ids': candidate_ids,
                     'error': error_msg,
                     'is_valid_result': False
                 }
-
+            
             # 正解ラベルの決定
             anchor_gt_cluster = GROUND_TRUTH_CLUSTERS.get(anchor_id)
             true_match_candidate_ids = set()
@@ -503,33 +538,55 @@ async def evaluate_model_on_selections_async(
             # 予測が正解かどうかの判定と、予測ペアの収集
             prediction_correct = False
             selected_candidate_ids = []
-            positive_pairs_for_this_anchor = []
-
+            
             # `selected_indices` が None でなく、空でもなく、[-1] でもない場合
             if selected_indices and selected_indices[0] != -1:
                 for idx in selected_indices:
                     if 0 <= idx < len(candidate_ids):
                         selected_id = candidate_ids[idx]
                         selected_candidate_ids.append(selected_id)
-
-                        # 予測ペアは正解・不正解を問わず追加
+                        
+                        # 予測ペアは正解・不正解を問わず追加 (バグ修正)
                         pair = tuple(sorted((anchor_id, selected_id)))
-                        positive_pairs_for_this_anchor.append(pair)
-
+                        predicted_positive_pairs.append(pair)
+                        
                         # 予測が正解セットに含まれているかチェック
                         if selected_id in true_match_candidate_ids:
                             prediction_correct = True
 
+            # 最初の正解候補のみをレポート用に選択（なければNone）
+            first_true_match = next(iter(true_match_candidate_ids), None)
+
+            # --- ここから KNNペア評価用のメトリクス計算を追加 ---
+            knn_tp, knn_fp, knn_fn, knn_tn = 0, 0, 0, 0
+            true_match_set = set(true_match_candidate_ids)
+            selected_set = set(selected_candidate_ids)
+
+            for cand_id in candidate_ids:
+                is_true_match = cand_id in true_match_set
+                is_selected = cand_id in selected_set
+
+                if is_true_match and is_selected:
+                    knn_tp += 1
+                elif not is_true_match and is_selected:
+                    knn_fp += 1
+                elif is_true_match and not is_selected:
+                    knn_fn += 1
+                elif not is_true_match and not is_selected:
+                    knn_tn += 1
+            # --- ここまで追加 ---
+
             return {
                 'index': index,
                 'anchor_id': anchor_id,
-                'candidate_ids': candidate_ids,
                 'ground_truth_exists': is_truly_positive_exists,
                 'prediction_correct': prediction_correct,
-                'selected_candidate_ids': selected_candidate_ids,
-                'true_match_candidate_ids': true_match_candidate_ids,
-                'positive_pairs': positive_pairs_for_this_anchor,
+                'selected_candidate_id': ", ".join(selected_candidate_ids) if selected_candidate_ids else "None",
+                'true_match_candidate_id': first_true_match,
                 'error': None,
+                'knn_metrics': {
+                    'tp': knn_tp, 'fp': knn_fp, 'fn': knn_fn, 'tn': knn_tn
+                },
                 'is_valid_result': True
             }
 
@@ -547,7 +604,9 @@ async def evaluate_model_on_selections_async(
             batch = anchor_info_list[i:i + batch_size]
             
             tasks = [evaluate_single_selection(info) for info in batch]
-            batch_results = await asyncio.gather(*tasks, return_exceptions=True)
+            batch_results = await asyncio.gather(
+                *tasks, return_exceptions=True
+            )
             
             batch_task_errors = 0
             for result in batch_results:
@@ -560,23 +619,24 @@ async def evaluate_model_on_selections_async(
                     if result.get('error'):
                         errors.append((result['anchor_id'], result['error']))
                         # この行を追加してエラー内容を即時表示
-                        pbar.write(f"エラー発生 (アンカー: {result['anchor_id']}): {result['error']}")
+                        pbar.write(
+                            f"エラー発生 (アンカー: {result['anchor_id']}): "
+                            f"{result['error']}"
+                        )
                     continue
                 
-                anchor_id = result['anchor_id']
-                processed_anchors.append(anchor_id)
+                processed_anchors.append(result['anchor_id'])
                 ground_truths.append(result['ground_truth_exists'])
                 predictions.append(result['prediction_correct'])
-                detailed_results_by_anchor[anchor_id] = {
-                    'selected_ids': result['selected_candidate_ids'],
-                    'true_match_ids': result['true_match_candidate_ids'],
-                    'candidate_ids': result['candidate_ids'],
-                    'error': result['error'],
-                }
-                
-                # 予測ペアは正解・不正解を問わず追加
-                predicted_positive_pairs.extend(result['positive_pairs'])
-
+                # --- ここから KNNペア評価用のメトリクス集計を追加 ---
+                if 'knn_metrics' in result:
+                    metrics = result['knn_metrics']
+                    total_knn_tp += metrics.get('tp', 0)
+                    total_knn_fp += metrics.get('fp', 0)
+                    total_knn_fn += metrics.get('fn', 0)
+                    total_knn_tn += metrics.get('tn', 0)
+                # --- ここまで追加 ---
+            
             if batch_task_errors > 0:
                 pbar.set_description(f"{desc} [タスクエラー: {batch_task_errors}件]")
             if len(errors) > 0:
@@ -586,14 +646,19 @@ async def evaluate_model_on_selections_async(
                 save_cache(pbar)
     
     print(f"モデル '{model_id}' での非同期評価完了。エラー: {len(errors)}件。")
-
+    
     return {
         "predictions": predictions,
         "ground_truths": ground_truths,
         "predicted_positive_pairs": list(set(predicted_positive_pairs)),
         "errors": errors,
         "processed_anchors": processed_anchors,
-        "detailed_results": detailed_results_by_anchor
+        # --- ここから KNNペア評価用のメトリクスをreturnに追加 ---
+        "knn_pairwise_metrics": {
+            'tp': total_knn_tp, 'fp': total_knn_fp,
+            'fn': total_knn_fn, 'tn': total_knn_tn
+        }
+        # --- ここまで追加 ---
     }
 
 
@@ -638,6 +703,40 @@ def calculate_pairwise_metrics(ground_truths, predictions, model_name=""):
         "tn": tn, "fp": fp, "fn": fn, "tp": tp
     }
     return metrics
+
+
+def calculate_knn_pairwise_metrics(metrics, model_name=""):
+    """KNNペアごとの評価指標と混合行列を計算する"""
+    tp = metrics.get('tp', 0)
+    fp = metrics.get('fp', 0)
+    fn = metrics.get('fn', 0)
+    tn = metrics.get('tn', 0)
+
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0
+    f1 = (2 * (precision * recall) / (precision + recall)
+          if (precision + recall) > 0 else 0)
+    
+    print(f"\n--- {model_name} KNNペア評価指標 ---")
+    print("  解釈:")
+    print("  - 各(アンカー, 候補)ペアを単位として評価")
+    print("  - Ground Truth: ペアが本当にマッチするか")
+    print("  - Prediction:   モデルがそのペアをマッチすると選択したか")
+    print("  +----------------+-----------------+-----------------+")
+    print(f"  | {'':^14} | {'Predicted: Yes':^15} | {'Predicted: No':^15} |")
+    print("  +================+=================+=================+")
+    print(f"  | {'GT: Yes':<14} | TP: {tp:<12d} | FN: {fn:<12d} |")
+    print("  +----------------+-----------------+-----------------+")
+    print(f"  | {'GT: No':<14} | FP: {fp:<12d} | TN: {tn:<12d} |")
+    print("  +----------------+-----------------+-----------------+")
+    print(f"  適合率 (Precision): {precision:.4f} (TP / (TP + FP))")
+    print(f"  再現率 (Recall):    {recall:.4f} (TP / (TP + FN))")
+    print(f"  F1スコア:           {f1:.4f}")
+
+    return {
+        "precision": precision, "recall": recall, "f1_score": f1,
+        "tn": tn, "fp": fp, "fn": fn, "tp": tp
+    }
 
 
 def form_predicted_clusters(positive_pairs, all_record_ids):
@@ -730,6 +829,9 @@ async def main(args):
     load_cache()
     load_bib_data_and_gt_clusters(args.ground_truth_yaml)
     
+    # --- 詳細結果のCSV作成のための変数を初期化 ---
+    csv_rows = []
+
     # 評価候補の読み込み
     candidate_sets, all_record_ids_in_candidates = (
         load_evaluation_candidates(args.candidates_json)
@@ -756,6 +858,12 @@ async def main(args):
         results_before["predictions"],
         args.model_before_ft
     )
+    # --- ここから KNNペア評価用のメトリクス計算を追加 ---
+    knn_pairwise_metrics_before = calculate_knn_pairwise_metrics(
+        results_before["knn_pairwise_metrics"],
+        args.model_before_ft
+    )
+    # --- ここまで追加 ---
     
     pred_clusters_before = form_predicted_clusters(
         results_before["predicted_positive_pairs"],
@@ -783,6 +891,12 @@ async def main(args):
         results_after["predictions"],
         args.model_after_ft
     )
+    # --- ここから KNNペア評価用のメトリクス計算を追加 ---
+    knn_pairwise_metrics_after = calculate_knn_pairwise_metrics(
+        results_after["knn_pairwise_metrics"],
+        args.model_after_ft
+    )
+    # --- ここまで追加 ---
     
     pred_clusters_after = form_predicted_clusters(
         results_after["predicted_positive_pairs"],
@@ -868,59 +982,8 @@ async def main(args):
         pairwise_metrics_all_before = empty_metrics
         pairwise_metrics_all_after = empty_metrics
     
-    # --- 詳細結果のCSV作成 ---
-    csv_rows = []
-    # ユニークなペアを記録し、重複行を避ける
-    processed_pairs = set()
-
-    # `candidate_sets` をもとに全ペアをリストアップ
-    for anchor_id, candidate_ids in candidate_sets.items():
-        for candidate_id in candidate_ids:
-            pair = tuple(sorted((anchor_id, candidate_id)))
-            if pair in processed_pairs:
-                continue
-            processed_pairs.add(pair)
-            
-            # 正解ラベルの判定
-            gt_c1 = GROUND_TRUTH_CLUSTERS.get(pair[0])
-            gt_c2 = GROUND_TRUTH_CLUSTERS.get(pair[1])
-            is_truly_similar = (
-                gt_c1 is not None and gt_c2 is not None and
-                not str(gt_c1).startswith("gt_orphan_") and
-                not str(gt_c2).startswith("gt_orphan_") and
-                str(gt_c1) == str(gt_c2)
-            )
-            
-            # 各モデルの予測結果を取得 (対称性を考慮)
-            # Before-FT
-            res_before_anchor = results_before["detailed_results"].get(anchor_id)
-            pred_before_anchor_selects_cand = (res_before_anchor and candidate_id in res_before_anchor['selected_ids'])
-            
-            res_before_cand = results_before["detailed_results"].get(candidate_id)
-            pred_before_cand_selects_anchor = (res_before_cand and anchor_id in res_before_cand['selected_ids'])
-
-            pred_before = pred_before_anchor_selects_cand or pred_before_cand_selects_anchor
-            err_before = (res_before_anchor['error'] if res_before_anchor and res_before_anchor['error'] else None)
-
-            # After-FT
-            res_after_anchor = results_after["detailed_results"].get(anchor_id)
-            pred_after_anchor_selects_cand = (res_after_anchor and candidate_id in res_after_anchor['selected_ids'])
-
-            res_after_cand = results_after["detailed_results"].get(candidate_id)
-            pred_after_cand_selects_anchor = (res_after_cand and anchor_id in res_after_cand['selected_ids'])
-            
-            pred_after = pred_after_anchor_selects_cand or pred_after_cand_selects_anchor
-            err_after = (res_after_anchor['error'] if res_after_anchor and res_after_anchor['error'] else None)
-
-            csv_rows.append({
-                "record_id_1": pair[0],
-                "record_id_2": pair[1],
-                "ground_truth_similar": is_truly_similar,
-                "predicted_similar_before": pred_before,
-                "error_before": err_before or "",
-                "predicted_similar_after": pred_after,
-                "error_after": err_after or "",
-            })
+    # 詳細結果のCSV作成 (To be implemented properly)
+    # results_df_data = []
     
     # --- 出力先ディレクトリの準備 ---
     candidates_json_path = args.candidates_json
@@ -949,10 +1012,11 @@ async def main(args):
     if csv_rows:
         import pandas as pd
         details_df = pd.DataFrame(csv_rows)
-        details_filename = os.path.join(output_dir, f"{base_filename}_details.csv")
+        details_filename = os.path.join(
+            output_dir, f"{base_filename}_details.csv"
+        )
         details_df.to_csv(details_filename, index=False)
         print(f"詳細な評価結果を {details_filename} に保存しました。")
-
 
     # --- パフォーマンスレポートの生成 ---
     report_content = f"""# ファインチューニング性能評価レポート（selecting戦略）
@@ -1000,6 +1064,25 @@ async def main(args):
 - NMI: {clustering_metrics_after['nmi']:.4f}
 - Homogeneity: {clustering_metrics_after['homogeneity']:.4f}, Completeness: {clustering_metrics_after['completeness']:.4f}, V-measure: {clustering_metrics_after['v_measure']:.4f}
 
+## KNNペア評価
+### ファインチューニング前モデル ({args.model_before_ft})
+- 混合行列:
+    (解釈: 各(アンカー, 候補)ペアを単位として評価)
+    予測      |  Predicted: Yes | Predicted: No
+  ------------|-----------------|-----------------
+  GT: Yes     | TP: {knn_pairwise_metrics_before['tp']:<15d} | FN: {knn_pairwise_metrics_before['fn']:<15d}
+  GT: No      | FP: {knn_pairwise_metrics_before['fp']:<15d} | TN: {knn_pairwise_metrics_before['tn']:<15d}
+- 適合率: {knn_pairwise_metrics_before['precision']:.4f}, 再現率: {knn_pairwise_metrics_before['recall']:.4f}, F1: {knn_pairwise_metrics_before['f1_score']:.4f}
+
+### ファインチューニング後モデル ({args.model_after_ft})
+- 混合行列:
+    (解釈: 各(アンカー, 候補)ペアを単位として評価)
+    予測      |  Predicted: Yes | Predicted: No
+  ------------|-----------------|-----------------
+  GT: Yes     | TP: {knn_pairwise_metrics_after['tp']:<15d} | FN: {knn_pairwise_metrics_after['fn']:<15d}
+  GT: No      | FP: {knn_pairwise_metrics_after['fp']:<15d} | TN: {knn_pairwise_metrics_after['tn']:<15d}
+- 適合率: {knn_pairwise_metrics_after['precision']:.4f}, 再現率: {knn_pairwise_metrics_after['recall']:.4f}, F1: {knn_pairwise_metrics_after['f1_score']:.4f}
+
 ## 全ペア推論評価
 ### ファインチューニング前モデル ({args.model_before_ft})
 - 混合行列:
@@ -1019,6 +1102,7 @@ async def main(args):
 
 ## 改善度
 - F1スコア改善: {pairwise_metrics_after['f1_score'] - pairwise_metrics_before['f1_score']:+.4f}
+- KNNペアF1改善: {knn_pairwise_metrics_after['f1_score'] - knn_pairwise_metrics_before['f1_score']:+.4f}
 - ARI改善: {clustering_metrics_after['ari'] - clustering_metrics_before['ari']:+.4f}
 - 全ペアF1改善: {pairwise_metrics_all_after['f1_score'] - pairwise_metrics_all_before['f1_score']:+.4f}
 """
@@ -1072,6 +1156,13 @@ async def main(args):
         pairwise_metrics_before['f1_score']
     )
     print(f"F1スコア改善: {f1_improvement:+.4f}")
+    # --- ここから KNNペアF1改善の表示を追加 ---
+    knn_f1_improvement = (
+        knn_pairwise_metrics_after['f1_score'] -
+        knn_pairwise_metrics_before['f1_score']
+    )
+    print(f"KNNペアF1改善: {knn_f1_improvement:+.4f}")
+    # --- ここまで追加 ---
 
 
 if __name__ == "__main__":
@@ -1092,7 +1183,7 @@ if __name__ == "__main__":
         "--data_type",
         type=str,
         required=True,
-        choices=["bib", "music", "person"],
+        choices=["bib", "music", "person", "walmart_amazon_product", "wdc_product"],
         help="評価対象のデータの種類 (bib, music, person)"
     )
     parser.add_argument(

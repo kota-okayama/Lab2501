@@ -16,31 +16,43 @@ def get_prompt_for_selection(data_type: str) -> str:
         "bib": "2つのレコードが同じ書誌を指しているか",
         "music": "2つのレコードが同じ音楽作品を指しているか",
         "person": "2つのレコードが同じ人物を指しているか",
+        "wdc_product": "2つのレコードが同じ商品を指しているか",
+        "walmart_amazon_product": "2つのレコードが同じ商品を指しているか",
     }
-    task_description = prompt_map.get(data_type, "2つのレコードが同じエンティティを指しているか")
-    return f"これから、2つのレコードのペアのリストを提示します。これらのペアは、{task_description}を判定するタスクのデータです。"
+    task_description = prompt_map.get(
+        data_type, "2つのレコードが同じエンティティを指しているか"
+    )
+    return (
+        "これから、2つのレコードのペアのリストを提示します。これらのペアは、"
+        f"{task_description}を判定するタスクのデータです。"
+    )
 
 
 def get_prompt_for_finetuning(data_type: str) -> tuple[str, str]:
     """データタイプに応じて、ファインチューニング用のsystemプロンプトとuserプロンプトのテンプレートを返す"""
-    prompt_templates = {
-        "bib": {"jp_type": "書誌", "jp_work": "文献"},
-        "music": {"jp_type": "音楽", "jp_work": "作品"},
-        "person": {"jp_type": "人物", "jp_work": "人物"},
-    }
-    template = prompt_templates.get(data_type, {"jp_type": "情報", "jp_work": "エンティティ"})
-
-    jp_type = template["jp_type"]
-    jp_work = template["jp_work"]
+    jp_type = "情報"
+    jp_work = "エンティティ"
+    if data_type == "bib":
+        jp_type, jp_work = "書誌", "文献"
+    elif data_type == "music":
+        jp_type, jp_work = "音楽", "作品"
+    elif data_type == "person":
+        jp_type, jp_work = "人物", "人物"
+    elif "product" in data_type:
+        jp_type, jp_work = "商品", "商品"
 
     system_prompt = (
-        f"あなたは2つの{jp_type}情報が実質的に同一の{jp_work}を指すかどうかを判断する専門家です。\\n"
-        f"まず、2つの{jp_type}情報が同一の{jp_work}と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
-        "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+        f"あなたは2つの{jp_type}情報が実質的に同一の{jp_work}を指すかどうかを"
+        "判断する専門家です。\\n"
+        f"まず、2つの{jp_type}情報が同一の{jp_work}と思われる場合は「はい」、"
+        "そうでない場合は「いいえ」で明確に回答してください。\\n"
+        "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0"
+        "（完全に同一）の範囲で提示してください。"
     )
 
     user_prompt_template = (
-        f"以下の2つの{jp_type}情報が、実質的に同一の{jp_work}を指しているかどうかを判断してください。\\n\\n"
+        f"以下の2つの{jp_type}情報が、実質的に同一の{jp_work}を指しているか"
+        "どうかを判断してください。\\n\\n"
         f"{jp_type}情報1:\\n{{content1}}\\n\\n"
         f"{jp_type}情報2:\\n{{content2}}\\n\\n"
         f"これらは同一の{jp_work}ですか？\\n回答:"
@@ -48,20 +60,44 @@ def get_prompt_for_finetuning(data_type: str) -> tuple[str, str]:
     return system_prompt, user_prompt_template
 
 
-def format_record_data(data_dict):
+def format_record_data(data_dict, data_type):
     """
     レコードのデータ辞書をLLMが読みやすい改行区切りの文字列にフォーマットする
+    (create_finetuning_data_from_strategies.py との前処理統一のため)
     """
-    return "\n".join(
-        [
-            f"{key.replace('bib1_', '').capitalize()}: {value}"
-            for key, value in data_dict.items()
-            if value and str(value).strip()
-        ]
-    )
+    if data_type == "music":
+        title = data_dict.get("title", "タイトル不明")
+        artist = data_dict.get("artist", "アーティスト不明")
+        album = data_dict.get("album", "アルバム不明")
+        release_date = data_dict.get("release_date", "リリース日不明")
+        return (f"タイトル: {title}\nアーティスト: {artist}\n"
+                f"アルバム: {album}\nリリース日: {release_date}")
+    elif data_type == "person":
+        name = data_dict.get("name", "名前不明")
+        affiliation = data_dict.get("affiliation", "所属不明")
+        return f"名前: {name}\n所属: {affiliation}"
+    elif data_type == "walmart_amazon_product":
+        title = data_dict.get("title", "商品名不明")
+        brand = data_dict.get("brand", "ブランド不明")
+        modelno = data_dict.get("modelno", "モデル番号不明")
+        price = data_dict.get("price", "価格不明")
+        return f"商品名: {title}\nブランド: {brand}\nモデル番号: {modelno}\n価格: {price}"
+    elif data_type == "wdc_product":
+        title = data_dict.get("title", "商品名不明")
+        brand = data_dict.get("brand", "ブランド不明")
+        description = data_dict.get("description", "説明不明")
+        price = data_dict.get("price", "価格不明")
+        return f"商品名: {title}\nブランド: {brand}\n説明: {description}\n価格: {price}"
+    else:  # bib or default
+        title = data_dict.get("bib1_title", "タイトル不明")
+        author = data_dict.get("bib1_author", "著者不明")
+        publisher = data_dict.get("bib1_publisher", "出版社不明")
+        pubdate = data_dict.get("bib1_pubdate", "出版日不明")
+        return (f"タイトル: {title}\n著者: {author}\n"
+                f"出版社: {publisher}\n出版日: {pubdate}")
 
 
-def load_and_prepare_data_from_yml(yml_path):
+def load_and_prepare_data_from_yml(yml_path, data_type, total_candidates=None):
     """
     YAMLファイルからレコードを読み込み、全てのペア候補とマスターデータを生成する
     """
@@ -86,7 +122,9 @@ def load_and_prepare_data_from_yml(yml_path):
             record_id = record["id"]
             all_records.append(record)
             record_to_cluster_map[record_id] = cluster_id
-            master_data_dict[record_id] = format_record_data(record["data"])
+            master_data_dict[record_id] = format_record_data(
+                record["data"], data_type
+            )
 
     print("ポジティブペアとネガティブペアを生成しています...")
     positive_pairs = []
@@ -100,8 +138,26 @@ def load_and_prepare_data_from_yml(yml_path):
     num_positive_pairs = len(positive_pairs)
     all_record_ids = list(record_to_cluster_map.keys())
     
+    if total_candidates and total_candidates > num_positive_pairs:
+        num_negative_to_generate = total_candidates - num_positive_pairs
+    else:
+        # デフォルトの挙動: ポジティブペアと同数を生成
+        num_negative_to_generate = num_positive_pairs
+
+    # 生成可能なネガティブペアの最大数を計算
+    total_possible_pairs = len(all_record_ids) * (len(all_record_ids) - 1) // 2
+    max_possible_negative_pairs = total_possible_pairs - num_positive_pairs
+
+    if num_negative_to_generate > max_possible_negative_pairs:
+        print(
+            f"警告: 要求されたネガティブペア数 ({num_negative_to_generate}) は "
+            f"生成可能な最大数 ({max_possible_negative_pairs}) を超えています。"
+        )
+        print("生成可能な全てのネガティブペアを使用します。")
+        num_negative_to_generate = max_possible_negative_pairs
+
     negative_pairs_set = set()
-    while len(negative_pairs_set) < num_positive_pairs:
+    while len(negative_pairs_set) < num_negative_to_generate:
         id1, id2 = random.sample(all_record_ids, 2)
         if record_to_cluster_map[id1] != record_to_cluster_map[id2]:
             # ペアの順序を統一して重複を防ぐ
@@ -113,13 +169,18 @@ def load_and_prepare_data_from_yml(yml_path):
     all_pairs = positive_pairs + negative_pairs
     random.shuffle(all_pairs)
 
-    print(f"生成されたペア数: ポジティブ {len(positive_pairs)}, ネガティブ {len(negative_pairs)}, 合計 {len(all_pairs)}")
+    print(
+        f"生成されたペア数: ポジティブ {len(positive_pairs)}, "
+        f"ネガティブ {len(negative_pairs)}, 合計 {len(all_pairs)}"
+    )
     
     # ポジティブペアのセットを返して、後でラベルを判定できるようにする
     return all_pairs, master_data_dict, set(positive_pairs)
 
 
-def select_one_batch_with_llm(client, candidate_pairs, master_data_dict, num_to_select, data_type):
+def select_one_batch_with_llm(
+    client, candidate_pairs, master_data_dict, num_to_select, data_type
+):
     """
     LLMに一回の選択（1バッチ分）を依頼する
     """
@@ -131,7 +192,7 @@ def select_one_batch_with_llm(client, candidate_pairs, master_data_dict, num_to_
 
 思考のステップを一つずつ記述してください。
 
-最終的な回答は、選択したペアのインデックスのみをカンマ区切りで出力してください。他の説明は不要です。
+最終的な回答は、選択したペアのインデックスのみをカンマ区切りで、一行で出力してください。思考プロセスや他の説明は一切含めないでください。
 例: 1, 5, 12, 28
 
 以下がデータのペアです:
@@ -141,16 +202,27 @@ def select_one_batch_with_llm(client, candidate_pairs, master_data_dict, num_to_
     for i, (id1, id2) in enumerate(candidate_pairs):
         content1 = master_data_dict.get(id1, "[コンテンツ不明]")
         content2 = master_data_dict.get(id2, "[コンテンツ不明]")
-        prompt_body_parts.append(f"{i}: (レコード1: '{content1}', レコード2: '{content2}')")
+        prompt_body_parts.append(
+            f"{i}: (レコード1: '{content1}', レコード2: '{content2}')"
+        )
     
     full_prompt = prompt_header + "\n".join(prompt_body_parts)
 
-    print(f"{len(candidate_pairs)} 件の候補から {num_to_select} 件を選択するようLLMに依頼します...")
+    print(
+        f"{len(candidate_pairs)} 件の候補から {num_to_select} 件を"
+        "選択するようLLMに依頼します..."
+    )
     try:
         completion = client.chat.completions.create(
             model="gpt-4o-mini",  # コストと速度のバランスが良いモデル
             messages=[
-                {"role": "system", "content": "You are an expert in selecting data for machine learning model training."},
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an expert in selecting data for "
+                        "machine learning model training."
+                    ),
+                },
                 {"role": "user", "content": full_prompt},
             ],
             temperature=0.7,
@@ -161,8 +233,11 @@ def select_one_batch_with_llm(client, candidate_pairs, master_data_dict, num_to_
         return []
 
     try:
+        # 思考プロセスが含まれる場合でも、最後の行に数値リストがあると仮定
         last_line = response_text.strip().split("\n")[-1]
-        selected_indices = [int(i.strip()) for i in last_line.split(",")]
+        # 数字とカンマ、スペース以外の文字を削除してパースの頑健性を高める
+        cleaned_line = "".join(filter(lambda char: char.isdigit() or char == ',' or char.isspace(), last_line))
+        selected_indices = [int(i.strip()) for i in cleaned_line.split(",") if i.strip()]
         
         if any(i >= len(candidate_pairs) for i in selected_indices):
             raise ValueError("LLMが範囲外のインデックスを返しました。")
@@ -175,7 +250,9 @@ def select_one_batch_with_llm(client, candidate_pairs, master_data_dict, num_to_
         return []
 
 
-def save_as_jsonl(pairs, master_data_dict, positive_pairs_set, output_file, data_type):
+def save_as_jsonl(
+    pairs, master_data_dict, positive_pairs_set, output_file, data_type
+):
     """
     選択されたペアをファインチューニング用のJSONL形式で保存する
     """
@@ -187,41 +264,77 @@ def save_as_jsonl(pairs, master_data_dict, positive_pairs_set, output_file, data
         for pair in pairs:
             # ペアの順序をソートしてタプルに変換し、セットでの検索を確実にする
             sorted_pair = tuple(sorted(pair))
-            label = "match" if sorted_pair in positive_pairs_set else "not_match"
+            is_match = sorted_pair in positive_pairs_set
             
-            assistant_response = "はい\\n類似度スコア: 1.0" if label == "match" else "いいえ\\n類似度スコア: 0.0"
+            assistant_response = (
+                "はい\\n類似度スコア: 1.0" if is_match else "いいえ\\n類似度スコア: 0.0"
+            )
 
             id1, id2 = pair
             content1 = master_data_dict.get(id1, "[コンテンツ不明]")
             content2 = master_data_dict.get(id2, "[コンテンツ不明]")
 
+            user_content = user_prompt_template.format(
+                content1=content1, content2=content2
+            )
             json_line = {
                 "messages": [
-                    {
-                        "role": "system",
-                        "content": system_prompt,
-                    },
-                    {
-                        "role": "user",
-                        "content": user_prompt_template.format(content1=content1, content2=content2),
-                    },
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_content},
                     {"role": "assistant", "content": assistant_response},
                 ]
             }
             f.write(json.dumps(json_line, ensure_ascii=False) + "\n")
-    print(f"JSONLファイルの保存が完了しました。")
+    print("JSONLファイルの保存が完了しました。")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="LLMを使用してYAMLファイルからファインチューニング用のデータペアを選択します。")
-    parser.add_argument("--record_yml", type=str, required=True, help="レコード情報が記載されたYAMLファイルのパス")
-    parser.add_argument("--output_dir", type=str, required=True, help="出力ファイルを保存するディレクトリのパス")
-    parser.add_argument("--total_samples", type=int, required=True, help="最終的に選択したいペアの総数")
-    parser.add_argument("--num_samples_per_request", type=int, default=32, help="1回のLLMリクエストで選択するペアの数")
-    parser.add_argument("--num_candidates", type=int, default=200, help="1回のLLMリクエストで提示する候補の数")
-    parser.add_argument("--output_csv", type=str, required=True, help="選択されたペアを保存するCSVファイル名")
-    parser.add_argument("--output_jsonl", type=str, help="ファインチューニング用に選択されたペアを保存するJSONLファイル名")
-    parser.add_argument("--data_type", type=str, required=True, choices=["bib", "music", "person"], help="データの種類 (プロンプト生成に利用)")
+    parser = argparse.ArgumentParser(
+        description="LLMを使用してYAMLファイルからファインチューニング用のデータペアを選択します。"
+    )
+    parser.add_argument(
+        "--record_yml", type=str, required=True,
+        help="レコード情報が記載されたYAMLファイルのパス"
+    )
+    parser.add_argument(
+        "--output_dir", type=str, required=True,
+        help="出力ファイルを保存するディレクトリのパス"
+    )
+    parser.add_argument(
+        "--total_samples", type=int, required=True,
+        help="最終的に選択したいペアの総数"
+    )
+    parser.add_argument(
+        "--num_samples_per_request", type=int, default=32,
+        help="1回のLLMリクエストで選択するペアの数"
+    )
+    parser.add_argument(
+        "--num_candidates", type=int, default=200,
+        help="1回のLLMリクエストで提示する候補の数"
+    )
+    parser.add_argument(
+        "--output_csv", type=str, required=True,
+        help="選択されたペアを保存するCSVファイル名"
+    )
+    parser.add_argument(
+        "--output_jsonl", type=str,
+        help="ファインチューニング用に選択されたペアを保存するJSONLファイル名"
+    )
+    parser.add_argument(
+        "--total_candidates", type=int, default=None,
+        help="生成する候補ペアの総数。指定しない場合、ポジティブペア数の2倍になります。"
+    )
+    parser.add_argument(
+        "--data_type", type=str, required=True,
+        choices=[
+            "bib",
+            "music",
+            "person",
+            "wdc_product",
+            "walmart_amazon_product",
+        ],
+        help="データの種類 (プロンプト生成に利用)"
+    )
     args = parser.parse_args()
 
     # 出力ディレクトリを作成
@@ -232,7 +345,11 @@ def main():
         sys.exit(1)
     client = OpenAI()
 
-    all_pairs, master_data_dict, positive_pairs_set = load_and_prepare_data_from_yml(args.record_yml)
+    all_pairs, master_data_dict, positive_pairs_set = (
+        load_and_prepare_data_from_yml(
+            args.record_yml, args.data_type, args.total_candidates
+        )
+    )
     
     unselected_pairs_set = {tuple(sorted(p)) for p in all_pairs}
     final_selected_pairs = []
@@ -247,14 +364,20 @@ def main():
             break
         
         num_candidates = min(args.num_candidates, len(unselected_pairs_set))
-        candidate_pairs_tuples = random.sample(list(unselected_pairs_set), num_candidates)
+        candidate_pairs_tuples = random.sample(
+            list(unselected_pairs_set), num_candidates
+        )
         # LLMにはタプルではなくリストで渡す
         candidate_pairs = [list(p) for p in candidate_pairs_tuples]
         
-        num_to_select = min(args.num_samples_per_request, args.total_samples - len(final_selected_pairs))
+        num_to_select = min(
+            args.num_samples_per_request,
+            args.total_samples - len(final_selected_pairs)
+        )
 
         selected_batch = select_one_batch_with_llm(
-            client, candidate_pairs, master_data_dict, num_to_select, args.data_type
+            client, candidate_pairs, master_data_dict,
+            num_to_select, args.data_type
         )
         
         if selected_batch:
@@ -269,14 +392,22 @@ def main():
 
     # CSV出力
     output_csv_path = os.path.join(args.output_dir, args.output_csv)
-    output_df = pd.DataFrame(final_selected_pairs, columns=["record_id_1", "record_id_2"])
+    output_df = pd.DataFrame(
+        final_selected_pairs, columns=["record_id_1", "record_id_2"]
+    )
     output_df.to_csv(output_csv_path, index=False)
-    print(f"\n処理完了。合計 {len(final_selected_pairs)} 件のペアを {output_csv_path} に保存しました。")
+    print(
+        f"\n処理完了。合計 {len(final_selected_pairs)} 件のペアを "
+        f"{output_csv_path} に保存しました。"
+    )
 
     # JSONL出力 (引数が指定されている場合のみ)
     if args.output_jsonl:
         output_jsonl_path = os.path.join(args.output_dir, args.output_jsonl)
-        save_as_jsonl(final_selected_pairs, master_data_dict, positive_pairs_set, output_jsonl_path, args.data_type)
+        save_as_jsonl(
+            final_selected_pairs, master_data_dict,
+            positive_pairs_set, output_jsonl_path, args.data_type
+        )
 
 
 if __name__ == "__main__":

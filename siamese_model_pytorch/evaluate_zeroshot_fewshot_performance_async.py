@@ -35,7 +35,7 @@ REQUESTS_PER_MINUTE = 3000    # 1分間の最大リクエスト数
 REQUEST_DELAY = 60.0 / REQUESTS_PER_MINUTE  # リクエスト間の最小間隔
 
 # デフォルト設定
-DEFAULT_MODEL_ID = "gpt-4o-mini"
+DEFAULT_MODEL_ID = "gpt-4o-mini-2024-07-18"
 
 
 def get_prompts(data_type):
@@ -44,6 +44,8 @@ def get_prompts(data_type):
         "bib": {"entity": "文献", "info": "書誌情報"},
         "music": {"entity": "楽曲", "info": "楽曲情報"},
         "person": {"entity": "人物", "info": "人物情報"},
+        "walmart_amazon_product": {"entity": "製品", "info": "製品情報"},
+        "wdc_product": {"entity": "製品", "info": "製品情報"},
         "unknown": {"entity": "レコード", "info": "情報"}
     }
     if data_type not in prompt_map:
@@ -813,8 +815,10 @@ async def main(args):
     data_type_info = get_prompts(args.data_type)
 
     # Few-shotデータの読み込み
-    few_shot_system_prompt, few_shot_examples = load_few_shot_prompt_and_examples(
-        args.few_shot_data, max_examples=args.max_fewshot_examples
+    few_shot_system_prompt, few_shot_examples = (
+        load_few_shot_prompt_and_examples(
+            args.few_shot_data, max_examples=args.max_fewshot_examples
+        )
     )
     
     print("\n===== Zero-shot vs Few-shot モデル性能比較評価 =====")
@@ -1060,7 +1064,6 @@ async def main(args):
 日付: {time.strftime("%Y-%m-%d %H:%M:%S")}
 
 ## 評価対象
-- データタイプ: {args.data_type}
 - モデル: {args.model_id}
 - データ: {args.ground_truth_yaml}
 - ペアリスト: {args.pairs_csv} ({len(pairs_to_evaluate)} ペア)
@@ -1263,8 +1266,10 @@ async def main(args):
         total_time += (end_time_fewshot - start_time_fewshot)
     print(f"総処理時間: {total_time:.2f}秒")
     if few_shot_examples:
-        f1_improvement = (pairwise_metrics_fewshot.get('f1_score', 0) -
-                  pairwise_metrics_zeroshot.get('f1_score', 0))
+        f1_improvement = (
+            pairwise_metrics_fewshot.get('f1_score', 0) -
+            pairwise_metrics_zeroshot.get('f1_score', 0)
+        )
         print(f"F1スコア改善: {f1_improvement:+.4f}")
 
 
@@ -1282,7 +1287,7 @@ if __name__ == "__main__":
         "--data_type",
         type=str,
         required=True,
-        choices=["bib", "music", "person"],
+        choices=["bib", "music", "person", "walmart_amazon_product", "wdc_product"],
         help="データの種類 (プロンプト生成に利用)"
     )
     parser.add_argument(

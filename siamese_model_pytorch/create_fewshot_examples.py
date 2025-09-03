@@ -61,7 +61,8 @@ def get_prompts(data_type):
     prompt_map = {
         "bib": {"entity": "文献", "info": "書誌情報"},
         "music": {"entity": "楽曲", "info": "楽曲情報"},
-        "person": {"entity": "人物", "info": "人物情報"}
+        "person": {"entity": "人物", "info": "人物情報"},
+        "product": {"entity": "製品", "info": "製品情報"}
     }
     if data_type not in prompt_map:
         raise ValueError(f"未知のデータタイプです: {data_type}")
@@ -111,7 +112,10 @@ def load_inconsistent_triangles(filepath):
                             row['triangle_node2'],
                             row['triangle_node3']
                         ),
-                        "score": float(row['inconsistency_score'])
+                        "score": float(row['inconsistency_score']),
+                        "true_edge12": row.get('true_edge12', 'false').lower() == 'true',
+                        "true_edge23": row.get('true_edge23', 'false').lower() == 'true',
+                        "true_edge31": row.get('true_edge31', 'false').lower() == 'true'
                     })
                 except (KeyError, ValueError):
                     continue
@@ -230,6 +234,11 @@ def generate_hybrid_prompt(
             llm_judgement2 = "はい" if s2 > 0.5 else "いいえ"
             llm_judgement3 = "はい" if s3 > 0.5 else "いいえ"
 
+            # 正解ラベルを取得し、文字列に変換
+            true_judgement1 = "一致" if triangle_data.get("true_edge12") else "不一致"
+            true_judgement2 = "一致" if triangle_data.get("true_edge23") else "不一致"
+            true_judgement3 = "一致" if triangle_data.get("true_edge31") else "不一致"
+
             # 3. IDだけでなく、具体的なレコード情報を含める
             info1_str = get_record_details_for_prompt(n1).replace("\\n", ", ")
             info2_str = get_record_details_for_prompt(n2).replace("\\n", ", ")
@@ -244,7 +253,11 @@ def generate_hybrid_prompt(
                 f"- ペア(A, B) → {llm_judgement1} (スコア: {s1:.2f})\\n"
                 f"- ペア(B, C) → {llm_judgement2} (スコア: {s2:.2f})\\n"
                 f"- しかし、ペア(A, C) → {llm_judgement3} (スコア: {s3:.2f})\\n"
-                "これは推移律 (A=B, B=C ならば A=C) に矛盾しています。"
+                "これは推移律 (A=B, B=C ならば A=C) に矛盾しています。\\n"
+                "正しい判断は以下の通りです。\\n"
+                f"- ペア(A, B) → {true_judgement1}\\n"
+                f"- ペア(B, C) → {true_judgement2}\\n"
+                f"- ペア(A, C) → {true_judgement3}"
             )
             bad_example_texts.append(example_text)
 
@@ -300,7 +313,7 @@ def main():
         "--output_json_path", required=True, help="出力するJSONファイルのパス"
     )
     parser.add_argument(
-        "--data_type", required=True, choices=["bib", "music", "person"],
+        "--data_type", required=True, choices=["bib", "music", "person", "product"],
         help="データの種類"
     )
     parser.add_argument(

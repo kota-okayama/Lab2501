@@ -81,12 +81,15 @@ def get_record_details_for_finetuning_prompt(record_id, data_type):
         authors_str = bib_details.get("artist", "アーティスト不明")
         publisher = bib_details.get("album", "アルバム不明")
         pubdate = bib_details.get("release_date", "リリース日不明")
+        length = bib_details.get("length", "長さ不明")
         return (f"タイトル: {title}\nアーティスト: {authors_str}\n"
-                f"アルバム: {publisher}\nリリース日: {pubdate}")
+                f"アルバム: {publisher}\nリリース日: {pubdate}\n長さ: {length}")
     elif data_type == "person":
-        name = bib_details.get("name", "名前不明")
-        affiliation = bib_details.get("affiliation", "所属不明")
-        return (f"名前: {name}\n所属: {affiliation}")
+        givenname = bib_details.get("givenname", "名前不明")
+        surname = bib_details.get("surname", "姓不明")
+        postcode = bib_details.get("postcode", "郵便番号不明")
+        suburb = bib_details.get("suburb", "地域不明")
+        return (f"名前: {givenname}\n姓: {surname}\n郵便番号: {postcode}\n地域: {suburb}")
     elif data_type == "walmart_amazon_product":
         name = bib_details.get("title", "商品名不明")
         brand = bib_details.get("brand", "ブランド不明")
