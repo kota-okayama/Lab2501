@@ -1,0 +1,4147 @@
+summary:
+  creation_date: '2025-09-04 20:45:42.516'
+  update_date: '2025-09-04 20:45:42.516'
+  num_of_records: 500
+  num_of_pairs:
+    1: 390
+    2: 52 
+    3: 2  
+  config_match: null
+  config_mismatch: null
+inf_attr:
+  title: TEXT_EN
+  price: TEXT_EN
+  brand: TEXT_EN
+  modelno: TEXT_EN
+records:
+  file0_1079:
+  - id: ac367398-7197-442e-80fd-5f088716ba05
+    cluster_id: '1079'
+    data:
+      brand: hp
+      modelno: c8057a
+      price: 199 99
+      title: hewlett packard c8057a maintenance kit for hp laserjet 4100 series
+  file0_10200:
+  - id: 22895dba-05d3-4ec4-b425-dede7dcf020e
+    cluster_id: '10200'
+    data:
+      brand: brother
+      modelno: lc61bk
+      price: 12 55
+      title: brother lc61bk ink cartridge black
+  file0_6895:
+  - id: 05d863bc-2448-489c-b864-35c8eda6ef14
+    cluster_id: '6895'
+    data:
+      brand: thecus
+      modelno: n16000
+      price: 5236 97
+      title: intel xeon cpu 8gb ddr3 sdram
+  file0_12534:
+  - id: 186687b4-df77-4eb3-819a-a13931fb24cc
+    cluster_id: '12534'
+    data:
+      brand: coby
+      modelno: csmp175blk
+      price: 51 99
+      title: coby vitruvian speaker system for ipod and iphone csmp175blk black
+  file0_18916:
+  - id: 57512220-1641-4505-8895-0ab73e0bb9be
+    cluster_id: '18916'
+    data:
+      brand: bic
+      modelno: ''
+      price: 28 36
+      title: bic wosqpp418 wite out shake n squeeze correction pen 8 ml white 4 pack
+  - id: 6cfc71e2-974e-4798-8728-a760a06ea177
+    cluster_id: '18916'
+    data:
+      brand: bic
+      modelno: wosqpp418 whi
+      price: 8 39
+      title: bic wite out shake n squeeze correction pen white 4 pack
+  file0_6582:
+  - id: a2c82002-9760-4076-99ac-003e8e9f245a
+    cluster_id: '6582'
+    data:
+      brand: cables unlimited
+      modelno: utp 1400 01y
+      price: 4 99
+      title: cables unlimited utp 1400 01y cat5e snagless patch cable 1 feet yellow
+  file0_5477:
+  - id: 41d634e6-d5bd-4858-89cc-053728142bac
+    cluster_id: '5477'
+    data:
+      brand: sony
+      modelno: k 58622 01
+      price: 149 95
+      title: sony cyber shot dsc w570 digital camera black with 4gb card case accessory
+        kit
+  file0_18554:
+  - id: 81f74ac2-79f9-48c1-895b-e39e0fad977d
+    cluster_id: '18554'
+    data:
+      brand: sheaffer
+      modelno: ''
+      price: 93 82
+      title: new sheaffer 93169 300 ballpoint pen pencil set chrome trim shf93169
+  file0_21655:
+  - id: e662965c-b305-4dea-9df9-2fdd7d1bf13b
+    cluster_id: '21655'
+    data:
+      brand: palm
+      modelno: ''
+      price: 5 82
+      title: palm pre plus agf blue and chrome grt slider case 2 pack
+  file0_9534:
+  - id: a16d0dfb-09e5-4a33-82b4-91a5728fc25b
+    cluster_id: '9534'
+    data:
+      brand: sony
+      modelno: 3dpw30r2h
+      price: 7 35
+      title: sony 8cm dvd rw with hangtab 3 pack
+  - id: 5b0aedfe-63ed-4979-91c6-33556da5e064
+    cluster_id: '9534'
+    data:
+      brand: sony
+      modelno: 3dpw30r2h
+      price: '12'
+      title: sony handycam mini dvd rw for dvd camcorders 3 pack
+  file0_19594:
+  - id: f0a0689a-eb58-49c7-a919-acf7f84dfe93
+    cluster_id: '19594'
+    data:
+      brand: hp
+      modelno: c4127x 27x
+      price: 105 45
+      title: hp consumable laserjet 4000 toner cart
+  file0_12654:
+  - id: 812b1a98-912c-4e8c-8098-3c9b323f1253
+    cluster_id: '12654'
+    data:
+      brand: netgear
+      modelno: rnd4000 100nas
+      price: ''
+      title: netgear readynas nv 4 bay 0tb diskless
+  file0_8314:
+  - id: 704031e2-cf3f-44a7-bf3c-51a182194af3
+    cluster_id: '8314'
+    data:
+      brand: microsoft
+      modelno: d86 04533
+      price: 210 44
+      title: microsoft visio standard 2010
+  file0_2553:
+  - id: c5c9be20-6d4f-4c62-ba93-e6e27391b6b6
+    cluster_id: '2553'
+    data:
+      brand: acer
+      modelno: a500 10s16u
+      price: ''
+      title: acer iconia tab a500 10s16u 10 1 inch tablet computer aluminum metallic
+  file0_8885:
+  - id: 3921327f-d1b4-4674-90ab-23caced5c4c0
+    cluster_id: '8885'
+    data:
+      brand: kensington
+      modelno: '56146'
+      price: 34 07
+      title: kensington 56146 solemate plus adjustable footrest gray
+  file0_19800:
+  - id: e3202a9a-627d-43ba-8370-fe8d6a52bff5
+    cluster_id: '19800'
+    data:
+      brand: macally
+      modelno: ''
+      price: '43'
+      title: new macally powerlink8 ipod iphone battery charger mcyprl8
+  file0_24512:
+  - id: 12c2eed8-0019-47b7-b0fc-24680c4cbc9d
+    cluster_id: '24512'
+    data:
+      brand: coolermaster
+      modelno: r9 nbc xlit gp
+      price: 24 88
+      title: cooler master cooler master notepal x lite black
+  file0_2149:
+  - id: 1ecb23fb-4f45-4505-bd97-bc405d034e13
+    cluster_id: '2149'
+    data:
+      brand: saunders
+      modelno: ''
+      price: ''
+      title: saunders 21800 slimmate recycled portable desktop 1 capacity holds 8
+        1 2w x 12h pink
+  file0_21799:
+  - id: 0a241ca8-afb1-4b61-94aa-4603fe079cc3
+    cluster_id: '21799'
+    data:
+      brand: clarion
+      modelno: ccaaux
+      price: 23 99
+      title: clarion ccaaux female 3 5mm stereo mini jack to male rca extension cable
+        with integrated cover
+  - id: fadaab77-b3bd-4d4f-921e-a7ac1da6f55e
+    cluster_id: '21799'
+    data:
+      brand: clarion
+      modelno: ccaaux
+      price: 29 99
+      title: clarion 3 5mm stereo mini jack to rca extension cable 40
+  file0_8740:
+  - id: 9d39966d-feda-4afd-95b5-ce5292cdcca5
+    cluster_id: '8740'
+    data:
+      brand: marware
+      modelno: '602956000000'
+      price: 11 99
+      title: marware eco vue for ipad
+  file1_6973:
+  - id: c2f294b0-cbd0-4d4f-86a7-1cfb16ccb686
+    cluster_id: '6973'
+    data:
+      brand: hp
+      modelno: q6511a
+      price: ''
+      title: hp q6511a laserjet 11a black print cartridge in retail packaging
+  - id: 86ee28dc-408b-43c2-8a15-b09ba311aaaa
+    cluster_id: '6973'
+    data:
+      brand: hp
+      modelno: q6511a
+      price: 191 03
+      title: hp q6511a hp 11a toner 6000 page yield black
+  file0_6973:
+  - id: c2f294b0-cbd0-4d4f-86a7-1cfb16ccb686
+    cluster_id: '6973'
+    data:
+      brand: hp
+      modelno: q6511a
+      price: ''
+      title: hp q6511a laserjet 11a black print cartridge in retail packaging
+  - id: 86ee28dc-408b-43c2-8a15-b09ba311aaaa
+    cluster_id: '6973'
+    data:
+      brand: hp
+      modelno: q6511a
+      price: 191 03
+      title: hp q6511a hp 11a toner 6000 page yield black
+  file0_3610:
+  - id: 00062c9c-6cac-4fce-8e30-979f91c4c160
+    cluster_id: '3610'
+    data:
+      brand: sabrent
+      modelno: usb uf6
+      price: 24 87
+      title: sabrent usb uf6 6 port usb 2 0 firewire ieee 1394 pci combo adapter plus
+        6pin to 4pin firewire ieee1394 cable
+  file0_11076:
+  - id: 066ef52c-6476-4952-b2e8-2b5dd15dce08
+    cluster_id: '11076'
+    data:
+      brand: gear head
+      modelno: mp1600ru
+      price: 9 45
+      title: gear head optical usb retractable mobile mouse black silver mp1600ru
+  file0_13606:
+  - id: 20500f3d-b0ac-41d4-8d7f-bb04823946bb
+    cluster_id: '13606'
+    data:
+      brand: lorex
+      modelno: cva6933
+      price: 8 98
+      title: rca to 6 pin din coupler
+  file0_11485:
+  - id: a2abc86e-86a4-41c1-80d3-0d52809db067
+    cluster_id: '11485'
+    data:
+      brand: sony
+      modelno: fashc1am b
+      price: 8 79
+      title: sony fashc1am b accessory shoe cap for sony alpha digital slr camera
+        black
+  file0_13528:
+  - id: fd5fea17-be4b-4cf6-8c07-f5ee38aed006
+    cluster_id: '13528'
+    data:
+      brand: sennheiser
+      modelno: hd218
+      price: 50 37
+      title: sennheiser hd218 closed back headphone optimized for ipod iphone mp3
+        and music players
+  file0_17543:
+  - id: a7fdf120-cd1b-4036-a194-23a5db2304d8
+    cluster_id: '17543'
+    data:
+      brand: smead
+      modelno: ''
+      price: 18 35
+      title: smead 81152 side opening pressguard report cover prong fastener letter
+        black
+  file0_15030:
+  - id: 65aab89b-51d8-44ef-b643-ed438da74218
+    cluster_id: '15030'
+    data:
+      brand: gecko gear
+      modelno: gg600028
+      price: 5 65
+      title: gecko folio deluxe for ipad 1
+  file0_2744:
+  - id: 39bb3c02-c483-4a23-85d4-a515addf178f
+    cluster_id: '2744'
+    data:
+      brand: asus
+      modelno: maximus iv extreme rev 3 0
+      price: 329 99
+      title: asus maximus iv extreme lga 1155 rebublic of gamers intel p67 ddr3 2400
+        atx motherboard
+  file1_9227:
+  - id: b41ed545-a3a7-45bd-b03c-c60b56ed3480
+    cluster_id: '9227'
+    data:
+      brand: xantech
+      modelno: 29110dbkit
+      price: ''
+      title: xantech 29110dbkit designer hidden link infrared kit black
+  - id: fa4c27c3-7bdd-42b5-8b80-e86e7e4043d0
+    cluster_id: '9227'
+    data:
+      brand: xantech
+      modelno: 29110dbkit
+      price: 56 88
+      title: xantech 29110dbkit designer hidden link infrared kit black
+  file0_9691:
+  - id: 7b9a2999-cce1-494a-a0cd-bdf5dbe91935
+    cluster_id: '9691'
+    data:
+      brand: q see
+      modelno: qpscdca
+      price: 71 14
+      title: q see qpscdca professional indoor ccd camera w audio color
+  file0_12729:
+  - id: 2dbf061d-c443-4d26-9d53-611b30e756a4
+    cluster_id: '12729'
+    data:
+      brand: marware
+      modelno: '602956000000'
+      price: 16 56
+      title: marware microshell for ipad 2 pink 602956008576
+  file0_13024:
+  - id: 0966b659-5530-4b53-b68f-2d2c0e52d9f8
+    cluster_id: '13024'
+    data:
+      brand: hp
+      modelno: c6567b
+      price: 51 96
+      title: hp coated paper 42 inches x 150 feet roll
+  - id: 6333b6df-8a9c-4d41-a0e9-70f2ef55df49
+    cluster_id: '13024'
+    data:
+      brand: hp
+      modelno: c6567b
+      price: 69 88
+      title: hp c6567b coated paper 1 roll 42 inches x 150 ft
+  file0_12970:
+  - id: 5e85ef6c-9f08-49d9-a218-45ed112a7252
+    cluster_id: '12970'
+    data:
+      brand: iluv
+      modelno: iad562blk
+      price: 15 99
+      title: iluv usb car adapter with cable for ipod ipad and iphone iad562
+  file0_18796:
+  - id: b14c91d7-60dc-4a4f-a888-1e55b43314c9
+    cluster_id: '18796'
+    data:
+      brand: tp link
+      modelno: ''
+      price: 79 99
+      title: tl pa211 powerline network adapter
+  file0_15724:
+  - id: 79ddb678-4b2b-44de-92ce-a7856f1fbb19
+    cluster_id: '15724'
+    data:
+      brand: midland
+      modelno: gxt760vp4
+      price: 53 65
+      title: midland gxt760vp4 36 mile 42 channel frs gmrs two way radio pair
+  file0_19425:
+  - id: 6efc3c36-01aa-4e72-9bbd-f7fb9b73c5a8
+    cluster_id: '19425'
+    data:
+      brand: rolodex
+      modelno: ''
+      price: 20 32
+      title: new rolodex 22291eld metal mesh open tray business card file holds 125
+        2 1 4 x 4 cards black rol22291eld
+  file0_13017:
+  - id: dd721234-9ab9-4565-8a99-f4036a4cbfbb
+    cluster_id: '13017'
+    data:
+      brand: hp
+      modelno: j7961g aba
+      price: '225'
+      title: hp jetdirect 635n internal printer server up to 1000mbps through put
+        eio comp
+  file0_1374:
+  - id: 0dda8165-305b-4794-becc-f4ef54ce9be9
+    cluster_id: '1374'
+    data:
+      brand: trendnet
+      modelno: tv ip422wn
+      price: 224 46
+      title: trendnet tv ip422wn securview wireless day night pan tilt zoom internet
+        surveillance camera
+  file0_6943:
+  - id: a8369563-8c2c-4b9a-a7e9-8a0078d5ec49
+    cluster_id: '6943'
+    data:
+      brand: ihome
+      modelno: ip56gvc
+      price: '109'
+      title: ihome ip56gvc rechargeable portable stereo system for iphone ipod gunmetal
+  file0_5485:
+  - id: 215b10ba-ed48-404e-80bb-33dd680d8682
+    cluster_id: '5485'
+    data:
+      brand: sony
+      modelno: bdve370
+      price: '248'
+      title: sony bdv e370 sony 5 1 blu ray disc system 3d compatible
+  file0_8482:
+  - id: 7b0d6e7f-375f-485d-90ec-2c001f948937
+    cluster_id: '8482'
+    data:
+      brand: diamond
+      modelno: grc100
+      price: 16 67
+      title: diamond grc100 green button remote with usb receiver for use with diamond
+        all in wonder cards
+  file0_14629:
+  - id: 7422991f-afef-4f38-9d17-75456f0546e9
+    cluster_id: '14629'
+    data:
+      brand: memorex
+      modelno: '98682'
+      price: 51 95
+      title: memorex 98682 25 gb 6x blu ray disc bd rs 30 ct spindle
+  file1_14074:
+  - id: 6b4ec8b5-b74d-4b6a-964d-e8afaa77c05a
+    cluster_id: '14074'
+    data:
+      brand: seagate
+      modelno: stbf500101
+      price: 179 99
+      title: seagate goflex satellite mobile wireless storage 500 gb usb 3 0 external
+        hard drive stbf500101 black
+  - id: 22a958f3-7a2d-4dc7-a5ff-127d699f49f7
+    cluster_id: '14074'
+    data:
+      brand: seagate
+      modelno: stbf500101
+      price: 199 98
+      title: seagate goflex satellite
+  file0_15698:
+  - id: 2f7311c6-04b5-4a28-aea0-cce856686a23
+    cluster_id: '15698'
+    data:
+      brand: patriot
+      modelno: psf16gmcsdhc43p
+      price: 21 98
+      title: patriot signature 16 gb microsdhc class 4 flash memory card with standard
+        sd adapter psf16gmcsdhc43p
+  file0_12170:
+  - id: 03dfb32b-3f70-4e52-82cb-d8a045ec0231
+    cluster_id: '12170'
+    data:
+      brand: pioneer
+      modelno: ts w259s4
+      price: ''
+      title: pioneer ts w259s4 champion series 10 single 4ohm 1200 watts
+  - id: 1f78081a-1723-40a1-b8b6-3109695dced9
+    cluster_id: '12170'
+    data:
+      brand: pioneer
+      modelno: ts w259s4
+      price: '113'
+      title: pioneer 10 subwoofer with single voice coil 350w
+  file0_18790:
+  - id: 985fa727-1441-4597-aa38-fb90018d0eec
+    cluster_id: '18790'
+    data:
+      brand: tripp lite
+      modelno: p606 006 r
+      price: 10 71
+      title: tripp lite p606 006 r ieee1284 gold parallel printer a b cable db25m
+        cen36m 6ft
+  file0_2393:
+  - id: 3acc7090-94ea-4e32-85e0-499fed42b5e6
+    cluster_id: '2393'
+    data:
+      brand: apple
+      modelno: mb745ll a
+      price: ''
+      title: apple ipod nano 8 gb green 4th generation previous model
+  file0_17331:
+  - id: 3aa9ff50-f929-402e-b66c-80e5eb7993e8
+    cluster_id: '17331'
+    data:
+      brand: pendaflex
+      modelno: ''
+      price: ''
+      title: new pendaflex 415213 reinforced hanging file folders 1 3 tab kraft letter
+        standard green 25 box ess415213
+  file0_21642:
+  - id: 33f13649-99fc-4fa2-9b13-0e411299d8ff
+    cluster_id: '21642'
+    data:
+      brand: ameriphone
+      modelno: ha40
+      price: 23 49
+      title: ameriphone ha40 in line telephone handset amplifier
+  file0_20678:
+  - id: de1e346d-1c1c-46a3-9ab9-85d2a634f8f6
+    cluster_id: '20678'
+    data:
+      brand: humminbird
+      modelno: ''
+      price: '1200'
+      title: new humminbird 407970 1 798ci hd si gps color fishing system hum4079701
+  file0_17214:
+  - id: 85d9aa64-60e7-459f-8cc4-43ded2c65d91
+    cluster_id: '17214'
+    data:
+      brand: zax
+      modelno: ''
+      price: ''
+      title: zax 85910 select series rf coaxial f pin cable 10 m
+  file0_10018:
+  - id: d87c3be8-2483-4002-8408-fb6d42679f4b
+    cluster_id: '10018'
+    data:
+      brand: avery
+      modelno: '24409'
+      price: 3 99
+      title: avery marks a lot dry erase markers black blue green and red pack of
+        4 24409
+  file0_11509:
+  - id: ee02a612-4cc8-4ead-8a2b-d8e004fffc4e
+    cluster_id: '11509'
+    data:
+      brand: sony
+      modelno: bctrv
+      price: 31 99
+      title: sony bctrv travel charger black
+  file0_3639:
+  - id: 8040bab3-5381-4f88-b1a2-8cfb6fe2f294
+    cluster_id: '3639'
+    data:
+      brand: iosafe
+      modelno: pa50500u3yr
+      price: 290 49
+      title: iosafe rugged portable hard drive 500 gb external firewire 800 hi speed
+        usb superspeed usb with 3 years data recovery service
+  file0_679:
+  - id: 08c15343-fada-4802-b0eb-39b657cb7b5b
+    cluster_id: '679'
+    data:
+      brand: buffalo technology
+      modelno: ls qv8 0tl r5
+      price: 781 99
+      title: buffalo technology linkstation pro quad 8 tb 4 x 2 tb raid network attached
+        storage ls qv8 0tl r5 black
+  file0_19532:
+  - id: 89049662-9b04-427d-96ca-6944d0e5a08d
+    cluster_id: '19532'
+    data:
+      brand: hammermill
+      modelno: ''
+      price: 26 8
+      title: new hammermill 103036 fore mp multipurpose paper 96 brightness 20lb 8
+        3 8 x 11 3 4 white 500 ream ham103036
+  file0_286:
+  - id: 35fa9f3f-f352-42b7-8d4f-782624888098
+    cluster_id: '286'
+    data:
+      brand: lowrance
+      modelno: ''
+      price: ''
+      title: lowrance 000 00175 001 mark 5x pro fishfinder
+  file0_14036:
+  - id: 72804da1-f949-4390-86a3-dfbc8e2ec2b7
+    cluster_id: '14036'
+    data:
+      brand: toshiba
+      modelno: 55g310u
+      price: ''
+      title: toshiba 55g310u 55 inch 1080p 120 hz lcd hdtv black
+  - id: 426094f4-271c-4f67-891e-57c13f0beecb
+    cluster_id: '14036'
+    data:
+      brand: toshiba
+      modelno: 55g310u
+      price: '899'
+      title: toshiba 55 class lcd 1080p 120hz hdtv 55g310u
+  file0_17647:
+  - id: df581adf-8b63-4df9-96a2-2a8c8472d048
+    cluster_id: '17647'
+    data:
+      brand: s j paper
+      modelno: ''
+      price: '61'
+      title: new s j paper s11720 5 1 4 inch expansion file pockets straight cut redrope
+        legal red 10 box sjps11720
+  file0_18731:
+  - id: 7b3180a8-3d8e-4850-9aff-a5fc88260e96
+    cluster_id: '18731'
+    data:
+      brand: ifrogz
+      modelno: it4ll gmt
+      price: 11 99
+      title: ifrogz luxe lean case for ipod touch 4g gun metal
+  file0_1287:
+  - id: b6af14e5-c8a7-45cb-8684-2fece0fc8533
+    cluster_id: '1287'
+    data:
+      brand: western digital
+      modelno: wd800aajs
+      price: 43 85
+      title: western digital 80 gb caviar blue sata 7200 rpm 8 mb cache bulk oem desktop
+        hard drive wd800aajs
+  file0_739:
+  - id: d54af4c3-b866-4781-8161-3cf23110f19e
+    cluster_id: '739'
+    data:
+      brand: microsoft
+      modelno: cyd 00001
+      price: 26 99
+      title: microsoft bluetooth number pad
+  file0_20838:
+  - id: 9402ba18-dc8e-43ff-91c1-17f23e024eb3
+    cluster_id: '20838'
+    data:
+      brand: oki
+      modelno: ''
+      price: ''
+      title: oki 52106001 52106001 ribbon black
+  file0_15248:
+  - id: 3d7417ea-923c-4420-a283-39445fda32ae
+    cluster_id: '15248'
+    data:
+      brand: tribeca
+      modelno: ''
+      price: 29 99
+      title: baltimore ravens ipod touch 4g hard case
+  - id: 9475af15-cde0-4a3e-b8f6-1556adb24121
+    cluster_id: '15248'
+    data:
+      brand: tribeca
+      modelno: fva4584
+      price: 29 99
+      title: baltimore ravens ipod touch 4g hard case
+  file0_22773:
+  - id: 14ea189b-8bc4-4d76-aa09-5ba164d36bc9
+    cluster_id: '22773'
+    data:
+      brand: samsill
+      modelno: '1733536'
+      price: 15 36
+      title: samsill 4 clean touch locking round ring view binder white
+  file0_5714:
+  - id: fc2764db-d342-4d1c-b5ad-6816f658813c
+    cluster_id: '5714'
+    data:
+      brand: patriot
+      modelno: psd34g13332s
+      price: 23 99
+      title: patriot signature 4 gb pc3 10600 1333 mhz ddr3 sodimm notebook memory
+        psd34g13332s
+  file0_15140:
+  - id: f36eafe9-4a51-4239-805e-89b10710bba1
+    cluster_id: '15140'
+    data:
+      brand: dymo
+      modelno: '30573'
+      price: 15 21
+      title: dymo white shipping labels 30573
+  file0_21979:
+  - id: c2dda4d2-6e71-4c78-9c7e-263ce451c2fc
+    cluster_id: '21979'
+    data:
+      brand: usrobotics
+      modelno: usr5638
+      price: 27 98
+      title: 56k pci express faxmodem
+  file0_2079:
+  - id: 4b0712b0-8dd2-483d-9299-835fa0ab3755
+    cluster_id: '2079'
+    data:
+      brand: gizmoco
+      modelno: ''
+      price: 4 95
+      title: universal horizontal phone case fits many flip phones including lg muziq
+        fusic motorola razr series sanyo katana series samsung a900 m510 sanyo 3200
+  file0_2577:
+  - id: 2f6fc3a2-2efa-4677-ad05-5bf7d9e0ef22
+    cluster_id: '2577'
+    data:
+      brand: casio
+      modelno: xj a235u
+      price: ''
+      title: casio green slim line projector xj a235u
+  - id: fa0c700b-3da2-45ea-90f0-3d385e2abfea
+    cluster_id: '2577'
+    data:
+      brand: casio
+      modelno: xja235u
+      price: 1199 99
+      title: casio xj a235u green slim dlp projector
+  file0_933:
+  - id: 3c7bba90-cec4-4227-8805-38dc87936565
+    cluster_id: '933'
+    data:
+      brand: jvc
+      modelno: has150bn
+      price: ''
+      title: jvc lt wht flat foldable headphone black
+  file0_15967:
+  - id: 497a2d5c-13c3-47fd-bbf1-364c58cc70b7
+    cluster_id: '15967'
+    data:
+      brand: acer
+      modelno: aod257 1411
+      price: 299 99
+      title: acer aspire one aod257 1411 10 1 inch netbook aquamarine
+  file0_14873:
+  - id: debe1af7-f18f-46af-abbf-144e3dc229f5
+    cluster_id: '14873'
+    data:
+      brand: ik multimedia
+      modelno: ip irig plg in
+      price: ''
+      title: ik multimedia amplitube irig
+  file0_16337:
+  - id: 26d79e5b-d912-4a4a-a1f1-a8dddc796dd3
+    cluster_id: '16337'
+    data:
+      brand: gbc
+      modelno: ''
+      price: ''
+      title: gbc 9742450 linen textured binding system covers 11 x 8 1 2 navy 200
+        pack
+  file0_12794:
+  - id: 8d46cd8f-31be-4b8e-a219-428fa085b3ec
+    cluster_id: '12794'
+    data:
+      brand: da lite
+      modelno: ''
+      price: 464 95
+      title: da lite designer contour manual hdtv format wall ceiling mounted screen
+        52 x 92 106 diagonal high power surface with csr controlled screen return
+  file0_4829:
+  - id: 7d2c6083-f733-45f5-ab9b-c50224377269
+    cluster_id: '4829'
+    data:
+      brand: jvc
+      modelno: hafx34g
+      price: '25'
+      title: jvc ha fx34g marshmallow in ear headphones green
+  file0_5624:
+  - id: 11824096-28dc-4bd9-bbfe-aedf37f8e41e
+    cluster_id: '5624'
+    data:
+      brand: sony
+      modelno: alcr1em
+      price: 13 17
+      title: rear lens cap for nex
+  file0_14584:
+  - id: 51a2b192-48ce-4382-a451-3e9704d580ce
+    cluster_id: '14584'
+    data:
+      brand: vivitar
+      modelno: ''
+      price: '39'
+      title: high grade multi coated multi threaded circular polarizing filter 62mm
+        nwv direct microfiber cleaning cloth alternative for sony vf 62cpam
+  file0_15946:
+  - id: 49e6ba4f-1678-4ff9-97ce-e02209e47382
+    cluster_id: '15946'
+    data:
+      brand: kingston
+      modelno: kth xw667lp 2g
+      price: 65 24
+      title: kingston 2 gb ddr2 sdram memory module 2 gb 2 x 1 gb 667mhz ddr2667 pc25300
+        ddr2 sdram dimm kth xw667lp 2g
+  file0_18056:
+  - id: eab73f06-cc63-49d0-a805-8157eae57a80
+    cluster_id: '18056'
+    data:
+      brand: pacon
+      modelno: ''
+      price: 108 93
+      title: new pacon 63260 rainbow duo finish colored kraft paper 35 lbs 36 x 1000
+        ft pink pac63260
+  file1_12094:
+  - id: 32ad7821-2442-4ffb-bbcd-22efea568f7d
+    cluster_id: '12094'
+    data:
+      brand: swann
+      modelno: swa49 d5
+      price: '479'
+      title: swann alpha d05 swa49 d5 19 inch lcd all in one 4 channel h 264 dvr security
+        system
+  - id: b9389af0-7ebb-4332-bdda-d0e93bacb5b3
+    cluster_id: '12094'
+    data:
+      brand: swann
+      modelno: swa49 d5
+      price: 749 54
+      title: swann alpha d5 aio 19 h 264 4 channel security camera dvr
+  file0_9136:
+  - id: c3c236fe-b072-41cb-8c4a-2a6bd7061762
+    cluster_id: '9136'
+    data:
+      brand: evga
+      modelno: 012 p3 1571 kr
+      price: 319 99
+      title: evga geforce gtx 570 hd 1280mb gddr5 dual dvi hdmi displayport pci express
+        2 0 graphics card limited 3 year warranty 012 p3 1571 kr
+  file0_9459:
+  - id: 211b363a-26c1-4772-8c98-20a4adedf1f2
+    cluster_id: '9459'
+    data:
+      brand: steelseries
+      modelno: '62012'
+      price: 89 99
+      title: steelseries xai high performance laser gaming mouse black
+  file0_15269:
+  - id: a6dee46d-4f1a-4f28-822c-150bac22d635
+    cluster_id: '15269'
+    data:
+      brand: verbatim
+      modelno: '95407'
+      price: 9 96
+      title: verbatim secure digital 2gb memory card 95407
+  - id: a9c3c1a4-6b00-4c49-be73-9e4bfbe2a7d0
+    cluster_id: '15269'
+    data:
+      brand: verbatim
+      modelno: '95407'
+      price: 11 88
+      title: verbatim 95407 2gb secure digital card
+  file0_20825:
+  - id: 4d669573-3244-4bad-9f17-5455858177d1
+    cluster_id: '20825'
+    data:
+      brand: pioneer
+      modelno: cnsd 110fm
+      price: 62 22
+      title: pioneer cnsd 110fm map update for pioavicz110bt navigation a v receiver
+  file0_7731:
+  - id: 331a65bd-0c0d-456c-a82d-77095e537f99
+    cluster_id: '7731'
+    data:
+      brand: philips
+      modelno: aj7030d 37
+      price: 69 99
+      title: philips clock radio for ipod and iphone aj7030d
+  file0_10133:
+  - id: 5f77ad7a-736e-41ec-b8e4-7d27f76dc8f2
+    cluster_id: '10133'
+    data:
+      brand: rediform
+      modelno: ''
+      price: 13 64
+      title: new rediform 5l528 sales book 4 1 4 x 6 3 8 carbonless triplicate 50
+        sets book red5l528
+  file0_20243:
+  - id: 8477a18e-749f-4b07-b677-168367e3375c
+    cluster_id: '20243'
+    data:
+      brand: philips
+      modelno: dla1209 17
+      price: 29 34
+      title: dla1209 multimedia player skin
+  file0_21458:
+  - id: ed2545f1-a0ee-446c-94f1-5c35779b7bdf
+    cluster_id: '21458'
+    data:
+      brand: hp
+      modelno: cd994fn 140
+      price: 24 95
+      title: hp 564 ink cartridge in retail packagings combo pack
+  - id: cfba614b-6322-45c4-a2fa-31c61dcafea6
+    cluster_id: '21458'
+    data:
+      brand: hp
+      modelno: hp cd994fn
+      price: 26 5
+      title: hp 564 tri color combo inkjet cartridge cd994fn
+  file0_19221:
+  - id: d373e992-b7df-4b47-9e7f-6b430c6cdcf6
+    cluster_id: '19221'
+    data:
+      brand: antec
+      modelno: 92mm smartcool
+      price: 13 88
+      title: antec 92mm smartcool thermally controlled 92mm case fan
+  file0_6732:
+  - id: ecb90b88-0ed2-4b50-b479-1b9662fb43a8
+    cluster_id: '6732'
+    data:
+      brand: logitech
+      modelno: 960 000715
+      price: 39 99
+      title: logitech hd webcam c525 portable hd 720p video calling with autofocus
+  file0_9114:
+  - id: b3651e5e-86c3-4181-b303-aea0bec1fd31
+    cluster_id: '9114'
+    data:
+      brand: franklin
+      modelno: lm 6000se
+      price: '495'
+      title: franklin lm 6000se
+  file0_5772:
+  - id: 96f1afbc-a6c2-4cf1-a979-34341c9c0f2e
+    cluster_id: '5772'
+    data:
+      brand: oki
+      modelno: ''
+      price: 34 46
+      title: oki 52111701 52111701 toner 1500 page yield black
+  file0_3993:
+  - id: dbeea29c-cc5f-4c01-a538-5dcb06d5b5d5
+    cluster_id: '3993'
+    data:
+      brand: sib
+      modelno: ''
+      price: 0 65
+      title: new ac adapter power supply charger cord for gateway pa1700 02 mt6017
+        4000 m 6834 mx3000 mx3414 mx6420 mx6438 m 6841 m 6843 ml6731 ml6732
+  file0_12520:
+  - id: 1d5b6cf2-ed10-4770-9790-975a7ec58101
+    cluster_id: '12520'
+    data:
+      brand: cooler master
+      modelno: rr h101 22fk ri
+      price: 14 99
+      title: cooler master hyper 101i heat pipes direct contact cpu cooler intel socket
+        lga775 1156 rr h101 22fk ri
+  file0_16606:
+  - id: 59b3b4c5-c3ff-440a-b943-a8eb21975ad0
+    cluster_id: '16606'
+    data:
+      brand: hp
+      modelno: ''
+      price: ''
+      title: hp c6979a premium photo paper 64 lbs glossy 8 1 2 x 11 50 sheets pack
+  file0_18269:
+  - id: 67dcf885-8983-4129-b8e3-2aeadee047f2
+    cluster_id: '18269'
+    data:
+      brand: serif inc
+      modelno: ''
+      price: 81 78
+      title: serif movieplus x5 win xp vista win 7
+  file0_4470:
+  - id: 8884bbee-fdcc-4eab-964d-0f7c07adf11a
+    cluster_id: '4470'
+    data:
+      brand: clickfree
+      modelno: '10373'
+      price: 107 35
+      title: clickfree automatic backup c2 1 tb usb 3 0 desktop external hard drive
+        10373 piano black
+  file0_10349:
+  - id: 6f138588-0ffe-4f0f-be63-9372381e56e9
+    cluster_id: '10349'
+    data:
+      brand: arkon
+      modelno: ipm511
+      price: 11 98
+      title: arkon ipm511 sun visor car mount for iphone 4 with slim grip phone holder
+        fits at t and verizon iphone 4
+  file0_4957:
+  - id: a7383eea-0374-4fa9-84af-9fa6964260cb
+    cluster_id: '4957'
+    data:
+      brand: hp
+      modelno: wt431aa aba
+      price: 390 99
+      title: hp notebook projection companion portable projector
+  file0_7341:
+  - id: 72dd49b9-77da-496a-a551-a99d95a396cf
+    cluster_id: '7341'
+    data:
+      brand: db
+      modelno: jgr185 18
+      price: 74 99
+      title: 23 pc ultimate super savings deluxe db roth accessory kit for the aluratek
+        ahdvc02f ahdvc01f advc01f cinecam hd camcorder
+  file0_12161:
+  - id: 2ef5a828-6776-4e59-b6ba-c4985035d220
+    cluster_id: '12161'
+    data:
+      brand: primera technology
+      modelno: plus
+      price: 88 42
+      title: primera tuffcoat plus 25 x bd r 25 gb 6x white matte ink jet printable
+        surface printable inner hub spindle storage media
+  file0_10214:
+  - id: cec9b52a-8485-47a7-a8b8-e07e45c8a92e
+    cluster_id: '10214'
+    data:
+      brand: motorola
+      modelno: '56557'
+      price: 30 57
+      title: motorola 56557 rechargeable lithium ion battery pack
+  file0_17968:
+  - id: d9c809ac-4a2e-4e5c-9a56-f9792a603920
+    cluster_id: '17968'
+    data:
+      brand: smead
+      modelno: ''
+      price: ''
+      title: smead 85750 project jackets letter poly clear translucent blue green
+        yellow 5 pack
+  file0_8420:
+  - id: ab0c8e30-7baa-4bfb-83eb-3309db93c4e8
+    cluster_id: '8420'
+    data:
+      brand: a data
+      modelno: atnba4gtkd
+      price: 19 99
+      title: adata nba kevin durant 4 gb usb 2 0 flash player atnba4gtkd
+  file0_16169:
+  - id: 169c4046-e5f9-4f49-8776-2d69a446257d
+    cluster_id: '16169'
+    data:
+      brand: duracell
+      modelno: 813 0291 07
+      price: 42 44
+      title: duracell 813 0291 07 175 watt dc to ac pocket power source inverter
+  file0_19280:
+  - id: 8e4c5d2b-2de2-409b-b72b-98a7053a81a6
+    cluster_id: '19280'
+    data:
+      brand: mace
+      modelno: ''
+      price: 26 47
+      title: 80200 security alarm
+  file0_9359:
+  - id: 1440b98b-6674-4a73-99c0-5f1f5be359cd
+    cluster_id: '9359'
+    data:
+      brand: tripp lite
+      modelno: ''
+      price: ''
+      title: mini optical mouse
+  file0_17804:
+  - id: 3546e9af-5f5f-411a-8e5a-0b3eabd2b022
+    cluster_id: '17804'
+    data:
+      brand: basyx
+      modelno: ''
+      price: '194'
+      title: new basyx bl2145a1a1 bl series return shell 48 1 4w x 24d x 29h medium
+        cherry bsxbl2145a1a1
+  - id: a7832e46-58b5-4eae-bde5-74309ae99a2a
+    cluster_id: '17804'
+    data:
+      brand: basyx
+      modelno: ''
+      price: '252'
+      title: basyx return shell 48 1 4 x24 x29 medium cherry
+  file0_14074:
+  - id: 6b4ec8b5-b74d-4b6a-964d-e8afaa77c05a
+    cluster_id: '14074'
+    data:
+      brand: seagate
+      modelno: stbf500101
+      price: 179 99
+      title: seagate goflex satellite mobile wireless storage 500 gb usb 3 0 external
+        hard drive stbf500101 black
+  - id: 22a958f3-7a2d-4dc7-a5ff-127d699f49f7
+    cluster_id: '14074'
+    data:
+      brand: seagate
+      modelno: stbf500101
+      price: 199 98
+      title: seagate goflex satellite
+  file0_10829:
+  - id: a43d8b98-0d9f-4a6d-9a21-7a892c0da817
+    cluster_id: '10829'
+    data:
+      brand: kingston
+      modelno: dt112k 16gbcl
+      price: 30 99
+      title: kingston datatraveler 112 16 gb usb 2 0 flash drive dt112k 16gbcl black
+  file0_4323:
+  - id: 47334c8a-4139-4a75-b485-181e1dada073
+    cluster_id: '4323'
+    data:
+      brand: apc
+      modelno: br1000g
+      price: 135 19
+      title: apc br1000g 600 watts 1000 va input 120v output 120v power saving back
+        ups rs
+  file0_9378:
+  - id: 14fda9ed-b4c8-450f-9cb1-234e0adc1ada
+    cluster_id: '9378'
+    data:
+      brand: samsung
+      modelno: scx 4835fr
+      price: 429 43
+      title: samsung scx 4835fr monochrome printer
+  file0_6854:
+  - id: 384f68eb-dde5-4f6a-beae-d9953a62fa90
+    cluster_id: '6854'
+    data:
+      brand: jvc
+      modelno: hafx35pn
+      price: 13 74
+      title: marshmallow headphone pink
+  file0_20131:
+  - id: 7d7af4cd-3772-41ad-9906-516861c3d67d
+    cluster_id: '20131'
+    data:
+      brand: premiertek
+      modelno: ''
+      price: 17 8
+      title: lc ipad std tablet pc case flip leather black
+  file0_4383:
+  - id: 330d0a53-4936-412a-86d9-7a2fd0212f21
+    cluster_id: '4383'
+    data:
+      brand: sharp
+      modelno: ''
+      price: '50'
+      title: discgear 3700 09m selector 100 silver
+  file0_14058:
+  - id: 06a76a0b-b73f-4381-9c9a-7ba49d844d63
+    cluster_id: '14058'
+    data:
+      brand: sony
+      modelno: mdr nc40
+      price: 59 2
+      title: sony mdr nc40 noise canceling headphone black
+  file0_14449:
+  - id: aee376d2-cfe5-46d8-a513-01b11cb75417
+    cluster_id: '14449'
+    data:
+      brand: ocinkjet
+      modelno: ''
+      price: 8 23
+      title: dell mk991 compatible remanufactured series 9 standard capacity color
+        ink cartridge
+  file0_20704:
+  - id: ff431e05-25c2-458b-913c-cb98a527374b
+    cluster_id: '20704'
+    data:
+      brand: mediabridge
+      modelno: mwn usb54g
+      price: ''
+      title: medialink wireless g usb adapter 802 11g 54mbps 2 4ghz windows 2000 xp
+        vista 32 bit vista 64 bit windows 7 compatible
+  file0_4198:
+  - id: 367c945b-5c73-451c-b2e2-a7c733cf5084
+    cluster_id: '4198'
+    data:
+      brand: targus
+      modelno: tss177us
+      price: 26 99
+      title: targus crave slipcase for apple ipad 16gb 32gb 64gb wifi and wifi 3g
+        ipad 2 tss177us black
+  file0_8548:
+  - id: d51da528-188e-4082-9c97-8c4a0fb35554
+    cluster_id: '8548'
+    data:
+      brand: 4inkjets
+      modelno: ''
+      price: 98 99
+      title: ld compatible xerox 113r00712 hy black laser toner cartridge for phaser
+        4510
+  file0_4286:
+  - id: e76ea357-acef-4ff7-b0f1-d22547e31ab8
+    cluster_id: '4286'
+    data:
+      brand: sirius satellite radio
+      modelno: suph1
+      price: 37 24
+      title: audiovox sirius suph1 dock play home kit black
+  file1_11741:
+  - id: 11f83f04-bbea-437c-bb38-866d4dfbed1b
+    cluster_id: '11741'
+    data:
+      brand: storm
+      modelno: ''
+      price: 103 99
+      title: storm im2306 30001 2306 case with foam olive drab cases outdoor products
+  - id: bebacb95-d8e6-4878-8a5d-8cce309ca1f2
+    cluster_id: '11741'
+    data:
+      brand: pelican
+      modelno: ''
+      price: 69 95
+      title: pelican storm im2306 case watertight padlockable case with multilayer
+        cubed foam interior olive drab
+  - id: 53664e3b-ae69-4d19-9edd-d12815b90e92
+    cluster_id: '11741'
+    data:
+      brand: storm
+      modelno: im2306 30001
+      price: 97 88
+      title: storm 2306 case with foam olive drab
+  file0_4157:
+  - id: b66419f1-b030-426c-a499-4abb75f41479
+    cluster_id: '4157'
+    data:
+      brand: pioneer
+      modelno: ts sw3001s2
+      price: ''
+      title: pioneer ts sw3001s2 12 inch shallow subwoofer with 1500 watts max power
+  file0_18773:
+  - id: f5d29a88-cbc0-41c1-8e03-5c7e22ed6ccd
+    cluster_id: '18773'
+    data:
+      brand: wincraft
+      modelno: ''
+      price: 16 99
+      title: anderson silva mouse pad
+  file0_24205:
+  - id: ca9f9caf-70b2-4b8d-8b60-4060479c19e6
+    cluster_id: '24205'
+    data:
+      brand: ematic
+      modelno: em504camb
+      price: 39 88
+      title: ematic 4gb video mp3 player with 2 4 lcd built in 5mp digital camera
+        assorted colors
+  file0_15879:
+  - id: f9ecc220-0932-4bf0-a7fd-660d0bb78b88
+    cluster_id: '15879'
+    data:
+      brand: compaq
+      modelno: cq57 229wm
+      price: 359 99
+      title: compaq cq57 229wm 15 6 inch amd dual core 1ghz laptop
+  file0_24116:
+  - id: a9a8988d-7127-4a8a-a402-065781f7202d
+    cluster_id: '24116'
+    data:
+      brand: draper
+      modelno: '115041'
+      price: 1551 95
+      title: draper glass beaded rolleramic electric screen av format 8 x 10
+  file0_12642:
+  - id: e0e9d894-1118-4383-94f5-c6f1e0eae6d0
+    cluster_id: '12642'
+    data:
+      brand: smead
+      modelno: ''
+      price: '50'
+      title: new smead 66004 smartstrip refill label kit 250 label forms pack laser
+        250 pack smd66004
+  file0_17434:
+  - id: 36c72f2f-22fd-4349-9e56-690b64891729
+    cluster_id: '17434'
+    data:
+      brand: hon
+      modelno: ''
+      price: '486'
+      title: new hon 10707rnn 10700 series right pedestal credenza 72w x 24d x 29
+        1 2h mahogany hon10707rnn
+  file0_1990:
+  - id: 0ba58543-bb5d-4c35-bdbf-14021f0d5c2b
+    cluster_id: '1990'
+    data:
+      brand: sangean
+      modelno: ps 100
+      price: 14 95
+      title: sangean pillow speaker white
+  file0_14530:
+  - id: ae7312e6-78b9-4365-8711-9ae66bf1213a
+    cluster_id: '14530'
+    data:
+      brand: canon
+      modelno: r20 silver
+      price: '369'
+      title: canon vixia hf r20 full hd camcorder with 8gb internal flash memory silver
+  file0_363:
+  - id: b78b1fb4-9d88-4364-819f-f7277d145809
+    cluster_id: '363'
+    data:
+      brand: blackberry
+      modelno: 33 0543 05 rm
+      price: 18 14
+      title: blackberry 33 0543 05 rm folding blade charger for playbook charger retail
+        packaging black
+  file0_733:
+  - id: 467ff63a-4349-4ec6-bc78-cdd383381397
+    cluster_id: '733'
+    data:
+      brand: microsoft
+      modelno: gmf 00013
+      price: 19 99
+      title: microsoft wireless mobile mouse 3500 poppy red
+  file0_10206:
+  - id: b0f34e98-4efb-4f1b-b2ea-46b31d1fd532
+    cluster_id: '10206'
+    data:
+      brand: nikon
+      modelno: '26105'
+      price: '229'
+      title: nikon coolpix s52 9mp digital camera zoom with 3x optical vibration reduction
+        zoom midnight black
+  file0_18969:
+  - id: 733e1551-51e7-4dfd-b697-ff78e2e06f15
+    cluster_id: '18969'
+    data:
+      brand: national
+      modelno: ''
+      price: 34 78
+      title: new national brand 63453 four ring ledger binder kit 100 ledger sheets
+        8 1 2 x 5 1 2 red63453
+  file0_9694:
+  - id: 989c7dcc-be96-40ee-894a-bd019a8f3cca
+    cluster_id: '9694'
+    data:
+      brand: qdos
+      modelno: qd 7182 sb
+      price: 15 84
+      title: qdos qd 7182 sb jetpen duo stylus for use with iphone ipod touch and
+        ipad 2 pk case carrier packaging black silver
+  file0_10956:
+  - id: 873617ac-a7c7-4504-9071-c93ad9196695
+    cluster_id: '10956'
+    data:
+      brand: hp
+      modelno: c9352an 140
+      price: 17 56
+      title: hp 22 tri color ink cartridge in retail packaging c9352an 140
+  file0_10619:
+  - id: 99f29b9b-93b9-4a4c-8975-2f9cc182c928
+    cluster_id: '10619'
+    data:
+      brand: netgear
+      modelno: wnhde111
+      price: ''
+      title: netgear 5 ghz wireless n hd access point bridge wnhde111
+  file0_12461:
+  - id: 9648f6be-041c-4d0f-87d1-74dc4cf0db59
+    cluster_id: '12461'
+    data:
+      brand: digipower
+      modelno: dslr 500n
+      price: 28 15
+      title: digipower dslr 500n 1 hour travel charger for nikon slr
+  file1_20287:
+  - id: d148d684-144a-48d2-8adc-8be447de8436
+    cluster_id: '20287'
+    data:
+      brand: arkon
+      modelno: ipm tab1
+      price: 13 04
+      title: arkon portable fold up stand for apple ipad galaxy tab playbook xoom
+        hp toshiba acer nook and other tablets ipm tab1
+  - id: 146ce44e-434e-4962-bf9b-b85264aeaaee
+    cluster_id: '20287'
+    data:
+      brand: arkon
+      modelno: ipm tab1
+      price: 14 09
+      title: arkon ipad desktop and travel stand
+  file0_964:
+  - id: 0c81f350-f910-4999-9063-235191c6c0ea
+    cluster_id: '964'
+    data:
+      brand: iogear
+      modelno: gdroavc6
+      price: 30 27
+      title: iogear hd av cable with charge and sync for handheld devices gdroavc6
+        black
+  file0_1656:
+  - id: f77a7093-94c1-4579-b926-4e3eefc744eb
+    cluster_id: '1656'
+    data:
+      brand: roocase
+      modelno: ''
+      price: 9 98
+      title: roocase slv2 neoprene sleeve berry blue carrying case for lacie starck
+        mobile usb 3 0 500gb mobile hard drive 301975
+  file0_20045:
+  - id: 7b4b26d6-438b-43dc-aae6-5f197ba2f01c
+    cluster_id: '20045'
+    data:
+      brand: lexmark
+      modelno: 27s2100
+      price: 287 83
+      title: 550 sheet drawer c734 c736
+  file0_11808:
+  - id: b680363f-32b8-4932-9a48-408e0865732e
+    cluster_id: '11808'
+    data:
+      brand: ocz
+      modelno: oczusbr2dc 8gb
+      price: 16 75
+      title: ocz rally2 usb 2 0 8 gb flash drive oczusbr2dc 8gb
+  file0_21528:
+  - id: 3fa1dcaa-2143-475b-9d47-c4f255dc8373
+    cluster_id: '21528'
+    data:
+      brand: pro series
+      modelno: hs71512
+      price: 129 95
+      title: safety siren pro series hs71512 3 radon gas detector
+  file0_10734:
+  - id: 0275b28d-9dba-4f65-bb5b-a7745652cf05
+    cluster_id: '10734'
+    data:
+      brand: logitech
+      modelno: 920 003241
+      price: 54 99
+      title: logitech tablet keyboard for ipad keyboard and stand combo 920 003241
+  file0_6325:
+  - id: 8b6d08c1-7285-4333-aa9d-770b39416eb4
+    cluster_id: '6325'
+    data:
+      brand: apc
+      modelno: p7t
+      price: 14 48
+      title: apc essential surgearrest 7 outlet phone line protection
+  file1_578:
+  - id: 850d2a5e-7e46-4fa0-926d-8cc7e33983e1
+    cluster_id: '578'
+    data:
+      brand: microsoft
+      modelno: d1t 00011
+      price: 11 99
+      title: comfort opt mse3000 silver blu
+  - id: a3eb5c70-7a77-413e-9b5f-21f6afc2ce21
+    cluster_id: '578'
+    data:
+      brand: microsoft
+      modelno: d1t00011
+      price: 19 95
+      title: microsoft comfort optical mouse 3000 silver blue
+  file0_22233:
+  - id: d665746e-b154-4a83-b511-42c86c94ba09
+    cluster_id: '22233'
+    data:
+      brand: griffin technology
+      modelno: gc32006
+      price: '0'
+      title: griffin arrowhead universal stand for tablets
+  file0_8790:
+  - id: c20da293-c36c-4d88-b4b0-70fce4009d01
+    cluster_id: '8790'
+    data:
+      brand: da lite
+      modelno: ''
+      price: 904 95
+      title: da lite advantage manual with csr projection screen 133 in 16 9 high
+        power
+  - id: 3189b5a3-d23c-45cf-b377-605249449b51
+    cluster_id: '8790'
+    data:
+      brand: da lite
+      modelno: '85742'
+      price: 1267 99
+      title: da lite high power advantage manual with csr hdtv format 133 diagonal
+  file0_7136:
+  - id: 3ac2c7e1-3456-488d-a32c-18379110b7b1
+    cluster_id: '7136'
+    data:
+      brand: epson
+      modelno: b11b194011
+      price: 355 91
+      title: epson workforce pro gt s50 document imaging scanner
+  - id: 9ad4a112-9ef1-4737-96ec-839dc0ad74dd
+    cluster_id: '7136'
+    data:
+      brand: epson
+      modelno: b11b194011
+      price: 407 12
+      title: epson workforce pro gt s50 document image scanner
+  file0_1478:
+  - id: a9e401d9-88fd-4753-8ba3-aa927c2b09f2
+    cluster_id: '1478'
+    data:
+      brand: startech
+      modelno: hdmimm15
+      price: 5 68
+      title: startech com hdmimm15 15 feet hdmi to hdmi digital video cable
+  file0_5896:
+  - id: 1115f03d-ef82-4066-9763-d7cc4e03182d
+    cluster_id: '5896'
+    data:
+      brand: dp audio video
+      modelno: dh700
+      price: '91'
+      title: dp audio video dh700 7 inch headrest monitor ultra slim
+  file0_10507:
+  - id: c53ca698-2726-4a5e-afc7-02f0eda66d40
+    cluster_id: '10507'
+    data:
+      brand: coby
+      modelno: cxcd241blu
+      price: 22 99
+      title: coby cx cd241 portable cd player with am fm stereo tuner blue
+  file0_12999:
+  - id: 969b05ac-0626-4256-8a26-6945c8494638
+    cluster_id: '12999'
+    data:
+      brand: hp
+      modelno: q6580a
+      price: 59 99
+      title: hp universal instant dry semi gloss photo paper 36 inches x 100 feet
+        roll
+  file0_7632:
+  - id: d2dbb954-1754-4f1c-a2ce-b75234255806
+    cluster_id: '7632'
+    data:
+      brand: roocase
+      modelno: ''
+      price: 43 64
+      title: roocase executive portfolio magenta leather case cover with landscape
+        portrait view for apple ipad 2 wifi 3g model 16gb 32gb 64gb
+  file0_7024:
+  - id: 2e3efdd5-7f41-4607-888a-547017a522e0
+    cluster_id: '7024'
+    data:
+      brand: tribeca
+      modelno: ''
+      price: 17 99
+      title: pittsburgh penguins iphone 3g duo case
+  file0_8468:
+  - id: d648279b-e2a2-4ab6-bbfe-c19f459e674d
+    cluster_id: '8468'
+    data:
+      brand: dymo
+      modelno: '1750630'
+      price: 114 01
+      title: labelwriter usb enet connect pc mac print server
+  file0_20941:
+  - id: 305ec030-15a0-4336-8bc9-f03693fdd42e
+    cluster_id: '20941'
+    data:
+      brand: denon
+      modelno: avr 791
+      price: 384 88
+      title: denon avr 791 7 1 channel a v home theater multi source multi zone receiver
+        with hdmi 1 4a supporting 1080p and 3d black
+  file0_23334:
+  - id: f6798b86-c815-4b31-807c-8acbc1ae6ea7
+    cluster_id: '23334'
+    data:
+      brand: everki
+      modelno: everki ekf808s18
+      price: '39'
+      title: everki commute 18 4 laptop sleeve with memory foam ekf808s18
+  file0_15382:
+  - id: db9396dc-3611-4e1a-aeb9-d23cdd62b448
+    cluster_id: '15382'
+    data:
+      brand: 4inkjets
+      modelno: ''
+      price: 4 99
+      title: t048620 epson remanufactured light magenta t0486 ink cartridge by ld
+        products
+  file0_8891:
+  - id: 04e4abf6-5852-4963-97b2-568737615aac
+    cluster_id: '8891'
+    data:
+      brand: jvc
+      modelno: thba10
+      price: 143 99
+      title: jvc thba10 120 watts 4 channel soundbar
+  file0_3537:
+  - id: 585491ea-6d2f-4174-858f-b45abdfcc92f
+    cluster_id: '3537'
+    data:
+      brand: simplism
+      modelno: tr lcflipad sw en
+      price: 28 75
+      title: simplism leather collection flip leather case for ipad snow white
+  file0_6883:
+  - id: ddf1c89d-760f-4836-8557-50a19a2785e0
+    cluster_id: '6883'
+    data:
+      brand: iomega
+      modelno: '35108'
+      price: 59 99
+      title: iomega skin 500 gb usb 2 0 portable external hard drive 35108 red
+  file0_5352:
+  - id: e6aeed25-46a7-401a-bc0c-01b7c1fea0a9
+    cluster_id: '5352'
+    data:
+      brand: texas instruments
+      modelno: 34mv tbl 1l1 a
+      price: 23 42
+      title: ti 34 multi view calculator
+  file0_4790:
+  - id: b4195495-c7fa-4e3b-9c10-ad0eab1a78f1
+    cluster_id: '4790'
+    data:
+      brand: lexar
+      modelno: '20300'
+      price: 14 46
+      title: kodak cd r 80 100 pack spindle 20300
+  file0_11652:
+  - id: 5185864a-addb-4b48-98c1-3b7b1dc07823
+    cluster_id: '11652'
+    data:
+      brand: 3m
+      modelno: ''
+      price: ''
+      title: replace lamp for 3m 3797610800 bl fp200d
+  file0_10912:
+  - id: a3522676-1956-4925-9b9b-7d02628acd66
+    cluster_id: '10912'
+    data:
+      brand: iluv
+      modelno: iad219
+      price: 12 45
+      title: iluv iad219 dual usb car charger for iphone 4 3g 3gs and all mobile devices
+        black
+  file0_17437:
+  - id: 32ee2ad5-f7b7-4aad-897a-9eb6c6f0d20e
+    cluster_id: '17437'
+    data:
+      brand: five star
+      modelno: ''
+      price: 18 14
+      title: new five star 06210 wirebound notebook college rule 3 subject 150 sheets
+        mea06210
+  file0_9800:
+  - id: 58e1a7da-f49e-4f1d-94d6-d6bad7343477
+    cluster_id: '9800'
+    data:
+      brand: panasonic
+      modelno: dmc ts3r
+      price: ''
+      title: panasonic lumix dmc ts3 12 1 mp rugged waterproof digital camera with
+        4 6x wide angle optical image stabilized zoom and 2 7 inch lcd red
+  file0_10405:
+  - id: ab223c3d-2c7b-4e2a-a01e-6da551284334
+    cluster_id: '10405'
+    data:
+      brand: lexmark
+      modelno: ''
+      price: 131 8
+      title: 64015sa toner 6000 page yield black
+  file0_15550:
+  - id: d644f133-20a6-4b36-95a3-e51537dc09f4
+    cluster_id: '15550'
+    data:
+      brand: samsung
+      modelno: hw c450
+      price: ''
+      title: samsung hw c450 soundbar speaker
+  file0_15374:
+  - id: 7e5ccc6a-62f1-4df0-8e10-2edc301bb95e
+    cluster_id: '15374'
+    data:
+      brand: targus
+      modelno: tg unv
+      price: 16 34
+      title: targus digital tg unv universal lithium ion charger for lion batteries
+  file0_9406:
+  - id: 36ea8f5a-e7da-4c3b-a852-6c452026a23e
+    cluster_id: '9406'
+    data:
+      brand: tenba
+      modelno: 638 681
+      price: 13 95
+      title: tenba 638 681 mixx large camera pouch black black
+  file0_10251:
+  - id: fa103b22-3bbd-4841-83c3-380cffc5abd0
+    cluster_id: '10251'
+    data:
+      brand: brother
+      modelno: tn 110c
+      price: 47 59
+      title: brother tn110c cyan toner cartridge compatible with hl 4040cn hl 4070cdw
+        series
+  file0_24354:
+  - id: 877677a3-a13a-4768-8939-78dc9216252a
+    cluster_id: '24354'
+    data:
+      brand: draper
+      modelno: '104019'
+      price: '1615'
+      title: draper matte white access series e electric screen ntsc 15 diagonal
+  file1_15269:
+  - id: a6dee46d-4f1a-4f28-822c-150bac22d635
+    cluster_id: '15269'
+    data:
+      brand: verbatim
+      modelno: '95407'
+      price: 9 96
+      title: verbatim secure digital 2gb memory card 95407
+  - id: a9c3c1a4-6b00-4c49-be73-9e4bfbe2a7d0
+    cluster_id: '15269'
+    data:
+      brand: verbatim
+      modelno: '95407'
+      price: 11 88
+      title: verbatim 95407 2gb secure digital card
+  file0_18863:
+  - id: fe0867b6-3b1f-4b02-bfd7-2e5d6c9ff878
+    cluster_id: '18863'
+    data:
+      brand: keytronicems
+      modelno: kt400p4
+      price: 15 49
+      title: ps2 compact keyboard gray pc large l shape enter key
+  file0_11780:
+  - id: cfc4c644-67e6-479c-95f3-1dffd64adbb4
+    cluster_id: '11780'
+    data:
+      brand: oxford
+      modelno: ''
+      price: ''
+      title: oxford 40591 reinforced board card file with lift off lid holds 1200
+        6 x 9 cards black white
+  file0_7285:
+  - id: ea8a84a4-b65c-4a36-b564-02f13cbfff84
+    cluster_id: '7285'
+    data:
+      brand: vtech
+      modelno: cs5111
+      price: 19 99
+      title: vtech cs5111 cordless phone silver black 1 handset
+  file0_19818:
+  - id: 13081fc5-a18b-4bc8-8d00-523e345299b1
+    cluster_id: '19818'
+    data:
+      brand: microsoft
+      modelno: mhc 00019
+      price: 26 13
+      title: microsoft wireless mobile mouse 6000 red
+  - id: 6eba29c6-bd5e-48cd-943f-fe13ab25f98b
+    cluster_id: '19818'
+    data:
+      brand: microsoft
+      modelno: mhc 00019
+      price: 29 88
+      title: wireless mobile mouse 6000 bluetrack red
+  file0_21830:
+  - id: 7c6d1166-3f1b-4e01-9ba2-c53b8499f30d
+    cluster_id: '21830'
+    data:
+      brand: hp
+      modelno: c7980a
+      price: 38 48
+      title: hewlett packard c7980a hp sdlt 320 data cartridge
+  file0_5256:
+  - id: 0285974b-0264-4649-b195-f017dfa4afd7
+    cluster_id: '5256'
+    data:
+      brand: verbatim
+      modelno: '95355'
+      price: 72 28
+      title: verbatim 95355 ultralife 4 7 gb 8x gold archival grade dvd r 50 disc
+        spindle
+  - id: f8c965d6-465e-4406-914a-7ba301be1422
+    cluster_id: '5256'
+    data:
+      brand: verbatim
+      modelno: '95355'
+      price: 84 67
+      title: verbatim 95355 ultralife 8x dvd r media
+  file0_3487:
+  - id: 8b40efd9-509c-4210-abe3-f9b9f8b3eb35
+    cluster_id: '3487'
+    data:
+      brand: sony
+      modelno: mshx16a
+      price: 45 05
+      title: sony 16 gb pro hg duo hx memory stick mshx16a black
+  file0_1066:
+  - id: 69e88d1e-8274-4eae-83a4-7b0759c3732b
+    cluster_id: '1066'
+    data:
+      brand: battery biz
+      modelno: b 9741 az36082
+      price: 22 95
+      title: hi capacity camcorder battery for sony ccd tr105
+  file0_8591:
+  - id: 717b0b33-4f67-4562-9cb0-2de59fa8d2e0
+    cluster_id: '8591'
+    data:
+      brand: centon
+      modelno: dsp8gb10pk
+      price: 102 99
+      title: centon dsp8gb10pk 10 x 8gb multi pack pro usb flash drive grey
+  file0_3093:
+  - id: c15b7161-0121-4aa6-951a-4855c3ce3bdb
+    cluster_id: '3093'
+    data:
+      brand: battery biz
+      modelno: aa b25 az3776
+      price: 59 95
+      title: hi capacity auto air adapter for fujitsu lifebook c2010
+  file0_4106:
+  - id: 00c604e3-d102-4ad5-ae41-1872693c6887
+    cluster_id: '4106'
+    data:
+      brand: solo cup company
+      modelno: ''
+      price: 91 94
+      title: solo cup company plastic cold cups 10 ounces clear 1000 per carton
+  file0_2273:
+  - id: b4312ccb-42cd-416c-a7b1-b1e1d0c67891
+    cluster_id: '2273'
+    data:
+      brand: brother
+      modelno: mfc 5460cn
+      price: ''
+      title: brother mfc 5460cn color photo inkjet all in one flatbed with networking
+  file0_15518:
+  - id: 2def47a4-b9f6-4463-b1c7-f07ed3d48d2f
+    cluster_id: '15518'
+    data:
+      brand: scosche
+      modelno: it3kbk
+      price: ''
+      title: scosche kickback t3 co molded case for ipod touch 2g 3g black black
+  file0_21071:
+  - id: e04d2208-b02b-4448-86f6-bdd1f34993a6
+    cluster_id: '21071'
+    data:
+      brand: trendnet
+      modelno: tk 209k
+      price: 25 97
+      title: trendnet 2 port usb kvm switch kit with audio includes 2x kvm cables
+        tk 209k blue
+  file0_489:
+  - id: 7d20dd85-20e0-4552-b6c0-05387d610e11
+    cluster_id: '489'
+    data:
+      brand: 3m
+      modelno: em500gps
+      price: 45 94
+      title: 3m ergonomic mouse optical usb ps2 compatible small size black em500gps
+  file0_7859:
+  - id: 1173b9d0-d6b7-4165-8098-d7988b0bc502
+    cluster_id: '7859'
+    data:
+      brand: inland
+      modelno: '2507'
+      price: 19 54
+      title: inland proht 02507 floor standing tripod
+  file0_2860:
+  - id: bbaa8793-dad9-46b5-a9d3-f99c441fb13a
+    cluster_id: '2860'
+    data:
+      brand: lacie
+      modelno: 301897kua
+      price: ''
+      title: lacie grand 1 tb usb 2 0 desktop external hard drive 301897kua
+  file0_20989:
+  - id: 2ecaa8ca-2743-49e1-8234-8e54b4b9c025
+    cluster_id: '20989'
+    data:
+      brand: mivizu
+      modelno: ''
+      price: 7 6
+      title: mivizu ciph4mvzwrpgrn00 green endulge iphone 4 skin
+  file0_16141:
+  - id: 510592ca-4e2b-4a32-a2c6-a0bfcfe629a5
+    cluster_id: '16141'
+    data:
+      brand: msi
+      modelno: fx420 002us
+      price: 659 99
+      title: msi fx420 002us 14 inch laptop black
+  file0_5922:
+  - id: 5c6836be-ecfb-4ae8-9ec5-e8ff6964d268
+    cluster_id: '5922'
+    data:
+      brand: clover
+      modelno: ''
+      price: ''
+      title: clover lcd0935 9 tft lcd security system with 2 outdoor cameras
+  file0_7281:
+  - id: 346b6f77-ade0-449f-b50f-b87c3a7a1aef
+    cluster_id: '7281'
+    data:
+      brand: vxi
+      modelno: '202720'
+      price: 64 65
+      title: vxi blueparrott roadwarrior b250 xt bluetooth wireless headset for cell
+        phones computers with ac and auto chargers 202720
+  file0_16127:
+  - id: 9e70f94b-5567-4092-b710-832944196491
+    cluster_id: '16127'
+    data:
+      brand: panasonic
+      modelno: rp ht21
+      price: 4 95
+      title: panasonic rp ht21 lightweight headphones with xbs port
+  - id: 259f8509-dfed-4ce0-bfbd-23e551bab043
+    cluster_id: '16127'
+    data:
+      brand: panasonic
+      modelno: rp ht21
+      price: 9 88
+      title: panasonic lightweight headphones w xbs rp ht21
+  file0_20318:
+  - id: 33a29a5f-daf3-4bfb-b1d7-459c47e168d4
+    cluster_id: '20318'
+    data:
+      brand: monster
+      modelno: mp av 800
+      price: 28 33
+      title: monster cable mp av 800 powercenter with surge protection
+  file0_13225:
+  - id: eb7c9b68-55f7-4566-ae56-e3542284dc53
+    cluster_id: '13225'
+    data:
+      brand: zeikos
+      modelno: ze sdr 5
+      price: 2 94
+      title: zeikos usb 2 0 sd sdhc mmc flash memory card reader ze sdr5
+  file0_15076:
+  - id: f492763c-6373-48d8-a372-986ec303b014
+    cluster_id: '15076'
+    data:
+      brand: evga
+      modelno: 512 p3 n987 tr
+      price: 59 99
+      title: evga nvidia geforce 9800gt 512 mb ddr3 vga dvi hdmi pci express video
+        card 512 p3 n987 tr
+  file0_18362:
+  - id: 4a8dc293-83bb-4f95-9a5f-70f916d7b581
+    cluster_id: '18362'
+    data:
+      brand: innovera
+      modelno: ''
+      price: 18 97
+      title: new innovera 81900 slim cd case clear 25 pack ivr81900
+  file1_8815:
+  - id: e0ecccc4-e349-45b5-9f45-8e233c7dd5f3
+    cluster_id: '8815'
+    data:
+      brand: lexar
+      modelno: ljdff8gbasbna
+      price: 14 99
+      title: lexar jumpdrive firefly 8gb usb 2 0 flash drive ljdff8gbasbna charcoal
+  - id: 1b3d42d0-1183-44d5-850f-a603f777d38f
+    cluster_id: '8815'
+    data:
+      brand: lexar media
+      modelno: ljdff8gbasbna
+      price: 16 57
+      title: lexar media ljdff8gbasbna 4gb jumpdrive firefly usb 2 0 flash drive
+  file0_17300:
+  - id: 4a17a6ce-1518-406a-9826-68c8077c2ee2
+    cluster_id: '17300'
+    data:
+      brand: floortex
+      modelno: ''
+      price: ''
+      title: floortex eco4851ep ecotex revolutionmat recycled chair mat 48 x 51 slightly
+        tinted
+  file0_7951:
+  - id: 55030dc0-40d8-48b3-898d-9378b6f1fa5d
+    cluster_id: '7951'
+    data:
+      brand: the corner stone porcelain mug collection
+      modelno: ''
+      price: ''
+      title: 1982 the corner stone porcelain mug collection complete 12 piece set
+        by the collectors studio
+  file0_14669:
+  - id: d1eeae82-2eb6-40c5-a41b-f923d5d27609
+    cluster_id: '14669'
+    data:
+      brand: logitech
+      modelno: 910 002469
+      price: 19 99
+      title: logitech wireless mouse m305 vivid violet 910 002469
+  file0_10058:
+  - id: 03fc0f95-cd17-4b33-871a-5ac4a05aa0a5
+    cluster_id: '10058'
+    data:
+      brand: zinwell
+      modelno: zat 970a
+      price: 59 72
+      title: zinwell zat 970a digital to analog tv converter box for antenna use
+  file0_23496:
+  - id: fc87f0ea-6732-477d-ada9-93a0b9bdf301
+    cluster_id: '23496'
+    data:
+      brand: tops business forms
+      modelno: '65100'
+      price: 7 94
+      title: tops jammit pocket wirebound notebook ruled 9 white 100 sheets per pad
+  file0_20295:
+  - id: 681c8f81-30c6-489a-87cf-b0f29bd6cf8a
+    cluster_id: '20295'
+    data:
+      brand: seh
+      modelno: m03862
+      price: 507 49
+      title: thinprint gateway tpg120 10 100 rj45 supports up to 12 printers
+  file0_21162:
+  - id: aa84bc05-f5ce-4511-9ee2-ae8e93ae20b0
+    cluster_id: '21162'
+    data:
+      brand: siig
+      modelno: cb sa0211 s1
+      price: 16 82
+      title: siig cb sa0211 s1 6 6 feet serial ata external cable
+  file0_1188:
+  - id: b3b20930-46f4-46dd-afdb-7561644a1a2f
+    cluster_id: '1188'
+    data:
+      brand: ep memory
+      modelno: epclp 32gb 2 0
+      price: 52 74
+      title: ep memory 32 gb usb 2 0 capless wave flash drive ep memoryclp 32gb 2
+        0 pink
+  file0_9417:
+  - id: a2fa74fc-ec3b-461d-9b95-31f06612bad3
+    cluster_id: '9417'
+    data:
+      brand: road ready
+      modelno: ''
+      price: 189 99
+      title: road ready rrlaptop17 universal case for 17 inch laptop
+  file0_13729:
+  - id: 836b6687-c272-407c-ba0c-d6acce2f5299
+    cluster_id: '13729'
+    data:
+      brand: panasonic
+      modelno: dmc fp7p r
+      price: ''
+      title: panasonic lumix dmc fp7 16 1 mp digital camera with 4x optical image
+        stabilized zoom with 3 5 inch touch screen lcd red
+  file0_6278:
+  - id: 9cdfb70f-f6ac-4585-8619-e324be88a4bc
+    cluster_id: '6278'
+    data:
+      brand: avery
+      modelno: ''
+      price: ''
+      title: avery 11137 laser inkjet hanging file folder inserts 1 3 tab 3 1 2 inch
+        white 100 pack
+  file0_18877:
+  - id: 14cd91b1-177e-4854-b927-34d728ef9604
+    cluster_id: '18877'
+    data:
+      brand: acer
+      modelno: ''
+      price: 489 99
+      title: acer aspire as7741z 4643 17 3 notebook pc
+  file0_3588:
+  - id: 8d8b19bc-044a-4f1e-9d3e-742480847a0c
+    cluster_id: '3588'
+    data:
+      brand: sandisk
+      modelno: microsd to sd adapter
+      price: 0 89
+      title: sandisk microsd microsdhc to sd adapter static pack
+  file0_8474:
+  - id: 24e64a07-e65c-4ebb-bc9c-f12b0e6d5e63
+    cluster_id: '8474'
+    data:
+      brand: frisby
+      modelno: ''
+      price: 107 35
+      title: 5 1 dolby digital dts true powerful surround sound computer speakers
+        w remote control gaming home theater ipod
+  file0_10799:
+  - id: 5956ed26-1a12-4ff5-96b5-54291a1c95d1
+    cluster_id: '10799'
+    data:
+      brand: kingston
+      modelno: kvr1333d3s9 4g
+      price: 25 74
+      title: kingston valueram 4gb 1333mhz pc3 1066 ddr3 sodimm notebook memory kvr1333d3s9
+        4g
+  file0_16977:
+  - id: 599edd7b-4470-4002-b2f6-9d58abc74719
+    cluster_id: '16977'
+    data:
+      brand: wilson jones
+      modelno: ''
+      price: '54'
+      title: new wilson jones 36549w hanging view binder with fliplock post mechanism
+        3 capacity white wlj36549w
+  file0_14546:
+  - id: 93ab0f15-1630-4dfa-9c9e-882f0c14ccfd
+    cluster_id: '14546'
+    data:
+      brand: cables unlimited
+      modelno: ioc1000
+      price: 20 29
+      title: cables unlimited tm 1 port db25 parallel pci i o card ioc1000
+  - id: 5f90d0af-ccf5-414e-be07-4ba88802b8c4
+    cluster_id: '14546'
+    data:
+      brand: cables unlimited
+      modelno: ioc 1000
+      price: 16 88
+      title: cables unlimited 1 port db25 parallel pci ecp epp spp port i o card
+  file0_19044:
+  - id: 45ccc743-39d6-4fb7-adf4-e44411794112
+    cluster_id: '19044'
+    data:
+      brand: global marketing partners
+      modelno: gps usb
+      price: 41 24
+      title: gps usb navigation receiver by ambicom
+  file0_15306:
+  - id: 56fd5039-3f80-4d40-8048-b877cf4e0034
+    cluster_id: '15306'
+    data:
+      brand: universal
+      modelno: a6
+      price: 18 66
+      title: universal remote control a6 6 device learning remote black
+  file0_16238:
+  - id: 43e27707-49f8-4e7d-8e43-e05168cbf312
+    cluster_id: '16238'
+    data:
+      brand: marks a lot
+      modelno: ''
+      price: 27 93
+      title: new marks a lot 07887 permanent marker regular chisel tip red dozen ave07887
+  file0_2234:
+  - id: bb113206-0d2d-4487-840f-31ce46be2b8f
+    cluster_id: '2234'
+    data:
+      brand: middle atlantic
+      modelno: ''
+      price: 152 42
+      title: mpr seq by middle atlantic products
+  file0_3453:
+  - id: 0ffedb16-6041-4078-9ab9-d60c421a100f
+    cluster_id: '3453'
+    data:
+      brand: arkon
+      modelno: stm114
+      price: 13 98
+      title: arkon stm114 slim tab deluxe windshield and dash mount for smartphone
+        bulk packaging black
+  file1_19818:
+  - id: 13081fc5-a18b-4bc8-8d00-523e345299b1
+    cluster_id: '19818'
+    data:
+      brand: microsoft
+      modelno: mhc 00019
+      price: 26 13
+      title: microsoft wireless mobile mouse 6000 red
+  - id: 6eba29c6-bd5e-48cd-943f-fe13ab25f98b
+    cluster_id: '19818'
+    data:
+      brand: microsoft
+      modelno: mhc 00019
+      price: 29 88
+      title: wireless mobile mouse 6000 bluetrack red
+  file0_4499:
+  - id: 111b7260-83fd-406b-9380-6f589f9c30ce
+    cluster_id: '4499'
+    data:
+      brand: case logic
+      modelno: tbc 307black
+      price: 27 34
+      title: case logic tbc 307 slr camera backpack black
+  file0_21247:
+  - id: 3ed8953c-d22d-4cc0-91f1-ad34e958ec07
+    cluster_id: '21247'
+    data:
+      brand: duck
+      modelno: ''
+      price: 26 52
+      title: new duck 1079097 ez start premium packaging tape 2 60 yard rolls bonus
+        30 yard roll clear duc1079097
+  file0_16960:
+  - id: ff486338-2ee6-4c4c-93e1-d9d20ce3c123
+    cluster_id: '16960'
+    data:
+      brand: quartet
+      modelno: ''
+      price: ''
+      title: quartet 2004 bulletin bar i natural cork bulletin 24 x 1 natural aluminum
+        frame
+  file0_23421:
+  - id: 9d1baa4a-259f-4a7a-9f2c-65d5d624d302
+    cluster_id: '23421'
+    data:
+      brand: encore
+      modelno: '15060'
+      price: 24 98
+      title: mavis beacon teaches typing platinum 20
+  file0_18862:
+  - id: ca0af194-d7f1-4729-b1f9-26439e22186d
+    cluster_id: '18862'
+    data:
+      brand: floortex
+      modelno: ''
+      price: ''
+      title: floortex eco3648ep ecotex revolutionmat recycled chair mat 36 x 48 slightly
+        tinted
+  file0_20110:
+  - id: 3dddc22a-b45a-4dd7-b88c-941408e954d6
+    cluster_id: '20110'
+    data:
+      brand: genovation
+      modelno: 904 rj
+      price: 177 52
+      title: lcd mini data terminal 12 key usb serial flat membrane keys
+  file0_10565:
+  - id: a463e26b-d824-45cc-9d1e-d8ece3f62b7a
+    cluster_id: '10565'
+    data:
+      brand: cables unlimited
+      modelno: utp 1400 14k
+      price: 3 32
+      title: cables unlimited utp 1400 14k cat5e snagless patch cable 14 feet black
+  file0_22493:
+  - id: 65c829de-95f2-4eeb-9b4a-6f614ab92ab2
+    cluster_id: '22493'
+    data:
+      brand: da lite
+      modelno: '73139'
+      price: 222 99
+      title: da lite matte white designer model b with fabric case in frost gray 84
+        x 84 av format
+  file0_288:
+  - id: 93fa8b85-ea11-42e2-bc30-358ac9cfa70e
+    cluster_id: '288'
+    data:
+      brand: uniball
+      modelno: ''
+      price: ''
+      title: uni ball 60134 vision roller ball stick water proof pen blue ink fine
+        dozen
+  file0_12094:
+  - id: 32ad7821-2442-4ffb-bbcd-22efea568f7d
+    cluster_id: '12094'
+    data:
+      brand: swann
+      modelno: swa49 d5
+      price: '479'
+      title: swann alpha d05 swa49 d5 19 inch lcd all in one 4 channel h 264 dvr security
+        system
+  - id: b9389af0-7ebb-4332-bdda-d0e93bacb5b3
+    cluster_id: '12094'
+    data:
+      brand: swann
+      modelno: swa49 d5
+      price: 749 54
+      title: swann alpha d5 aio 19 h 264 4 channel security camera dvr
+  file1_19000:
+  - id: 91e91748-e605-4c30-9826-00e9d0e17524
+    cluster_id: '19000'
+    data:
+      brand: mercury
+      modelno: ''
+      price: 41 58
+      title: executive computer backpack
+  - id: ace2cdf1-e4aa-4ef0-bb9d-fcac0c2d52f7
+    cluster_id: '19000'
+    data:
+      brand: mercury luggage
+      modelno: ''
+      price: 56 99
+      title: mercury luggage executive computer backpack
+  file0_1328:
+  - id: 3ac9dc1a-a40e-4989-bff5-6b8d50dc65bf
+    cluster_id: '1328'
+    data:
+      brand: verbatim
+      modelno: '95092'
+      price: 15 21
+      title: verbatim 95092 700 mb 52x lightscribe gold recordable discs cd r 20 disc
+        slim case
+  file0_2208:
+  - id: c43846d4-fbb4-464e-8d4c-9a52f422587b
+    cluster_id: '2208'
+    data:
+      brand: philips
+      modelno: sqm6375 27
+      price: 43 93
+      title: philips sqm6375 27 simply straight hdtv fixed wall mount for 42 to 60
+        inch screens
+  file0_7944:
+  - id: c05f4090-a849-4318-a619-50ab226f9f3f
+    cluster_id: '7944'
+    data:
+      brand: defender
+      modelno: sentinel1
+      price: 399 97
+      title: defender sentinel1 ultra compact web ready dvr security system w 7 inch
+        lcd 4 indoor outdoor night vision surveillance cameras
+  file0_15096:
+  - id: 7ecdb244-d0e6-407b-99f2-9e8b1224e053
+    cluster_id: '15096'
+    data:
+      brand: epson
+      modelno: '8766'
+      price: 22 82
+      title: epson ribbon cartridge for dfx 5000 5000 8000 dot matrix printers
+  file0_21778:
+  - id: 7b7fe968-52f0-4eb2-941e-57a91402f9c2
+    cluster_id: '21778'
+    data:
+      brand: plantronics
+      modelno: 65145 01
+      price: 69 99
+      title: plantronics s12 corded telephone headset system
+  file0_8815:
+  - id: e0ecccc4-e349-45b5-9f45-8e233c7dd5f3
+    cluster_id: '8815'
+    data:
+      brand: lexar
+      modelno: ljdff8gbasbna
+      price: 14 99
+      title: lexar jumpdrive firefly 8gb usb 2 0 flash drive ljdff8gbasbna charcoal
+  - id: 1b3d42d0-1183-44d5-850f-a603f777d38f
+    cluster_id: '8815'
+    data:
+      brand: lexar media
+      modelno: ljdff8gbasbna
+      price: 16 57
+      title: lexar media ljdff8gbasbna 4gb jumpdrive firefly usb 2 0 flash drive
+  file1_18916:
+  - id: 57512220-1641-4505-8895-0ab73e0bb9be
+    cluster_id: '18916'
+    data:
+      brand: bic
+      modelno: ''
+      price: 28 36
+      title: bic wosqpp418 wite out shake n squeeze correction pen 8 ml white 4 pack
+  - id: 6cfc71e2-974e-4798-8728-a760a06ea177
+    cluster_id: '18916'
+    data:
+      brand: bic
+      modelno: wosqpp418 whi
+      price: 8 39
+      title: bic wite out shake n squeeze correction pen white 4 pack
+  file1_17804:
+  - id: 3546e9af-5f5f-411a-8e5a-0b3eabd2b022
+    cluster_id: '17804'
+    data:
+      brand: basyx
+      modelno: ''
+      price: '194'
+      title: new basyx bl2145a1a1 bl series return shell 48 1 4w x 24d x 29h medium
+        cherry bsxbl2145a1a1
+  - id: a7832e46-58b5-4eae-bde5-74309ae99a2a
+    cluster_id: '17804'
+    data:
+      brand: basyx
+      modelno: ''
+      price: '252'
+      title: basyx return shell 48 1 4 x24 x29 medium cherry
+  file0_24580:
+  - id: 0bb2a28a-b0f7-42e0-9589-bb240e58815b
+    cluster_id: '24580'
+    data:
+      brand: rubbermaid commercial
+      modelno: st24sspl
+      price: 399 97
+      title: rubbermaid commercial defenders biohazard square stainless steel step
+        can 24 gal
+  file0_4445:
+  - id: 2ec2a856-8cde-4c0c-9e9f-3ee27bfafc02
+    cluster_id: '4445'
+    data:
+      brand: 4inkjets
+      modelno: ''
+      price: 59 99
+      title: ld compatible high yield black laser toner cartridge for lexmark 12a7405
+        e321 e323 series printers
+  file0_8867:
+  - id: 931aacdc-9a74-4c42-a45c-91b76d73570e
+    cluster_id: '8867'
+    data:
+      brand: kingston
+      modelno: kvr800d2n5k2 2g
+      price: 28 74
+      title: kingston h corporation non ecc cl5 dimm kit of 2 2 dual channel kit 800
+        mhz pc2 6400 240 pin ddr2 sdram kvr800d2n5k2 2g
+  file0_778:
+  - id: 26fd5a69-e84a-4109-9bc9-55eb29bfb55f
+    cluster_id: '778'
+    data:
+      brand: vtech
+      modelno: ls6405 tpk1
+      price: 59 95
+      title: vtech ls6405 dect 6 0 accessory handset caller id call waiting 3 pack
+  file0_1632:
+  - id: 2d02820c-84ae-44d1-9908-6c70331ad4b3
+    cluster_id: '1632'
+    data:
+      brand: samsung
+      modelno: moment
+      price: ''
+      title: samsung replenish android phone blue sprint
+  file0_18706:
+  - id: c4043ffc-066b-4010-b72b-3cd9e1b0019c
+    cluster_id: '18706'
+    data:
+      brand: master
+      modelno: ''
+      price: 682 77
+      title: mastervision platinum dry erase enclosed board
+  file1_13790:
+  - id: 35129eb2-7ac4-4843-aa9f-db380512faa4
+    cluster_id: '13790'
+    data:
+      brand: kingwin
+      modelno: kf 251 bk
+      price: 21 99
+      title: kingwin dual bay 2 5 inch internal sata tray less hot swap rack with
+        key lock kf 251 bk
+  - id: 692ef8c5-913e-4361-afce-ca12b8f5c4e4
+    cluster_id: '13790'
+    data:
+      brand: kingwin
+      modelno: kf 251 bk
+      price: 27 88
+      title: kingwin mobile rack storage bay adapter
+  file0_14096:
+  - id: 2f78cf9e-2af7-470b-98d3-a6977f4c0bc6
+    cluster_id: '14096'
+    data:
+      brand: unknown
+      modelno: replacement laptop battery for acer
+      price: 32 65
+      title: 11 10v 6600mah li ion replacement laptop battery for acer aspire 3640
+        aspire 3670 aspire 5590 extensa 3100 extensa 4620 extensa 4620 4691 extensa
+        4620 6402 extensa 4620z travelmate 4320 travelmate 4520 travelmate 4720 travelmate
+        6252 travelmate 6252 100508mi travelmate 6293 6311 acer aspire 2420 2920 2920z
+        3620 5540 5550 5560 series acer extensa 4120 4630 series acer travelmate 2420
+        2440 3240 3250 3280 3300 6231 6291 6292 6492 6493 6553 6593 series compatible
+        part numbers bt 00603 012 bt 00604 006 btp amj1 btp anj1 btp aoj1 btp apj1
+        btp aqj1 btp arj1 btp as3620 btp asj1 btp b2j1 garda31 garda32 lc btp00 021
+        lc btp00 022 lc btp01 010 lc btp01 011 lc tg600 001 ms2180 tm07b41
+  file0_173:
+  - id: 758eea3d-d4c4-47dc-aa72-bfaded4ab53c
+    cluster_id: '173'
+    data:
+      brand: sony
+      modelno: mdr ex35lp vb
+      price: 12 99
+      title: sony mdr ex35lp vb ex style headphones with deep bass sound violet blue
+  - id: 83e47f55-9594-4317-bed6-22b46e07f76c
+    cluster_id: '173'
+    data:
+      brand: sony
+      modelno: mdrex35lp vb
+      price: 13 54
+      title: sony mdrex35lp vb colorful headphone with case violet blue
+  file0_17207:
+  - id: 6e8bc5ca-3ebe-4313-ae37-19bb67788341
+    cluster_id: '17207'
+    data:
+      brand: smead
+      modelno: ''
+      price: ''
+      title: top tab file folders double ply top 1 3 cut letter white 100 box smd12834
+  file0_22649:
+  - id: 62c3cdae-f365-4b91-8bdc-d67c03037fca
+    cluster_id: '22649'
+    data:
+      brand: sony
+      modelno: mhs ts20 b
+      price: '198'
+      title: sony bloggie touch mhs ts20 mp4 pocket hd video camera with 3 lcd and
+        4 hour record time black
+  file0_4388:
+  - id: cdb2e56f-d4f9-4d07-9de5-ac8318a58a6a
+    cluster_id: '4388'
+    data:
+      brand: digipower
+      modelno: tc 500c
+      price: 30 53
+      title: digipower tc 500c travel charger for canon nb series batteries including
+        nb 4l and nb 6l
+  file0_12673:
+  - id: 95ea1a4a-e2b2-41f6-abfb-df6198b7cf50
+    cluster_id: '12673'
+    data:
+      brand: moultrie
+      modelno: mfh dgs d55ir
+      price: 91 77
+      title: moultrie gamespy 5 megapixel digital infrared game camera
+  file0_6560:
+  - id: 1bd37662-dd7e-4bcb-ba2c-92e0ab4823a0
+    cluster_id: '6560'
+    data:
+      brand: canon
+      modelno: ''
+      price: ''
+      title: canon imageclass mf9220cdn multifunction printer
+  file0_11607:
+  - id: 73614304-6e66-4bcf-8fb5-f3fe78e1c9b6
+    cluster_id: '11607'
+    data:
+      brand: samsung
+      modelno: hx du010ec
+      price: '84'
+      title: samsung g3 station desktop external drive hx du010ec bb2
+  file1_482:
+  - id: b4a86ffd-048a-49ef-bec4-f659f8d3dd55
+    cluster_id: '482'
+    data:
+      brand: brother
+      modelno: tx2411
+      price: 21 7
+      title: 3 4inch black on white pt 30 35 8000 pc
+  - id: 984844d1-87f7-454d-a3aa-3414e3c48f39
+    cluster_id: '482'
+    data:
+      brand: brother
+      modelno: tx2411
+      price: 34 88
+      title: brother tx2411 p touch tx laminated tape
+  file0_5583:
+  - id: 66b0251d-0a28-45d2-8169-221e327766cf
+    cluster_id: '5583'
+    data:
+      brand: samsung
+      modelno: mz 5pa064c
+      price: '119'
+      title: samsung 470 series mz 5pa064c 64 gb 2 5 inch sata ii mlc internal ssd
+        with desktop upgrade kit and norton ghost 15 mz 5pa064c
+  file0_20514:
+  - id: 7b21c4c1-dd5a-4deb-a01d-2d2b4af3c53b
+    cluster_id: '20514'
+    data:
+      brand: sony
+      modelno: vcl dh0758
+      price: ''
+      title: sony vcl dh0758 wide angle conversion lens for dsch1 h2 and h5 digital
+        cameras
+  file0_4777:
+  - id: 56a5d4a4-b91b-4e12-ae9d-3407a4d73059
+    cluster_id: '4777'
+    data:
+      brand: qms
+      modelno: 1710517 006
+      price: '65'
+      title: konica minolta 1710517 006 yellow toner cartridge 2300dl printer
+  file0_12552:
+  - id: ab5abe90-3fb5-48d2-be7e-2f5607d1a8fa
+    cluster_id: '12552'
+    data:
+      brand: simple mobile
+      modelno: ''
+      price: 3 99
+      title: simple mobile activation kit including sim card
+  file0_9951:
+  - id: 0668e0a5-67c1-4b3d-868e-9c8bd46fc78f
+    cluster_id: '9951'
+    data:
+      brand: drift innovation
+      modelno: shd170
+      price: ''
+      title: drift innovation hd170 stealth action camera with hd recording 4x digital
+        zoom and 1 5 inch lcd screen black
+  file0_14674:
+  - id: f0ea6783-abe1-401f-ba54-d51301a1f883
+    cluster_id: '14674'
+    data:
+      brand: logitech
+      modelno: 910 001831
+      price: 11 48
+      title: logitech corded mouse m125 blue
+  file0_7159:
+  - id: 179c0915-bd09-4e51-87ab-a55e2233531d
+    cluster_id: '7159'
+    data:
+      brand: ep memory
+      modelno: epsw 8gb 2 0
+      price: 14 99
+      title: ep memory 8 gb usb 2 0 mobile swingdrive flash drive ep memorysw 8gb
+        2 0
+  file0_6014:
+  - id: 9854aeaa-c986-4109-82ec-b808d51e8ec8
+    cluster_id: '6014'
+    data:
+      brand: seal shield
+      modelno: ''
+      price: '24'
+      title: seal flex washable keyboard silicone rubber flexible superior tactile
+        respons
+  file0_9244:
+  - id: dfb74634-7346-4220-ac26-fa4eee9dd86d
+    cluster_id: '9244'
+    data:
+      brand: wilson
+      modelno: '952350'
+      price: 49 9
+      title: wilson electronics 952350 50 foot wilson400 ultra low loss coax cable
+        with n male connectors
+  file0_12796:
+  - id: 0f4c4336-c488-44df-9a78-84cfa4f583f0
+    cluster_id: '12796'
+    data:
+      brand: da lite
+      modelno: ''
+      price: 103 95
+      title: da lite deluxe model b manual wall and ceiling projection screen 50 x
+        50 71 diagonal silver matte surface
+  file0_4337:
+  - id: b8fe6d72-9fab-4a91-bfef-75f3b0077ded
+    cluster_id: '4337'
+    data:
+      brand: aleratec
+      modelno: shredder lubricant sheet 12 pack
+      price: 34 31
+      title: aleratec shredder lubricant sheet 12 pack shredder lubricant sheets pack
+        of 12
+  file0_16713:
+  - id: a438a0fa-c5e4-4608-8307-7c786f34037c
+    cluster_id: '16713'
+    data:
+      brand: safco
+      modelno: ''
+      price: '39'
+      title: new safco 4200 nail head wall coat rack two hooks metal satin aluminum
+        saf4200
+  file0_13392:
+  - id: f2795fa9-c0d0-4183-81ca-6772a2b6a64c
+    cluster_id: '13392'
+    data:
+      brand: lowepro
+      modelno: lp36174 peu
+      price: 119 95
+      title: lowepro slingshot 302 aw digital slr camera backpack case black tripod
+        accessory kit for canon rebel t3 t3i t1i t2i eos 60d 5d 7d nikon d3000 d3100
+        d5000 d5100 d7000 d300s olympus evolt e 5 e 30 e 620 sony alpha a560 a580
+        a33 a35 a55
+  file0_10208:
+  - id: fa49b539-4afb-40b4-a14a-df82eea09cc4
+    cluster_id: '10208'
+    data:
+      brand: nikon
+      modelno: '26109'
+      price: 229 95
+      title: nikon coolpix s550 10mp digital camera with 5x optical zoom cool blue
+  file0_16569:
+  - id: a46110d0-f629-4951-945d-94385762ebce
+    cluster_id: '16569'
+    data:
+      brand: bush
+      modelno: ''
+      price: ''
+      title: new bush wc36726 series c credenza 71w x 23 3 8d x 29 7 8h mahogany bshwc36726
+  file0_16412:
+  - id: 8c714e03-b75a-40ca-8d3d-61f26fd8f8ed
+    cluster_id: '16412'
+    data:
+      brand: tops
+      modelno: ''
+      price: 28 92
+      title: new tops 35510 engineering computation pad 5 squares quad rule ltr green
+        100 sheet pad top35510
+  file0_16565:
+  - id: 4ab45bcf-664c-4563-9cbc-f91687c1d841
+    cluster_id: '16565'
+    data:
+      brand: c line
+      modelno: ''
+      price: '31'
+      title: new c line 92377 self adhesive inkjet laser printer name badges 2 1 3
+        x 3 3 8 white 200 box cli92377
+  file0_18448:
+  - id: 48615ab8-32a4-4a83-8674-94cd80fd8715
+    cluster_id: '18448'
+    data:
+      brand: lenovo
+      modelno: 0a33883
+      price: 43 95
+      title: thinkpad x220 tablet sleeve
+  file0_18027:
+  - id: c1a8d072-44c9-4277-87e6-d7ea57d08015
+    cluster_id: '18027'
+    data:
+      brand: comprehensive
+      modelno: ''
+      price: ''
+      title: comprehensive pp phono rca plug cable end set of 25
+  file0_9169:
+  - id: f34dd629-ebcf-41a1-8f79-57854f1c77b3
+    cluster_id: '9169'
+    data:
+      brand: edge
+      modelno: k5240 221058 pe
+      price: 52 55
+      title: edge memory 6 gb 3 x 2 gb dimm 240 pin ddr3 1066 mhz pc3 8500 unbuffered
+        non ecc
+  file0_20811:
+  - id: 89188917-e49c-45df-9133-f3726e282b86
+    cluster_id: '20811'
+    data:
+      brand: scosche
+      modelno: mdab
+      price: 4 95
+      title: scosche mda b micro delco antenna adapter tip
+  file0_995:
+  - id: 46b47d30-2cb8-4ed2-8503-42f351a80d99
+    cluster_id: '995'
+    data:
+      brand: iluv
+      modelno: icc816blk
+      price: 20 09
+      title: iluv icc816 portfolio case with stand for 2nd generation apple ipad 2
+        wifi 3g model 16gb 32gb 64gb newest model black
+  - id: a30af848-291c-4c9a-bb85-94177fb797ca
+    cluster_id: '995'
+    data:
+      brand: iluv
+      modelno: icc816blk
+      price: 35 88
+      title: iluv portfolio case stand for ipad 2 black
+  file0_20619:
+  - id: 0458005b-bfad-4c22-8db5-41edbc92dbfa
+    cluster_id: '20619'
+    data:
+      brand: astra
+      modelno: ''
+      price: 72 4
+      title: astra astra1000rs dbp remote starter with keyless entry with data port
+        two 5 button remotes
+  file0_2302:
+  - id: 36f89b64-9e2b-402e-8f99-5db0ced98c4a
+    cluster_id: '2302'
+    data:
+      brand: blueant
+      modelno: usen baw s3
+      price: 53 94
+      title: blueant s3 voice controlled car speakerphone black retail packaging
+  file1_2577:
+  - id: 2f6fc3a2-2efa-4677-ad05-5bf7d9e0ef22
+    cluster_id: '2577'
+    data:
+      brand: casio
+      modelno: xj a235u
+      price: ''
+      title: casio green slim line projector xj a235u
+  - id: fa0c700b-3da2-45ea-90f0-3d385e2abfea
+    cluster_id: '2577'
+    data:
+      brand: casio
+      modelno: xja235u
+      price: 1199 99
+      title: casio xj a235u green slim dlp projector
+  file0_5790:
+  - id: 06af091a-2127-499f-b6ee-7e013dc50c91
+    cluster_id: '5790'
+    data:
+      brand: nikon
+      modelno: s9100 black
+      price: ''
+      title: nikon coolpix s9100 12 1 mp cmos digital camera with 18x nikkor ed wide
+        angle optical zoom lens and full hd 1080p video black
+  file1_10974:
+  - id: d87221b7-5266-4b2e-817f-7e84507268e8
+    cluster_id: '10974'
+    data:
+      brand: hp
+      modelno: c8554a hpc8554a
+      price: 48 47
+      title: hp drum unit image cleaning kit c8560a c8561a c8562a c8563a for laserjet
+        9500
+  - id: 21c6d04a-3919-4aa6-a8c7-9394eb15440d
+    cluster_id: '10974'
+    data:
+      brand: hp
+      modelno: c8563a
+      price: 671 69
+      title: hp c8560a drum unit
+  file0_10480:
+  - id: 4c0dd48f-ee31-40e2-9c6e-3002bde6a183
+    cluster_id: '10480'
+    data:
+      brand: corsair
+      modelno: cmfvya32gbgt2
+      price: 59 99
+      title: corsair 32 gb flash voyager gtr usb 2 0 flash drive cmfvya32gbgt2
+  file0_8518:
+  - id: fbf8e597-e175-4a74-b218-392fe167d37a
+    cluster_id: '8518'
+    data:
+      brand: corsair
+      modelno: vs1gsds667d2
+      price: 14 99
+      title: corsair memory vs1gsds667d2 1 gb pc2 5300 667mhz 200 pin ddr2 sodimm
+        notebook memory
+  file0_18750:
+  - id: 2b5afba7-52de-4c71-ae03-bbc25699f66d
+    cluster_id: '18750'
+    data:
+      brand: 'filemaker inc '
+      modelno: ty356ll a
+      price: 264 98
+      title: filemaker pro 11
+  file0_578:
+  - id: 850d2a5e-7e46-4fa0-926d-8cc7e33983e1
+    cluster_id: '578'
+    data:
+      brand: microsoft
+      modelno: d1t 00011
+      price: 11 99
+      title: comfort opt mse3000 silver blu
+  - id: a3eb5c70-7a77-413e-9b5f-21f6afc2ce21
+    cluster_id: '578'
+    data:
+      brand: microsoft
+      modelno: d1t00011
+      price: 19 95
+      title: microsoft comfort optical mouse 3000 silver blue
+  file0_1022:
+  - id: 1020c72b-4c5d-44e3-bf35-256df6cdd4a5
+    cluster_id: '1022'
+    data:
+      brand: hqrp
+      modelno: ''
+      price: 5 91
+      title: hqrp firewire cable cord compatible with sony vmc il4615 ieee 1394 4pin
+        to 6pin replacement plus hqrp lcd screen protector
+  file1_14546:
+  - id: 93ab0f15-1630-4dfa-9c9e-882f0c14ccfd
+    cluster_id: '14546'
+    data:
+      brand: cables unlimited
+      modelno: ioc1000
+      price: 20 29
+      title: cables unlimited tm 1 port db25 parallel pci i o card ioc1000
+  - id: 5f90d0af-ccf5-414e-be07-4ba88802b8c4
+    cluster_id: '14546'
+    data:
+      brand: cables unlimited
+      modelno: ioc 1000
+      price: 16 88
+      title: cables unlimited 1 port db25 parallel pci ecp epp spp port i o card
+  file0_13825:
+  - id: 1e171757-ec1f-4277-8534-b00cf249324d
+    cluster_id: '13825'
+    data:
+      brand: boss
+      modelno: hir8m
+      price: 90 82
+      title: boss audio hir8m universal headrest with pre installed 8 inch widescreen
+        tft video monitor
+  file0_6799:
+  - id: e2bcfbe5-4bb4-4ff5-9602-b289f6640988
+    cluster_id: '6799'
+    data:
+      brand: kodak
+      modelno: easyshare m550 blue
+      price: 97 82
+      title: kodak easyshare m550 12 mp digital camera with 5x wide angle optical
+        zoom and 2 7 inch lcd blue
+  file0_2499:
+  - id: 3e05dbbe-aa53-45db-82ac-6f3c9ac22161
+    cluster_id: '2499'
+    data:
+      brand: da lite
+      modelno: ''
+      price: 3200 88
+      title: dalite fast fold velour drapery kits for heavy duty deluxe frames without
+        adjustable skirt bar includes case 14ft 6 x 25 feet
+  file0_21121:
+  - id: 1471ee1c-c0a4-4a6f-ba14-40d816037359
+    cluster_id: '21121'
+    data:
+      brand: night owl optics
+      modelno: apollo 45
+      price: 294 48
+      title: night owl security apollo 45 4 channel h 264 dvr surveillance kit with
+        d1 recording
+  - id: d86f0f49-ab3b-4c23-87ee-e28659517cf4
+    cluster_id: '21121'
+    data:
+      brand: night owl
+      modelno: apollo 45
+      price: '338'
+      title: night owl optics apollo 45 4 channel h 264 500gb dvr kit
+  file0_24156:
+  - id: c99f0304-c7ec-4cf7-868d-9545e28ff49c
+    cluster_id: '24156'
+    data:
+      brand: da lite
+      modelno: '90544'
+      price: 441 95
+      title: da lite silver matte model c manual screen 8 x 8 av format
+  file0_9332:
+  - id: a68e5af9-63ab-4d7e-814c-74e7d7637744
+    cluster_id: '9332'
+    data:
+      brand: neewer
+      modelno: usb cable 8 pin most general cable 23
+      price: 1 9
+      title: usb cable for sony cybershot dsc s650 dsc s700 dsc s730 dsc s750 dsc
+        s780 dsc s800
+  file0_13822:
+  - id: a0ef6a7c-62a1-458d-bdd4-326a387ed747
+    cluster_id: '13822'
+    data:
+      brand: griffin technology
+      modelno: gb01988
+      price: 13 99
+      title: elan folio for ipad black
+  file0_10055:
+  - id: a55a56fe-0145-4871-930b-fb69db9373b3
+    cluster_id: '10055'
+    data:
+      brand: vistaquest
+      modelno: vq 2005
+      price: 28 96
+      title: 2 0 mp digital camera vq 2005
+  file0_7282:
+  - id: 70b8853c-3ab8-4e40-8b7f-ecd6bb34207f
+    cluster_id: '7282'
+    data:
+      brand: vxi
+      modelno: '202780'
+      price: 70 43
+      title: passport 21p dc headset
+  file0_20608:
+  - id: fe059b38-f882-4dbd-aa24-1ddbd1ca4a33
+    cluster_id: '20608'
+    data:
+      brand: action
+      modelno: ''
+      price: ''
+      title: birdhouse tony hawk 16gb crossbones blue skatedrive usb flash drive
+  file0_13196:
+  - id: ea063f23-6f96-4b1d-87f0-433e5c52607a
+    cluster_id: '13196'
+    data:
+      brand: dymo
+      modelno: '18489'
+      price: 12 99
+      title: dymo 3 4 inch flexible industrial strength nylon labels for rhino 5000
+        label printer white 18489
+  file0_11759:
+  - id: 806ac899-b1d4-4b23-b9f8-f330ce582556
+    cluster_id: '11759'
+    data:
+      brand: panasonic
+      modelno: rp hje280 a
+      price: 15 99
+      title: panasonic rp hje280 a inner ear earbuds w extension blue
+  file0_10636:
+  - id: 64a21fa7-7d23-4d93-8fc6-d81bd8de96a0
+    cluster_id: '10636'
+    data:
+      brand: nanuk
+      modelno: 945 1001
+      price: 150 93
+      title: nanuk 945 case with cubed foam black
+  file0_8913:
+  - id: 4c67e3ef-23ca-4eb6-aaef-5167b748b2ef
+    cluster_id: '8913'
+    data:
+      brand: duracell
+      modelno: dr11aa
+      price: 44 78
+      title: duracell nimh multi format 7 hour camcorder battery dr11aa
+  file0_22709:
+  - id: 610ca8e9-e01d-4153-ae14-7ef04573e4a9
+    cluster_id: '22709'
+    data:
+      brand: jvc
+      modelno: hafx35an
+      price: 15 54
+      title: jvc marshmallow headphones blue
+  file0_4845:
+  - id: 4276019e-6624-4e2b-bf09-3f64a1d6c13e
+    cluster_id: '4845'
+    data:
+      brand: general imaging
+      modelno: j1470s sl
+      price: 98 86
+      title: ge smart j1470s sl 14 mp with 7 x optical zoom digital camera silver
+  file0_21600:
+  - id: a14ef79e-abf2-4fda-8700-d05dec07df99
+    cluster_id: '21600'
+    data:
+      brand: zax
+      modelno: '87520'
+      price: 9 34
+      title: zax 87520 pro series 2 rca jacks to rca plug y adapter
+  file1_14036:
+  - id: 72804da1-f949-4390-86a3-dfbc8e2ec2b7
+    cluster_id: '14036'
+    data:
+      brand: toshiba
+      modelno: 55g310u
+      price: ''
+      title: toshiba 55g310u 55 inch 1080p 120 hz lcd hdtv black
+  - id: 426094f4-271c-4f67-891e-57c13f0beecb
+    cluster_id: '14036'
+    data:
+      brand: toshiba
+      modelno: 55g310u
+      price: '899'
+      title: toshiba 55 class lcd 1080p 120hz hdtv 55g310u
+  file0_5155:
+  - id: 86ba1461-42bf-4b67-a18c-9fcad017a399
+    cluster_id: '5155'
+    data:
+      brand: dymo
+      modelno: 220p kit case
+      price: 52 8
+      title: dymo labelmanager 220p kit case labelmaker b w thermal transfer roll
+        0 47 in 180 dpi ac 230 v
+  file0_17612:
+  - id: f2457ebd-a431-4711-a76c-a11a743694a1
+    cluster_id: '17612'
+    data:
+      brand: smead
+      modelno: ''
+      price: '53'
+      title: new smead 13701 top tab classification folder one divider four section
+        blue 10 box smd13701
+  file0_10367:
+  - id: 18635e15-639f-4792-bf80-6f68eb3e4089
+    cluster_id: '10367'
+    data:
+      brand: apc
+      modelno: be450g
+      price: 55 99
+      title: apc be450g back ups es 8 outlet 450va 120v uninterrupted power supply
+  file0_5243:
+  - id: df3c1c26-938b-42bc-aa5a-122edb2d9e9b
+    cluster_id: '5243'
+    data:
+      brand: verbatim
+      modelno: '97470'
+      price: 16 51
+      title: verbatim wireless mini nano travel mouse 97470 graphite
+  file0_8488:
+  - id: fe75da60-9e4e-4237-889f-65c261bdc5b4
+    cluster_id: '8488'
+    data:
+      brand: dell
+      modelno: pa 10
+      price: 17 65
+      title: ' oem dell ac adapter laptop charger for dell inspiron dell xps dell
+        studio dell latitude dell vostro p n pa 10 pa10 90w 90 watt genuine original
+        oem portable charger for laptop notebook computer battery charger power supply
+        cord plug'
+  file0_5635:
+  - id: 2a58e2f4-0a10-4452-b0c9-336ef0e44b66
+    cluster_id: '5635'
+    data:
+      brand: rca
+      modelno: ant1050
+      price: 4 78
+      title: rca ant1050 digital flat passive ultra slim profile antenna with enhanced
+        reception black
+  file0_2413:
+  - id: 07a7e0c8-fd52-4fee-972e-f9a371031f82
+    cluster_id: '2413'
+    data:
+      brand: amped wireless
+      modelno: ua150c
+      price: 39 78
+      title: amped wireless high power wireless 150n compact usb adapter ua150c
+  file0_6292:
+  - id: 55656ef5-9d62-4491-8665-9aecdf53e63b
+    cluster_id: '6292'
+    data:
+      brand: hp
+      modelno: ''
+      price: 24 07
+      title: genuine new hewlett packard c9385an hp 88 black ink cartridge
+  file0_12150:
+  - id: fba7c1e4-317c-445d-aa05-5334e681ab23
+    cluster_id: '12150'
+    data:
+      brand: rab lighting
+      modelno: rab stl110hw
+      price: 86 99
+      title: rab stl110hw stealth motion sensor with 110 degree view and par 38 bell
+        flood lighting kit white
+  file0_2518:
+  - id: 08d12267-6ba1-40fd-98ad-c853f5efa948
+    cluster_id: '2518'
+    data:
+      brand: blackberry
+      modelno: asy 18071 001
+      price: 2 4
+      title: blackberry asy 18071 001 1 5m micro data cable bulk packaging black
+  file0_12186:
+  - id: 01ad1b02-64c9-4886-b0ca-3ac1f3386447
+    cluster_id: '12186'
+    data:
+      brand: otterbox
+      modelno: 1942 17 5
+      price: 17 09
+      title: otterbox defender case for iphone 3g 3g s white
+  file0_14700:
+  - id: 9e0f1f14-4cbb-429b-9f0a-d26e6d8cc3d0
+    cluster_id: '14700'
+    data:
+      brand: da lite
+      modelno: ''
+      price: 429 95
+      title: da lite designer contour manual hdtv format wall ceiling mounted screen
+        45 x 80 92 diagonal high power surface with csr controlled screen return
+  file0_7233:
+  - id: 7260a8aa-37c8-43d4-b677-8a1dd68226e3
+    cluster_id: '7233'
+    data:
+      brand: xantech
+      modelno: 284d10p
+      price: ''
+      title: xantech 284m10p
+  file0_9137:
+  - id: 13392b08-7c84-4fce-ae08-0bb358a5fbca
+    cluster_id: '9137'
+    data:
+      brand: epson
+      modelno: v11h376020
+      price: ''
+      title: epson powerlite s9 v11h376020
+  file0_13140:
+  - id: d8fe1819-1403-4344-9d05-50f204da9757
+    cluster_id: '13140'
+    data:
+      brand: aluratek
+      modelno: awum100f
+      price: 29 99
+      title: fax 56k v 92 usb modem ext to rj11 adapter
+  file0_482:
+  - id: b4a86ffd-048a-49ef-bec4-f659f8d3dd55
+    cluster_id: '482'
+    data:
+      brand: brother
+      modelno: tx2411
+      price: 21 7
+      title: 3 4inch black on white pt 30 35 8000 pc
+  - id: 984844d1-87f7-454d-a3aa-3414e3c48f39
+    cluster_id: '482'
+    data:
+      brand: brother
+      modelno: tx2411
+      price: 34 88
+      title: brother tx2411 p touch tx laminated tape
+  file1_5256:
+  - id: 0285974b-0264-4649-b195-f017dfa4afd7
+    cluster_id: '5256'
+    data:
+      brand: verbatim
+      modelno: '95355'
+      price: 72 28
+      title: verbatim 95355 ultralife 4 7 gb 8x gold archival grade dvd r 50 disc
+        spindle
+  - id: f8c965d6-465e-4406-914a-7ba301be1422
+    cluster_id: '5256'
+    data:
+      brand: verbatim
+      modelno: '95355'
+      price: 84 67
+      title: verbatim 95355 ultralife 8x dvd r media
+  file0_18447:
+  - id: 1355e2d3-2da4-4568-92b2-75128f950ce0
+    cluster_id: '18447'
+    data:
+      brand: liquid paper
+      modelno: ''
+      price: 21 94
+      title: liquid paper 59601 dryline precision correction tape pen non refillable
+        1 5 x 236
+  file0_19420:
+  - id: ed1051f5-acaa-48c0-8585-d5d2149cd764
+    cluster_id: '19420'
+    data:
+      brand: tops
+      modelno: ''
+      price: 17 99
+      title: new tops 46510 sales order book 5 1 2 x 7 7 8 three part carbonless 50
+        sets book top46510
+  file0_10974:
+  - id: d87221b7-5266-4b2e-817f-7e84507268e8
+    cluster_id: '10974'
+    data:
+      brand: hp
+      modelno: c8554a hpc8554a
+      price: 48 47
+      title: hp drum unit image cleaning kit c8560a c8561a c8562a c8563a for laserjet
+        9500
+  - id: 21c6d04a-3919-4aa6-a8c7-9394eb15440d
+    cluster_id: '10974'
+    data:
+      brand: hp
+      modelno: c8563a
+      price: 671 69
+      title: hp c8560a drum unit
+  file0_15195:
+  - id: 5c22eb28-e737-4120-81ef-fd597e78e427
+    cluster_id: '15195'
+    data:
+      brand: bling software
+      modelno: ''
+      price: 49 99
+      title: bling software 123 copy dvd gold 2011 software
+  file0_14940:
+  - id: a54aee34-eb69-4961-a7cf-6f43a90e6b94
+    cluster_id: '14940'
+    data:
+      brand: hp
+      modelno: c9362wn 140 424
+      price: 13 9
+      title: hp 92 black ink cartridge in retail packaging c9362wn 140
+  file0_2144:
+  - id: b2e2c47d-01ed-4282-b588-b1ac7ec1917f
+    cluster_id: '2144'
+    data:
+      brand: scosche
+      modelno: iph35
+      price: 21 98
+      title: scosche ventmount accessory holder black
+  file0_4038:
+  - id: 516874a3-1d97-47bf-8c49-aaf45bac226c
+    cluster_id: '4038'
+    data:
+      brand: vivicam
+      modelno: v7020
+      price: '32'
+      title: vivitar vivicam v7020 7 1 megapixel digital camera purple
+  file0_10340:
+  - id: b320ebc1-44d3-457b-bd9d-3d76522f5435
+    cluster_id: '10340'
+    data:
+      brand: asus
+      modelno: 'eah6450 silent di 1gd3 lp '
+      price: 59 99
+      title: asus ati radeon hd6450 silence 1 gb ddr3 vga dvi hdmi low profile pci
+        express video card eah6450 silent di 1gd3 lp
+  file0_3432:
+  - id: 3559e916-f999-43b9-9894-419f9c5fed57
+    cluster_id: '3432'
+    data:
+      brand: the learning company
+      modelno: '382115'
+      price: 24 99
+      title: mavis beacon teaches typing 12 jewel case
+  file0_16207:
+  - id: 6385ec1e-7682-4897-a013-15b9bfa28502
+    cluster_id: '16207'
+    data:
+      brand: quartet
+      modelno: ''
+      price: ''
+      title: new quartet bte643a dry erase bulletin board embossed foam 36 x 24 black
+        white aluminum frame qrtbte643a
+  file0_1201:
+  - id: 558fd66e-6131-45a2-b518-4215b0e049e1
+    cluster_id: '1201'
+    data:
+      brand: electrograph
+      modelno: ele upjmt
+      price: 108 18
+      title: electrograph ele upjmt universal projector mount with ceiling plate
+  file0_2640:
+  - id: 1e39f73a-dd79-4aa6-b6f4-0b3889e96b84
+    cluster_id: '2640'
+    data:
+      brand: 'staedtler inc '
+      modelno: ''
+      price: 24 05
+      title: std1002b lumograph pencil break resistant 2b blue barrel
+  file0_9679:
+  - id: 860dcccc-c07a-4aff-9716-b13bdba5f13a
+    cluster_id: '9679'
+    data:
+      brand: raidmax
+      modelno: atx 238wr
+      price: 39 99
+      title: raidmax tornado atx mid tower gaming case atx 238wr
+  file0_13376:
+  - id: 67a122f6-4a99-4071-9537-8ab57e991aab
+    cluster_id: '13376'
+    data:
+      brand: targus
+      modelno: amm0106us
+      price: 10 99
+      title: targus stylus for apple ipad 16gb 32gb 64gb wifi 3g ipad 2 iphone ipod
+        motorola xoom samsung galaxy blackberry playbook amm0106us white
+  file0_5940:
+  - id: 459ad40c-52c1-4d2c-b171-3066c8b3c4b7
+    cluster_id: '5940'
+    data:
+      brand: infocus
+      modelno: inliteshow3
+      price: 239 76
+      title: liteshow iii wrls disp adapter any proj or thin disp with vga input
+  file0_3567:
+  - id: c546cfec-621b-42c7-8d5c-aef1f6f08aa3
+    cluster_id: '3567'
+    data:
+      brand: scosche
+      modelno: gm1515b
+      price: 9 88
+      title: scosche gm1515b s10 rack kit for 1995 97 general motors sonoma chevrolet
+  - id: 84dc4da0-9f04-446c-b448-2765e52d9903
+    cluster_id: '3567'
+    data:
+      brand: scosche
+      modelno: gm1515b
+      price: 9 88
+      title: scosche 1995 97 general motors sonoma chevrolet s10 rack kit color match
+  file0_8864:
+  - id: 5aceca6f-8d3f-403d-95be-0d1271436d2d
+    cluster_id: '8864'
+    data:
+      brand: kingston
+      modelno: dtvp 16gb
+      price: 119 78
+      title: kingston datatraveler vault privacy edition 16 gb usb 2 0 flash drive
+        dtvp 16gb blue
+  file0_9205:
+  - id: 848db004-3a67-4364-b564-344214c27385
+    cluster_id: '9205'
+    data:
+      brand: zotac
+      modelno: zt 50303 10m
+      price: 246 99
+      title: zotac geforce gtx 560 ti oc 1 gb 850mhz 4010mhz 256 bit graphics card
+        zt 50303 10m
+  file0_20715:
+  - id: cd904da2-74be-4ef1-bc69-36e97fae42c1
+    cluster_id: '20715'
+    data:
+      brand: da lite
+      modelno: high contrast matte white
+      price: 151 61
+      title: da lite model b high contrast matte white projection screen 120 in matte
+        white
+  file0_11741:
+  - id: 11f83f04-bbea-437c-bb38-866d4dfbed1b
+    cluster_id: '11741'
+    data:
+      brand: storm
+      modelno: ''
+      price: 103 99
+      title: storm im2306 30001 2306 case with foam olive drab cases outdoor products
+  - id: bebacb95-d8e6-4878-8a5d-8cce309ca1f2
+    cluster_id: '11741'
+    data:
+      brand: pelican
+      modelno: ''
+      price: 69 95
+      title: pelican storm im2306 case watertight padlockable case with multilayer
+        cubed foam interior olive drab
+  - id: 53664e3b-ae69-4d19-9edd-d12815b90e92
+    cluster_id: '11741'
+    data:
+      brand: storm
+      modelno: im2306 30001
+      price: 97 88
+      title: storm 2306 case with foam olive drab
+  file0_3060:
+  - id: d14d97c3-67df-4c72-8a6e-b27450cce81b
+    cluster_id: '3060'
+    data:
+      brand: hp
+      modelno: c8010a
+      price: 16 95
+      title: hp c8010a 4mm dds 5 dat 72 170m 36 72gb data tape cartridge
+  file0_20868:
+  - id: e71cc62b-dc37-4120-a662-54acb614dad5
+    cluster_id: '20868'
+    data:
+      brand: garmin
+      modelno: 010 n0783 40
+      price: ''
+      title: garmin n vi 1200 noh 3 5 inch portable gps navigator lower 48
+  file0_22285:
+  - id: d952266e-d586-483d-8ff6-b088be87d19f
+    cluster_id: '22285'
+    data:
+      brand: honest technology
+      modelno: vdd5m
+      price: 64 98
+      title: honestech vhs to dvd 5 0 deluxe for pc
+  file0_7897:
+  - id: c87d0322-ccdc-46e6-ab65-3b1190d26eb8
+    cluster_id: '7897'
+    data:
+      brand: jabra
+      modelno: gn 1000 rhl
+      price: 47 02
+      title: gn netcom 1000 rhl remote handset lifter
+  file0_12453:
+  - id: 4a1e7408-d9b8-420c-bcb7-ae9eaa47b3a2
+    cluster_id: '12453'
+    data:
+      brand: wagan
+      modelno: el9903
+      price: 18 17
+      title: wagan 5 amp ac to 12v dc power adapter
+  file0_23349:
+  - id: 5d28eb15-c96c-4a48-abf2-acec2fe52b54
+    cluster_id: '23349'
+    data:
+      brand: draper
+      modelno: '200129'
+      price: 1551 95
+      title: draper m2500 premier series c manual screen 120 diagonal widescreen format
+  file0_16179:
+  - id: 3612ad9a-cd30-4a77-9383-c4f108d189b6
+    cluster_id: '16179'
+    data:
+      brand: skb
+      modelno: 3r2217 10b cw
+      price: 289 99
+      title: skb equipment case 22 x 17 x 10 1 2 foam wheels
+  file0_18873:
+  - id: c7b7fa15-767e-49e5-b7a3-4269a9cd83a8
+    cluster_id: '18873'
+    data:
+      brand: apricorn
+      modelno: x809wbun
+      price: 74 84
+      title: apricorn 80gb univiversal 2 5 5400 rpm h x809wbun
+  file0_11214:
+  - id: bb4a0ba3-5979-4e11-9273-a56a29c8e218
+    cluster_id: '11214'
+    data:
+      brand: xfx
+      modelno: hd545xzch2
+      price: 48 03
+      title: xfx ati radeon hd5450 1 gb ddr3 vga dvi hdmi low profile pci express
+        video card hd545xzch2
+  file0_19879:
+  - id: 3b4c380a-58b1-4420-817c-788e3eb8d60b
+    cluster_id: '19879'
+    data:
+      brand: igo
+      modelno: ac05064 0001
+      price: 103 22
+      title: igo external laptop battery charging connect tips included
+  file0_5859:
+  - id: 1a4a1e8b-a2de-4340-92af-95d7cea13ed9
+    cluster_id: '5859'
+    data:
+      brand: logitech
+      modelno: 981 000335
+      price: 46 43
+      title: b530 usb headset clear comfortable effective communication for your business
+  file0_14350:
+  - id: 67b88e5d-8c27-4726-a392-01d47d7ea218
+    cluster_id: '14350'
+    data:
+      brand: encore
+      modelno: enf656 usb ager
+      price: 26 23
+      title: 56k v 92 usb external data fax tam modem
+  file0_13790:
+  - id: 35129eb2-7ac4-4843-aa9f-db380512faa4
+    cluster_id: '13790'
+    data:
+      brand: kingwin
+      modelno: kf 251 bk
+      price: 21 99
+      title: kingwin dual bay 2 5 inch internal sata tray less hot swap rack with
+        key lock kf 251 bk
+  - id: 692ef8c5-913e-4361-afce-ca12b8f5c4e4
+    cluster_id: '13790'
+    data:
+      brand: kingwin
+      modelno: kf 251 bk
+      price: 27 88
+      title: kingwin mobile rack storage bay adapter
+  file0_7640:
+  - id: 29d7d478-966a-4916-8839-e066c3c76f4f
+    cluster_id: '7640'
+    data:
+      brand: roku
+      modelno: 2100x
+      price: '98'
+      title: roku xds streaming player 1080p
+  file0_16626:
+  - id: f86d1bac-7059-4f1f-a66e-579937d60e5d
+    cluster_id: '16626'
+    data:
+      brand: swingline
+      modelno: ''
+      price: ''
+      title: swingline 74515 15 sheet electric portable desktop punch silver black
+  file0_5756:
+  - id: 284bdc07-190c-418b-b843-1b76a4118bbb
+    cluster_id: '5756'
+    data:
+      brand: omnimount
+      modelno: power40
+      price: '149'
+      title: omnimount power40 articulating motorized wall mount for 23 to 46 displays
+        black
+  file0_21894:
+  - id: 717f3534-bdfa-42c3-af72-c5bf5294a221
+    cluster_id: '21894'
+    data:
+      brand: startech
+      modelno: usbfaa 6
+      price: 2 99
+      title: startech com 6 feet beige a to a usb 2 0 cable m m usbfaa 6
+  file0_13233:
+  - id: 0980e309-ab7a-4570-a7b0-38b4dc9e4963
+    cluster_id: '13233'
+    data:
+      brand: cp tech level one
+      modelno: ''
+      price: 61 59
+      title: new ethernet network pci adapter fnc0600txm
+  file0_12831:
+  - id: a4c20693-4c7c-489c-a546-144980677504
+    cluster_id: '12831'
+    data:
+      brand: icon
+      modelno: k 42148 v02
+      price: 6 73
+      title: icon black leather w pink stitching digital camera case for casio exilim
+        ex fs10 ex z90
+  file0_6118:
+  - id: 5dce609b-2131-4d31-ace5-c19edb30ba35
+    cluster_id: '6118'
+    data:
+      brand: rca
+      modelno: 25205re1
+      price: 66 28
+      title: rca 25205re1 na 1 handset 2 line landline telephone
+  file1_16127:
+  - id: 9e70f94b-5567-4092-b710-832944196491
+    cluster_id: '16127'
+    data:
+      brand: panasonic
+      modelno: rp ht21
+      price: 4 95
+      title: panasonic rp ht21 lightweight headphones with xbs port
+  - id: 259f8509-dfed-4ce0-bfbd-23e551bab043
+    cluster_id: '16127'
+    data:
+      brand: panasonic
+      modelno: rp ht21
+      price: 9 88
+      title: panasonic lightweight headphones w xbs rp ht21
+  file0_20139:
+  - id: ebbf523c-409f-4d73-8514-b23769d01915
+    cluster_id: '20139'
+    data:
+      brand: lexar
+      modelno: ''
+      price: ''
+      title: jumpdrive secure ii 8gb blister pck
+  file0_22887:
+  - id: 43642de3-6d04-4762-b07e-ecd46f4f7bd1
+    cluster_id: '22887'
+    data:
+      brand: accell
+      modelno: b103c 003f 40
+      price: 13 77
+      title: accell greencable series 1m hdmi a 1 3 cable
+  file0_5040:
+  - id: 9b885e30-2565-4d79-84a0-fca4265dfffd
+    cluster_id: '5040'
+    data:
+      brand: griffin technology
+      modelno: gb02202
+      price: 13 54
+      title: griffin slap band case for ipod nano 6g black
+  file0_16046:
+  - id: c48fce7e-f793-43ca-bd7e-1dc3a066731d
+    cluster_id: '16046'
+    data:
+      brand: sakar
+      modelno: sl1000
+      price: 12 99
+      title: sprayground sprayloud sl1000 deejay zimad headphones city graffs 3
+  file0_23490:
+  - id: 8fbfb6c3-6967-4fe7-b353-f5947d708c52
+    cluster_id: '23490'
+    data:
+      brand: adobe
+      modelno: adbcd21340wiae
+      price: '449'
+      title: adobe software production premium cs5 5 pc
+  file0_9221:
+  - id: f2e06ec5-68a5-48a7-a9c2-f7bd472b3adf
+    cluster_id: '9221'
+    data:
+      brand: xerox
+      modelno: 106r01162
+      price: 318 92
+      title: xerox corp 106r01162 toner 25000 page yield yellow
+  file0_19749:
+  - id: 9994297c-09b0-4eaa-b397-0eff6aac3c30
+    cluster_id: '19749'
+    data:
+      brand: belkin
+      modelno: a3l791 14 blu s
+      price: 5 11
+      title: belkin a3l791 14 blu s rj45m rj45m 14 feet 10 100bt cat5e snagless patch
+        cable blue
+  file0_15393:
+  - id: 70215f46-9260-470c-8773-bd9de335dc90
+    cluster_id: '15393'
+    data:
+      brand: svat
+      modelno: vis300 7m2
+      price: 179 99
+      title: svat vis300 7m2 hands free 2 wire color video intercom system with 7
+        lcd monitor and night vision security camera
+  file0_4076:
+  - id: e60a0ab0-25c9-46db-92d1-9655b476dc14
+    cluster_id: '4076'
+    data:
+      brand: targus
+      modelno: tsm103us
+      price: 44 99
+      title: targus unofficial messenger case designed for 16 inch laptops tsm103us
+        black
+  file0_9158:
+  - id: 88f4a246-2cef-4395-bea4-2610200e671c
+    cluster_id: '9158'
+    data:
+      brand: atdec
+      modelno: th wh pj fm taa
+      price: 71 55
+      title: telehook flush projector mount universal white
+  file0_15413:
+  - id: f0b29c9c-3d30-411a-8129-7031e1941226
+    cluster_id: '15413'
+    data:
+      brand: startech
+      modelno: ctk200
+      price: 15 21
+      title: startech com 11 piece pc computer tool kit with carrying case ctk200
+  file0_21864:
+  - id: 5b4fd644-494b-4b91-ac2c-2c646a9270e3
+    cluster_id: '21864'
+    data:
+      brand: karendeals
+      modelno: ''
+      price: 26 95
+      title: black gray oem incipio silicrylic rubberized case stand screen protector
+        for blackberry playbook
+  file0_18868:
+  - id: 4fccb6f8-fb50-4012-835d-519e6cf1612f
+    cluster_id: '18868'
+    data:
+      brand: ccm
+      modelno: '81928'
+      price: 14 95
+      title: ccm blackberry playbook screen protector film matte clear 4 pack 2 clear
+        2 anti glare
+  file0_11873:
+  - id: eea87f52-bcee-42df-bb44-c759775160fe
+    cluster_id: '11873'
+    data:
+      brand: hp
+      modelno: cq140a b1h
+      price: ''
+      title: hp photosmart estation all in one cq140a b1h
+  file0_15128:
+  - id: 4273b2eb-93bb-4d4c-902a-9056e565681f
+    cluster_id: '15128'
+    data:
+      brand: edge
+      modelno: d2184 185329 pe
+      price: 19 38
+      title: edge 512mb pc2100 ddr 184 pin non ecc dimm for desktops
+  file0_22019:
+  - id: bcc361d4-2a01-4daf-a823-a4dcde086b09
+    cluster_id: '22019'
+    data:
+      brand: blueant
+      modelno: usen baw t1
+      price: 52 95
+      title: blueant t1 rugged bluetooth headset
+  file0_5497:
+  - id: c6752bff-14f2-49ff-a551-68c9ddac2b29
+    cluster_id: '5497'
+    data:
+      brand: smk
+      modelno: vp6272
+      price: 44 99
+      title: smk link bluetooth calculator keypad vp6272
+  file0_20538:
+  - id: d8989243-bd90-40f5-ba7e-58a473a37ffa
+    cluster_id: '20538'
+    data:
+      brand: sony
+      modelno: ''
+      price: ''
+      title: pink plaid protective and reinforced portfolio jacket cover carrying
+        case for sony prs 950 electronic reader ereader device prs 950 prs950 compatible
+        with all colors indlues a 4 inch determination hand strap includes a anti
+        glare screen protector black clip on brighty xtraflex led light flexible goose
+        neck
+  file0_8825:
+  - id: 33536831-de68-4348-96eb-b9747c068670
+    cluster_id: '8825'
+    data:
+      brand: lacie
+      modelno: '130979'
+      price: 214 99
+      title: lacie fastkey 60 gb usb 3 0 solid state drive 130979
+  file0_16997:
+  - id: 59fbc65d-edd5-4769-aaf8-bbc783de7b7a
+    cluster_id: '16997'
+    data:
+      brand: smead
+      modelno: ''
+      price: '106'
+      title: new smead 64270 3 capacity closed side flexible hanging file pockets
+        letter sky blue 25 box smd64270
+  file0_18934:
+  - id: a584a760-2d5d-4e70-bd0e-2b3404068704
+    cluster_id: '18934'
+    data:
+      brand: edge
+      modelno: ' 2 5 ssd plus upgrade kit '
+      price: 460 25
+      title: edge 2 5 ssd plus upgrade kit solid state drive 256 gb internal 2 5 sata
+        300 64 mb flash
+  file0_7842:
+  - id: d56fb244-ae0c-4a81-9e14-c3d71f156a2a
+    cluster_id: '7842'
+    data:
+      brand: kenwood
+      modelno: ''
+      price: 39 99
+      title: pair of new kenwood kfc x173 480 watts combined 240 each powerful two
+        way car audio speakers with silk dome tweeters
+  file0_2594:
+  - id: 67c20a9b-a44a-4325-8d2f-55f94be1000e
+    cluster_id: '2594'
+    data:
+      brand: case logic
+      modelno: dcb 309
+      price: 53 58
+      title: case logic dcb 309 slr camera backpack black
+  - id: 7d02cb71-45c7-4da7-ae81-b880d85368e0
+    cluster_id: '2594'
+    data:
+      brand: case logic
+      modelno: dcb 309black
+      price: 79 99
+      title: case logic slr camera backpack
+  file0_12322:
+  - id: 96a7c8f9-9f6a-4f8a-8a43-c59f957b8c1e
+    cluster_id: '12322'
+    data:
+      brand: terk
+      modelno: sirext50
+      price: 18 19
+      title: audiovox sirius sirext50 indoor outdoor antenna extension 50 feet cable
+        black
+  file0_4282:
+  - id: b86baf3e-eb0c-407f-a892-3600f41e0644
+    cluster_id: '4282'
+    data:
+      brand: avery
+      modelno: ''
+      price: ''
+      title: avery 6490 laser inkjet 3 5in diskette labels white 375 pack
+  file0_6664:
+  - id: 486bc40c-2d07-4680-b180-cf245e1b4c6a
+    cluster_id: '6664'
+    data:
+      brand: midland
+      modelno: '75785'
+      price: 34 24
+      title: midland 75 785 40 channel cb radio
+  file0_4494:
+  - id: dc65c843-8510-4fc1-948e-62931425f424
+    cluster_id: '4494'
+    data:
+      brand: norazza
+      modelno: ac165
+      price: 12 85
+      title: ape case small digital camera bag ac165
+  file0_10558:
+  - id: f5b3f412-1fd8-4ec1-8591-d3ba65ecb27f
+    cluster_id: '10558'
+    data:
+      brand: clearone
+      modelno: 910 159 251
+      price: '125'
+      title: clearone chat 60 usb voip desktop hands free
+  file0_19439:
+  - id: ff3cbd2e-2b91-40e1-a3e5-b07132a4328d
+    cluster_id: '19439'
+    data:
+      brand: casio
+      modelno: ex zr100 black
+      price: ''
+      title: casio exilim ex zr100 12 1 mp cmos sensor with 12 5x optical zoom digital
+        camera black
+  file0_10668:
+  - id: 3d34d87e-7cec-4056-b199-17c0fdb8a13c
+    cluster_id: '10668'
+    data:
+      brand: microsoft
+      modelno: 6jh 00026
+      price: 14 05
+      title: microsoft wired keyboard 200 for business white 6jh 00026
+  file0_16574:
+  - id: 8360acb4-6ad6-47ed-8c64-c8df3161212d
+    cluster_id: '16574'
+    data:
+      brand: bankers box
+      modelno: ''
+      price: '185'
+      title: new bankers box 0083201 stor file extra strength storage box legal locking
+        lid white blue 12 carton fel0083201
+  file0_21498:
+  - id: b42a6225-62e4-4635-8980-0b441d40c1df
+    cluster_id: '21498'
+    data:
+      brand: pentel
+      modelno: ''
+      price: 12 96
+      title: pentel r s v p rt retractable ball point pen med pt blue
+  file0_9048:
+  - id: de851b98-ce55-46b0-8d05-538a727dc4a3
+    cluster_id: '9048'
+    data:
+      brand: battery biz
+      modelno: b 9598
+      price: 20 95
+      title: hi capacity li ion camcorder battery for sony dcr dvd100 dcr dv200 np
+        qm70 71
+  file1_8790:
+  - id: c20da293-c36c-4d88-b4b0-70fce4009d01
+    cluster_id: '8790'
+    data:
+      brand: da lite
+      modelno: ''
+      price: 904 95
+      title: da lite advantage manual with csr projection screen 133 in 16 9 high
+        power
+  - id: 3189b5a3-d23c-45cf-b377-605249449b51
+    cluster_id: '8790'
+    data:
+      brand: da lite
+      modelno: '85742'
+      price: 1267 99
+      title: da lite high power advantage manual with csr hdtv format 133 diagonal
+  file0_5384:
+  - id: 7f0982cf-1787-4b6f-85db-7c2cba90b703
+    cluster_id: '5384'
+    data:
+      brand: curo7
+      modelno: smp2200 black
+      price: 12 99
+      title: sylvania 2 gb clip mp3 player black
+  file0_17253:
+  - id: a4e44678-5e0e-47be-8250-5c9dac8ea7c6
+    cluster_id: '17253'
+    data:
+      brand: pendaflex
+      modelno: ''
+      price: '31'
+      title: new viewfront standard pocket poly booklet envelope case pack 3 445512
+  file0_8730:
+  - id: abd64a9c-099a-480d-96fb-b2796ef5a767
+    cluster_id: '8730'
+    data:
+      brand: maxell
+      modelno: p 24 usb power charger
+      price: 9 59
+      title: maxell p 24 usb power charger power adapter ac usb
+  file0_19349:
+  - id: 536709ca-953f-4584-8e6f-4c3ede75171d
+    cluster_id: '19349'
+    data:
+      brand: wincraft
+      modelno: ''
+      price: 18 99
+      title: vitor belfort mouse pad
+  file0_13022:
+  - id: b068032d-893c-4154-910a-f810f80d3e61
+    cluster_id: '13022'
+    data:
+      brand: hp
+      modelno: ch340a b1h
+      price: 29 99
+      title: hp deskjet 1000 printer ch340a b1h
+  file0_1840:
+  - id: 93e85bac-d210-43a6-87fe-3742c8fcb1c3
+    cluster_id: '1840'
+    data:
+      brand: zotac
+      modelno: zt 40701 10l
+      price: 79 99
+      title: zotac nvidia geforce gt440 512mb ddr5 dvi hdmi displayport pci express
+        video card zt 40701 10l
+  file0_6884:
+  - id: 847a0192-34e3-45ad-833c-4d1f90369e13
+    cluster_id: '6884'
+    data:
+      brand: iomega
+      modelno: '34766'
+      price: 149 99
+      title: iomega 2 tb home media network hard drive cloud edition 34766
+  file0_6481:
+  - id: 909a2cc7-ab4f-4d67-ba65-3fa54ece9df6
+    cluster_id: '6481'
+    data:
+      brand: coolermaster
+      modelno: rc 360 kknr5
+      price: 49 99
+      title: cooler master elite 360 m atx atx mid mini tower case with 350 watt power
+        supply rc 360 kkr1
+  file0_20287:
+  - id: d148d684-144a-48d2-8adc-8be447de8436
+    cluster_id: '20287'
+    data:
+      brand: arkon
+      modelno: ipm tab1
+      price: 13 04
+      title: arkon portable fold up stand for apple ipad galaxy tab playbook xoom
+        hp toshiba acer nook and other tablets ipm tab1
+  - id: 146ce44e-434e-4962-bf9b-b85264aeaaee
+    cluster_id: '20287'
+    data:
+      brand: arkon
+      modelno: ipm tab1
+      price: 14 09
+      title: arkon ipad desktop and travel stand
+  file0_7333:
+  - id: b4d76c4e-3927-4459-a4c5-afd7bff285ed
+    cluster_id: '7333'
+    data:
+      brand: uniden
+      modelno: gmr3689 2ck
+      price: 65 99
+      title: uniden gmr3689 2ck 36 mile gmrs tru waterproof two way radios with headset
+        jack yellow two radios
+  file0_2695:
+  - id: 05e43264-bed7-4849-81ec-cf6bc1d824a4
+    cluster_id: '2695'
+    data:
+      brand: msi
+      modelno: 'z68ma ed55 b3 '
+      price: 159 99
+      title: msi z68ma ed55 b3 lga1155 intel z68 b3 ddr3 sata3 and usb 3 0 a gbe matx
+        motherboard
+  file0_13869:
+  - id: d4cef002-c73c-4b1d-8511-299d2471907d
+    cluster_id: '13869'
+    data:
+      brand: disney
+      modelno: ons076ca dy05
+      price: 29 99
+      title: disney 15 4 inch laptop slip case sleeve cars
+  file0_3539:
+  - id: f21c5d2d-e65b-4eb8-b26b-499bde582c75
+    cluster_id: '3539'
+    data:
+      brand: simplism japan
+      modelno: tr fscsipd2 pk en
+      price: 34 99
+      title: simplism japan flip silicone case set for ipad 2 pink tr fscsipd2 pk
+        en
+  file0_9351:
+  - id: 15af8415-3bb6-46fa-b595-754af2f55fd8
+    cluster_id: '9351'
+    data:
+      brand: griffin technology
+      modelno: gc23124
+      price: 28 07
+      title: tunejuice for iphone ipod 5w blk
+  file0_24052:
+  - id: de604105-3765-42aa-9fbb-a7f67d60bca2
+    cluster_id: '24052'
+    data:
+      brand: hp
+      modelno: ed493ut
+      price: 97 88
+      title: hp ed493ut smart auto power adapter
+  file0_13823:
+  - id: e8f2636e-9511-43aa-93f5-716d76fe14d6
+    cluster_id: '13823'
+    data:
+      brand: hp
+      modelno: 2011x
+      price: 129 99
+      title: hp 2011x 20 inch led monitor black
+  file0_20831:
+  - id: 527510ca-e3fe-4e64-aa3f-088abb19fc44
+    cluster_id: '20831'
+    data:
+      brand: panasonic
+      modelno: kx mb3020
+      price: 265 99
+      title: panasonic kx mb3020 multi function laser printer
+  file0_17355:
+  - id: 08af3e52-98bf-44dc-b21c-53c7ccd54678
+    cluster_id: '17355'
+    data:
+      brand: advantus
+      modelno: ''
+      price: ''
+      title: new advantus 75553 carabiner style retractable id reel 30 extension smoke
+        6 pack avt75553
+  file0_14439:
+  - id: 92e8517f-d5b3-4dbf-9e02-b90c684d020e
+    cluster_id: '14439'
+    data:
+      brand: cooler master
+      modelno: rs460 pmsra3 us
+      price: 38 24
+      title: cooler master extreme power series 460w atx form factor 12v v2 01 power
+        supply rs460 pmsra3 us
+  file0_5307:
+  - id: eb0145c2-8d9f-4f2e-accd-d46ebd9ce4e9
+    cluster_id: '5307'
+    data:
+      brand: audio technica
+      modelno: ath t300
+      price: 26 95
+      title: monitor plush earpads headphone
+  file0_24589:
+  - id: ee3cf1c4-89cb-4f1e-b45c-e8140aad982e
+    cluster_id: '24589'
+    data:
+      brand: cables unlimited
+      modelno: pcm 2295 03
+      price: 10 88
+      title: cables unlimited 3 high speed hdmi cable black
+  file0_13318:
+  - id: 66261e0a-58f5-4f65-b36e-0bb7f33a74d3
+    cluster_id: '13318'
+    data:
+      brand: ultimate ears
+      modelno: 985 000223
+      price: 19 99
+      title: ultimate ears 100 noise isolating earphones jade guitar green blue
+  file0_7637:
+  - id: 2cd460dd-1742-4feb-a731-455979cbce63
+    cluster_id: '7637'
+    data:
+      brand: roocase
+      modelno: ym34 capstylus bk
+      price: 10 97
+      title: roocase capacitive black stylus for lg g slate 4g android 8 9 inch tablet
+        for t mobile
+  file0_17225:
+  - id: 924a92ed-2eb8-45b3-8e16-f0ad0da8353c
+    cluster_id: '17225'
+    data:
+      brand: tops
+      modelno: ''
+      price: 24 3
+      title: tops 74112 second nature subject wirebound notebook quadrille rule ltr
+        we 80 sheet
+  file0_16520:
+  - id: 8ef57e48-d940-4a84-872a-161cfa268f9c
+    cluster_id: '16520'
+    data:
+      brand: pendaflex
+      modelno: ''
+      price: '67'
+      title: new pendaflex 22200 double ply tabbed file jacket with two inch expansion
+        letter manila 50 box ess22200
+  file0_12871:
+  - id: db268626-161a-4f03-b82e-bcb5419d0d0c
+    cluster_id: '12871'
+    data:
+      brand: kingston
+      modelno: kth pl313e 4g
+      price: 46 13
+      title: kingston 4 gb ddr3 sdram memory module 4 gb 1 x 4 gb 1333mhz ddr31333
+        pc310600 ecc ddr3 sdram dimm kth pl313e 4g
+  file0_15948:
+  - id: 850a9048-aaf9-4a7e-a149-09b73d359ebe
+    cluster_id: '15948'
+    data:
+      brand: astak
+      modelno: cm d001
+      price: 3 94
+      title: astak cm d001 dummy camera with built in motion sensor
+  file0_13093:
+  - id: d61d3e3d-caa6-46d0-81c2-b98b87a04f97
+    cluster_id: '13093'
+    data:
+      brand: griffin technology
+      modelno: gc17080
+      price: 14 58
+      title: griffin gc17080 usb to dock connector cable for ipod iphone coiled
+  file0_20350:
+  - id: 8147ff8e-b3b9-4c2c-a9fa-88c135ea1fc5
+    cluster_id: '20350'
+    data:
+      brand: general electric
+      modelno: '23269'
+      price: '3'
+      title: ge 23269 rg6 coaxial video cable black 12 feet
+  file0_11464:
+  - id: 5b9adba2-1d9c-4fd6-bd0a-11fe5417ccd5
+    cluster_id: '11464'
+    data:
+      brand: sony
+      modelno: npbk1
+      price: 22 5
+      title: sony np bk1 type k rechargeable li ion battery pack for sony webbie camcorder
+        s780 s750 digital cameras retail packaging
+  file0_5354:
+  - id: b36cd5d1-615b-4e2a-997b-76920ce63866
+    cluster_id: '5354'
+    data:
+      brand: antec
+      modelno: cp 850
+      price: 119 17
+      title: antec cp 850 850 watt cpx power supply unit for antec twelve hundred
+        p183 and p193
+  file0_23192:
+  - id: 5f8beea6-46eb-40c3-a15f-f92c8cab47c8
+    cluster_id: '23192'
+    data:
+      brand: quartet
+      modelno: ''
+      price: 199 09
+      title: quartet horizontal format planning system porcelain 36 x 24 white aluminum
+        frame
+  file0_906:
+  - id: 66d34e62-28f8-48c6-a6a3-7e214541b82c
+    cluster_id: '906'
+    data:
+      brand: kensington
+      modelno: k60087
+      price: 21 99
+      title: kensington monitor stand small with smartfit system k60087
+  file0_17719:
+  - id: 9029a9a0-b9e9-4a17-b6a5-280117b10b48
+    cluster_id: '17719'
+    data:
+      brand: pendaflex
+      modelno: ''
+      price: ''
+      title: new pendaflex r152yel two ply reinforced file folder straight cut top
+        tab letter yellow 100 box essr152yel
+  file0_14166:
+  - id: 1e79b749-632b-4d46-8a80-28100d77232f
+    cluster_id: '14166'
+    data:
+      brand: m edge
+      modelno: pad1 s1 n b
+      price: 32 5
+      title: m edge touring sleeve for ipad 1 and 2 black pad1 s1 n b
+  file0_19240:
+  - id: 612a6ea4-6f51-4086-87d2-6ae88d29be7e
+    cluster_id: '19240'
+    data:
+      brand: general electric
+      modelno: '76401'
+      price: 12 72
+      title: ge cordless phone nimh 3 6v 600mah battery 76401
