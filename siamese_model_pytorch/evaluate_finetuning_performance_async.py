@@ -19,6 +19,7 @@ from sklearn.metrics import (
 )
 from openai import AsyncOpenAI
 from tqdm.asyncio import tqdm
+import re
 
 # --- グローバル変数 ---
 BIB_DATA = {}  # {record_id: bib_details_dict}
@@ -158,27 +159,27 @@ def load_bib_data_and_gt_clusters(yaml_path):
         print(f"  サイズ{size}: {size_distribution[size]}クラスタ")
 
 
-def load_evaluation_pairs(csv_path):
+def load_evaluation_pairs(csv_path, limit=None):
     """
     CSVファイルから評価用ペアを読み込む
     """
-    pairs = []
-    all_record_ids = set()
-    
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"CSVファイルが見つかりません: {csv_path}")
     
-    with open(csv_path, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        header = next(reader, None)  # ヘッダー行を読み飛ばす
-        
-        for row in reader:
-            if len(row) >= 2:
-                record_id_1, record_id_2 = row[0].strip(), row[1].strip()
-                pairs.append((record_id_1, record_id_2))
-                all_record_ids.add(record_id_1)
-                all_record_ids.add(record_id_2)
-    
+    pairs_df = pd.read_csv(csv_path, header=None, names=['record_id1', 'record_id2'])
+    if limit:
+        pairs_df = pairs_df.head(limit)
+        print(f"評価ペアを {limit} 件に制限しました。")
+
+    pairs = []
+    all_record_ids = set()
+
+    for _, row in pairs_df.iterrows():
+        record_id_1, record_id_2 = str(row['record_id1']).strip(), str(row['record_id2']).strip()
+        pairs.append((record_id_1, record_id_2))
+        all_record_ids.add(record_id_1)
+        all_record_ids.add(record_id_2)
+
     print(f"評価ペアを読み込みました: {len(pairs)} ペア ({len(all_record_ids)} ユニークレコード)")
     return pairs, all_record_ids
 
@@ -219,78 +220,78 @@ def get_prompts(data_type):
     """データタイプに応じたプロンプトを返す"""
     if data_type == "bib":
         system_prompt = (
-            "あなたは2つの書誌情報が実質的に同一の文献を指すかどうかを判断する専門家です。\n"
-            "まず、2つの書誌情報が同一の文献と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
-            "あなたの判断は次のルールに厳密に従う必要があります：\n"
-            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
-            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+            "You are an expert at determining whether two bibliographic records refer to essentially the same publication.\n"
+            "First, please clearly answer 'Yes' if you believe the two bibliographic records refer to the same publication, or 'No' otherwise.\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         )
         user_prompt_template = (
-            "以下の2つの書誌情報が、実質的に同一の文献を指しているかどうかを判断してください。\n\n"
-            "情報1:\n{info_1}\n\n"
-            "情報2:\n{info_2}\n\n"
-            "これらは同一の文献ですか？\n回答:"
+            "Please determine whether the following two bibliographic records refer to essentially the same publication.\n\n"
+            "Record 1:\n{info_1}\n\n"
+            "Record 2:\n{info_2}\n\n"
+            "Do these refer to the same publication?\nAnswer:"
         )
     elif data_type == "music":
         system_prompt = (
-            "あなたは2つの楽曲情報が実質的に同一の楽曲を指すかどうかを判断する専門家です。\n"
-            "まず、2つの楽曲情報が同一の楽曲と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
-            "あなたの判断は次のルールに厳密に従う必要があります：\n"
-            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
-            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+            "You are an expert at determining whether two music records refer to essentially the same musical work.\n"
+            "First, please clearly answer 'Yes' if you believe the two music records refer to the same work, or 'No' otherwise.\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         )
         user_prompt_template = (
-            "以下の2つの楽曲情報が、実質的に同一の楽曲を指しているかどうかを判断してください。\n\n"
-            "情報1:\n{info_1}\n\n"
-            "情報2:\n{info_2}\n\n"
-            "これらは同一の楽曲ですか？\n回答:"
+            "Please determine whether the following two music records refer to essentially the same musical work.\n\n"
+            "Record 1:\n{info_1}\n\n"
+            "Record 2:\n{info_2}\n\n"
+            "Do these refer to the same work?\nAnswer:"
         )
     elif data_type == "person":
         system_prompt = (
-            "あなたは2つの人物情報が実質的に同一の人物を指すかどうかを判断する専門家です。\n"
-            "まず、2つの人物情報が同一の人物と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
-            "あなたの判断は次のルールに厳密に従う必要があります：\n"
-            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
-            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+            "You are an expert at determining whether two person records refer to essentially the same individual.\n"
+            "First, please clearly answer 'Yes' if you believe the two person records refer to the same individual, or 'No' otherwise.\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         )
         user_prompt_template = (
-            "以下の2つの人物情報が、実質的に同一の人物を指しているかどうかを判断してください。\n\n"
-            "情報1:\n{info_1}\n\n"
-            "情報2:\n{info_2}\n\n"
-            "これらは同一の人物ですか？\n回答:"
+            "Please determine whether the following two person records refer to essentially the same individual.\n\n"
+            "Record 1:\n{info_1}\n\n"
+            "Record 2:\n{info_2}\n\n"
+            "Do these refer to the same person?\nAnswer:"
         )
     elif data_type == "walmart_amazon_product":
         system_prompt = (
-            "あなたは2つの商品情報が実質的に同一の商品を指すかどうかを判断する専門家です。\n"
-            "まず、2つの商品情報が同一と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
-            "あなたの判断は次のルールに厳密に従う必要があります：\n"
-            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
-            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+            "You are an expert at determining whether two product records refer to essentially the same product.\n"
+            "First, please clearly answer 'Yes' if you believe the two product records refer to the same product, or 'No' otherwise.\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         )
         user_prompt_template = (
-            "以下の2つの商品情報が、実質的に同一の商品を指しているかどうかを判断してください。\n\n"
-            "情報1:\n{info_1}\n\n"
-            "情報2:\n{info_2}\n\n"
-            "これらは同一の商品ですか？\n回答:"
+            "Please determine whether the following two product records refer to essentially the same product.\n\n"
+            "Product 1:\n{info_1}\n\n"
+            "Product 2:\n{info_2}\n\n"
+            "Do these refer to the same product?\nAnswer:"
         )
     elif data_type == "wdc_product":
         system_prompt = (
-            "あなたは2つの商品情報が実質的に同一の商品を指すかどうかを判断する専門家です。\n"
-            "まず、2つの商品情報が同一と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。\n"
-            "あなたの判断は次のルールに厳密に従う必要があります：\n"
-            " - 類似度スコアが0.5以上の場合、回答は必ず「はい」にしてください。\n"
-            " - 類似度スコアが0.5未満の場合、回答は必ず「いいえ」にしてください。\n"
+            "You are an expert at determining whether two product records refer to essentially the same product.\n"
+            "First, please clearly answer 'Yes' if you believe the two product records refer to the same product, or 'No' otherwise.\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         )
         user_prompt_template = (
-            "以下の2つの商品情報が、実質的に同一の商品を指しているかどうかを判断してください。\n\n"
-            "情報1:\n{info_1}\n\n"
-            "情報2:\n{info_2}\n\n"
-            "これらは同一の商品ですか？\n回答:"
+            "Please determine whether the following two product records refer to essentially the same product.\n\n"
+            "Product 1:\n{info_1}\n\n"
+            "Product 2:\n{info_2}\n\n"
+            "Do these refer to the same product?\nAnswer:"
         )
     else:
         raise ValueError(f"未知のデータタイプです: {data_type}")
@@ -376,23 +377,26 @@ async def get_llm_evaluation_for_pair_async(client, record_id_1, record_id_2, mo
         if lines:
             is_similar_str = lines[0].strip().lower()
         
-        score_keyword = "類似度スコア:"
-        for line in lines:
-            if score_keyword in line:
-                similarity_score_str = line.split(score_keyword)[-1].strip()
-                break
-        
-        # パース処理
+        # 英語と日本語のスコアキーワードに対応
+        score_pattern = r"(?:類似度スコア|Similarity Score|Confidence Score):\s*([0-9.]+)"
+        match = re.search(score_pattern, response_text, re.IGNORECASE)
+        if match:
+            similarity_score_str = match.group(1)
+
+        # パース処理 (英語と日本語に対応)
         parsed_is_similar = None
-        if "はい" in is_similar_str:
+        first_line_check = is_similar_str.rstrip('.。')
+        if first_line_check in ["yes", "はい"]:
             parsed_is_similar = True
-        elif "いいえ" in is_similar_str:
+        elif first_line_check in ["no", "いいえ"]:
             parsed_is_similar = False
         else:
             # 応答全体から探す
-            if "はい" in response_text and "いいえ" not in response_text:
+            has_yes = "yes" in response_text.lower() or "はい" in response_text
+            has_no = "no" in response_text.lower() or "いいえ" in response_text
+            if has_yes and not has_no:
                 parsed_is_similar = True
-            elif "いいえ" in response_text and "はい" not in response_text:
+            elif has_no and not has_yes:
                 parsed_is_similar = False
         
         parsed_similarity_score = None
@@ -421,15 +425,9 @@ async def get_llm_evaluation_for_pair_async(client, record_id_1, record_id_2, mo
         return parsed_is_similar, parsed_similarity_score, None
         
     except Exception as e:
-        # openai.APIErrorから詳細なエラー情報を取得
-        if hasattr(e, 'message'):
-            error_details = e.message
-        elif hasattr(e, 'response') and hasattr(e.response, 'text'):
-            error_details = e.response.text
-        else:
-            error_details = str(e)
-            
-        error_msg = f"API呼び出し中にエラーが発生 (ペア: {record_id_1}, {record_id_2}): {error_details}"
+        error_msg = f"API Error for pair ({record_id_1}, {record_id_2}): {type(e).__name__} - {e}\n"
+        with open("error_log.txt", "a", encoding="utf-8") as f:
+            f.write(error_msg)
         return None, None, error_msg
 
 
@@ -630,6 +628,11 @@ def sanitize_model_name_for_filename(model_name):
     """ファイル名に使用できるようにモデル名をサニタイズする"""
     return model_name.replace('/', '_').replace(':', '_').replace(' ', '_')
 
+def truncate_filename_component(text, max_length=50):
+    """ファイル名の構成要素を指定した長さに短縮する"""
+    if len(text) <= max_length:
+        return text
+    return text[:max_length-3] + "..."
 
 def format_clusters_with_details(predicted_clusters, bib_data_dict):
     """
@@ -662,7 +665,7 @@ async def main(args):
     load_bib_data_and_gt_clusters(args.ground_truth_yaml)
     
     # 評価ペアの読み込み
-    pairs_to_evaluate, all_record_ids_in_pairs = load_evaluation_pairs(args.pairs_csv)
+    pairs_to_evaluate, all_record_ids_in_pairs = load_evaluation_pairs(args.pairs_csv, args.limit_pairs)
     all_record_ids_list = sorted(list(all_record_ids_in_pairs))
     
     print("\n===== ファインチューニング前後のモデル性能比較評価 =====")
@@ -801,7 +804,12 @@ async def main(args):
     # --- ファイル名の生成 ---
     model_before_ft_sanitized = sanitize_model_name_for_filename(args.model_before_ft)
     model_after_ft_sanitized = sanitize_model_name_for_filename(args.model_after_ft)
-    base_filename = f"eval_async_{os.path.basename(args.pairs_csv).replace('.csv', '')}_before-{model_before_ft_sanitized}_after-{model_after_ft_sanitized}"
+    # ファイル名の各構成要素を短縮
+    pairs_base = truncate_filename_component(os.path.basename(args.pairs_csv).replace('.csv', ''), 30)
+    model_before_short = truncate_filename_component(model_before_ft_sanitized, 10)
+    model_after_short = truncate_filename_component(model_after_ft_sanitized, 70)
+
+    base_filename = f"eval_async_{pairs_base}_before-{model_before_short}_after-{model_after_short}"
 
     # --- 詳細結果の保存 ---
     detailed_csv_filename = os.path.join(output_dir, f"{base_filename}_details.csv")
@@ -926,7 +934,8 @@ if __name__ == "__main__":
     parser.add_argument("--model_after_ft", required=True, help="ファインチューニング後のモデルID (必須)")
     parser.add_argument("--max_concurrent", type=int, default=20, help="最大同時リクエスト数")
     parser.add_argument("--requests_per_minute", type=int, default=3000, help="1分間の最大リクエスト数")
-    
+    parser.add_argument("--limit_pairs", type=int, default=None, help="評価ペアの数を制限します。デバッグ用。")
+
     args = parser.parse_args()
     
     # グローバル設定を更新

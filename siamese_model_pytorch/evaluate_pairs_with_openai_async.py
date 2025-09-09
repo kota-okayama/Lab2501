@@ -199,17 +199,21 @@ def parse_llm_response(response_text):
 
     if len(lines) > 0:
         first_line = lines[0].strip()
-        if first_line.rstrip(".。") in ["はい", "いいえ"]:
-            judgement = first_line.rstrip(".。")
+        if first_line.rstrip(".。") in ["はい", "いいえ", "Yes", "No"]:
+            # 日本語と英語の両方に対応
+            if first_line.rstrip(".。") in ["はい", "Yes"]:
+                judgement = "Yes"
+            elif first_line.rstrip(".。") in ["いいえ", "No"]:
+                judgement = "No"
 
-    score_pattern = r"類似度スコア:\s*([0-9.]+)"
+    score_pattern = r"(類似度スコア|Similarity Score|Confidence Score):\s*([0-9.]+)"
     score_found = False
     reason_start_index_after_score = 0
     for i, line in enumerate(lines):
         match = re.search(score_pattern, line)
         if match:
             try:
-                score = float(match.group(1))
+                score = float(match.group(2))  # group(2)を使用（group(1)は言語部分）
                 score_found = True
                 reason_start_index_after_score = i + 1
                 break
@@ -244,10 +248,14 @@ def parse_llm_response(response_text):
     reason = "\n".join(reason_lines).strip()
 
     if judgement == "不明":
-        if "はい" in response_text and "いいえ" not in response_text:
-            judgement = "はい"
-        elif "いいえ" in response_text and "はい" not in response_text:
-            judgement = "いいえ"
+        # 英語と日本語両方に対応
+        has_yes = "はい" in response_text or "Yes" in response_text
+        has_no = "いいえ" in response_text or "No" in response_text
+        
+        if has_yes and not has_no:
+            judgement = "Yes"
+        elif has_no and not has_yes:
+            judgement = "No"
 
     return judgement, score, reason
 

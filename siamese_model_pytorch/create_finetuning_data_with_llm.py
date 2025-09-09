@@ -66,28 +66,28 @@ def format_record_data(data_dict, data_type):
     (create_finetuning_data_from_strategies.py との前処理統一のため)
     """
     if data_type == "music":
-        title = data_dict.get("title", "タイトル不明")
-        artist = data_dict.get("artist", "アーティスト不明")
-        album = data_dict.get("album", "アルバム不明")
-        release_date = data_dict.get("release_date", "リリース日不明")
-        return (f"タイトル: {title}\nアーティスト: {artist}\n"
-                f"アルバム: {album}\nリリース日: {release_date}")
+        title = data_dict.get("title", "Unknown")
+        artist = data_dict.get("artist", "Unknown")
+        album = data_dict.get("album", "Unknown")
+        release_date = data_dict.get("release_date", "Unknown")
+        return (f"Title: {title}\nArtist: {artist}\n"
+                f"Album: {album}\nRelease Date: {release_date}")
     elif data_type == "person":
-        name = data_dict.get("name", "名前不明")
-        affiliation = data_dict.get("affiliation", "所属不明")
-        return f"名前: {name}\n所属: {affiliation}"
+        name = data_dict.get("name", "Unknown")
+        affiliation = data_dict.get("affiliation", "Unknown")
+        return f"Name: {name}\nAffiliation: {affiliation}"
     elif data_type == "walmart_amazon_product":
-        title = data_dict.get("title", "商品名不明")
-        brand = data_dict.get("brand", "ブランド不明")
-        modelno = data_dict.get("modelno", "モデル番号不明")
-        price = data_dict.get("price", "価格不明")
-        return f"商品名: {title}\nブランド: {brand}\nモデル番号: {modelno}\n価格: {price}"
+        title = data_dict.get("title", "Unknown")
+        brand = data_dict.get("brand", "Unknown")
+        modelno = data_dict.get("modelno", "Unknown")
+        price = data_dict.get("price", "Unknown")
+        return f"Product Name: {title}\nBrand: {brand}\nModel Number: {modelno}\nPrice: {price}"
     elif data_type == "wdc_product":
-        title = data_dict.get("title", "商品名不明")
-        brand = data_dict.get("brand", "ブランド不明")
-        description = data_dict.get("description", "説明不明")
-        price = data_dict.get("price", "価格不明")
-        return f"商品名: {title}\nブランド: {brand}\n説明: {description}\n価格: {price}"
+        title = data_dict.get("title", "Unknown")
+        brand = data_dict.get("brand", "Unknown")
+        description = data_dict.get("description", "Unknown")
+        price = data_dict.get("price", "Unknown")
+        return f"Product Name: {title}\nBrand: {brand}\nDescription: {description}\nPrice: {price}"
     else:  # bib or default
         title = data_dict.get("bib1_title", "タイトル不明")
         author = data_dict.get("bib1_author", "著者不明")
@@ -214,7 +214,7 @@ def select_one_batch_with_llm(
     )
     try:
         completion = client.chat.completions.create(
-            model="gpt-4o-mini",  # コストと速度のバランスが良いモデル
+            model="gpt-4o",  # コストと速度のバランスが良いモデル
             messages=[
                 {
                     "role": "system",
@@ -236,8 +236,13 @@ def select_one_batch_with_llm(
         # 思考プロセスが含まれる場合でも、最後の行に数値リストがあると仮定
         last_line = response_text.strip().split("\n")[-1]
         # 数字とカンマ、スペース以外の文字を削除してパースの頑健性を高める
-        cleaned_line = "".join(filter(lambda char: char.isdigit() or char == ',' or char.isspace(), last_line))
-        selected_indices = [int(i.strip()) for i in cleaned_line.split(",") if i.strip()]
+        cleaned_line = "".join(filter(
+            lambda char: char.isdigit() or char == ',' or char.isspace(), 
+            last_line
+        ))
+        selected_indices = [
+            int(i.strip()) for i in cleaned_line.split(",") if i.strip()
+        ]
         
         if any(i >= len(candidate_pairs) for i in selected_indices):
             raise ValueError("LLMが範囲外のインデックスを返しました。")

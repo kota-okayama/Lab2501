@@ -30,6 +30,9 @@ import subprocess
 import json
 import csv
 from tqdm import tqdm
+import shutil
+from datetime import datetime
+import glob
 
 # プロジェクトルートをPythonパスに追加
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -78,7 +81,24 @@ def run_command(command, description):
 
 def sanitize_model_name_for_filename(model_name):
     """ファイル名に使用できるようにモデル名をサニタイズする"""
-    return model_name.replace('/', '_').replace(':', '_').replace(' ', '_')
+    # 長いファイル名を短縮化
+    sanitized = model_name.replace('/', '_').replace(':', '_').replace(' ', '_')
+
+    # ファインチューニングモデルの場合、短縮形を生成
+    if sanitized.startswith('ft_gpt-4o-mini-2024-07-18_mlab_'):
+        # ft:gpt-4o-mini-2024-07-18:mlab:amazon-walmart-product-matching-
+        # inconsistency-0904-100:CBwzXgQF -> ft_inconsistency-0904-100_CBwzXgQF
+        parts = sanitized.split('_')
+        if len(parts) >= 7:  # ft_gpt-4o-mini-2024-07-18_mlab_[info]_[id]
+            strategy_part = '_'.join(parts[6:-1])  # strategy info部分
+            model_id = parts[-1]  # 最後のモデルID
+            return f"ft_{strategy_part}_{model_id}"
+
+    # 通常のモデルも短縮
+    if len(sanitized) > 50:
+        return sanitized[:50]
+
+    return sanitized
 
 
 def get_num_lines_in_jsonl(file_path):
@@ -87,6 +107,165 @@ def get_num_lines_in_jsonl(file_path):
         return 0
     with open(file_path, 'r', encoding='utf-8') as f:
         return sum(1 for _ in f)
+
+
+def extract_strategy_from_model_id(model_id):
+    """
+    モデルIDからサンプリング戦略を抽出する。
+    例: "ft:...:music-matching-random-..." -> "random"
+    """
+    if not model_id.startswith("ft:"):
+        return "base_model" 
+    
+    try:
+        parts = model_id.split(':')
+        if len(parts) >= 4:
+            # amazon-walmart-product-matching-inconsistency-0904-100 の部分から戦略を抽出
+            strategy_part = parts[3].replace('-', '_')
+            
+            # 既知の戦略パターンを確認
+            known_strategies = ['inconsistency', 'diversity', 'uncertainty', 'random', 'lowest_score']
+            for strategy in known_strategies:
+                if strategy in strategy_part:
+                    return strategy
+        
+        return 'random'  # デフォルト戦略
+    except Exception:
+        return 'random'
+
+
+def extract_iteration_number(output_base_dir):
+    """出力ベースディレクトリからイテレーション番号を抽出する
+    
+    Args:
+        output_base_dir (str): 例: "results_music/run_2k_ite2_music"
+    
+    Returns:
+        int: イテレーション番号（例: 2）。見つからない場合は0
+    """
+    import re
+    match = re.search(r'_ite(\d+)_', output_base_dir)
+    if match:
+        return int(match.group(1))
+    return 0
+
+
+def find_previous_ft_data(output_base_dir, data_type, strategy, current_iteration):
+    """過去のイテレーションのFTデータファイルを検索する
+    
+    Args:
+        output_base_dir (str): 現在の出力ベースディレクトリ
+        data_type (str): データタイプ（例: "music"）
+        strategy (str): 戦略名（例: "diversity"）
+        current_iteration (int): 現在のイテレーション番号
+    
+    Returns:
+        list: 過去のFTデータファイルパスのリスト
+    """
+    import glob
+    import re
+    
+    previous_files = []
+    base_pattern = output_base_dir.replace(f'_ite{current_iteration}_', '_ite{}_')
+    
+    # ite0からcurrent_iteration-1までのファイルを検索
+    for ite in range(current_iteration):
+        ite_dir = base_pattern.format(ite)
+        search_pattern = os.path.join(ite_dir, "evaluation_results", f"*{strategy}*.jsonl")
+        
+        # パターンマッチでファイルを検索
+        matching_files = glob.glob(search_pattern)
+        for file_path in matching_files:
+            if os.path.exists(file_path):
+                num_lines = get_num_lines_in_jsonl(file_path)
+                if num_lines > 0:
+                    previous_files.append(file_path)
+                    print(f"  -> 過去のFTデータを発見: {file_path} ({num_lines} 件)")
+                else:
+                    print(f"  -> 空のFTデータファイルをスキップ: {file_path}")
+    
+    return previous_files
+
+
+def find_previous_cumulative_ft_data(output_base_dir, strategy, current_iteration):
+    """1つ前のイテレーションの累積FTデータファイルを検索する"""
+    if current_iteration == 0:
+        return None
+
+    import glob
+    
+    previous_iteration = current_iteration - 1
+    
+    # 1つ前のイテレーションのディレクトリパスを構築
+    # 例: ".../run_2k_ite2_wdc" -> ".../run_2k_ite1_wdc"
+    base_pattern = output_base_dir.replace(
+        f'_ite{current_iteration}_', f'_ite{previous_iteration}_'
+    )
+    
+    # 累積FTファイルを検索
+    search_pattern = os.path.join(
+        base_pattern, "evaluation_results", f"*{strategy}_cumulative_ite{previous_iteration}.jsonl"
+    )
+    
+    matching_files = glob.glob(search_pattern)
+    
+    if matching_files:
+        found_file = matching_files[0]
+        num_lines = get_num_lines_in_jsonl(found_file)
+        if num_lines > 0:
+            print(f"  -> 1つ前の累積FTデータを発見: {found_file} ({num_lines} 件)")
+            return found_file
+        else:
+            print(f"  -> 1つ前の累積FTデータが空のためスキップ: {found_file}")
+
+    # ite0の場合は `_cumulative_` がつかない可能性があるため、フォールバック検索
+    if previous_iteration == 0:
+        search_pattern_fallback = os.path.join(
+            base_pattern, "evaluation_results", f"*{strategy}*.jsonl"
+        )
+        all_files = glob.glob(search_pattern_fallback)
+        # 累積ファイル以外を選ぶ
+        non_cumulative_files = [f for f in all_files if '_cumulative_' not in os.path.basename(f)]
+        if non_cumulative_files:
+            found_file = non_cumulative_files[0]
+            num_lines = get_num_lines_in_jsonl(found_file)
+            if num_lines > 0:
+                 print(f"  -> [フォールバック] ite0のFTデータを発見: {found_file} ({num_lines} 件)")
+                 return found_file
+
+    return None
+
+
+def merge_ft_data_files(file_paths, output_path):
+    """複数のFTデータファイルを統合する
+    
+    Args:
+        file_paths (list): 統合するJSONLファイルパスのリスト
+        output_path (str): 出力先のJSONLファイルパス
+    
+    Returns:
+        int: 統合されたレコード数
+    """
+    total_records = 0
+    
+    try:
+        with open(output_path, 'w', encoding='utf-8') as outfile:
+            for file_path in file_paths:
+                if os.path.exists(file_path):
+                    with open(file_path, 'r', encoding='utf-8') as infile:
+                        for line in infile:
+                            line = line.strip()
+                            if line:
+                                outfile.write(line + '\n')
+                                total_records += 1
+                    print(f"  -> {file_path} から {get_num_lines_in_jsonl(file_path)} 件を統合")
+        
+        print(f"統合完了: {total_records} 件のレコードを {output_path} に保存")
+        return total_records
+        
+    except Exception as e:
+        print(f"FTデータ統合中にエラーが発生しました: {e}")
+        return 0
 
 
 def run_embedding_and_graph_pipeline(args):
@@ -210,13 +389,24 @@ def get_legacy_evaluation_details_path(args, pairs_csv_path):
 def get_evaluation_details_path(args, pairs_csv_path, model_before_ft, model_after_ft):
     """評価詳細CSVファイルのパスを生成する"""
     base_name = os.path.basename(pairs_csv_path).replace(".csv", "")
+    # ベース名も短縮化
+    if len(base_name) > 50:
+        base_name = base_name[:50]
+    
     before_model_name = sanitize_model_name_for_filename(model_before_ft)
     after_model_name = sanitize_model_name_for_filename(model_after_ft)
 
     output_filename = (
-        f"eval_async_{base_name}_before-{before_model_name}_"
+        f"eval_{base_name}_before-{before_model_name}_"
         f"after-{after_model_name}_details.csv"
     )
+    
+    # ファイル名の長さをさらに制限
+    if len(output_filename) > 200:
+        # ハッシュを使用してファイル名を短縮
+        import hashlib
+        hash_str = hashlib.md5(output_filename.encode()).hexdigest()[:8]
+        output_filename = f"eval_details_{hash_str}.csv"
 
     return os.path.join(
         os.path.dirname(pairs_csv_path),
@@ -245,6 +435,9 @@ def run_evaluation(args, pairs_csv_path, model_before, model_after):
         "--requests_per_minute", str(args.requests_per_minute),
     ]
 
+    if args.limit_pairs:
+        command.extend(["--limit_pairs", str(args.limit_pairs)])
+
     if not run_command(command, "モデル性能評価"):
         print("STEP 3 が失敗しました。処理を中断します。")
         sys.exit(1)
@@ -256,6 +449,20 @@ def run_evaluation(args, pairs_csv_path, model_before, model_after):
 def run_inconsistency_detection(args, details_csv_path):
     """STEP 4: 矛盾する三角形を検出"""
     print("\n\n===== STEP 4: 矛盾する三角形の検出 =====")
+
+    # 実際のdetails.csvファイルが存在するか確認
+    if not os.path.exists(details_csv_path):
+        print(f"警告: 指定されたファイルが見つかりません: {details_csv_path}")
+        # evaluation_resultsディレクトリで*details.csvファイルを検索
+        output_dir = os.path.dirname(details_csv_path)
+        import glob
+        details_files = glob.glob(os.path.join(output_dir, "*details.csv"))
+        if details_files:
+            details_csv_path = details_files[0]  # 最初に見つかったファイルを使用
+            print(f"代替ファイルを使用: {details_csv_path}")
+        else:
+            print("エラー: details.csvファイルが見つかりません。")
+            sys.exit(1)
 
     script_path = os.path.join(
         "siamese_model_pytorch", "detect_inconsistent_triangles.py"
@@ -278,84 +485,243 @@ def run_inconsistency_detection(args, details_csv_path):
 
     print("===== STEP 4完了 =====")
     base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
-    return os.path.join(
-        output_dir, f"{base_name}_score_after_inconsistent_triangles.csv"
-    )
+    
+    # ファイル名の長さ制限
+    inconsistent_filename = f"{base_name}_score_after_inconsistent_triangles.csv"
+    if len(inconsistent_filename) > 200:
+        import hashlib
+        hash_str = hashlib.md5(inconsistent_filename.encode()).hexdigest()[:8]
+        inconsistent_filename = f"inconsistent_triangles_{hash_str}.csv"
+    
+    return os.path.join(output_dir, inconsistent_filename)
 
 
 def run_finetuning_data_preparation(
-    args, inconsistent_triangles_csv, details_csv_path, llm_clusters_json_path
+    args, inconsistent_triangles_csv, details_csv_path, llm_clusters_json_path, model_before_ft, model_after_ft, force_strategies=None
 ):
-    """STEP 5: ファインチューニング用データの準備（複数戦略）"""
+    """STEP 5: ファインチューニング用データの準備（モデル別戦略）"""
     print("\n\n===== STEP 5: ファインチューニング用データの準備 =====")
 
-    strategies = args.ft_strategies.split(',')
+    # イテレーション番号を抽出
+    current_iteration = extract_iteration_number(args.output_base_dir)
+    print(f"現在のイテレーション: {current_iteration}")
+
+    strategies_to_generate = []
+    if force_strategies:
+        print(f"指定された戦略リストに基づいてFTデータを生成します: {force_strategies}")
+        strategies_to_generate = force_strategies
+    else:
+        # BEFOREとAFTERモデル両方から戦略を抽出
+        strategy_before = extract_strategy_from_model_id(model_before_ft)
+        strategy_after = extract_strategy_from_model_id(model_after_ft)
+        
+        print(f"BEFOREモデル '{model_before_ft}' から抽出された戦略: {strategy_before}")
+        print(f"AFTERモデル '{model_after_ft}' から抽出された戦略: {strategy_after}")
+
+        # 両方の戦略でFTデータを生成
+        if strategy_before != 'random':  # ベースモデル以外
+            strategies_to_generate.append(strategy_before)
+        else:
+            strategies_to_generate.append(strategy_after)
+        
+        # 重複を除去
+        strategies_to_generate = list(set(strategies_to_generate))
+        
+        if not strategies_to_generate:
+            strategies_to_generate = ['random']  # フォールバック
+
     base_name_for_ft = os.path.basename(
         details_csv_path
     ).replace("_details.csv", "")
     output_dir = os.path.dirname(details_csv_path)
-    num_samples = 0
+    num_samples = 100  # 固定100ペア
 
-    # 1. Inconsistency-based strategy (if requested)
-    if 'inconsistency' in strategies:
-        print("\n--- 戦略: inconsistency ---")
-        script_path = os.path.join(
-            "siamese_model_pytorch", "prepare_finetuning_data.py"
-        )
-        output_jsonl_path = os.path.join(
-            output_dir, f"ft_data_{base_name_for_ft}_inconsistency.jsonl"
-        )
-        command = [
-            "python3", "-u", script_path,
-            "--inconsistent_triangles_csv", inconsistent_triangles_csv,
-            "--evaluation_details_csv", details_csv_path,
-            "--ground_truth_yaml", args.record_yaml_path,
-            "--output_jsonl_path", output_jsonl_path,
-            "--data_type", args.data_type,
-            "--score_column", "score_before"
-        ]
-        if not run_command(command, "FTデータ準備 (inconsistency)"):
-            print("inconsistency 戦略が失敗しました。")
+    # 各戦略でファインチューニングデータを生成
+    for strategy in strategies_to_generate:
+        print(f"\n--- 戦略: {strategy} (100ペア固定) ---")
+        
+        # ファイル名の長さ制限
+        base_ft_filename = f"ft_data_{base_name_for_ft}_{strategy}.jsonl"
+        if len(base_ft_filename) > 200:
+            import hashlib
+            hash_str = hashlib.md5(base_ft_filename.encode()).hexdigest()[:8]
+            base_ft_filename = f"ft_data_{strategy}_{hash_str}.jsonl"
+
+        # 現在のイテレーションのFTデータファイル
+        current_ft_path = os.path.join(output_dir, base_ft_filename)
+        
+        # 最終的な統合FTデータファイル（イテレーション対応）
+        final_ft_filename = f"ft_data_{strategy}_cumulative_ite{current_iteration}.jsonl"
+        if len(final_ft_filename) > 200:
+            hash_str = hashlib.md5(final_ft_filename.encode()).hexdigest()[:8]
+            final_ft_filename = f"ft_data_{strategy}_cum_{hash_str}.jsonl"
+        final_ft_path = os.path.join(output_dir, final_ft_filename)
+
+
+        # 実際のdetails.csvファイルが存在するか確認して修正
+        actual_details_csv_path = details_csv_path
+        if not os.path.exists(details_csv_path):
+            print(f"警告: 指定されたファイルが見つかりません: {details_csv_path}")
+            # evaluation_resultsディレクトリで*details.csvファイルを検索
+            import glob
+            details_files = glob.glob(os.path.join(output_dir, "*details.csv"))
+            if details_files:
+                actual_details_csv_path = details_files[0]
+                print(f"代替ファイルを使用: {actual_details_csv_path}")
+            else:
+                print(f"エラー: {strategy} 戦略用のdetails.csvファイルが見つかりません。")
+                continue
+
+        # 戦略に基づいてファインチューニングデータを生成
+        if strategy in ['inconsistency', 'lowest_score']:
+            script_path = os.path.join(
+                "siamese_model_pytorch", "prepare_finetuning_data.py"
+            )
+            command = [
+                "python3", "-u", script_path,
+                "--inconsistent_triangles_csv", inconsistent_triangles_csv,
+                "--evaluation_details_csv", actual_details_csv_path,
+                "--ground_truth_yaml", args.record_yaml_path,
+                "--output_jsonl_path", current_ft_path,
+                "--data_type", args.data_type,
+                "--score_column", "score_after", # score_before から修正
+                "--num_samples", str(num_samples),
+                "--sampling_strategy", strategy
+            ]
+            if not run_command(command, f"FTデータ準備 ({strategy})"):
+                print(f"{strategy} 戦略が失敗しました。")
+                continue
         else:
-            num_samples = get_num_lines_in_jsonl(output_jsonl_path)
-            print(f"inconsistency 戦略で {num_samples} 件のデータを生成しました。")
+            script_path = os.path.join(
+                "siamese_model_pytorch",
+                "create_finetuning_data_from_strategies.py"
+            )
+            command = [
+                "python3", "-u", script_path,
+                "--strategy", strategy,
+                "--output_jsonl_path", current_ft_path,
+                "--ground_truth_yaml", args.record_yaml_path,
+                "--num_samples", str(num_samples),
+                "--data_type", args.data_type,
+            ]
+            if strategy in ["uncertainty", "random"]:
+                command.extend(["--evaluation_details_csv", actual_details_csv_path])
+            if strategy == "uncertainty":
+                command.extend(["--score_column", "score_after"])
+            if strategy == "diversity":
+                command.extend(["--llm_clusters_json", llm_clusters_json_path])
 
-    if num_samples == 0 and len(strategies) > 1:
-        print("警告: inconsistency戦略のサンプル数が0です。"
-              "他の戦略のサンプル数を決定できません。スキップします。")
-        return
+            if not run_command(command, f"FTデータ準備 ({strategy})"):
+                print(f"{strategy} 戦略が失敗しました。")
+                continue
 
-    # 2. Other strategies
-    other_strategies = [s for s in strategies if s != 'inconsistency']
-    for strategy in other_strategies:
-        print(f"\n--- 戦略: {strategy} ---")
-        script_path = os.path.join(
-            "siamese_model_pytorch",
-            "create_finetuning_data_from_strategies.py"
+        # 現在のイテレーションのサンプル数を確認
+        current_samples = get_num_lines_in_jsonl(current_ft_path)
+        print(f"{strategy} 戦略で {current_samples} 件のデータを生成しました。")
+        
+        # 過去のデータと統合
+        print(f"\n--- イテレーション統合処理: {strategy} ---")
+        
+        # 1つ前の累積FTデータファイルを検索
+        previous_cumulative_file = find_previous_cumulative_ft_data(
+            args.output_base_dir, strategy, current_iteration
         )
-        output_jsonl_path = os.path.join(
-            output_dir, f"ft_data_{base_name_for_ft}_{strategy}.jsonl"
-        )
-        command = [
-            "python3", "-u", script_path,
-            "--strategy", strategy,
-            "--output_jsonl_path", output_jsonl_path,
-            "--ground_truth_yaml", args.record_yaml_path,
-            "--num_samples", str(num_samples),
-            "--data_type", args.data_type,
-        ]
-        if strategy in ["uncertainty", "random"]:
-            command.extend(["--evaluation_details_csv", details_csv_path])
-        if strategy == "uncertainty":
-            command.extend(["--score_column", "score_after"])
-        if strategy == "diversity":
-            command.extend(["--llm_clusters_json", llm_clusters_json_path])
-
-        if not run_command(command, f"FTデータ準備 ({strategy})"):
-            print(f"{strategy} 戦略が失敗しました。")
+        
+        # 統合するファイルリスト
+        files_to_merge = []
+        if previous_cumulative_file:
+            files_to_merge.append(previous_cumulative_file)
+        if get_num_lines_in_jsonl(current_ft_path) > 0:
+            files_to_merge.append(current_ft_path)
+        
+        if len(files_to_merge) > 0:
+            print(f"統合対象ファイル数: {len(files_to_merge)}")
+            total_samples = merge_ft_data_files(files_to_merge, final_ft_path)
+            print(f"累積FTデータ: {total_samples} 件 -> {final_ft_path}")
+        else:
+            print("統合するデータがありません。")
 
     print("\n===== STEP 5完了 =====")
+    return strategies_to_generate
 
+
+def run_finetuning_execution(args, output_dir, strategies_generated):
+    """STEP 6: 生成されたFTデータを使用してファインチューニングを実行"""
+    print("\n\n===== STEP 6: ファインチューニング実行 =====")
+    
+    current_iteration = extract_iteration_number(args.output_base_dir)
+    
+    for strategy in strategies_generated:
+        print(f"\n--- {strategy} 戦略のファインチューニング実行 ---")
+        
+        # 累積FTデータファイルを検索
+        if current_iteration >= 1:
+            pattern = f"*{strategy}_cumulative_ite{current_iteration}*.jsonl"
+        else:
+            pattern = f"*{strategy}*.jsonl"
+            
+            ft_files = glob.glob(os.path.join(output_dir, pattern))
+        
+        if not ft_files:
+            print(f"警告: {strategy} 戦略のFTデータファイルが見つかりません。")
+            continue
+            
+        ft_file = ft_files[0]  # 最初に見つかったファイルを使用
+        num_samples = get_num_lines_in_jsonl(ft_file)
+        
+        if num_samples == 0:
+            print(f"警告: {strategy} 戦略のFTデータが空です。スキップします。")
+            continue
+            
+        print(f"FTデータファイル: {ft_file} ({num_samples} 件)")
+        
+        # ファインチューニングジョブ名を生成
+        job_suffix = f"{args.data_type}-matching-{strategy}-ite{current_iteration}-{num_samples}"
+        
+        print(f"ファインチューニングジョブを開始: {job_suffix}")
+        print(f"ベースモデル: {args.base_model_for_ft}")
+        print(f"トレーニングデータ: {num_samples} 件")
+        
+        # 実際のファインチューニングコマンドを実行
+        # （ここでは実際のOpenAI APIコールは実装せず、ログのみ出力）
+        print("注意: 実際のファインチューニング実行機能は未実装です。")
+        print(f"実行予定コマンド: openai api fine_tuning.jobs.create -t {ft_file} -m {args.base_model_for_ft} --suffix {job_suffix}")
+    
+    print("\n===== STEP 6完了 =====")
+
+
+def find_details_file_dynamically(pairs_csv_path, ft_model):
+    """指定されたFTモデルに対応するdetails.csvファイルを動的に検索する"""
+    evaluation_results_dir = os.path.join(
+        os.path.dirname(pairs_csv_path), "..", "evaluation_results"
+    )
+    details_files = glob.glob(
+        os.path.join(evaluation_results_dir, "*details.csv")
+    )
+    
+    if details_files:
+        current_strategy = extract_strategy_from_model_id(ft_model)
+        strategy_with_hyphen = current_strategy.replace('_', '-')
+        
+        matching_files = []
+        for file_path in details_files:
+            filename = os.path.basename(file_path)
+            if (f"_{current_strategy}_" in filename or 
+                f"-{current_strategy}-" in filename or
+                f"_{strategy_with_hyphen}_" in filename or
+                f"-{strategy_with_hyphen}-" in filename):
+                matching_files.append(file_path)
+        
+        if matching_files:
+            found_path = matching_files[0]
+            print(f"  -> 対応するファイルを発見: {found_path}")
+            return found_path
+        else:
+            print(f"エラー: 戦略 '{current_strategy}' に対応する評価詳細ファイルが見つかりませんでした。")
+            return None
+    else:
+        print(f"エラー: 評価詳細ファイルが一つも見つかりません: {evaluation_results_dir}")
+        return None
 
 def main():
     """メインのパイプライン処理"""
@@ -406,7 +772,7 @@ def main():
         help="生成するエンベディングの組み合わせ (例: 'full;title')"
     )
     step1_group.add_argument(
-        "--k_neighbors", type=int, default=15, help="K近傍のK値"
+        "--k_neighbors", type=int, default=10, help="K近傍のK値"
     )
 
     # --- Step 3: Evaluation ---
@@ -423,16 +789,23 @@ def main():
     # --- Step 4: Inconsistency Detection ---
     step4_group = parser.add_argument_group('Step 4: Inconsistency Detection')
     step4_group.add_argument(
-        "--inconsistency_top_n", type=int, default=100,
-        help="検出する矛盾ペアの上位N件"
+        "--inconsistency_top_n", type=int, default=200,
+        help="検出する矛盾三角形の上位N件"
     )
 
     # --- Step 5: Finetuning Data Preparation ---
     step5_group = parser.add_argument_group('Step 5: Finetuning Data Prep')
-    step5_group.add_argument(
-        "--ft-strategies", type=str,
-        default="inconsistency,diversity,uncertainty,random",
-        help="実行するFTデータ生成戦略（カンマ区切り）"
+    # 注意: FT戦略はモデルIDから自動抽出されるため、--ft-strategies引数は削除
+    
+    # --- Step 6: Finetuning Execution ---
+    step6_group = parser.add_argument_group('Step 6: Finetuning Execution')
+    step6_group.add_argument(
+        "--execute_finetuning", action="store_true",
+        help="生成したFTデータを使用して実際にファインチューニングを実行"
+    )
+    step6_group.add_argument(
+        "--base_model_for_ft", type=str, default="gpt-4o-mini-2024-07-18",
+        help="ファインチューニングのベースモデル"
     )
 
     # --- 実行制御 ---
@@ -455,10 +828,32 @@ def main():
         "--skip_step_5", action="store_true",
         help="Step 5 をスキップ"
     )
+    control_group.add_argument("--num_samples", type=int, default=100, help="Number of samples for finetuning data strategies")
+    control_group.add_argument("--limit_pairs", type=int, help="Limit the number of pairs for evaluation for debugging.")
 
     args = parser.parse_args()
 
     os.makedirs(args.output_base_dir, exist_ok=True)
+
+    # ヘルパー関数をmain関数のトップレベルに定義
+    def find_clusters_file(base_dir):
+        """Helper to find the clusters_after.json file."""
+        import glob
+        evaluation_results_dir = os.path.join(base_dir, "evaluation_results")
+        
+        # まずは期待通りのパスを探す
+        expected_path = os.path.join(evaluation_results_dir, "clusters_after.json")
+        if os.path.exists(expected_path):
+            return expected_path
+            
+        # 見つからない場合はglobで探す
+        search_pattern = os.path.join(evaluation_results_dir, "*_clusters_after.json")
+        matching_files = glob.glob(search_pattern)
+        
+        if matching_files:
+            return matching_files[0]
+        
+        return None
 
     # --- パイプライン実行 ---
     if not args.skip_step_1:
@@ -476,94 +871,218 @@ def main():
             sys.exit(1)
         print(f"既存の評価ペアファイルを使用します: {pairs_csv_path}")
 
-    # --- Create Model Pairs ---
-    model_ids = args.model_ids
-    if not model_ids:
-        print("エラー: --model_ids には少なくとも1つのモデルIDを指定してください。")
-        sys.exit(1)
+    current_iteration = extract_iteration_number(args.output_base_dir)
 
-    model_pairs = []
-    # 偶数個のモデルIDをペアにする
-    for i in range(0, len(model_ids) - (len(model_ids) % 2), 2):
-        model_pairs.append((model_ids[i], model_ids[i + 1]))
+    # ite0かつモデルIDが1つの場合、全戦略のFTデータを生成する特別モード
+    if current_iteration == 0 and len(args.model_ids) == 1:
+        # ite0 special mode: 1つのベースモデルから全戦略のFTデータを生成
+        base_model = args.model_ids[0]
+        output_base_dir = args.output_base_dir # ★★★ 変数定義を先頭に移動 ★★★
+        os.makedirs(output_base_dir, exist_ok=True)
+        evaluation_results_dir = os.path.join(output_base_dir, "evaluation_results")
+        os.makedirs(evaluation_results_dir, exist_ok=True)
+        
+        print("\n" + "="*80)
+        print("Running in ite0 special mode: Generating all strategies from base model")
+        print(f"Base Model: {base_model}")
+        print("="*80)
+        
+        # パス変数をブロックの先頭で初期化
+        details_csv_path = None
+        inconsistent_triangles_path = None
+        clusters_path = None
 
-    # モデルIDが奇数個の場合、最後のものを最初のものとペアにする
-    if len(model_ids) % 2 != 0:
-        model_pairs.append((model_ids[0], model_ids[-1]))
-
-    # --- Loop for Steps 3, 4, 5 for each model pair ---
-    if args.skip_step_3 and args.skip_step_4 and args.skip_step_5:
-        print("\n\n===== STEP 3, 4, 5 をスキップしました =====")
-    else:
-        for i, (model_before, model_after) in enumerate(model_pairs):
-            print(f"\n\n{'#'*80}")
-            print(f"#### モデルペア {i+1}/{len(model_pairs)} の処理を開始... ####")
-            print(f"#### BEFORE: {model_before}")
-            print(f"#### AFTER:  {model_after}")
-            print(f"{'#'*80}")
-
-            # --- Step 3 ---
-            if not args.skip_step_3:
-                details_csv_path = run_evaluation(
-                    args, pairs_csv_path, model_before, model_after
+        # --- Step 3 ---
+        if not args.skip_step_3:
+            details_csv_path = run_evaluation(args, pairs_csv_path, base_model, base_model)
+        else:
+            print("\n\n===== STEP 3 をスキップしました =====")
+            # 新しい命名規則でパスを取得
+            details_csv_path = get_evaluation_details_path(args, pairs_csv_path, base_model, base_model)
+            if not os.path.exists(details_csv_path):
+                print(f"  -> 推定されたパスにファイルが見つかりません。動的に検索します...")
+                evaluation_results_dir = os.path.join(
+                    os.path.dirname(pairs_csv_path), "..", "evaluation_results"
                 )
+                import glob
+                details_files = glob.glob(os.path.join(evaluation_results_dir, "*details.csv"))
+                if details_files:
+                    details_csv_path = details_files[0] # ite0では1つのはず
+                    print(f"  -> ファイルを発見: {details_csv_path}")
+                else:
+                    print(f"エラー: 評価詳細ファイル (*details.csv) が見つかりません: {evaluation_results_dir}")
+                    sys.exit(1)
+            print(f"既存の評価詳細ファイルを使用します: {details_csv_path}")
+
+        # Step3で有効なパスが得られなかった場合はここで終了
+        if not details_csv_path or not os.path.exists(details_csv_path):
+            print("エラー: Step3の評価ファイルが見つからないため、これ以上処理を続行できません。")
+            sys.exit(1)
+
+        # --- Step 4 ---
+        if not args.skip_step_4:
+            # inconsistency と lowest_score の場合にのみ実行
+            # (ite0モードでは両方の戦略が含まれる可能性があるため、ここでチェックはしない)
+            print("-" * 50)
+            print(f"Step 4: 矛盾三角形の検出")
+            inconsistent_triangles_path = run_inconsistency_detection(args, details_csv_path)
+            if not inconsistent_triangles_path:
+                print("警告: 矛盾三角形の検出に失敗しました。")
             else:
-                print("\n\n===== STEP 3 をスキップしました =====")
-                # 新しい命名規則でパスを取得
-                details_csv_path = get_evaluation_details_path(
-                    args, pairs_csv_path, model_before, model_after
-                )
-                if not os.path.exists(details_csv_path):
-                    # 見つからない場合、古い命名規則でフォールバック
-                    print(f"  -> 新しい命名規則のファイルが見つかりません。古い命名規則で再試行します...")
-                    legacy_path = get_legacy_evaluation_details_path(args, pairs_csv_path)
-                    if legacy_path and os.path.exists(legacy_path):
-                        details_csv_path = legacy_path
-                        print(f"  -> 古い命名規則のファイルを使用します: {details_csv_path}")
-                    else:
-                        print(f"エラー: 評価詳細ファイルが見つかりません: {details_csv_path}")
-                        print("Step 3をスキップするには、このファイルが事前に存在している必要があります。")
-                        continue  # 次のペアへ
-                print(f"既存の評価詳細ファイルを使用します: {details_csv_path}")
+                 print("===== STEP 4完了 =====")
+        else:
+            print("\n\n===== STEP 4 をスキップしました =====")
+            # 矛盾三角形ファイルのパスを推定
+            output_dir = os.path.dirname(details_csv_path)
+            base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
+            inconsistent_filename = f"{base_name}_score_after_inconsistent_triangles.csv"
+            inconsistent_triangles_path = os.path.join(output_dir, inconsistent_filename)
+            if not os.path.exists(inconsistent_triangles_path):
+                 print(f"エラー: 矛盾三角形ファイルが見つかりません: {inconsistent_triangles_path}")
+                 sys.exit(1)
+            print(f"既存の矛盾三角形ファイルを使用します: {inconsistent_triangles_path}")
 
-            # --- Step 4 ---
-            if not args.skip_step_4:
-                inconsistent_triangles_csv = run_inconsistency_detection(
-                    args, details_csv_path
-                )
-            else:
-                print("\n\n===== STEP 4 をスキップしました =====")
-                output_dir = os.path.dirname(details_csv_path)
-                base_name = os.path.basename(
-                    details_csv_path
-                ).replace("_details.csv", "")
-                inconsistent_triangles_csv = os.path.join(
-                    output_dir,
-                    f"{base_name}_score_after_inconsistent_triangles.csv"
-                )
-                if not os.path.exists(inconsistent_triangles_csv):
-                     print(f"  -> 新しい命名規則のファイルが見つかりません。")
-                     # 古いパスはdetails_csv_pathに依存するため、details_csv_pathが古いパスなら自動で古いパスを探すことになる
-                     print(f"エラー: 矛盾三角形ファイルが見つかりません: {inconsistent_triangles_csv}")
-                     print("Step 4をスキップするには、このファイルが事前に存在している必要があります。")
-                     continue # 次のペアへ
-                print(f"既存の矛盾三角形ファイルを使用します: {inconsistent_triangles_csv}")
+        # --- Step 5 ---
+        if not args.skip_step_5:
+            print("\n\n===== STEP 5: FTデータ準備 =====")
+            # 'diversity' 戦略に備えて、クラスタファイルを無条件で探す
+            clusters_path = find_clusters_file(output_base_dir)
+            if not clusters_path:
+                print(f"警告: 戦略 'diversity' のためのクラスタファイルが見つかりませんでした。")
 
-            # --- Step 5 ---
-            if not args.skip_step_5:
-                # Step5で必要なクラスタファイルのパスを決定
-                base_name = os.path.basename(
-                    details_csv_path
-                ).replace("_details.csv", "")
-                clusters_path = os.path.join(
-                    os.path.dirname(details_csv_path),
-                    f"{base_name}_clusters_after.json"
-                )
+            all_strategies = ['inconsistency', 'diversity', 'uncertainty', 'random', 'lowest_score']
+            for strategy in all_strategies:
                 run_finetuning_data_preparation(
-                    args, inconsistent_triangles_csv, details_csv_path, clusters_path
+                    args, 
+                    inconsistent_triangles_path, 
+                    details_csv_path, 
+                    clusters_path, 
+                    base_model, 
+                    base_model, #
+                    force_strategies=[strategy]
                 )
-            else:
-                print("\n\n===== STEP 5 をスキップしました =====")
+        else:
+            print("\n\n===== STEP 5 をスキップしました =====")
+
+    # ite1以降、またはite0でも複数モデルIDが指定された場合の通常モード
+    else:
+        # --- Create Model Pairs ---
+        output_base_dir = args.output_base_dir # ★★★ 変数定義を先頭に移動 ★★★
+        os.makedirs(output_base_dir, exist_ok=True)
+        evaluation_results_dir = os.path.join(output_base_dir, "evaluation_results")
+        os.makedirs(evaluation_results_dir, exist_ok=True)
+        model_ids = args.model_ids
+        if len(args.model_ids) < 2:
+            print("エラー: 通常モードの実行には、ベースモデルと少なくとも1つのFTモデルを指定してください。")
+            sys.exit(1)
+    
+        base_model = model_ids[0]
+        ft_models = model_ids[1:]
+        print(f"ベースモデル: {base_model}")
+        print(f"評価対象FTモデル数: {len(ft_models)}")
+    
+        # --- Loop for Steps 3, 4, 5 for each model pair ---
+        if args.skip_step_3 and args.skip_step_4 and args.skip_step_5:
+            print("\n\n===== STEP 3, 4, 5 をスキップしました =====")
+        else:
+            for i, ft_model in enumerate(ft_models):
+                print(f"\n\n{'#'*80}")
+                print(f"#### モデルペア {i+1}/{len(ft_models)} の処理を開始... ####")
+                print(f"#### BASE:   {base_model}")
+                print(f"#### FT:     {ft_model}")
+                print(f"{'#'*80}")
+    
+                # パス変数をループの先頭で初期化
+                details_csv_path = None
+                inconsistent_triangles_path = None
+                clusters_path = None
+
+                # --- Step 3 ---
+                if not args.skip_step_3:
+                    print("\n\n===== STEP 3: モデル評価 =====")
+                    details_csv_path = run_evaluation(
+                        args, pairs_csv_path, base_model, ft_model
+                    )
+                    # run_evaluationが失敗した場合のフォールバック処理
+                    if not details_csv_path or not os.path.exists(details_csv_path):
+                        print("  -> Step3の実行に失敗、または結果ファイルが見つかりません。動的検索でフォールバックします...")
+                        details_csv_path = find_details_file_dynamically(pairs_csv_path, ft_model)
+
+                else:
+                    print("\n\n===== STEP 3 をスキップしました =====")
+                    details_csv_path = find_details_file_dynamically(pairs_csv_path, ft_model)
+
+
+                # パスが見つからなかった場合に以降の処理を確実にスキップ
+                if not details_csv_path or not os.path.exists(details_csv_path):
+                    print(f"エラー: details.csvへの有効なパスが設定されませんでした。モデル '{os.path.basename(ft_model)}' の処理をスキップします。")
+                    continue
+
+                # --- Step 4 ---
+                current_strategy = extract_strategy_from_model_id(ft_model)
+                if not args.skip_step_4:
+                    if current_strategy in ['inconsistency', 'lowest_score']:
+                        print("-" * 50)
+                        print(f"Step 4: 矛盾三角形の検出 ({current_strategy})")
+                        inconsistent_triangles_path = run_inconsistency_detection(args, details_csv_path)
+                        if not inconsistent_triangles_path:
+                            print(f"警告: {current_strategy} 戦略のための矛盾三角形の検出に失敗しました。")
+                        else:
+                            print("===== STEP 4完了 =====")
+                    else:
+                        print(f"Note: Step 4 is skipped for '{current_strategy}' strategy.")
+                else:
+                    print("\n\n===== STEP 4 をスキップしました =====")
+                    # 矛盾三角形ファイルのパスを推定
+                    output_dir = os.path.dirname(details_csv_path)
+                    base_name = os.path.basename(
+                        details_csv_path
+                    ).replace("_details.csv", "")
+                    
+                    # ファイル名の長さ制限（Step4のrun_inconsistency_detectionと同じロジック）
+                    inconsistent_filename = f"{base_name}_score_after_inconsistent_triangles.csv"
+                    if len(inconsistent_filename) > 200:
+                        import hashlib
+                        hash_str = hashlib.md5(inconsistent_filename.encode()).hexdigest()[:8]
+                        inconsistent_filename = f"inconsistent_triangles_{hash_str}.csv"
+                    
+                    inconsistent_triangles_path = os.path.join(output_dir, inconsistent_filename)
+                    
+                    if not os.path.exists(inconsistent_triangles_path):
+                        print(f"  -> 新しい命名規則のファイルが見つかりません。動的検索を実行中...")
+                        # evaluation_resultsディレクトリで動的検索
+                        import glob
+                        search_pattern = os.path.join(output_dir, "*inconsistent_triangles.csv")
+                        matching_files = glob.glob(search_pattern)
+                        
+                        if matching_files:
+                            inconsistent_triangles_path = matching_files[0]  # 最初に見つかったファイルを使用
+                            print(f"  -> 動的検索で発見: {inconsistent_triangles_path}")
+                        else:
+                            print(f"エラー: 矛盾三角形ファイルが見つかりません: {search_pattern}")
+                            print("Step 4をスキップするには、このファイルが事前に存在している必要があります。")
+                            continue # 次のペアへ
+                    print(f"既存の矛盾三角形ファイルを使用します: {inconsistent_triangles_path}")
+    
+                # --- Step 5 ---
+                if not args.skip_step_5:
+                    print("\n\n===== STEP 5: FTデータ準備 =====")
+                    # 'diversity' 戦略の場合のみクラスタファイルを探す
+                    if current_strategy == 'diversity':
+                        clusters_path = find_clusters_file(output_base_dir)
+                        if not clusters_path:
+                            print(f"警告: 戦略 'diversity' のためのクラスタファイルが見つかりませんでした。")
+
+                    run_finetuning_data_preparation(
+                        args,
+                        inconsistent_triangles_path,
+                        details_csv_path,
+                        clusters_path,
+                        base_model,
+                        ft_model
+                    )
+                else:
+                    print("\n\n===== STEP 5 をスキップしました =====")
 
     print("\n\nパイプラインの全工程が正常に完了しました。")
 

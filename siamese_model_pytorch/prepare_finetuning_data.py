@@ -244,71 +244,89 @@ def get_record_details_for_finetuning_prompt(record_id, data_type):
         return f"レコードID {record_id} の書誌情報なし"
 
     if data_type == "music":
-        title = bib_details.get("title", "タイトル不明")
-        authors_str = bib_details.get("artist", "アーティスト不明")
-        publisher = bib_details.get("album", "アルバム不明")
-        pubdate = bib_details.get("release_date", "リリース日不明")
-        length = bib_details.get("length", "長さ不明")
-        return (f"タイトル: {title}\nアーティスト: {authors_str}\n"
-                f"アルバム: {publisher}\nリリース日: {pubdate}\n長さ: {length}")
+        title = bib_details.get("title", "Unknown")
+        authors_str = bib_details.get("artist", "Unknown")
+        publisher = bib_details.get("album", "Unknown")
+        pubdate = bib_details.get("release_date", "Unknown")
+        length = bib_details.get("length", "Unknown")
+        return (f"Title: {title}\nArtist: {authors_str}\n"
+                f"Album: {publisher}\nRelease Date: {pubdate}\nLength: {length}")
     elif data_type == "person":
-        givenname = bib_details.get("givenname", "名前不明")
-        surname = bib_details.get("surname", "姓不明")
-        postcode = bib_details.get("postcode", "郵便番号不明")
-        suburb = bib_details.get("suburb", "地域不明")
-        return (f"名前: {givenname}\n姓: {surname}\n郵便番号: {postcode}\n地域: {suburb}")
+        givenname = bib_details.get("givenname", "Unknown")
+        surname = bib_details.get("surname", "Unknown")
+        postcode = bib_details.get("postcode", "Unknown")
+        suburb = bib_details.get("suburb", "Unknown")
+        return (f"Given Name: {givenname}\nSurname: {surname}\nPostcode: {postcode}\nSuburb: {suburb}")
     elif data_type == "walmart_amazon_product":
-        name = bib_details.get("title", "商品名不明")
-        brand = bib_details.get("brand", "ブランド不明")
-        modelno = bib_details.get("modelno", "モデル番号不明")
-        price = bib_details.get("price", "価格不明")
-        return (f"商品名: {name}\nブランド: {brand}\nモデル番号: {modelno}\n価格: {price}")
+        name = bib_details.get("title", "Unknown")
+        brand = bib_details.get("brand", "Unknown")
+        modelno = bib_details.get("modelno", "Unknown")
+        price = bib_details.get("price", "Unknown")
+        return (f"Product Name: {name}\nBrand: {brand}\nModel Number: {modelno}\nPrice: {price}")
     elif data_type == "wdc_product":
-        name = bib_details.get("title", "商品名不明")
-        brand = bib_details.get("brand", "ブランド不明")
-        description = bib_details.get("description", "説明不明")
-        price = bib_details.get("price", "価格不明")
-        return (f"商品名: {name}\nブランド: {brand}\n説明: {description}\n価格: {price}")
+        name = bib_details.get("title", "Unknown")
+        brand = bib_details.get("brand", "Unknown")
+        description = bib_details.get("description", "Unknown")
+        price = bib_details.get("price", "Unknown")
+        return (f"Product Name: {name}\nBrand: {brand}\nDescription: {description}\nPrice: {price}")
     else:  # bib or default
-        title = bib_details.get("bib1_title", "タイトル不明")
-        authors_str = bib_details.get("bib1_author", "著者不明")
-        publisher = bib_details.get("bib1_publisher", "出版社不明")
-        pubdate = bib_details.get("bib1_pubdate", "出版日不明")
-        return (f"タイトル: {title}\n著者: {authors_str}\n"
-                f"出版社: {publisher}\n出版日: {pubdate}")
+        title = bib_details.get("bib1_title", "Unknown")
+        authors_str = bib_details.get("bib1_author", "Unknown")
+        publisher = bib_details.get("bib1_publisher", "Unknown")
+        pubdate = bib_details.get("bib1_pubdate", "Unknown")
+        return (f"Title: {title}\nAuthor: {authors_str}\n"
+                f"Publisher: {publisher}\nPublication Date: {pubdate}")
 
 
 def get_prompts(data_type):
     prompt_map = {
         "bib": (
-            "あなたは2つの書誌情報が実質的に同一の文献を指すかどうかを判断する専門家です。\\n"
-            "まず、2つの書誌情報が同一の文献と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+            "You are an expert at determining whether two bibliographic records refer to essentially the same publication.\\n"
+            "First, please clearly answer 'Yes' if you believe the two bibliographic records refer to the same publication, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         ),
         "music": (
-            "あなたは2つの音楽情報が実質的に同一の作品を指すかどうかを判断する専門家です。\\n"
-            "まず、2つの音楽情報が同一の作品と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+            "You are an expert at determining whether two music records refer to essentially the same musical work.\\n"
+            "First, please clearly answer 'Yes' if you believe the two music records refer to the same work, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         ),
         "person": (
-            "あなたは2つの人物情報が実質的に同一の人物を指すかどうかを判断する専門家です。\\n"
-            "まず、2つの人物情報が同一の人物と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+            "You are an expert at determining whether two person records refer to essentially the same individual.\\n"
+            "First, please clearly answer 'Yes' if you believe the two person records refer to the same individual, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         ),
         "walmart_amazon_product": (
-            "あなたは2つの商品情報が実質的に同一の商品を指すかどうかを判断する専門家です。\\n"
-            "まず、2つの商品情報が同一の商品と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+            "You are an expert at determining whether two product records refer to essentially the same product.\\n"
+            "First, please clearly answer 'Yes' if you believe the two product records refer to the same product, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         ),
         "wdc_product": (
-            "あなたは2つの商品情報が実質的に同一の商品を指すかどうかを判断する専門家です。\\n"
-            "まず、2つの商品情報が同一の商品と思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+            "You are an expert at determining whether two product records refer to essentially the same product.\\n"
+            "First, please clearly answer 'Yes' if you believe the two product records refer to the same product, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         ),
         "unknown": (
-            "あなたは2つの情報が実質的に同一のものを指すかどうかを判断する専門家です。\\n"
-            "まず、2つの情報が同一のものと思われる場合は「はい」、そうでない場合は「いいえ」で明確に回答してください。\\n"
-            "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0（完全に同一）の範囲で提示してください。"
+            "You are an expert at determining whether two records refer to essentially the same entity.\\n"
+            "First, please clearly answer 'Yes' if you believe the two records refer to the same entity, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
         ),
     }
     return prompt_map.get(data_type, prompt_map["unknown"])
@@ -319,43 +337,43 @@ def create_finetuning_message(record1_id, record2_id, is_truly_similar,
     system_prompt = get_prompts(data_type)
     if data_type == "walmart_amazon_product":
         user_prompt = (
-            f"以下の2つの商品情報が、実質的に同一の商品を指しているかどうかを判断してください。\\n\\n"
-            f"商品情報1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
-            f"商品情報2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
-            "これらは同一の商品ですか？\\n回答:"
+            f"Please determine whether the following two product records refer to essentially the same product.\\n\\n"
+            f"Product 1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
+            f"Product 2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
+            "Do these refer to the same product?\\nAnswer:"
         )
     elif data_type == "wdc_product":
         user_prompt = (
-            f"以下の2つの商品情報が、実質的に同一の商品を指しているかどうかを判断してください。\\n\\n"
-            f"商品情報1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
-            f"商品情報2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
-            "これらは同一の商品ですか？\\n回答:"
+            f"Please determine whether the following two product records refer to essentially the same product.\\n\\n"
+            f"Product 1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
+            f"Product 2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
+            "Do these refer to the same product?\\nAnswer:"
         )
     elif data_type == "music":
         user_prompt = (
-            f"以下の2つの音楽情報が、実質的に同一の作品を指しているかどうかを判断してください。\\n\\n"
-            f"音楽情報1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
-            f"音楽情報2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
-            "これらは同一の作品ですか？\\n回答:"
+            f"Please determine whether the following two music records refer to essentially the same musical work.\\n\\n"
+            f"Record 1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
+            f"Record 2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
+            "Do these refer to the same work?\\nAnswer:"
         )
     elif data_type == "person":
         user_prompt = (
-            f"以下の2つの人物情報が、実質的に同一の人物を指しているかどうかを判断してください。\\n\\n"
-            f"人物情報1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
-            f"人物情報2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
-            "これらは同一の人物ですか？\\n回答:"
+            f"Please determine whether the following two person records refer to essentially the same individual.\\n\\n"
+            f"Record 1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
+            f"Record 2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
+            "Do these refer to the same person?\\nAnswer:"
         )
     elif data_type == "bib":
         user_prompt = (
-            f"以下の2つの書誌情報が、実質的に同一の文献を指しているかどうかを判断してください。\\n\\n"
-            f"書誌情報1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
-            f"書誌情報2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
-            "これらは同一の文献ですか？\\n回答:"
+            f"Please determine whether the following two bibliographic records refer to essentially the same publication.\\n\\n"
+            f"Record 1:\\n{get_record_details_for_finetuning_prompt(record1_id, data_type)}\\n\\n"
+            f"Record 2:\\n{get_record_details_for_finetuning_prompt(record2_id, data_type)}\\n\\n"
+            "Do these refer to the same publication?\\nAnswer:"
         )
     if is_truly_similar:
-        assistant_response = "はい\\n類似度スコア: 1.0"
+        assistant_response = "Yes\\nConfidence Score: 1.0"
     else:
-        assistant_response = "いいえ\\n類似度スコア: 0.0"
+        assistant_response = "No\\nConfidence Score: 0.0"
     return {
         "messages": [
             {"role": "system", "content": system_prompt},
@@ -379,54 +397,81 @@ def main(args):
     finetuning_samples = []
     seen_pairs = set()
 
-    # 1. 矛盾する三角形のペアを追加
+    # 1. 矛盾する三角形のペアを追加（num_samplesで制限）
     try:
         inconsistent_df = pd.read_csv(args.inconsistent_triangles_csv)
+        
         temp_samples = []
-        for _, row in inconsistent_df.iterrows():
-            # 3つのペアを処理: (node1,node2), (node2,node3), (node1,node3)
-            pairs_data = [
-                # ペア1: node1 - node2
-                {
-                    'id1': row['triangle_node1'],
-                    'id2': row['triangle_node2'],
-                    'is_similar': row['true_edge12'],
-                    'score': row['p_edge12']
-                },
-                # ペア2: node2 - node3
-                {
-                    'id1': row['triangle_node2'],
-                    'id2': row['triangle_node3'],
-                    'is_similar': row['true_edge23'],
-                    'score': row['p_edge23']
-                },
-                # ペア3: node1 - node3
-                {
-                    'id1': row['triangle_node1'],
-                    'id2': row['triangle_node3'],
-                    'is_similar': row['true_edge31'],
-                    'score': row['p_edge31']
-                }
-            ]
 
-            for pair_data in pairs_data:
+        if args.sampling_strategy == "inconsistency":
+            print("サンプリング戦略: inconsistency (矛盾度スコアが高い順)")
+            # 矛盾度の高い順にソート
+            inconsistent_df = inconsistent_df.sort_values('inconsistency_score', ascending=False)
+            
+            for _, row in inconsistent_df.iterrows():
+                # 3つのペアを処理
+                pairs_data = [
+                    {'id1': row['triangle_node1'], 'id2': row['triangle_node2'], 'is_similar': row['true_edge12'], 'score': row['p_edge12'], 'inconsistency_score': row['inconsistency_score']},
+                    {'id1': row['triangle_node2'], 'id2': row['triangle_node3'], 'is_similar': row['true_edge23'], 'score': row['p_edge23'], 'inconsistency_score': row['inconsistency_score']},
+                    {'id1': row['triangle_node1'], 'id2': row['triangle_node3'], 'is_similar': row['true_edge31'], 'score': row['p_edge31'], 'inconsistency_score': row['inconsistency_score']}
+                ]
+                for pair_data in pairs_data:
+                    message = create_finetuning_message(
+                        pair_data['id1'], pair_data['id2'],
+                        pair_data['is_similar'], args.data_type,
+                        pair_data['score']
+                    )
+                    message['inconsistency_score'] = pair_data['inconsistency_score']
+                    temp_samples.append(message)
+            
+            # 矛盾度でソート（高い順）
+            temp_samples.sort(key=lambda x: x['inconsistency_score'], reverse=True)
+
+        elif args.sampling_strategy == "lowest_score":
+            print("サンプリング戦略: lowest_score (類似度スコアが低い順)")
+            for _, row in inconsistent_df.iterrows():
+                pairs_data = [
+                    {'id1': row['triangle_node1'], 'id2': row['triangle_node2'], 'is_similar': row['true_edge12'], 'score': row['p_edge12']},
+                    {'id1': row['triangle_node2'], 'id2': row['triangle_node3'], 'is_similar': row['true_edge23'], 'score': row['p_edge23']},
+                    {'id1': row['triangle_node1'], 'id2': row['triangle_node3'], 'is_similar': row['true_edge31'], 'score': row['p_edge31']}
+                ]
+                # 最も類似度が低いペアを選択
+                lowest_score_pair = min(pairs_data, key=lambda x: x['score'])
+                
                 message = create_finetuning_message(
-                    pair_data['id1'], pair_data['id2'],
-                    pair_data['is_similar'], args.data_type,
-                    pair_data['score']
+                    lowest_score_pair['id1'], lowest_score_pair['id2'],
+                    lowest_score_pair['is_similar'], args.data_type,
+                    lowest_score_pair['score']
                 )
+                message['score'] = lowest_score_pair['score'] # ソート用にスコアを保持
                 temp_samples.append(message)
 
-        # 矛盾ペアの重複除去
+            # 類似度スコアでソート（低い順）
+            temp_samples.sort(key=lambda x: x['score'])
+
+        # 重複除去しながらnum_samplesまで追加
+        unique_samples = []
+        seen_pairs_set = set()
         for sample in temp_samples:
             user_content = sample['messages'][1]['content']
-            if user_content not in seen_pairs:
-                seen_pairs.add(user_content)
-                finetuning_samples.append(sample)
+            if user_content not in seen_pairs_set:
+                seen_pairs_set.add(user_content)
+                # 一時的なスコアキーを削除
+                if 'inconsistency_score' in sample:
+                    del sample['inconsistency_score']
+                if 'score' in sample:
+                    del sample['score']
+                
+                unique_samples.append(sample)
+                
+                if len(unique_samples) >= args.num_samples:
+                    break
+        
+        finetuning_samples = unique_samples
 
         print(
-            f"矛盾ペア処理: {len(inconsistent_df) * 3} 件の候補から "
-            f"{len(finetuning_samples)} 件のユニークなペアを追加しました。"
+            f"候補ペア処理: {len(temp_samples)} 件の候補から "
+            f"{len(finetuning_samples)} 件のユニークなペアを追加しました（上限: {args.num_samples}）。"
         )
 
     except FileNotFoundError:
@@ -438,23 +483,163 @@ def main(args):
         else:
             print("  データフレームを読み込めませんでした")
 
-    # 2. Hard negative/positive ペアを追加してバランス調整
+    # 指定数に達していない場合は Hard sampling で補完
+    current_total = len(finetuning_samples)
+    if current_total < args.num_samples:
+        try:
+            needed_samples = args.num_samples - current_total
+            print(f"目標数に達していないため Hard sampling で {needed_samples} 件追加します")
+            
+            # バランスを数え直す
+            positive_count = sum(1 for sample in finetuning_samples
+                                 if 'Yes' in sample['messages'][2]['content'])
+            negative_count = len(finetuning_samples) - positive_count
+
+            # 70:30バランスを目標に少数クラスを優先補完
+            if positive_count < negative_count:
+                # 正例が少ない場合：50:50を目指す
+                target_positive = int(args.num_samples * 0.3)
+                target_negative = args.num_samples - target_positive
+                
+                needed_positive = max(0, target_positive - positive_count)
+                needed_negative = max(0, min(needed_samples - needed_positive, target_negative - negative_count))
+                print(f"正例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
+            else:
+                # 負例が少ない場合：50:50を目指す
+                target_positive = int(args.num_samples * 0.5)
+                target_negative = args.num_samples - target_positive
+                
+                needed_negative = max(0, target_negative - negative_count)
+                needed_positive = max(0, min(needed_samples - needed_negative, target_positive - positive_count))
+                print(f"負例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
+
+            details_df = pd.read_csv(args.evaluation_details_csv)
+            details_df['abs_score_dist'] = \
+                (details_df[args.score_column] - 0.5).abs()
+            hard_pairs_df = details_df.sort_values(by='abs_score_dist')
+
+            hard_positive_df = hard_pairs_df[
+                hard_pairs_df['ground_truth_similar']
+            ]
+            hard_negative_df = hard_pairs_df[
+                ~hard_pairs_df['ground_truth_similar']
+            ]
+
+            added_positive = 0
+            if needed_positive > 0:
+                for _, row in hard_positive_df.iterrows():
+                    if added_positive >= needed_positive:
+                        break
+                    message = create_finetuning_message(
+                        row['record_id_1'], row['record_id_2'],
+                        row['ground_truth_similar'], args.data_type,
+                        row[args.score_column]
+                    )
+                    user_content = message['messages'][1]['content']
+                    # seen_pairsは全サンプルで共有するため、ここでは使わない
+                    # if user_content not in seen_pairs:
+                    finetuning_samples.append(message)
+                    #     seen_pairs.add(user_content)
+                    added_positive += 1
+
+            added_negative = 0
+            if needed_negative > 0:
+                for _, row in hard_negative_df.iterrows():
+                    if added_negative >= needed_negative:
+                        break
+                    message = create_finetuning_message(
+                        row['record_id_1'], row['record_id_2'],
+                        row['ground_truth_similar'], args.data_type,
+                        row[args.score_column]
+                    )
+                    user_content = message['messages'][1]['content']
+                    # if user_content not in seen_pairs:
+                    finetuning_samples.append(message)
+                    #     seen_pairs.add(user_content)
+                    added_negative += 1
+
+            print(f"Hard ペア追加完了: 正例={added_positive}件, "
+                  f"負例={added_negative}件")
+
+        except FileNotFoundError:
+            print(f"警告: 評価詳細ファイルが見つかりません: "
+                  f"{args.evaluation_details_csv}。Hard Samplingは行われません。")
+        except Exception as e:
+            print(f"警告: Hard Sampling 中にエラーが発生しました: {e}")
+
+    # 2. バランス調整（必要に応じて削除・追加）
     # 現在の正例・負例を数える
     positive_count = sum(1 for sample in finetuning_samples
-                         if 'はい' in sample['messages'][2]['content'])
+                         if 'Yes' in sample['messages'][2]['content'])
     negative_count = len(finetuning_samples) - positive_count
 
-    print(f"矛盾ペアの内訳: 正例={positive_count}件, 負例={negative_count}件")
+    print(f"初期サンプリングの内訳: 正例={positive_count}件, 負例={negative_count}件")
+
+    # バランスが大きく偏っている場合は調整
+    imbalance_threshold = args.num_samples * 0.3  # 30%以上偏っている場合
+    current_total = len(finetuning_samples)
+    
+    if (positive_count - negative_count) > imbalance_threshold and current_total >= args.num_samples:
+        print(f"バランスが偏っているため調整します（閾値: {imbalance_threshold}）")
+        
+        # 70:30程度のバランスに調整（情報損失を最小限に）
+        if positive_count > negative_count:
+            # 正例が多い場合：50:50を目標
+            target_positive = int(args.num_samples * 0.5)
+            target_negative = args.num_samples - target_positive
+            
+            positive_samples = [s for s in finetuning_samples if 'Yes' in s['messages'][2]['content']]
+            negative_samples = [s for s in finetuning_samples if 'No' in s['messages'][2]['content']]
+            
+            # 削減は最小限に
+            actual_positive = min(target_positive, positive_count)
+            actual_negative = min(target_negative, negative_count)
+            
+            finetuning_samples = positive_samples[:actual_positive] + negative_samples[:actual_negative]
+        else:
+            # 負例が多い場合：30:70を目標
+            target_positive = int(args.num_samples * 0.3)
+            target_negative = args.num_samples - target_positive
+            
+            positive_samples = [s for s in finetuning_samples if 'Yes' in s['messages'][2]['content']]
+            negative_samples = [s for s in finetuning_samples if 'No' in s['messages'][2]['content']]
+            
+            # 削減は最小限に
+            actual_positive = min(target_positive, positive_count)
+            actual_negative = min(target_negative, negative_count)
+            
+            finetuning_samples = positive_samples[:actual_positive] + negative_samples[:actual_negative]
+        
+        # 再カウント
+        positive_count = sum(1 for sample in finetuning_samples
+                           if 'Yes' in sample['messages'][2]['content'])
+        negative_count = len(finetuning_samples) - positive_count
+        print(f"削減後の内訳: 正例={positive_count}件, 負例={negative_count}件")
 
     try:
-        # バランスを取るために必要な数を計算
-        target_count = max(positive_count, negative_count)
-        needed_positive = target_count - positive_count
-        needed_negative = target_count - negative_count
-
-        if needed_positive > 0 or needed_negative > 0:
-            print(f"バランス調整目標: 正例・負例を各{target_count}件に調整")
-            print(f"必要な追加数: 正例={needed_positive}件, 負例={needed_negative}件")
+        # 指定数に達していない場合は Hard sampling で補完
+        current_total = len(finetuning_samples)
+        if current_total < args.num_samples:
+            needed_samples = args.num_samples - current_total
+            print(f"目標数に達していないため Hard sampling で {needed_samples} 件追加します")
+            
+            # 70:30バランスを目標に少数クラスを優先補完
+            if positive_count < negative_count:
+                # 正例が少ない場合：30:70 → より良いバランスを目指す
+                target_positive = int(args.num_samples * 0.5)
+                target_negative = args.num_samples - target_positive
+                
+                needed_positive = max(0, target_positive - positive_count)
+                needed_negative = max(0, min(needed_samples - needed_positive, target_negative - negative_count))
+                print(f"正例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
+            else:
+                # 負例が少ない場合：70:30 → より良いバランスを目指す
+                target_positive = int(args.num_samples * 0.5)
+                target_negative = args.num_samples - target_positive
+                
+                needed_negative = max(0, target_negative - negative_count)
+                needed_positive = max(0, min(needed_samples - needed_negative, target_positive - positive_count))
+                print(f"負例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
 
             details_df = pd.read_csv(args.evaluation_details_csv)
             details_df['abs_score_dist'] = \
@@ -511,13 +696,18 @@ def main(args):
     except Exception as e:
         print(f"警告: 評価詳細ファイルの処理中にエラーが発生しました: {e}")
 
+    # 最終的なサンプル数制限
+    if len(finetuning_samples) > args.num_samples:
+        print(f"サンプル数が上限（{args.num_samples}）を超過しているため切り詰めます")
+        finetuning_samples = finetuning_samples[:args.num_samples]
+
     # 最終確認
     final_positive = sum(1 for sample in finetuning_samples
-                         if 'はい' in sample['messages'][2]['content'])
+                         if 'Yes' in sample['messages'][2]['content'])
     final_negative = len(finetuning_samples) - final_positive
 
     print("-" * 20)
-    print(f"最終的なサンプル数: {len(finetuning_samples)} 件")
+    print(f"最終的なサンプル数: {len(finetuning_samples)} 件（上限: {args.num_samples}）")
     print(f"最終データバランス: 正例={final_positive}件, 負例={final_negative}件")
     if final_negative > 0:
         print(f"バランス比率: {final_positive/final_negative:.2f} (理想は1.00)")
@@ -570,6 +760,15 @@ if __name__ == "__main__":
         "--score_column",
         required=True,
         help="Hard negative/positiveマイニングに使用するスコア列名"
+    )
+    parser.add_argument(
+        "--num_samples", type=int, default=100,
+        help="生成するサンプル数の上限（デフォルト: 100）"
+    )
+    parser.add_argument(
+        "--sampling_strategy", type=str, default="inconsistency",
+        choices=["inconsistency", "lowest_score"],
+        help="サンプリング戦略を選択 (デフォルト: inconsistency)"
     )
 
     args = parser.parse_args()
