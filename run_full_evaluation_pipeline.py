@@ -115,7 +115,7 @@ def extract_strategy_from_model_id(model_id):
     例: "ft:...:music-matching-random-..." -> "random"
     """
     if not model_id.startswith("ft:"):
-        return "base_model" 
+        return "random" 
     
     try:
         parts = model_id.split(':')
@@ -237,30 +237,33 @@ def find_previous_cumulative_ft_data(output_base_dir, strategy, current_iteratio
 
 
 def merge_ft_data_files(file_paths, output_path):
-    """複数のFTデータファイルを統合する
+    """複数のFTデータファイルを統合し、重複を排除する
     
     Args:
         file_paths (list): 統合するJSONLファイルパスのリスト
         output_path (str): 出力先のJSONLファイルパス
     
     Returns:
-        int: 統合されたレコード数
+        int: 統合されたユニークなレコード数
     """
-    total_records = 0
+    unique_lines = set()
     
     try:
-        with open(output_path, 'w', encoding='utf-8') as outfile:
-            for file_path in file_paths:
-                if os.path.exists(file_path):
-                    with open(file_path, 'r', encoding='utf-8') as infile:
-                        for line in infile:
-                            line = line.strip()
-                            if line:
-                                outfile.write(line + '\n')
-                                total_records += 1
-                    print(f"  -> {file_path} から {get_num_lines_in_jsonl(file_path)} 件を統合")
+        for file_path in file_paths:
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as infile:
+                    lines = [line.strip() for line in infile if line.strip()]
+                    unique_lines.update(lines)
+                    print(f"  -> {file_path} から {len(lines)} 件を統合対象として読み込み")
         
-        print(f"統合完了: {total_records} 件のレコードを {output_path} に保存")
+        total_records = len(unique_lines)
+        
+        with open(output_path, 'w', encoding='utf-8') as outfile:
+            # 再現性のためソートして書き出し
+            for line in sorted(list(unique_lines)):
+                outfile.write(line + '\n')
+        
+        print(f"統合完了: {total_records} 件のユニークなレコードを {output_path} に保存")
         return total_records
         
     except Exception as e:
@@ -519,10 +522,8 @@ def run_finetuning_data_preparation(
         print(f"AFTERモデル '{model_after_ft}' から抽出された戦略: {strategy_after}")
 
         # 両方の戦略でFTデータを生成
-        if strategy_before != 'random':  # ベースモデル以外
-            strategies_to_generate.append(strategy_before)
-        else:
-            strategies_to_generate.append(strategy_after)
+        strategies_to_generate.append(strategy_before)
+        strategies_to_generate.append(strategy_after)
         
         # 重複を除去
         strategies_to_generate = list(set(strategies_to_generate))
@@ -534,7 +535,7 @@ def run_finetuning_data_preparation(
         details_csv_path
     ).replace("_details.csv", "")
     output_dir = os.path.dirname(details_csv_path)
-    num_samples = 100  # 固定100ペア
+    num_samples = args.num_samples  
 
     # 各戦略でファインチューニングデータを生成
     for strategy in strategies_to_generate:
@@ -789,7 +790,7 @@ def main():
     # --- Step 4: Inconsistency Detection ---
     step4_group = parser.add_argument_group('Step 4: Inconsistency Detection')
     step4_group.add_argument(
-        "--inconsistency_top_n", type=int, default=200,
+        "--inconsistency_top_n", type=int, default=100,
         help="検出する矛盾三角形の上位N件"
     )
 

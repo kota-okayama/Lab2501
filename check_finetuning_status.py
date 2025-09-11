@@ -64,7 +64,7 @@ def create_finetuning_jobs_from_files(client, data_directory, record_file_path):
                 training_file=training_file.id,
                 model='gpt-4o-mini-2024-07-18',
                 suffix=suffix,
-                hyperparameters={'n_epochs': 3, 'learning_rate_multiplier': 1.8, 'batch_size': 4}
+                hyperparameters={'n_epochs': 3, 'learning_rate_multiplier': 1.8, 'batch_size': 1}
             )
             print(f"  > Job created: {job.id} (Status: {job.status})")
             
