@@ -28,76 +28,161 @@ def get_prompt_for_selection(data_type: str) -> str:
     )
 
 
-def get_prompt_for_finetuning(data_type: str) -> tuple[str, str]:
-    """データタイプに応じて、ファインチューニング用のsystemプロンプトとuserプロンプトのテンプレートを返す"""
-    jp_type = "情報"
-    jp_work = "エンティティ"
-    if data_type == "bib":
-        jp_type, jp_work = "書誌", "文献"
+def get_prompts(data_type):
+    """
+    データタイプに応じて、ファインチューニング用のsystemプロンプトを返す
+    (他スクリプトと統一)
+    """
+    prompt_map = {
+        "bib": (
+            "You are an expert at determining whether two bibliographic records refer to essentially the same publication.\\n"
+            "First, please clearly answer 'Yes' if you believe the two bibliographic records refer to the same publication, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
+        ),
+        "music": (
+            "You are an expert at determining whether two music records refer to essentially the same musical work.\\n"
+            "First, please clearly answer 'Yes' if you believe the two music records refer to the same work, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
+        ),
+        "person": (
+            "You are an expert at determining whether two person records refer to essentially the same individual.\\n"
+            "First, please clearly answer 'Yes' if you believe the two person records refer to the same individual, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
+        ),
+        "walmart_amazon_product": (
+            "You are an expert at determining whether two product records refer to essentially the same product.\\n"
+            "First, please clearly answer 'Yes' if you believe the two product records refer to the same product, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
+        ),
+        "wdc_product": (
+            "You are an expert at determining whether two product records refer to essentially the same product.\\n"
+            "First, please clearly answer 'Yes' if you believe the two product records refer to the same product, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
+        ),
+        "unknown": (
+            "You are an expert at determining whether two records refer to essentially the same entity.\\n"
+            "First, please clearly answer 'Yes' if you believe the two records refer to the same entity, or 'No' otherwise.\\n"
+            "Next, provide a confidence score from 0.0 (completely different) to 1.0 (completely identical) indicating your certainty in this judgment.\n"
+            "Your judgment must strictly follow these rules:\n"
+            " - If the confidence score is 0.5 or higher, your answer must be 'Yes'.\n"
+            " - If the confidence score is below 0.5, your answer must be 'No'.\n"
+        ),
+    }
+    return prompt_map.get(data_type, prompt_map["unknown"])
+
+
+def get_user_prompt(record1_details, record2_details, data_type):
+    """
+    データタイプに応じて、ファインチューニング用のuserプロンプトを生成する
+    """
+    if data_type == "walmart_amazon_product" or data_type == "wdc_product":
+        task = "product"
+        entity = "product"
     elif data_type == "music":
-        jp_type, jp_work = "音楽", "作品"
+        task = "music records"
+        entity = "musical work"
     elif data_type == "person":
-        jp_type, jp_work = "人物", "人物"
-    elif "product" in data_type:
-        jp_type, jp_work = "商品", "商品"
+        task = "person records"
+        entity = "individual"
+    elif data_type == "bib":
+        task = "bibliographic records"
+        entity = "publication"
+    else:
+        task = "records"
+        entity = "entity"
 
-    system_prompt = (
-        f"あなたは2つの{jp_type}情報が実質的に同一の{jp_work}を指すかどうかを"
-        "判断する専門家です。\\n"
-        f"まず、2つの{jp_type}情報が同一の{jp_work}と思われる場合は「はい」、"
-        "そうでない場合は「いいえ」で明確に回答してください。\\n"
-        "次に、その判断の確信度を示す類似度スコアを0.0（全く異なる）から1.0"
-        "（完全に同一）の範囲で提示してください。"
+    return (
+        f"Please determine whether the following two {task} refer to essentially the same {entity}.\\n\\n"
+        f"Record 1:\\n{record1_details}\\n\\n"
+        f"Record 2:\\n{record2_details}\\n\\n"
+        f"Do these refer to the same {entity}?\\nAnswer:"
     )
 
-    user_prompt_template = (
-        f"以下の2つの{jp_type}情報が、実質的に同一の{jp_work}を指しているか"
-        "どうかを判断してください。\\n\\n"
-        f"{jp_type}情報1:\\n{{content1}}\\n\\n"
-        f"{jp_type}情報2:\\n{{content2}}\\n\\n"
-        f"これらは同一の{jp_work}ですか？\\n回答:"
-    )
-    return system_prompt, user_prompt_template
+
+def create_finetuning_message(record1_id, record2_id, is_truly_similar,
+                              master_data_dict, data_type):
+    """
+    ファインチューニングメッセージを作成する (他スクリプトと統一)
+    """
+    system_prompt = get_prompts(data_type)
+    
+    content1 = master_data_dict.get(record1_id, "[コンテンツ不明]")
+    content2 = master_data_dict.get(record2_id, "[コンテンツ不明]")
+    user_prompt = get_user_prompt(content1, content2, data_type)
+    
+    if is_truly_similar:
+        assistant_response = "Yes\\nConfidence Score: 1.0"
+    else:
+        assistant_response = "No\\nConfidence Score: 0.0"
+
+    return {
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+            {"role": "assistant", "content": assistant_response},
+        ],
+        "record_id_1": str(record1_id),
+        "record_id_2": str(record2_id)
+    }
 
 
 def format_record_data(data_dict, data_type):
     """
     レコードのデータ辞書をLLMが読みやすい改行区切りの文字列にフォーマットする
-    (create_finetuning_data_from_strategies.py との前処理統一のため)
+    (get_record_details_for_finetuning_prompt と同じロジックに統一)
     """
     if data_type == "music":
         title = data_dict.get("title", "Unknown")
         artist = data_dict.get("artist", "Unknown")
         album = data_dict.get("album", "Unknown")
         release_date = data_dict.get("release_date", "Unknown")
+        length = data_dict.get("length", "Unknown")
         return (f"Title: {title}\nArtist: {artist}\n"
-                f"Album: {album}\nRelease Date: {release_date}")
+                f"Album: {album}\nRelease Date: {release_date}\nLength: {length}")
     elif data_type == "person":
-        name = data_dict.get("name", "Unknown")
-        affiliation = data_dict.get("affiliation", "Unknown")
-        return f"Name: {name}\nAffiliation: {affiliation}"
+        givenname = data_dict.get("givenname", "Unknown")
+        surname = data_dict.get("surname", "Unknown")
+        postcode = data_dict.get("postcode", "Unknown")
+        suburb = data_dict.get("suburb", "Unknown")
+        return (f"Given Name: {givenname}\nSurname: {surname}\nPostcode: {postcode}\nSuburb: {suburb}")
+
     elif data_type == "walmart_amazon_product":
-        title = data_dict.get("title", "Unknown")
+        name = data_dict.get("title", "Unknown")
         brand = data_dict.get("brand", "Unknown")
         modelno = data_dict.get("modelno", "Unknown")
         price = data_dict.get("price", "Unknown")
-        return f"Product Name: {title}\nBrand: {brand}\nModel Number: {modelno}\nPrice: {price}"
+        return f"Product Name: {name}\nBrand: {brand}\nModel Number: {modelno}\nPrice: {price}"
     elif data_type == "wdc_product":
-        title = data_dict.get("title", "Unknown")
+        name = data_dict.get("title", "Unknown")
         brand = data_dict.get("brand", "Unknown")
         description = data_dict.get("description", "Unknown")
         price = data_dict.get("price", "Unknown")
-        return f"Product Name: {title}\nBrand: {brand}\nDescription: {description}\nPrice: {price}"
+        return f"Product Name: {name}\nBrand: {brand}\nDescription: {description}\nPrice: {price}"
     else:  # bib or default
-        title = data_dict.get("bib1_title", "タイトル不明")
-        author = data_dict.get("bib1_author", "著者不明")
-        publisher = data_dict.get("bib1_publisher", "出版社不明")
-        pubdate = data_dict.get("bib1_pubdate", "出版日不明")
-        return (f"タイトル: {title}\n著者: {author}\n"
-                f"出版社: {publisher}\n出版日: {pubdate}")
+        title = data_dict.get("bib1_title", "Unknown")
+        author = data_dict.get("bib1_author", "Unknown")
+        publisher = data_dict.get("bib1_publisher", "Unknown")
+        pubdate = data_dict.get("bib1_pubdate", "Unknown")
+        return (f"Title: {title}\nAuthor: {author}\n"
+                f"Publisher: {publisher}\nPublication Date: {pubdate}")
 
 
-def load_and_prepare_data_from_yml(yml_path, data_type, total_candidates=None):
+def load_and_prepare_data_from_yml(yml_path, data_type, labeled_pairs, total_candidates=None):
     """
     YAMLファイルからレコードを読み込み、全てのペア候補とマスターデータを生成する
     """
@@ -133,7 +218,9 @@ def load_and_prepare_data_from_yml(yml_path, data_type, total_candidates=None):
         if len(record_ids) > 1:
             # 常にソートされたタプルとしてペアを追加し、順序の問題をなくす
             for id1, id2 in itertools.combinations(record_ids, 2):
-                positive_pairs.append(tuple(sorted((id1, id2))))
+                pair = tuple(sorted((id1, id2)))
+                if pair not in labeled_pairs:
+                    positive_pairs.append(pair)
 
     num_positive_pairs = len(positive_pairs)
     all_record_ids = list(record_to_cluster_map.keys())
@@ -162,7 +249,8 @@ def load_and_prepare_data_from_yml(yml_path, data_type, total_candidates=None):
         if record_to_cluster_map[id1] != record_to_cluster_map[id2]:
             # ペアの順序を統一して重複を防ぐ
             pair = tuple(sorted((id1, id2)))
-            negative_pairs_set.add(pair)
+            if pair not in labeled_pairs:
+                negative_pairs_set.add(pair)
     
     negative_pairs = list(negative_pairs_set)
 
@@ -188,7 +276,7 @@ def select_one_batch_with_llm(
     prompt_header = f"""あなたは、機械学習モデルの訓練に使うためのデータを選択する専門家（アクティブラーナー）です。
 {task_description}
 モデルの学習効率が最大になるように、最も有益だと考えられるペアを {num_to_select} 個選択してください。
-選択する際は、多様性、曖昧さ、代表性などを考慮してください。
+選択する際は、多様性、曖昧さ、代表性、データのバランスなどを考慮してください。
 
 思考のステップを一つずつ記述してください。
 
@@ -259,11 +347,9 @@ def save_as_jsonl(
     pairs, master_data_dict, positive_pairs_set, output_file, data_type
 ):
     """
-    選択されたペアをファインチューニング用のJSONL形式で保存する
+    選択されたペアをファインチューニング用のJSONL形式で保存する (形式を統一)
     """
     print(f"{output_file} にJSONL形式で保存しています...")
-
-    system_prompt, user_prompt_template = get_prompt_for_finetuning(data_type)
 
     with open(output_file, "w", encoding="utf-8") as f:
         for pair in pairs:
@@ -271,25 +357,12 @@ def save_as_jsonl(
             sorted_pair = tuple(sorted(pair))
             is_match = sorted_pair in positive_pairs_set
             
-            assistant_response = (
-                "はい\\n類似度スコア: 1.0" if is_match else "いいえ\\n類似度スコア: 0.0"
+            message = create_finetuning_message(
+                pair[0], pair[1], is_match, master_data_dict, data_type
             )
-
-            id1, id2 = pair
-            content1 = master_data_dict.get(id1, "[コンテンツ不明]")
-            content2 = master_data_dict.get(id2, "[コンテンツ不明]")
-
-            user_content = user_prompt_template.format(
-                content1=content1, content2=content2
-            )
-            json_line = {
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_content},
-                    {"role": "assistant", "content": assistant_response},
-                ]
-            }
-            f.write(json.dumps(json_line, ensure_ascii=False) + "\n")
+            # OpenAI APIは 'messages' キーのみを要求するため、それ以外は除外
+            openai_entry = {"messages": message["messages"]}
+            f.write(json.dumps(openai_entry, ensure_ascii=False) + "\n")
     print("JSONLファイルの保存が完了しました。")
 
 
@@ -340,6 +413,12 @@ def main():
         ],
         help="データの種類 (プロンプト生成に利用)"
     )
+    parser.add_argument(
+        '--labeled_pairs_csv',
+        type=str,
+        default=None,
+        help='過去にラベル付けされたペアのCSVファイルパス。これらのペアはサンプリングから除外されます。'
+    )
     args = parser.parse_args()
 
     # 出力ディレクトリを作成
@@ -350,9 +429,22 @@ def main():
         sys.exit(1)
     client = OpenAI()
 
+    # ラベル済みペアをロード
+    labeled_pairs = set()
+    if args.labeled_pairs_csv and os.path.exists(args.labeled_pairs_csv):
+        print(f"読み込み中: {args.labeled_pairs_csv}")
+        try:
+            labeled_df = pd.read_csv(args.labeled_pairs_csv)
+            for _, row in labeled_df.iterrows():
+                pair = tuple(sorted((str(row['record_id_1']), str(row['record_id_2']))))
+                labeled_pairs.add(pair)
+            print(f"{len(labeled_pairs)}件のラベル済みペアをロードしました。")
+        except Exception as e:
+            print(f"警告: ラベル済みペアファイルの読み込みに失敗: {e}")
+
     all_pairs, master_data_dict, positive_pairs_set = (
         load_and_prepare_data_from_yml(
-            args.record_yml, args.data_type, args.total_candidates
+            args.record_yml, args.data_type, labeled_pairs, args.total_candidates
         )
     )
     
@@ -395,14 +487,58 @@ def main():
 
         iteration += 1
 
+    # (追加) 最終的なデータバランス調整 (50:50目標)
+    print("\n最終的なデータバランス調整を行います...")
+    positive_pairs_selected = [p for p in final_selected_pairs if tuple(sorted(p)) in positive_pairs_set]
+    negative_pairs_selected = [p for p in final_selected_pairs if tuple(sorted(p)) not in positive_pairs_set]
+
+    target_count = args.total_samples // 2
+    
+    # 過剰なサンプルをランダムに削除
+    if len(positive_pairs_selected) > target_count:
+        print(f"正例が多すぎるため、{len(positive_pairs_selected) - target_count}件をランダムに削除します。")
+        positive_pairs_selected = random.sample(positive_pairs_selected, target_count)
+    if len(negative_pairs_selected) > target_count:
+        print(f"負例が多すぎるため、{len(negative_pairs_selected) - target_count}件をランダムに削除します。")
+        negative_pairs_selected = random.sample(negative_pairs_selected, target_count)
+        
+    balanced_pairs = positive_pairs_selected + negative_pairs_selected
+
+    # 不足分をランダムに追加
+    needed_positive = target_count - len(positive_pairs_selected)
+    needed_negative = (args.total_samples - target_count) - len(negative_pairs_selected)
+
+    if needed_positive > 0 or needed_negative > 0:
+        print(f"バランス調整のためさらにペアを追加: 正例+{needed_positive}, 負例+{needed_negative}")
+        
+        # 現在選択済みのペアを集合に
+        current_selected_set = {tuple(sorted(p)) for p in balanced_pairs}
+        
+        # 候補となる未選択のペア
+        positive_candidates = [p for p in positive_pairs_set if p not in current_selected_set]
+        all_negative_pairs = unselected_pairs_set - positive_pairs_set
+        negative_candidates = [p for p in all_negative_pairs if p not in current_selected_set]
+
+        # 正例を追加
+        if needed_positive > 0 and positive_candidates:
+            num_to_add = min(needed_positive, len(positive_candidates))
+            added_pos = random.sample(positive_candidates, num_to_add)
+            balanced_pairs.extend(added_pos)
+
+        # 負例を追加
+        if needed_negative > 0 and negative_candidates:
+            num_to_add = min(needed_negative, len(negative_candidates))
+            added_neg = random.sample(negative_candidates, num_to_add)
+            balanced_pairs.extend(added_neg)
+
     # CSV出力
     output_csv_path = os.path.join(args.output_dir, args.output_csv)
     output_df = pd.DataFrame(
-        final_selected_pairs, columns=["record_id_1", "record_id_2"]
+        balanced_pairs, columns=["record_id_1", "record_id_2"]
     )
     output_df.to_csv(output_csv_path, index=False)
     print(
-        f"\n処理完了。合計 {len(final_selected_pairs)} 件のペアを "
+        f"\n処理完了。合計 {len(balanced_pairs)} 件のペアを "
         f"{output_csv_path} に保存しました。"
     )
 
@@ -410,7 +546,7 @@ def main():
     if args.output_jsonl:
         output_jsonl_path = os.path.join(args.output_dir, args.output_jsonl)
         save_as_jsonl(
-            final_selected_pairs, master_data_dict,
+            balanced_pairs, master_data_dict,
             positive_pairs_set, output_jsonl_path, args.data_type
         )
 

@@ -1,12 +1,12 @@
 summary:
   creation_date: '2025-08-24 18:48:00.775'
   update_date: '2025-08-24 18:48:00.775'
-  num_of_records: 2000
+  num_of_records: 2001
   num_of_pairs:
     1: 1692
-    2: 62
-    3: 41
-    4: 14
+    2: 63
+    3: 42
+    4: 13
     5: 1
   config_match: null
   config_mismatch: null
@@ -16,159 +16,44 @@ inf_attr:
   brand: TEXT_EN
   modelno: TEXT_EN
 records:
-  'complimentary 60 days unlimited asus webstorage trial please visit www asuswebstorage com for more details 3 ':
-  - id: c1754db3-11f9-47e8-8f13-bccd84216dff
-    cluster_id: 'complimentary 60 days unlimited asus webstorage trial please visit
-      www asuswebstorage com for more details 3 '
+  '7372':
+  - id: 19e48db1-4989-4333-ad4b-9ee5b76b800a
+    cluster_id: '7372'
     data:
-      brand: asus
-      modelno: 'bluetooth v3 0 transfers files at roughly 480 megabits 60 megabytes
-        per second in close proximity and 100 megabits 12 5 megabytes per second at
-        10 meters actual results may vary depending on usage scenarios 4 rated number
-        1 windows based pc maker in pcmag com s service amp reliability report 2009
-        rated number 1 pc brand according to squaretrade the leading direct to consumer
-        warranty company for more information visit http www squaretrade com pages
-        laptop reliability 1109 rated number 1 reliable pc maker in spring 2009 s
-        rescuecom report http www rescuecom com rescuecom269 html rated number 1 windows
-        based pc brand in pcworld com survey http www pcworld com article 211074 the
-        tech brands you can trust html check out other great asus products asus external
-        dvd writer sdrw 08d2s u add a stylish external dvd re writer to your eee pc
-        this ultra slim diamond cut design external drive is easy to carry and does
-        not require any external power sources powers off the usb ports on your pc
-        asus netbook kit for 10 1 inch netbooks kit includes one external optical
-        disk drive one seashell optical mouse and one 10 inch velvet soft sleeve for
-        eee pcs and other netbooks it is the perfect accessory for your new 10 1 inch
-        eee pc asus ml228h widescreen led monitor enjoy asus led backlight technology
-        the 21 5 inch asus ml228h full hd monitor has a modern ultra slim design with
-        incredible energy efficiency asus rt n13u wireless n router with usb upgrade
-        your network to faster performance and broader range with this ez to setup
-        wireless n router you can even share an all in one printer with the peers
-        in your network '
-      price: 1015px pu17 rd
-      title: atom n570 1gb ddr3 250g hdd no optical drive windows 7 starter 32 bit
-        802 11bgn bluetooth 3 0 3 x usb 2 0 ports vga port 2 in 1 card reader sd mmc
-        up to 11 hours battery life 1yr warranty
-  - id: 8e9e8385-9077-425c-9773-d564b524a13a
-    cluster_id: 'complimentary 60 days unlimited asus webstorage trial please visit
-      www asuswebstorage com for more details 3 '
+      brand: sharp
+      modelno: ''
+      price: '32'
+      title: audiosource bi5 5 25 in wall construction bracket mount
+  - id: 860b1d34-a995-43b7-9eb5-9da7d6e2e192
+    cluster_id: '7372'
     data:
-      brand: asus
-      modelno: 'rated number 1 windows based pc maker in pcmag com s service amp reliability
-        report 2009 rated number 1 pc brand according to squaretrade the leading direct
-        to consumer warranty company for more information visit http www squaretrade
-        com pages laptop reliability 1109 rated number 1 reliable pc maker in spring
-        2009 s rescuecom report http www rescuecom com rescuecom269 html rated number
-        1 windows based pc brand in pcworld com survey http www pcworld com article
-        211074 the tech brands you can trust html check out other great asus products
-        asus external dvd writer sdrw 08d2s u add a stylish external dvd re writer
-        to your eee pc this ultra slim diamond cut design external drive is easy to
-        carry and does not require any external power sources powers off the usb ports
-        on your pc asus netbook kit for 10 1 inch netbooks kit includes one external
-        optical disk drive one seashell optical mouse and one 10 inch velvet soft
-        sleeve for eee pcs and other netbooks it is the perfect accessory for your
-        new 10 1 inch eee pc asus ml228h widescreen led monitor enjoy asus led backlight
-        technology the 21 5 inch asus ml228h full hd monitor has a modern ultra slim
-        design with incredible energy efficiency asus rt n13u wireless n router with
-        usb upgrade your network to faster performance and broader range with this
-        ez to setup wireless n router you can even share an all in one printer with
-        the peers in your network '
-      price: 1015px mu17 rd
-      title: atom n570 1gb ddr3 250g hdd no optical drive windows 7 starter 32 bit
-        802 11bgn 3 x usb 2 0 ports vga port 2 in 1 card reader sd mmc up to 9 hours
-        battery life 1yr warranty
-  - id: 3dbb0c83-9548-42a4-8b46-018ca9802eb3
-    cluster_id: 'complimentary 60 days unlimited asus webstorage trial please visit
-      www asuswebstorage com for more details 3 '
+      brand: audiosource
+      modelno: bi5
+      price: 17 29
+      title: audio source bi5 new construction bracket in wall 5 25 inches mount
+  - id: 37fdf7bf-8764-4b3f-93a8-cccad333dbf2
+    cluster_id: '7372'
     data:
-      brand: asus
-      modelno: 'bluetooth v3 0 transfers files at roughly 480 megabits 60 megabytes
-        per second in close proximity and 100 megabits 12 5 megabytes per second at
-        10 meters actual results may vary depending on usage scenarios 4 rated number
-        1 windows based pc maker in pcmag com s service amp reliability report 2009
-        rated number 1 pc brand according to squaretrade the leading direct to consumer
-        warranty company for more information visit http www squaretrade com pages
-        laptop reliability 1109 rated number 1 reliable pc maker in spring 2009 s
-        rescuecom report http www rescuecom com rescuecom269 html rated number 1 windows
-        based pc brand in pcworld com survey http www pcworld com article 211074 the
-        tech brands you can trust html check out other great asus products asus external
-        dvd writer sdrw 08d2s u add a stylish external dvd re writer to your eee pc
-        this ultra slim diamond cut design external drive is easy to carry and does
-        not require any external power sources powers off the usb ports on your pc
-        asus netbook kit for 10 1 inch netbooks kit includes one external optical
-        disk drive one seashell optical mouse and one 10 inch velvet soft sleeve for
-        eee pcs and other netbooks it is the perfect accessory for your new 10 1 inch
-        eee pc asus ml228h widescreen led monitor enjoy asus led backlight technology
-        the 21 5 inch asus ml228h full hd monitor has a modern ultra slim design with
-        incredible energy efficiency asus rt n13u wireless n router with usb upgrade
-        your network to faster performance and broader range with this ez to setup
-        wireless n router you can even share an all in one printer with the peers
-        in your network '
-      price: 1015px pu17 bu
-      title: atom n570 1gb ddr3 250g hdd no optical drive windows 7 starter 32 bit
-        802 11bgn bluetooth 3 0 3 x usb 2 0 ports vga port 2 in 1 card reader sd mmc
-        up to 11 hours battery life 1yr warranty
-  - id: 5761d0fa-d38d-4618-8303-3cbe1aec9545
-    cluster_id: 'complimentary 60 days unlimited asus webstorage trial please visit
-      www asuswebstorage com for more details 3 '
+      brand: audiosource
+      modelno: bi5
+      price: 25 88
+      title: audiosource bi5 5 in wall construction bracket mount
+  '6639':
+  - id: 9fbeaf89-85de-442b-a7dc-c08adc1e0c58
+    cluster_id: '6639'
     data:
-      brand: asus
-      modelno: 'bluetooth v3 0 transfers files at roughly 480 megabits 60 megabytes
-        per second in close proximity and 100 megabits 12 5 megabytes per second at
-        10 meters actual results may vary depending on usage scenarios 4 rated number
-        1 windows based pc maker in pcmag com s service amp reliability report 2009
-        rated number 1 pc brand according to squaretrade the leading direct to consumer
-        warranty company for more information visit http www squaretrade com pages
-        laptop reliability 1109 rated number 1 reliable pc maker in spring 2009 s
-        rescuecom report http www rescuecom com rescuecom269 html rated number 1 windows
-        based pc brand in pcworld com survey http www pcworld com article 211074 the
-        tech brands you can trust html check out other great asus products asus external
-        dvd writer sdrw 08d2s u add a stylish external dvd re writer to your eee pc
-        this ultra slim diamond cut design external drive is easy to carry and does
-        not require any external power sources powers off the usb ports on your pc
-        asus netbook kit for 10 1 inch netbooks kit includes one external optical
-        disk drive one seashell optical mouse and one 10 inch velvet soft sleeve for
-        eee pcs and other netbooks it is the perfect accessory for your new 10 1 inch
-        eee pc asus ml228h widescreen led monitor enjoy asus led backlight technology
-        the 21 5 inch asus ml228h full hd monitor has a modern ultra slim design with
-        incredible energy efficiency asus rt n13u wireless n router with usb upgrade
-        your network to faster performance and broader range with this ez to setup
-        wireless n router you can even share an all in one printer with the peers
-        in your network '
-      price: 1015px pu17 bk
-      title: atom n570 1gb ddr3 250g hdd no optical drive windows 7 starter 32 bit
-        802 11bgn bluetooth 3 0 3 x usb 2 0 ports vga port 2 in 1 card reader sd mmc
-        up to 11 hours battery life 1yr warranty
-  - id: 4fd148d7-48fb-4f33-9be4-23d46b3caf78
-    cluster_id: 'complimentary 60 days unlimited asus webstorage trial please visit
-      www asuswebstorage com for more details 3 '
+      brand: motorola
+      modelno: flipout
+      price: '186'
+      title: motorola flipout unlocked gsm quad band android phone with bluetooth
+        camera qwerty keyboard and wi fi unlocked phone us warranty black
+  - id: 09c6d851-65c7-4170-aa19-497b601c631a
+    cluster_id: '6639'
     data:
-      brand: asus
-      modelno: 'bluetooth v3 0 transfers files at roughly 480 megabits 60 megabytes
-        per second in close proximity and 100 megabits 12 5 megabytes per second at
-        10 meters actual results may vary depending on usage scenarios 4 rated number
-        1 windows based pc maker in pcmag com s service amp reliability report 2009
-        rated number 1 pc brand according to squaretrade the leading direct to consumer
-        warranty company for more information visit http www squaretrade com pages
-        laptop reliability 1109 rated number 1 reliable pc maker in spring 2009 s
-        rescuecom report http www rescuecom com rescuecom269 html rated number 1 windows
-        based pc brand in pcworld com survey http www pcworld com article 211074 the
-        tech brands you can trust html check out other great asus products asus external
-        dvd writer sdrw 08d2s u add a stylish external dvd re writer to your eee pc
-        this ultra slim diamond cut design external drive is easy to carry and does
-        not require any external power sources powers off the usb ports on your pc
-        asus netbook kit for 10 1 inch netbooks kit includes one external optical
-        disk drive one seashell optical mouse and one 10 inch velvet soft sleeve for
-        eee pcs and other netbooks it is the perfect accessory for your new 10 1 inch
-        eee pc asus ml228h widescreen led monitor enjoy asus led backlight technology
-        the 21 5 inch asus ml228h full hd monitor has a modern ultra slim design with
-        incredible energy efficiency asus rt n13u wireless n router with usb upgrade
-        your network to faster performance and broader range with this ez to setup
-        wireless n router you can even share an all in one printer with the peers
-        in your network '
-      price: 1015px pu17 wt
-      title: atom n570 1gb ddr3 250g hdd no optical drive windows 7 starter 32 bit
-        802 11bgn bluetooth 3 0 3 x usb 2 0 ports vga port 2 in 1 card reader sd mmc
-        up to 11 hours battery life 1yr warranty
+      brand: motorola
+      modelno: mb511
+      price: '219'
+      title: motorola flipout mb511 black unlocked
   '20393':
   - id: 15f2b3bd-a4df-4eb4-9c00-16afc2d0d89b
     cluster_id: '20393'

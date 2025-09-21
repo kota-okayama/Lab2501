@@ -4,6 +4,7 @@ import yaml
 import sys
 import argparse
 import pandas as pd
+import random # Added for random sampling
 
 # --- グローバル設定 ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -379,7 +380,9 @@ def create_finetuning_message(record1_id, record2_id, is_truly_similar,
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
             {"role": "assistant", "content": assistant_response},
-        ]
+        ],
+        "record_id_1": str(record1_id),
+        "record_id_2": str(record2_id)
     }
 
 
@@ -394,8 +397,23 @@ def main(args):
     # 正解データのロード
     load_bib_data_and_gt_clusters(args.ground_truth_yaml)
 
+    # ラベル済みペアをロード
+    labeled_pairs = set()
+    if args.labeled_pairs_csv and os.path.exists(args.labeled_pairs_csv):
+        print(f"読み込み中: {args.labeled_pairs_csv}")
+        try:
+            labeled_df = pd.read_csv(args.labeled_pairs_csv)
+            for _, row in labeled_df.iterrows():
+                pair = tuple(sorted((str(row['record_id_1']), str(row['record_id_2']))))
+                labeled_pairs.add(pair)
+            print(f"{len(labeled_pairs)}件のラベル済みペアをロードしました。")
+        except Exception as e:
+            print(f"警告: ラベル済みペアファイルの読み込みに失敗: {e}")
+
+
     finetuning_samples = []
-    seen_pairs = set()
+    # この実行内で追加されたペアを追跡 (IDベース)
+    seen_id_pairs = set()
 
     # 1. 矛盾する三角形のペアを追加（num_samplesで制限）
     try:
@@ -428,51 +446,55 @@ def main(args):
             temp_samples.sort(key=lambda x: x['inconsistency_score'], reverse=True)
 
         elif args.sampling_strategy == "lowest_score":
-            print("サンプリング戦略: lowest_score (類似度スコアが低い順)")
+            print("サンプリング戦略: lowest_score (スコアが0.5に最も近い順)")
             for _, row in inconsistent_df.iterrows():
                 pairs_data = [
                     {'id1': row['triangle_node1'], 'id2': row['triangle_node2'], 'is_similar': row['true_edge12'], 'score': row['p_edge12']},
                     {'id1': row['triangle_node2'], 'id2': row['triangle_node3'], 'is_similar': row['true_edge23'], 'score': row['p_edge23']},
                     {'id1': row['triangle_node1'], 'id2': row['triangle_node3'], 'is_similar': row['true_edge31'], 'score': row['p_edge31']}
                 ]
-                # 最も類似度が低いペアを選択
-                lowest_score_pair = min(pairs_data, key=lambda x: x['score'])
+                # スコアが0.5に最も近いペアを選択
+                lowest_score_pair = min(pairs_data, key=lambda x: abs(x['score'] - 0.5))
                 
                 message = create_finetuning_message(
                     lowest_score_pair['id1'], lowest_score_pair['id2'],
                     lowest_score_pair['is_similar'], args.data_type,
                     lowest_score_pair['score']
                 )
-                message['score'] = lowest_score_pair['score'] # ソート用にスコアを保持
+                # ソート用に不確実性スコアを保持 (0.5に近いほど小さい)
+                message['uncertainty'] = abs(lowest_score_pair['score'] - 0.5)
                 temp_samples.append(message)
 
-            # 類似度スコアでソート（低い順）
-            temp_samples.sort(key=lambda x: x['score'])
+            # 不確実性スコアでソート（小さい順）
+            temp_samples.sort(key=lambda x: x['uncertainty'])
 
-        # 重複除去しながらnum_samplesまで追加
-        unique_samples = []
-        seen_pairs_set = set()
+        # IDベースで重複除去しながらnum_samplesまで追加
         for sample in temp_samples:
-            user_content = sample['messages'][1]['content']
-            if user_content not in seen_pairs_set:
-                seen_pairs_set.add(user_content)
-                # 一時的なスコアキーを削除
-                if 'inconsistency_score' in sample:
-                    del sample['inconsistency_score']
-                if 'score' in sample:
-                    del sample['score']
-                
-                unique_samples.append(sample)
-                
-                if len(unique_samples) >= args.num_samples:
-                    break
-        
-        finetuning_samples = unique_samples
+            pair_tuple = tuple(sorted((sample['record_id_1'], sample['record_id_2'])))
+            if pair_tuple in labeled_pairs or pair_tuple in seen_id_pairs:
+                continue
 
+            # 一時的なスコアキーを削除
+            if 'inconsistency_score' in sample:
+                del sample['inconsistency_score']
+            if 'score' in sample:
+                del sample['score']
+            if 'uncertainty' in sample:
+                del sample['uncertainty']
+            
+            finetuning_samples.append(sample)
+            seen_id_pairs.add(pair_tuple)
+            
+            if len(finetuning_samples) >= args.num_samples:
+                break
+        
         print(
             f"候補ペア処理: {len(temp_samples)} 件の候補から "
             f"{len(finetuning_samples)} 件のユニークなペアを追加しました（上限: {args.num_samples}）。"
         )
+        initial_positive = sum(1 for s in finetuning_samples if 'Yes' in s['messages'][2]['content'])
+        initial_negative = len(finetuning_samples) - initial_positive
+        print(f"初期サンプリング時のバランス: 正例={initial_positive}件, 負例={initial_negative}件")
 
     except FileNotFoundError:
         print(f"警告: 矛盾ペアファイルが見つかりません: {args.inconsistent_triangles_csv}")
@@ -490,56 +512,44 @@ def main(args):
             needed_samples = args.num_samples - current_total
             print(f"目標数に達していないため Hard sampling で {needed_samples} 件追加します")
             
+            details_df = pd.read_csv(args.evaluation_details_csv)
+            # Hard Samplingをスコア順ではなくランダムにする
+            hard_pairs_df = details_df.sample(frac=1, random_state=42)
+
             # バランスを数え直す
             positive_count = sum(1 for sample in finetuning_samples
                                  if 'Yes' in sample['messages'][2]['content'])
             negative_count = len(finetuning_samples) - positive_count
 
-            # 70:30バランスを目標に少数クラスを優先補完
-            if positive_count < negative_count:
-                # 正例が少ない場合：50:50を目指す
-                target_positive = int(args.num_samples * 0.3)
-                target_negative = args.num_samples - target_positive
-                
-                needed_positive = max(0, target_positive - positive_count)
-                needed_negative = max(0, min(needed_samples - needed_positive, target_negative - negative_count))
-                print(f"正例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
-            else:
-                # 負例が少ない場合：50:50を目指す
-                target_positive = int(args.num_samples * 0.5)
-                target_negative = args.num_samples - target_positive
-                
-                needed_negative = max(0, target_negative - negative_count)
-                needed_positive = max(0, min(needed_samples - needed_negative, target_positive - positive_count))
-                print(f"負例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
+            # 50:50バランスを目標に補完
+            target_positive = args.num_samples // 2
+            target_negative = args.num_samples - target_positive
+            
+            needed_positive = max(0, target_positive - positive_count)
+            needed_negative = max(0, target_negative - negative_count)
+            print(f"バランス目標: 正例={target_positive}, 負例={target_negative}")
+            print(f"不足分をランダムに補完: 正例+{needed_positive}, 負例+{needed_negative}")
 
-            details_df = pd.read_csv(args.evaluation_details_csv)
-            details_df['abs_score_dist'] = \
-                (details_df[args.score_column] - 0.5).abs()
-            hard_pairs_df = details_df.sort_values(by='abs_score_dist')
-
-            hard_positive_df = hard_pairs_df[
-                hard_pairs_df['ground_truth_similar']
-            ]
-            hard_negative_df = hard_pairs_df[
-                ~hard_pairs_df['ground_truth_similar']
-            ]
+            hard_positive_df = hard_pairs_df[hard_pairs_df['ground_truth_similar']]
+            hard_negative_df = hard_pairs_df[~hard_pairs_df['ground_truth_similar']]
 
             added_positive = 0
             if needed_positive > 0:
                 for _, row in hard_positive_df.iterrows():
                     if added_positive >= needed_positive:
                         break
+
+                    pair_tuple = tuple(sorted((str(row['record_id_1']), str(row['record_id_2']))))
+                    if pair_tuple in labeled_pairs or pair_tuple in seen_id_pairs:
+                        continue
+
                     message = create_finetuning_message(
                         row['record_id_1'], row['record_id_2'],
                         row['ground_truth_similar'], args.data_type,
                         row[args.score_column]
                     )
-                    user_content = message['messages'][1]['content']
-                    # seen_pairsは全サンプルで共有するため、ここでは使わない
-                    # if user_content not in seen_pairs:
                     finetuning_samples.append(message)
-                    #     seen_pairs.add(user_content)
+                    seen_id_pairs.add(pair_tuple)
                     added_positive += 1
 
             added_negative = 0
@@ -547,15 +557,18 @@ def main(args):
                 for _, row in hard_negative_df.iterrows():
                     if added_negative >= needed_negative:
                         break
+                    
+                    pair_tuple = tuple(sorted((str(row['record_id_1']), str(row['record_id_2']))))
+                    if pair_tuple in labeled_pairs or pair_tuple in seen_id_pairs:
+                        continue
+                        
                     message = create_finetuning_message(
                         row['record_id_1'], row['record_id_2'],
                         row['ground_truth_similar'], args.data_type,
                         row[args.score_column]
                     )
-                    user_content = message['messages'][1]['content']
-                    # if user_content not in seen_pairs:
                     finetuning_samples.append(message)
-                    #     seen_pairs.add(user_content)
+                    seen_id_pairs.add(pair_tuple)
                     added_negative += 1
 
             print(f"Hard ペア追加完了: 正例={added_positive}件, "
@@ -567,139 +580,81 @@ def main(args):
         except Exception as e:
             print(f"警告: Hard Sampling 中にエラーが発生しました: {e}")
 
-    # 2. バランス調整（必要に応じて削除・追加）
-    # 現在の正例・負例を数える
-    positive_count = sum(1 for sample in finetuning_samples
-                         if 'Yes' in sample['messages'][2]['content'])
-    negative_count = len(finetuning_samples) - positive_count
+    # (追加) バランス調整前のデータを保存
+    if args.output_jsonl_path_unbalanced:
+        print(f"\nバランス調整前のデータを {args.output_jsonl_path_unbalanced} に保存します...")
+        try:
+            with open(args.output_jsonl_path_unbalanced, 'w', encoding='utf-8') as f:
+                for entry in finetuning_samples:
+                    openai_entry = {"messages": entry["messages"]}
+                    f.write(json.dumps(openai_entry, ensure_ascii=False) + '\n')
+            print(f"保存完了: {len(finetuning_samples)} 件")
+        except IOError as e:
+            print(f"エラー: バランス調整前データの書き込みに失敗: {e}")
 
-    print(f"初期サンプリングの内訳: 正例={positive_count}件, 負例={negative_count}件")
 
-    # バランスが大きく偏っている場合は調整
-    imbalance_threshold = args.num_samples * 0.3  # 30%以上偏っている場合
-    current_total = len(finetuning_samples)
+    # 2. 最終的なデータバランス調整 (50:50目標)
+    print("\n最終的なデータバランス調整を行います...")
+    positive_samples = [s for s in finetuning_samples if 'Yes' in s['messages'][2]['content']]
+    negative_samples = [s for s in finetuning_samples if 'No' in s['messages'][2]['content']]
     
-    if (positive_count - negative_count) > imbalance_threshold and current_total >= args.num_samples:
-        print(f"バランスが偏っているため調整します（閾値: {imbalance_threshold}）")
+    target_count = args.num_samples // 2
+    
+    # 過剰なサンプルをランダムに削除
+    if len(positive_samples) > target_count:
+        positive_samples = random.sample(positive_samples, target_count)
+    if len(negative_samples) > target_count:
+        negative_samples = random.sample(negative_samples, target_count)
         
-        # 70:30程度のバランスに調整（情報損失を最小限に）
-        if positive_count > negative_count:
-            # 正例が多い場合：50:50を目標
-            target_positive = int(args.num_samples * 0.5)
-            target_negative = args.num_samples - target_positive
-            
-            positive_samples = [s for s in finetuning_samples if 'Yes' in s['messages'][2]['content']]
-            negative_samples = [s for s in finetuning_samples if 'No' in s['messages'][2]['content']]
-            
-            # 削減は最小限に
-            actual_positive = min(target_positive, positive_count)
-            actual_negative = min(target_negative, negative_count)
-            
-            finetuning_samples = positive_samples[:actual_positive] + negative_samples[:actual_negative]
-        else:
-            # 負例が多い場合：30:70を目標
-            target_positive = int(args.num_samples * 0.3)
-            target_negative = args.num_samples - target_positive
-            
-            positive_samples = [s for s in finetuning_samples if 'Yes' in s['messages'][2]['content']]
-            negative_samples = [s for s in finetuning_samples if 'No' in s['messages'][2]['content']]
-            
-            # 削減は最小限に
-            actual_positive = min(target_positive, positive_count)
-            actual_negative = min(target_negative, negative_count)
-            
-            finetuning_samples = positive_samples[:actual_positive] + negative_samples[:actual_negative]
-        
-        # 再カウント
-        positive_count = sum(1 for sample in finetuning_samples
-                           if 'Yes' in sample['messages'][2]['content'])
-        negative_count = len(finetuning_samples) - positive_count
-        print(f"削減後の内訳: 正例={positive_count}件, 負例={negative_count}件")
+    finetuning_samples = positive_samples + negative_samples
 
-    try:
-        # 指定数に達していない場合は Hard sampling で補完
-        current_total = len(finetuning_samples)
-        if current_total < args.num_samples:
-            needed_samples = args.num_samples - current_total
-            print(f"目標数に達していないため Hard sampling で {needed_samples} 件追加します")
+    # それでも不足している場合は、さらにランダムに追加
+    current_positive = len(positive_samples)
+    current_negative = len(negative_samples)
+    
+    needed_positive = target_count - current_positive
+    needed_negative = (args.num_samples - target_count) - current_negative
+
+    if needed_positive > 0 or needed_negative > 0:
+        print(f"バランス調整のためさらにペアを追加: 正例+{needed_positive}, 負例+{needed_negative}")
+        try:
+            if 'details_df' not in locals():
+                details_df = pd.read_csv(args.evaluation_details_csv)
             
-            # 70:30バランスを目標に少数クラスを優先補完
-            if positive_count < negative_count:
-                # 正例が少ない場合：30:70 → より良いバランスを目指す
-                target_positive = int(args.num_samples * 0.5)
-                target_negative = args.num_samples - target_positive
-                
-                needed_positive = max(0, target_positive - positive_count)
-                needed_negative = max(0, min(needed_samples - needed_positive, target_negative - negative_count))
-                print(f"正例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
-            else:
-                # 負例が少ない場合：70:30 → より良いバランスを目指す
-                target_positive = int(args.num_samples * 0.5)
-                target_negative = args.num_samples - target_positive
-                
-                needed_negative = max(0, target_negative - negative_count)
-                needed_positive = max(0, min(needed_samples - needed_negative, target_positive - positive_count))
-                print(f"負例が少数クラスのため、バランス改善: 正例+{needed_positive}, 負例+{needed_negative}")
+            # まだ使われていないペアを候補にする
+            all_current_pairs = labeled_pairs.union(seen_id_pairs)
+            details_df['pair_tuple'] = details_df.apply(lambda row: tuple(sorted((str(row['record_id_1']), str(row['record_id_2'])))), axis=1)
+            candidate_df = details_df[~details_df['pair_tuple'].isin(all_current_pairs)]
 
-            details_df = pd.read_csv(args.evaluation_details_csv)
-            details_df['abs_score_dist'] = \
-                (details_df[args.score_column] - 0.5).abs()
-            hard_pairs_df = details_df.sort_values(by='abs_score_dist')
+            positive_candidates = candidate_df[candidate_df['ground_truth_similar']]
+            negative_candidates = candidate_df[~candidate_df['ground_truth_similar']]
 
-            hard_positive_df = hard_pairs_df[
-                hard_pairs_df['ground_truth_similar']
-            ]
-            hard_negative_df = hard_pairs_df[
-                ~hard_pairs_df['ground_truth_similar']
-            ]
+            # 正例を追加
+            if needed_positive > 0 and not positive_candidates.empty:
+                num_to_add = min(needed_positive, len(positive_candidates))
+                added_pos_df = positive_candidates.sample(n=num_to_add)
+                for _, row in added_pos_df.iterrows():
+                    message = create_finetuning_message(row['record_id_1'], row['record_id_2'], True, args.data_type)
+                    finetuning_samples.append(message)
 
-            added_positive = 0
-            if needed_positive > 0:
-                for _, row in hard_positive_df.iterrows():
-                    if added_positive >= needed_positive:
-                        break
-                    message = create_finetuning_message(
-                        row['record_id_1'], row['record_id_2'],
-                        row['ground_truth_similar'], args.data_type,
-                        row[args.score_column]
-                    )
-                    user_content = message['messages'][1]['content']
-                    if user_content not in seen_pairs:
-                        finetuning_samples.append(message)
-                        seen_pairs.add(user_content)
-                        added_positive += 1
+            # 負例を追加
+            if needed_negative > 0 and not negative_candidates.empty:
+                num_to_add = min(needed_negative, len(negative_candidates))
+                added_neg_df = negative_candidates.sample(n=num_to_add)
+                for _, row in added_neg_df.iterrows():
+                    message = create_finetuning_message(row['record_id_1'], row['record_id_2'], False, args.data_type)
+                    finetuning_samples.append(message)
 
-            added_negative = 0
-            if needed_negative > 0:
-                for _, row in hard_negative_df.iterrows():
-                    if added_negative >= needed_negative:
-                        break
-                    message = create_finetuning_message(
-                        row['record_id_1'], row['record_id_2'],
-                        row['ground_truth_similar'], args.data_type,
-                        row[args.score_column]
-                    )
-                    user_content = message['messages'][1]['content']
-                    if user_content not in seen_pairs:
-                        finetuning_samples.append(message)
-                        seen_pairs.add(user_content)
-                        added_negative += 1
+        except FileNotFoundError:
+            print(f"警告: 評価詳細ファイルが見つかりません: {args.evaluation_details_csv}。追加のバランス調整はスキップされます。")
+        except Exception as e:
+            print(f"警告: バランス調整中の追加サンプリングでエラー: {e}")
 
-            print(f"Hard ペア追加完了: 正例={added_positive}件, "
-                  f"負例={added_negative}件")
-        else:
-            print("矛盾ペアのバランスが取れているため、Hardペアの追加はスキップします。")
-
-    except FileNotFoundError:
-        print(f"警告: 評価詳細ファイルが見つかりません: "
-              f"{args.evaluation_details_csv}。バランス調整は行われません。")
-    except Exception as e:
-        print(f"警告: 評価詳細ファイルの処理中にエラーが発生しました: {e}")
 
     # 最終的なサンプル数制限
     if len(finetuning_samples) > args.num_samples:
-        print(f"サンプル数が上限（{args.num_samples}）を超過しているため切り詰めます")
-        finetuning_samples = finetuning_samples[:args.num_samples]
+        print(f"サンプル数が上限（{args.num_samples}）を超過しているためランダムに切り詰めます")
+        finetuning_samples = random.sample(finetuning_samples, args.num_samples)
 
     # 最終確認
     final_positive = sum(1 for sample in finetuning_samples
@@ -722,7 +677,9 @@ def main(args):
     try:
         with open(args.output_jsonl_path, 'w', encoding='utf-8') as f:
             for entry in finetuning_samples:
-                f.write(json.dumps(entry, ensure_ascii=False) + '\n')
+                # OpenAI APIは 'messages' キーのみを要求するため、それ以外は除外
+                openai_entry = {"messages": entry["messages"]}
+                f.write(json.dumps(openai_entry, ensure_ascii=False) + '\n')
         print(f"ファインチューニング用データを {args.output_jsonl_path} に保存しました。")
     except IOError as e:
         print(f"エラー: ファイルの書き込みに失敗しました - "
@@ -751,6 +708,11 @@ if __name__ == "__main__":
         help="出力するJSONLファイルのパス"
     )
     parser.add_argument(
+        "--output_jsonl_path_unbalanced",
+        default=None,
+        help="[任意] バランス調整前のデータを出力するJSONLファイルのパス"
+    )
+    parser.add_argument(
         "--data_type",
         required=True,
         choices=["bib", "music", "person", "walmart_amazon_product", "wdc_product"],
@@ -769,6 +731,12 @@ if __name__ == "__main__":
         "--sampling_strategy", type=str, default="inconsistency",
         choices=["inconsistency", "lowest_score"],
         help="サンプリング戦略を選択 (デフォルト: inconsistency)"
+    )
+    parser.add_argument(
+        '--labeled_pairs_csv',
+        type=str,
+        default=None,
+        help='過去にラベル付けされたペアのCSVファイルパス。これらのペアはサンプリングから除外されます。'
     )
 
     args = parser.parse_args()

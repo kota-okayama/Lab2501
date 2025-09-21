@@ -81,24 +81,16 @@ def run_command(command, description):
 
 def sanitize_model_name_for_filename(model_name):
     """ファイル名に使用できるようにモデル名をサニタイズする"""
-    # 長いファイル名を短縮化
-    sanitized = model_name.replace('/', '_').replace(':', '_').replace(' ', '_')
+    # このパイプラインスクリプト内では、よりシンプルなサニタイズ関数を使用
+    # 評価スクリプト側で複雑な命名規則を管理
+    return model_name.replace('/', '_').replace(':', '_').replace(' ', '_')
 
-    # ファインチューニングモデルの場合、短縮形を生成
-    if sanitized.startswith('ft_gpt-4o-mini-2024-07-18_mlab_'):
-        # ft:gpt-4o-mini-2024-07-18:mlab:amazon-walmart-product-matching-
-        # inconsistency-0904-100:CBwzXgQF -> ft_inconsistency-0904-100_CBwzXgQF
-        parts = sanitized.split('_')
-        if len(parts) >= 7:  # ft_gpt-4o-mini-2024-07-18_mlab_[info]_[id]
-            strategy_part = '_'.join(parts[6:-1])  # strategy info部分
-            model_id = parts[-1]  # 最後のモデルID
-            return f"ft_{strategy_part}_{model_id}"
 
-    # 通常のモデルも短縮
-    if len(sanitized) > 50:
-        return sanitized[:50]
-
-    return sanitized
+def truncate_filename_component(text, max_length=50):
+    """ファイル名の構成要素を指定した長さに短縮する"""
+    if len(text) <= max_length:
+        return text
+    return text[:max_length-3] + "..."
 
 
 def get_num_lines_in_jsonl(file_path):
@@ -187,7 +179,7 @@ def find_previous_ft_data(output_base_dir, data_type, strategy, current_iteratio
     return previous_files
 
 
-def find_previous_cumulative_ft_data(output_base_dir, strategy, current_iteration):
+def find_previous_cumulative_ft_data(output_base_dir, strategy, current_iteration, is_balanced=True):
     """1つ前のイテレーションの累積FTデータファイルを検索する"""
     if current_iteration == 0:
         return None
@@ -196,15 +188,17 @@ def find_previous_cumulative_ft_data(output_base_dir, strategy, current_iteratio
     
     previous_iteration = current_iteration - 1
     
+    # バランス状態に応じたファイル名プレフィックス
+    prefix = "ft_b_data" if is_balanced else "ft_ub_data"
+
     # 1つ前のイテレーションのディレクトリパスを構築
-    # 例: ".../run_2k_ite2_wdc" -> ".../run_2k_ite1_wdc"
     base_pattern = output_base_dir.replace(
         f'_ite{current_iteration}_', f'_ite{previous_iteration}_'
     )
     
     # 累積FTファイルを検索
     search_pattern = os.path.join(
-        base_pattern, "evaluation_results", f"*{strategy}_cumulative_ite{previous_iteration}.jsonl"
+        base_pattern, "evaluation_results", f"{prefix}_{strategy}_cumulative_ite{previous_iteration}.jsonl"
     )
     
     matching_files = glob.glob(search_pattern)
@@ -213,15 +207,17 @@ def find_previous_cumulative_ft_data(output_base_dir, strategy, current_iteratio
         found_file = matching_files[0]
         num_lines = get_num_lines_in_jsonl(found_file)
         if num_lines > 0:
-            print(f"  -> 1つ前の累積FTデータを発見: {found_file} ({num_lines} 件)")
+            print(f"  -> 1つ前の{'バランス済み' if is_balanced else 'バランスなし'}累積FTデータを発見: {found_file} ({num_lines} 件)")
             return found_file
         else:
-            print(f"  -> 1つ前の累積FTデータが空のためスキップ: {found_file}")
+            print(f"  -> 1つ前の{'バランス済み' if is_balanced else 'バランスなし'}累積FTデータが空のためスキップ: {found_file}")
 
     # ite0の場合は `_cumulative_` がつかない可能性があるため、フォールバック検索
     if previous_iteration == 0:
+        # ite0のファイル名は `ft_balanced_data_..._strategy.jsonl` または `ft_unbalanced_data_..._strategy.jsonl`
+        # `base_name_for_ft` が含まれるため、ワイルドカードで検索
         search_pattern_fallback = os.path.join(
-            base_pattern, "evaluation_results", f"*{strategy}*.jsonl"
+            base_pattern, "evaluation_results", f"{prefix}_*_{strategy}.jsonl"
         )
         all_files = glob.glob(search_pattern_fallback)
         # 累積ファイル以外を選ぶ
@@ -230,10 +226,94 @@ def find_previous_cumulative_ft_data(output_base_dir, strategy, current_iteratio
             found_file = non_cumulative_files[0]
             num_lines = get_num_lines_in_jsonl(found_file)
             if num_lines > 0:
-                 print(f"  -> [フォールバック] ite0のFTデータを発見: {found_file} ({num_lines} 件)")
+                 print(f"  -> [フォールバック] ite0の{'バランス済み' if is_balanced else 'バランスなし'}FTデータを発見: {found_file} ({num_lines} 件)")
                  return found_file
 
     return None
+
+
+def find_previous_labeled_pairs_csv(output_base_dir, strategy, current_iteration):
+    """1つ前のイテレーションの累積ラベル済みペアCSVを検索する"""
+    if current_iteration == 0:
+        return None
+
+    previous_iteration = current_iteration - 1
+    
+    # 1つ前のイテレーションのディレクトリパスを構築
+    base_pattern = output_base_dir.replace(
+        f'_ite{current_iteration}_', f'_ite{previous_iteration}_'
+    )
+    
+    # 累積ラベル済みペアCSVを検索
+    search_pattern = os.path.join(
+        base_pattern, "evaluation_results", f"labeled_pairs_{strategy}_cumulative_ite{previous_iteration}.csv"
+    )
+    
+    matching_files = glob.glob(search_pattern)
+    
+    if matching_files:
+        found_file = matching_files[0]
+        if os.path.exists(found_file) and os.path.getsize(found_file) > 0:
+            print(f"  -> 1つ前のラベル済みペアCSVを発見: {found_file}")
+            return found_file
+        else:
+            print(f"  -> 1つ前のラベル済みペアCSVが空のためスキップ: {found_file}")
+
+    return None
+
+
+def update_labeled_pairs_csv(new_ft_jsonl_path, previous_labeled_csv_path, new_labeled_csv_path):
+    """新しいFTデータからペアを抽出し、過去のラベル済みペアと統合して保存する"""
+    all_pairs = set()
+
+    # 1. 過去のラベル済みペアを読み込み
+    if previous_labeled_csv_path and os.path.exists(previous_labeled_csv_path):
+        try:
+            with open(previous_labeled_csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                next(reader) # ヘッダーをスキップ
+                for row in reader:
+                    if len(row) >= 2:
+                        all_pairs.add(tuple(sorted((row[0], row[1]))))
+            print(f"  -> {len(all_pairs)}件の過去のラベル済みペアを {os.path.basename(previous_labeled_csv_path)} から読み込み")
+        except Exception as e:
+            print(f"警告: 過去のラベル済みペアCSVの読み込みに失敗: {e}")
+
+    # 2. 新しいFTデータ(.jsonl)からペアを抽出
+    newly_added_pairs = set()
+    if os.path.exists(new_ft_jsonl_path):
+        try:
+            with open(new_ft_jsonl_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    try:
+                        data = json.loads(line)
+                        if 'record_id_1' in data and 'record_id_2' in data:
+                            pair = tuple(sorted((str(data['record_id_1']), str(data['record_id_2']))))
+                            newly_added_pairs.add(pair)
+                    except json.JSONDecodeError:
+                        continue # 空行などを無視
+            print(f"  -> {len(newly_added_pairs)}件の新しいペアを {os.path.basename(new_ft_jsonl_path)} から抽出")
+        except Exception as e:
+            print(f"警告: 新しいFTデータからのペア抽出に失敗: {e}")
+    
+    # 3. 統合して保存
+    original_count = len(all_pairs)
+    all_pairs.update(newly_added_pairs)
+    
+    try:
+        os.makedirs(os.path.dirname(new_labeled_csv_path), exist_ok=True)
+        with open(new_labeled_csv_path, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(['record_id_1', 'record_id_2'])
+            # 再現性のためソート
+            for pair in sorted(list(all_pairs)):
+                writer.writerow(pair)
+        
+        print(f"  -> 統合後のラベル済みペア: {len(all_pairs)}件 (新規 {len(all_pairs) - original_count}件) -> {os.path.basename(new_labeled_csv_path)}")
+        return True
+    except Exception as e:
+        print(f"エラー: 新しいラベル済みペアCSVの保存に失敗: {e}")
+        return False
 
 
 def merge_ft_data_files(file_paths, output_path):
@@ -391,25 +471,19 @@ def get_legacy_evaluation_details_path(args, pairs_csv_path):
 
 def get_evaluation_details_path(args, pairs_csv_path, model_before_ft, model_after_ft):
     """評価詳細CSVファイルのパスを生成する"""
-    base_name = os.path.basename(pairs_csv_path).replace(".csv", "")
-    # ベース名も短縮化
-    if len(base_name) > 50:
-        base_name = base_name[:50]
+    # 評価スクリプト (evaluate_finetuning_performance_async.py) と完全に同じロジックでファイル名を生成
     
-    before_model_name = sanitize_model_name_for_filename(model_before_ft)
-    after_model_name = sanitize_model_name_for_filename(model_after_ft)
+    model_before_ft_sanitized = sanitize_model_name_for_filename(model_before_ft)
+    model_after_ft_sanitized = sanitize_model_name_for_filename(model_after_ft)
+    
+    # ファイル名の各構成要素を短縮
+    pairs_base = truncate_filename_component(os.path.basename(pairs_csv_path).replace('.csv', ''), 30)
+    model_before_short = truncate_filename_component(model_before_ft_sanitized, 10)
+    model_after_short = truncate_filename_component(model_after_ft_sanitized, 70)
 
-    output_filename = (
-        f"eval_{base_name}_before-{before_model_name}_"
-        f"after-{after_model_name}_details.csv"
-    )
-    
-    # ファイル名の長さをさらに制限
-    if len(output_filename) > 200:
-        # ハッシュを使用してファイル名を短縮
-        import hashlib
-        hash_str = hashlib.md5(output_filename.encode()).hexdigest()[:8]
-        output_filename = f"eval_details_{hash_str}.csv"
+    base_filename = f"eval_async_{pairs_base}_before-{model_before_short}_after-{model_after_short}"
+
+    output_filename = f"{base_filename}_details.csv"
 
     return os.path.join(
         os.path.dirname(pairs_csv_path),
@@ -489,12 +563,8 @@ def run_inconsistency_detection(args, details_csv_path):
     print("===== STEP 4完了 =====")
     base_name = os.path.basename(details_csv_path).replace("_details.csv", "")
     
-    # ファイル名の長さ制限
+    # 評価スクリプトと同じロジックでinconsistent_trianglesのファイル名を生成
     inconsistent_filename = f"{base_name}_score_after_inconsistent_triangles.csv"
-    if len(inconsistent_filename) > 200:
-        import hashlib
-        hash_str = hashlib.md5(inconsistent_filename.encode()).hexdigest()[:8]
-        inconsistent_filename = f"inconsistent_triangles_{hash_str}.csv"
     
     return os.path.join(output_dir, inconsistent_filename)
 
@@ -539,25 +609,30 @@ def run_finetuning_data_preparation(
 
     # 各戦略でファインチューニングデータを生成
     for strategy in strategies_to_generate:
-        print(f"\n--- 戦略: {strategy} (100ペア固定) ---")
+        print(f"\n--- 戦略: {strategy} ({num_samples}ペア) ---")
         
-        # ファイル名の長さ制限
-        base_ft_filename = f"ft_data_{base_name_for_ft}_{strategy}.jsonl"
-        if len(base_ft_filename) > 200:
-            import hashlib
-            hash_str = hashlib.md5(base_ft_filename.encode()).hexdigest()[:8]
-            base_ft_filename = f"ft_data_{strategy}_{hash_str}.jsonl"
+        # --- ファイルパス生成 (新しい命名規則) ---
+        base_name_part = os.path.basename(details_csv_path).replace("_details.csv", "")
 
-        # 現在のイテレーションのFTデータファイル
-        current_ft_path = os.path.join(output_dir, base_ft_filename)
-        
-        # 最終的な統合FTデータファイル（イテレーション対応）
-        final_ft_filename = f"ft_data_{strategy}_cumulative_ite{current_iteration}.jsonl"
-        if len(final_ft_filename) > 200:
-            hash_str = hashlib.md5(final_ft_filename.encode()).hexdigest()[:8]
-            final_ft_filename = f"ft_data_{strategy}_cum_{hash_str}.jsonl"
-        final_ft_path = os.path.join(output_dir, final_ft_filename)
+        # バランスあり
+        balanced_current_filename = f"ft_b_data_{base_name_part}_{strategy}.jsonl"
+        balanced_cumulative_filename = f"ft_b_data_{strategy}_cumulative_ite{current_iteration}.jsonl"
+        balanced_current_path = os.path.join(output_dir, balanced_current_filename)
+        balanced_cumulative_path = os.path.join(output_dir, balanced_cumulative_filename)
 
+        # バランスなし
+        unbalanced_current_filename = f"ft_ub_data_{base_name_part}_{strategy}.jsonl"
+        unbalanced_cumulative_filename = f"ft_ub_data_{strategy}_cumulative_ite{current_iteration}.jsonl"
+        unbalanced_current_path = os.path.join(output_dir, unbalanced_current_filename)
+        unbalanced_cumulative_path = os.path.join(output_dir, unbalanced_cumulative_filename)
+
+
+        # ラベル済みペアファイルのパスを定義・検索 (これはバランス調整の有無で共通)
+        labeled_pairs_filename = f"labeled_pairs_{strategy}_cumulative_ite{current_iteration}.csv"
+        new_labeled_pairs_path = os.path.join(output_dir, labeled_pairs_filename)
+        previous_labeled_pairs_path = find_previous_labeled_pairs_csv(
+            args.output_base_dir, strategy, current_iteration
+        )
 
         # 実際のdetails.csvファイルが存在するか確認して修正
         actual_details_csv_path = details_csv_path
@@ -583,15 +658,22 @@ def run_finetuning_data_preparation(
                 "--inconsistent_triangles_csv", inconsistent_triangles_csv,
                 "--evaluation_details_csv", actual_details_csv_path,
                 "--ground_truth_yaml", args.record_yaml_path,
-                "--output_jsonl_path", current_ft_path,
+                "--output_jsonl_path", balanced_current_path,
+                "--output_jsonl_path_unbalanced", unbalanced_current_path,
                 "--data_type", args.data_type,
-                "--score_column", "score_after", # score_before から修正
+                "--score_column", "score_after",
                 "--num_samples", str(num_samples),
                 "--sampling_strategy", strategy
             ]
+            if previous_labeled_pairs_path:
+                command.extend(["--labeled_pairs_csv", previous_labeled_pairs_path])
+
             if not run_command(command, f"FTデータ準備 ({strategy})"):
                 print(f"{strategy} 戦略が失敗しました。")
                 continue
+            
+            # 正常終了後、ラベル済みペアファイルを更新 (どちらかのファイルからでOK)
+            update_labeled_pairs_csv(balanced_current_path, previous_labeled_pairs_path, new_labeled_pairs_path)
         else:
             script_path = os.path.join(
                 "siamese_model_pytorch",
@@ -600,7 +682,8 @@ def run_finetuning_data_preparation(
             command = [
                 "python3", "-u", script_path,
                 "--strategy", strategy,
-                "--output_jsonl_path", current_ft_path,
+                "--output_jsonl_path", balanced_current_path,
+                "--output_jsonl_path_unbalanced", unbalanced_current_path,
                 "--ground_truth_yaml", args.record_yaml_path,
                 "--num_samples", str(num_samples),
                 "--data_type", args.data_type,
@@ -612,35 +695,42 @@ def run_finetuning_data_preparation(
             if strategy == "diversity":
                 command.extend(["--llm_clusters_json", llm_clusters_json_path])
 
+            if previous_labeled_pairs_path:
+                command.extend(["--labeled_pairs_csv", previous_labeled_pairs_path])
+
             if not run_command(command, f"FTデータ準備 ({strategy})"):
                 print(f"{strategy} 戦略が失敗しました。")
                 continue
 
-        # 現在のイテレーションのサンプル数を確認
-        current_samples = get_num_lines_in_jsonl(current_ft_path)
-        print(f"{strategy} 戦略で {current_samples} 件のデータを生成しました。")
-        
-        # 過去のデータと統合
-        print(f"\n--- イテレーション統合処理: {strategy} ---")
-        
-        # 1つ前の累積FTデータファイルを検索
-        previous_cumulative_file = find_previous_cumulative_ft_data(
-            args.output_base_dir, strategy, current_iteration
-        )
-        
-        # 統合するファイルリスト
-        files_to_merge = []
-        if previous_cumulative_file:
-            files_to_merge.append(previous_cumulative_file)
-        if get_num_lines_in_jsonl(current_ft_path) > 0:
-            files_to_merge.append(current_ft_path)
-        
-        if len(files_to_merge) > 0:
-            print(f"統合対象ファイル数: {len(files_to_merge)}")
-            total_samples = merge_ft_data_files(files_to_merge, final_ft_path)
-            print(f"累積FTデータ: {total_samples} 件 -> {final_ft_path}")
-        else:
-            print("統合するデータがありません。")
+            # 正常終了後、ラベル済みペアファイルを更新 (どちらかのファイルからでOK)
+            update_labeled_pairs_csv(balanced_current_path, previous_labeled_pairs_path, new_labeled_pairs_path)
+
+        # --- 累積処理 ---
+        for is_balanced in [True, False]:
+            status = "バランス済み" if is_balanced else "バランスなし"
+            print(f"\n--- イテレーション統合処理: {strategy} ({status}) ---")
+
+            current_path = balanced_current_path if is_balanced else unbalanced_current_path
+            cumulative_path = balanced_cumulative_path if is_balanced else unbalanced_cumulative_path
+            
+            # 1つ前の累積FTデータファイルを検索
+            previous_cumulative_file = find_previous_cumulative_ft_data(
+                args.output_base_dir, strategy, current_iteration, is_balanced=is_balanced
+            )
+            
+            # 統合するファイルリスト
+            files_to_merge = []
+            if previous_cumulative_file:
+                files_to_merge.append(previous_cumulative_file)
+            if get_num_lines_in_jsonl(current_path) > 0:
+                files_to_merge.append(current_path)
+            
+            if len(files_to_merge) > 0:
+                print(f"統合対象ファイル数: {len(files_to_merge)}")
+                total_samples = merge_ft_data_files(files_to_merge, cumulative_path)
+                print(f"累積FTデータ ({status}): {total_samples} 件 -> {cumulative_path}")
+            else:
+                print(f"統合するデータがありません ({status})。")
 
     print("\n===== STEP 5完了 =====")
     return strategies_to_generate
@@ -790,7 +880,7 @@ def main():
     # --- Step 4: Inconsistency Detection ---
     step4_group = parser.add_argument_group('Step 4: Inconsistency Detection')
     step4_group.add_argument(
-        "--inconsistency_top_n", type=int, default=100,
+        "--inconsistency_top_n", type=int, default=400,
         help="検出する矛盾三角形の上位N件"
     )
 

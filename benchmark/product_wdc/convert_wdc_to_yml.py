@@ -80,7 +80,8 @@ def convert_wdc_to_yml(
     random_seed=None,
     order_by='random',
     training_partitions=0,
-    top_n_for_training=0
+    top_n_for_training=0,
+    output_dir=None
 ):
     """
     WDCデータセットをクラスタリングし、--partitionで指定された定義に基づいて
@@ -175,7 +176,13 @@ def convert_wdc_to_yml(
                  break
             
             output_filename = f"{prefix}_{j+1}.yml"
-            write_yml_file(output_filename, inf_attr, current_subset_clusters)
+            
+            if output_dir:
+                output_filepath = os.path.join(output_dir, output_filename)
+            else:
+                output_filepath = output_filename
+
+            write_yml_file(output_filepath, inf_attr, current_subset_clusters)
             print(f"  - Created subset {j+1}: {sum(len(v) for v in current_subset_clusters.values())} records in {len(current_subset_clusters)} clusters.")
 
 if __name__ == '__main__':
@@ -184,6 +191,8 @@ if __name__ == '__main__':
                         help='Path to the directory containing WDC JSON files or a single JSON file.')
     parser.add_argument('--partition', action='append', required=True,
                         help='Define a group of subsets. Format: "prefix:count:size". Can be specified multiple times.')
+    parser.add_argument('--output_dir', type=str, default=None,
+                        help='Directory to save the output YML files (default: current directory).')
     parser.add_argument('--attributes', type=str, 
                         help='Comma-separated list of attributes to include. Auto-detected if not provided.')
     parser.add_argument('--random_seed', type=int, default=42,
@@ -206,5 +215,6 @@ if __name__ == '__main__':
         random_seed=args.random_seed,
         order_by=args.order_by,
         training_partitions=args.training_partitions,
-        top_n_for_training=args.top_n_for_training
+        top_n_for_training=args.top_n_for_training,
+        output_dir=args.output_dir
     )

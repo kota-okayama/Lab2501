@@ -212,13 +212,15 @@ def create_finetuning_message(record1_id, record2_id, is_truly_similar,
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
             {"role": "assistant", "content": assistant_response},
-        ]
+        ],
+        "record_id_1": str(record1_id),
+        "record_id_2": str(record2_id)
     }
 
 
 # --- サンプリング戦略ごとの関数 ---
 
-def sample_uncertainty(args):
+def sample_uncertainty(args, labeled_pairs=set()):
     """不確実性サンプリング（バランス調整付き）"""
     print("不確実性サンプリングを開始します...")
     try:
@@ -227,73 +229,29 @@ def sample_uncertainty(args):
         print(f"エラー: 評価詳細ファイルが見つかりません: {args.evaluation_details_csv}")
         sys.exit(1)
 
+    # ラベル済みペアを除外
+    df['pair_tuple'] = df.apply(lambda row: tuple(sorted((str(row['record_id_1']), str(row['record_id_2'])))), axis=1)
+    df_filtered = df[~df['pair_tuple'].isin(labeled_pairs)]
+    print(f"ラベル済みペアを除外後、候補が {len(df)} 件から {len(df_filtered)} 件になりました。")
+    if df_filtered.empty:
+        return []
+
     # 不確実性でソート（0.5に近いほど不確実）
-    df['uncertainty'] = (df[args.score_column] - 0.5).abs()
-    df_sorted = df.sort_values(by='uncertainty')
+    df_filtered['uncertainty'] = (df_filtered[args.score_column] - 0.5).abs()
+    df_sorted = df_filtered.sort_values(by='uncertainty')
     
-    # 初期サンプリング
-    sampled_df = df_sorted.head(args.num_samples)
-    
-    # バランスをチェック
-    positive_count = sum(sampled_df['ground_truth_similar'])
-    negative_count = len(sampled_df) - positive_count
-    
-    print(f"初期サンプリング結果: 正例={positive_count}件, 負例={negative_count}件")
-    
-    # バランスが大きく偏っている場合は調整
-    imbalance_threshold = args.num_samples * 0.3  # 30%以上偏っている場合
-    
-    if abs(positive_count - negative_count) > imbalance_threshold:
-        print(f"バランスが偏っているため調整します（閾値: {imbalance_threshold}）")
-        
-        # 70:30程度のバランスに調整（情報損失を最小限に）
-        if positive_count < negative_count:
-            # 正例が少ない場合：30:70を目標
-            positive_df = df_sorted[df_sorted['ground_truth_similar'] == True]
-            negative_df = df_sorted[df_sorted['ground_truth_similar'] == False]
-            
-            target_positive = int(args.num_samples * 0.3)
-            target_negative = args.num_samples - target_positive
-            
-            # 削減は最小限に
-            actual_positive = min(target_positive, len(positive_df))
-            actual_negative = min(target_negative, len(negative_df))
-            
-            sampled_df = pd.concat([
-                positive_df.head(actual_positive),
-                negative_df.head(actual_negative)
-            ]).sort_values(by='uncertainty')
-            
-        else:
-            # 負例が少ない場合：70:30を目標
-            positive_df = df_sorted[df_sorted['ground_truth_similar'] == True]
-            negative_df = df_sorted[df_sorted['ground_truth_similar'] == False]
-            
-            target_positive = int(args.num_samples * 0.7)
-            target_negative = args.num_samples - target_positive
-            
-            # 削減は最小限に
-            actual_positive = min(target_positive, len(positive_df))
-            actual_negative = min(target_negative, len(negative_df))
-            
-            sampled_df = pd.concat([
-                positive_df.head(actual_positive),
-                negative_df.head(actual_negative)
-            ]).sort_values(by='uncertainty')
-        
-        # 再カウント
-        positive_count = sum(sampled_df['ground_truth_similar'])
-        negative_count = len(sampled_df) - positive_count
-        print(f"調整後の内訳: 正例={positive_count}件, 負例={negative_count}件")
+    # 上位から指定された数だけ取得
+    num_to_sample = min(args.num_samples, len(df_sorted))
+    sampled_df = df_sorted.head(num_to_sample)
     
     pairs = []
     for _, row in sampled_df.iterrows():
         pairs.append((str(row['record_id_1']), str(row['record_id_2'])))
         
-    print(f"{len(pairs)} 件のペアをサンプリングしました。")
+    print(f"不確実性が高いペアを {len(pairs)} 件サンプリングしました。")
     return pairs
 
-def sample_diversity(args):
+def sample_diversity(args, labeled_pairs=set()):
     """多様性サンプリング"""
     print("多様性サンプリングを開始します...")
     try:
@@ -308,7 +266,9 @@ def sample_diversity(args):
         if len(records) > 1:
             record_ids = [str(r['record_id']) for r in records]
             for pair in itertools.combinations(record_ids, 2):
-                positive_pairs.append(tuple(sorted(pair)))
+                sorted_pair = tuple(sorted(pair))
+                if sorted_pair not in labeled_pairs:
+                    positive_pairs.append(sorted_pair)
 
     cluster_ids = list(llm_clusters.keys())
     negative_pairs = []
@@ -320,7 +280,9 @@ def sample_diversity(args):
                 cluster2_records = [str(r['record_id']) for r in llm_clusters[cluster_ids[j]]]
                 for r1 in cluster1_records:
                     for r2 in cluster2_records:
-                        negative_pairs.append(tuple(sorted((r1, r2))))
+                        sorted_pair = tuple(sorted((r1, r2)))
+                        if sorted_pair not in labeled_pairs:
+                            negative_pairs.append(sorted_pair)
 
     # サンプル数の半分ずつを目標にランダムサンプリング
     num_positive = args.num_samples // 2
@@ -334,7 +296,7 @@ def sample_diversity(args):
     print(f"サンプリング結果: 正例 {len(sampled_pos)}件, 負例 {len(sampled_neg)}件 -> 合計 {len(pairs)} 件")
     return pairs
 
-def sample_random(args):
+def sample_random(args, labeled_pairs=set()):
     """ランダムサンプリング"""
     print("ランダムサンプリングを開始します...")
     try:
@@ -343,7 +305,15 @@ def sample_random(args):
         print(f"エラー: 評価詳細ファイルが見つかりません: {args.evaluation_details_csv}")
         sys.exit(1)
 
-    sampled_df = df.sample(n=args.num_samples, random_state=42)
+    # ラベル済みペアを除外
+    df['pair_tuple'] = df.apply(lambda row: tuple(sorted((str(row['record_id_1']), str(row['record_id_2'])))), axis=1)
+    df_filtered = df[~df['pair_tuple'].isin(labeled_pairs)]
+    print(f"ラベル済みペアを除外後、候補が {len(df)} 件から {len(df_filtered)} 件になりました。")
+    if df_filtered.empty:
+        return []
+
+    num_to_sample = min(args.num_samples, len(df_filtered))
+    sampled_df = df_filtered.sample(n=num_to_sample, random_state=42)
     
     pairs = []
     for _, row in sampled_df.iterrows():
@@ -359,6 +329,11 @@ def main():
     parser = argparse.ArgumentParser(description="各種サンプリング戦略に基づき、ファインチューニングデータを生成します。")
     parser.add_argument("--strategy", required=True, choices=["uncertainty", "diversity", "random"], help="サンプリング戦略")
     parser.add_argument("--output_jsonl_path", required=True, help="出力するJSONLファイルのパス")
+    parser.add_argument(
+        "--output_jsonl_path_unbalanced",
+        default=None,
+        help="[任意] バランス調整前のデータを出力するJSONLファイルのパス"
+    )
     parser.add_argument("--ground_truth_yaml", required=True, help="正解データのYAMLファイルパス")
     parser.add_argument("--num_samples", type=int, required=True, help="生成するサンプル（ペア）の総数")
     parser.add_argument("--data_type", required=True, help="データの種類 (例: bib)")
@@ -367,6 +342,12 @@ def main():
     parser.add_argument("--evaluation_details_csv", help="[uncertainty, random] ペア候補のCSV")
     parser.add_argument("--score_column", help="[uncertainty] スコア列名")
     parser.add_argument("--llm_clusters_json", help="[diversity] LLMによるクラスタJSONファイル")
+    parser.add_argument(
+        '--labeled_pairs_csv',
+        type=str,
+        default=None,
+        help='過去にラベル付けされたペアのCSVファイルパス。これらのペアはサンプリングから除外されます。'
+    )
 
     args = parser.parse_args()
 
@@ -381,13 +362,26 @@ def main():
     # 1. 正解データをロード
     load_bib_data_and_gt_clusters(args.ground_truth_yaml)
 
+    # (追加) ラベル済みペアをロード
+    labeled_pairs = set()
+    if args.labeled_pairs_csv and os.path.exists(args.labeled_pairs_csv):
+        print(f"読み込み中: {args.labeled_pairs_csv}")
+        try:
+            labeled_df = pd.read_csv(args.labeled_pairs_csv)
+            for _, row in labeled_df.iterrows():
+                pair = tuple(sorted((str(row['record_id_1']), str(row['record_id_2']))))
+                labeled_pairs.add(pair)
+            print(f"{len(labeled_pairs)}件のラベル済みペアをロードしました。")
+        except Exception as e:
+            print(f"警告: ラベル済みペアファイルの読み込みに失敗: {e}")
+
     # 2. 戦略に応じてペアをサンプリング
     strategy_func = {
         "uncertainty": sample_uncertainty,
         "diversity": sample_diversity,
         "random": sample_random,
     }[args.strategy]
-    sampled_pairs = strategy_func(args)
+    sampled_pairs = strategy_func(args, labeled_pairs)
     
     # 3. サンプルをJSONL形式に変換
     finetuning_samples = []
@@ -400,16 +394,96 @@ def main():
         message = create_finetuning_message(id1, id2, is_truly_similar, args.data_type)
         finetuning_samples.append(message)
         
+    initial_positive = sum(1 for s in finetuning_samples if 'Yes' in s['messages'][2]['content'])
+    initial_negative = len(finetuning_samples) - initial_positive
+    print(f"\n初期サンプリング時のバランス: 正例={initial_positive}件, 負例={initial_negative}件")
+
+    # (追加) バランス調整前のデータを保存
+    if args.output_jsonl_path_unbalanced:
+        print(f"\nバランス調整前のデータを {args.output_jsonl_path_unbalanced} に保存します...")
+        try:
+            with open(args.output_jsonl_path_unbalanced, 'w', encoding='utf-8') as f:
+                for entry in finetuning_samples:
+                    openai_entry = {"messages": entry["messages"]}
+                    f.write(json.dumps(openai_entry, ensure_ascii=False) + '\n')
+            print(f"保存完了: {len(finetuning_samples)} 件")
+        except IOError as e:
+            print(f"エラー: バランス調整前データの書き込みに失敗: {e}")
+        
+    # (追加) 最終的なデータバランス調整 (50:50目標)
+    print("\n最終的なデータバランス調整を行います...")
+    positive_samples = [s for s in finetuning_samples if 'Yes' in s['messages'][2]['content']]
+    negative_samples = [s for s in finetuning_samples if 'No' in s['messages'][2]['content']]
+    
+    target_count = args.num_samples // 2
+    
+    # 過剰なサンプルをランダムに削除
+    if len(positive_samples) > target_count:
+        print(f"正例が多すぎるため、{len(positive_samples) - target_count}件をランダムに削除します。")
+        positive_samples = random.sample(positive_samples, target_count)
+    if len(negative_samples) > target_count:
+        print(f"負例が多すぎるため、{len(negative_samples) - target_count}件をランダムに削除します。")
+        negative_samples = random.sample(negative_samples, target_count)
+        
+    finetuning_samples = positive_samples + negative_samples
+
+    # 不足分をランダムに追加
+    current_positive = len(positive_samples)
+    current_negative = len(negative_samples)
+    
+    needed_positive = target_count - current_positive
+    needed_negative = (args.num_samples - target_count) - current_negative
+
+    if needed_positive > 0 or needed_negative > 0:
+        print(f"バランス調整のためさらにペアを追加: 正例+{needed_positive}, 負例+{needed_negative}")
+        try:
+            details_df = pd.read_csv(args.evaluation_details_csv)
+            
+            # まだ使われていないペアを候補にする
+            all_current_pairs = labeled_pairs.copy()
+            for sample in finetuning_samples:
+                pair = tuple(sorted((sample['record_id_1'], sample['record_id_2'])))
+                all_current_pairs.add(pair)
+
+            details_df['pair_tuple'] = details_df.apply(lambda row: tuple(sorted((str(row['record_id_1']), str(row['record_id_2'])))), axis=1)
+            candidate_df = details_df[~details_df['pair_tuple'].isin(all_current_pairs)]
+
+            positive_candidates = candidate_df[candidate_df['ground_truth_similar']]
+            negative_candidates = candidate_df[~candidate_df['ground_truth_similar']]
+
+            # 正例を追加
+            if needed_positive > 0 and not positive_candidates.empty:
+                num_to_add = min(needed_positive, len(positive_candidates))
+                added_pos_df = positive_candidates.sample(n=num_to_add)
+                for _, row in added_pos_df.iterrows():
+                    message = create_finetuning_message(row['record_id_1'], row['record_id_2'], True, args.data_type)
+                    finetuning_samples.append(message)
+
+            # 負例を追加
+            if needed_negative > 0 and not negative_candidates.empty:
+                num_to_add = min(needed_negative, len(negative_candidates))
+                added_neg_df = negative_candidates.sample(n=num_to_add)
+                for _, row in added_neg_df.iterrows():
+                    message = create_finetuning_message(row['record_id_1'], row['record_id_2'], False, args.data_type)
+                    finetuning_samples.append(message)
+
+        except FileNotFoundError:
+            print(f"警告: 評価詳細ファイルが見つかりません: {args.evaluation_details_csv}。追加のバランス調整はスキップされます。")
+        except Exception as e:
+            print(f"警告: バランス調整中の追加サンプリングでエラー: {e}")
+
     # 4. ファイルに保存
     try:
         with open(args.output_jsonl_path, 'w', encoding='utf-8') as f:
             for entry in finetuning_samples:
-                f.write(json.dumps(entry, ensure_ascii=False) + '\n')
+                # OpenAI APIは 'messages' キーのみを要求するため、それ以外は除外
+                openai_entry = {"messages": entry["messages"]}
+                f.write(json.dumps(openai_entry, ensure_ascii=False) + '\n')
         print("-" * 20)
         print(f"合計 {len(finetuning_samples)} 件のファインチューニング用データを {args.output_jsonl_path} に保存しました。")
         
         # バランスの確認
-        final_positive = sum(1 for s in finetuning_samples if 'はい' in s['messages'][2]['content'])
+        final_positive = sum(1 for s in finetuning_samples if 'Yes' in s['messages'][2]['content'])
         final_negative = len(finetuning_samples) - final_positive
         print(f"最終データバランス: 正例={final_positive}件, 負例={final_negative}件")
         print("-" * 20)
