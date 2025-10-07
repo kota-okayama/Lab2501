@@ -20,6 +20,9 @@ tqdm>=4.62.0
 thefuzz>=0.19.0
 python-levenshtein>=0.12.2
 
+# HTTP通信（Ollama用）
+aiohttp>=3.8.0
+
 # === 開発・テスト用（オプション） ===
 # PyTorch関連 (直接の依存はないが、関連研究用に残す)
 torch>=2.0.0
